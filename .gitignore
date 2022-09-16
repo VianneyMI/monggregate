@@ -1,0 +1,6 @@
+venv
+.env
+notes.md
+**/notebook.ipynb
+.mypy_cache
+.vscode
