@@ -3,7 +3,7 @@
 from typing import Any
 from pymongo.database import Database
 from pydantic import BaseModel, BaseConfig
-from app.stage import Stage
+from app.stages.stage import Stage
 
 
 class Pipeline(BaseModel):
