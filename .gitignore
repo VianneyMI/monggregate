@@ -4,3 +4,4 @@ notes.md
 **/notebook.ipynb
 .mypy_cache
 .vscode
+**/__pycache__/

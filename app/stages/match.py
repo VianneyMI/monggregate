@@ -63,4 +63,6 @@ class Match(Stage):
         """Generates match stage statement from arguments"""
 
         query = values.get("query")
-        return {"$match":query}
+        values["statement"] = {"$match":query}
+
+        return values

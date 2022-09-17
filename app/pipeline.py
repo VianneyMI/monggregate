@@ -6,23 +6,32 @@ from pydantic import BaseModel, BaseConfig
 from app.stages.stage import Stage
 
 
+
 class Pipeline(BaseModel):
     """MongoDB aggregation pipeline abstraction"""
 
-    __db__ : Database
+    db : Database # TODO : Make private
     collection : str
     stages : list[Stage] = []
 
-    def __call__(self)->None:
+    def __call__(self)->list[dict]:
         """Makes a pipeline instance callable and executes the entire pipeline when called"""
 
-        self.run()
+        return self.run()
 
-    def run(self)->Any:
+
+    def run(self)->list[dict]:
         """Executes the entire pipeline"""
 
+        stages = []
         for stage in self.stages:
-            stage() # FIXME : stages is now a list of instances of stages
+            print(stage.statement)
+            stages.append(stage.statement)
+
+
+        array = list(self.db[self.collection].aggregate(pipeline=stages))
+        return array
+
 
     class Config(BaseConfig):
         """Configuration Class for Pipeline"""
