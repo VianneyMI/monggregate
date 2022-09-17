@@ -8,3 +8,12 @@ from app.stages.replace_root import ReplaceRoot
 from app.stages.set import Set
 from app.stages.unwind import Unwind
 from app.stages.sort import Sort
+from app.stages.limit import Limit
+from app.stages.sample import Sample
+from app.stages.skip import Skip
+
+
+# Aliases
+# ---------------------------------
+AddFields = Set
+ReplaceWith = ReplaceRoot

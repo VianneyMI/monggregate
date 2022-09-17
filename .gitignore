@@ -5,3 +5,5 @@ notes.md
 .mypy_cache
 .vscode
 **/__pycache__/
+tracker.xlsx
+~$tracker.xlsx
