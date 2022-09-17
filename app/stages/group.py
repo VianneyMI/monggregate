@@ -16,7 +16,7 @@ class Group(Stage):
     by : str | list[str] | set[str] = Field(..., alias = "_id")
     #operation : Operator # TODO  : After dealing with operators ($sum, $avg, $count, etc...)
     #result : Any
-    query : dict
+    query : dict = {}
 
 
 
@@ -29,19 +29,28 @@ class Group(Stage):
         #---------------------------------------
         by = values.get("by")
         _id = values.get("_id")
-        query = values.get("query")
+        query = values.get("query", {})
 
         # Handling aliases
         #---------------------------------------
         if not (_id or by or (query and query.get("_id"))):
             raise TypeError("by (_id) is required")
 
+        if not _id:
+            _id = by
+
+        # Validates query
+        #---------------------------------------
         if not query:
             raise TypeError("query is required")
 
+        # Generate statement
+        #--------------------------------------
         if not _id in query:
             query.update({"_id":_id})
 
-        values["statement"] = query
+        values["statement"] = {
+            "$group":query
+        }
 
         return values

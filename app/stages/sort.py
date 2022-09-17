@@ -14,8 +14,8 @@ class Sort(Stage):
 
     statement : dict # TODO : Fine tune type <VM, 16/09/2022> Ex : dict[str, str|dict]
     query : dict ={} #| None
-    ascending  : set[str] | dict | None # TODO : Allow str and list[str] also
-    descending : set[str] | dict | None # TODO : Allow str and list[str] also
+    ascending  : set[str] | dict | None # TODO : Allow str and list[str] also and bool (when by is passed)
+    descending : set[str] | dict | None # TODO : Allow str and list[str] also and bool (when by is passed)
 
     @root_validator(pre=True)
     @classmethod
