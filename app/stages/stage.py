@@ -12,3 +12,9 @@ class Stage(BaseModel):
         """Configuration for Stage classes"""
 
         allow_population_by_field_name = True
+
+
+    def __call__(self)->dict:
+        """Makes an instance of stage callable"""
+
+        return self.statement

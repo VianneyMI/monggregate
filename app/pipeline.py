@@ -25,8 +25,8 @@ class Pipeline(BaseModel):
 
         stages = []
         for stage in self.stages:
-            print(stage.statement)
-            stages.append(stage.statement)
+            print(stage())
+            stages.append(stage())
 
 
         array = list(self.db[self.collection].aggregate(pipeline=stages))
