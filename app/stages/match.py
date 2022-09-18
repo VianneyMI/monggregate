@@ -7,6 +7,8 @@ Online MongoDB documentation:
 Last Updated (in this package) : 16/09/2022
 Source :  https://www.mongodb.com/docs/manual/meta/aggregation-quick-reference/
 
+Definition
+---------------------
 Filters the documents to pass only the documents that match the specified condition(s) to the next pipeline stage.
 
 The  $match stage has the following prototype form:
@@ -18,7 +20,7 @@ $match does not accept raw aggregation expressions. Instead, use a $expr query e
 $match
 
 Behavior
-------------
+----------------------
 Pipeline Optimization
 ----------------------
     * Place the  $match as early in the aggregation pipeline as possible. Because
@@ -50,7 +52,13 @@ from app.stages.stage import Stage
 
 class Match(Stage):
     """
-    TBD
+    Creates a match statement for an aggregation pipeline match stage.
+
+    Attributes
+    -------------------
+
+        - statement, dict : the statement generated during instantiation after parsing the other arguments
+        - query, dict : the query use to filter the documents
 
     """
 
