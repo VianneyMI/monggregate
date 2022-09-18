@@ -1,16 +1,26 @@
 """Stage Sub-package"""
 
-from app.stages.match import Match
-from app.stages.project import Project
+from app.stages.bucket import Bucket
+from app.stages.bucket_auto import BucketAuto
 from app.stages.count import Count
 from app.stages.group import Group
-from app.stages.replace_root import ReplaceRoot
-from app.stages.set import Set
-from app.stages.unwind import Unwind
-from app.stages.sort import Sort
 from app.stages.limit import Limit
+from app.stages.match import Match
+from app.stages.project import Project
+from app.stages.replace_root import ReplaceRoot
 from app.stages.sample import Sample
 from app.stages.skip import Skip
+from app.stages.sort import Sort
+from app.stages.sort_by_count import SortByCount
+from app.stages.set import Set
+from app.stages.unwind import Unwind
+
+# TODO : Add the greater than 0 constraints on the models <VM, 18/09/2022>
+# TODO : Add skipped links in documentation <VM, 18/09/2022>
+# TODO : Add skipped notes or remove the useless ones
+# TODO : Uniformize docstrings
+#           - follow the same standard for code example (raw MongoDB example or example transformed in python dictionary)
+
 
 
 # Aliases
