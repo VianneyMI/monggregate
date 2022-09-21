@@ -1,5 +1,11 @@
 """
-Module definining an interface to MongoDB $count stage operation in aggrgation pipeline
+Module definining an interface to MongoDB $count stage operation in aggrgation pipeline.
+
+
+
+
+
+
 
 """
 
