@@ -66,7 +66,7 @@ class Sample(Stage):
     statement : dict
     value : int = Field(10, gt=0)
 
-    @root_validator
+    @root_validator(pre=True)
     @classmethod
     def generate_statement(cls, values:dict)->dict:
         """Generate statement from arguments"""

@@ -64,7 +64,7 @@ class Limit(Stage):
     statement : dict
     value : int
 
-    @root_validator
+    @root_validator(pre=True)
     @classmethod
     def generate_statement(cls, values:dict)->dict:
         """Generate statement from arguments"""
