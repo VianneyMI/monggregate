@@ -45,24 +45,33 @@ The easiest way to guarantee sort consistency is to include the _id field in you
 
 See the following for more information on each:
 
-    * Consistent sorting with $sort (aggregation) : https://www.mongodb.com/docs/manual/reference/operator/aggregation/sort/#std-label-sort-aggregation-consistent-sorting
+    * Consistent sorting with $sort (aggregation)
+    (https://www.mongodb.com/docs/manual/reference/operator/aggregation/sort/#std-label-sort-aggregation-consistent-sorting)
 
-    * Consistent sorting with the sort() shell method : https://www.mongodb.com/docs/manual/reference/method/cursor.sort/#std-label-sort-cursor-consistent-sorting
+    * Consistent sorting with the sort() shell method
+    (https://www.mongodb.com/docs/manual/reference/method/cursor.sort/#std-label-sort-cursor-consistent-sorting)
 
-    * Consistent sorting with the findAndModify command : https://www.mongodb.com/docs/manual/reference/command/findAndModify/#std-label-findandmodify-command-consistent-sorting
+    * Consistent sorting with the findAndModify command
+    (https://www.mongodb.com/docs/manual/reference/command/findAndModify/#std-label-findandmodify-command-consistent-sorting)
 
-    * Consistent sorting with the findAndModify() shell method : https://www.mongodb.com/docs/manual/reference/method/db.collection.findAndModify/#std-label-findandmodify-method-consistent-sorting
+    * Consistent sorting with the findAndModify() shell method
+    (https://www.mongodb.com/docs/manual/reference/method/db.collection.findAndModify/#std-label-findandmodify-method-consistent-sorting)
 
 
 
 """
 
-from pydantic import root_validator, Field
+from pydantic import root_validator
 from app.stages.stage import Stage
 
 class Skip(Stage):
     """
-    TBD
+    Creates a skip statement for an aggregation pipeline skip stage.
+
+    Attributes
+    -----------------------
+        - statement, dict : the statement generated after instantiation
+        - value, int : positive integer representing the number of documents to be skipped.
 
     """
 

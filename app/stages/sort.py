@@ -89,7 +89,8 @@ $sort stage to sort on both the borough field and the _id field:
             ]
         )
 
-Since the _id field is always guaranteed to contain exclusively unique values, the returned sort order will always be the same across multiple executions of the same sort.
+Since the _id field is always guaranteed to contain exclusively unique values,
+the returned sort order will always be the same across multiple executions of the same sort.
 
 """
 
@@ -98,7 +99,29 @@ from app.stages.stage import Stage
 
 class Sort(Stage):
     """
-    TBD
+    Creates a sort statement for an aggregation pipeline sort stage.
+
+    Attributes
+    -----------------------
+        - statement, dict : the statement generated after instantiation
+        - query, dict : fields-sort order mapping. 1 for ascending order, -1 for descending order. Defaults to {}
+                        if not provided, the query will be built from ascending and descending parameters.
+
+        - ascending, set[str] | dict | None : fields to sort on ascending order on
+        - descending, set[str] | dict | None : fields to sort on descending order on
+
+    NOTE : When trying to sort on several fields and opposite orders use query rather than using ascending and descending simunateously.
+
+    WARNING : If using the ascending and descending parameters at the same time, the generated query will have the following form:
+
+        >>> query = {
+            "ascending_field1" : 1,
+            ...
+            "ascending_fieldN" : 1,
+            "descending_field1" : -1,
+            ...
+            "descending_fieldN" : -1
+        }
 
     """
 

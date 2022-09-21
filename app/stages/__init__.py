@@ -20,7 +20,7 @@ from app.stages.unwind import Unwind
 # TODO : Add skipped notes or remove the useless ones
 # TODO : Uniformize docstrings
 #           - follow the same standard for code example (raw MongoDB example or example transformed in python dictionary)
-
+# TODO : Replace links by markdown links when/where relevant <VM, 21/09/2022>
 
 
 # Aliases
