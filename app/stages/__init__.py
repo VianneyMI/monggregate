@@ -1,5 +1,6 @@
 """Stage Sub-package"""
 
+from app.stages.stage import Stage
 from app.stages.bucket import Bucket
 from app.stages.bucket_auto import BucketAuto
 from app.stages.count import Count

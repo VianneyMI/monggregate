@@ -13,15 +13,24 @@ db = client.Kompozite
 #match = Match(query={"codename":"compo_51"})
 #projection = Project(include=set(["codename", "name", "name_fr"]), exclude=set(["_id"]))
 
-group = Group(by="$category", query={"total":{"$count":{}}})
-sort = Sort(ascending=set(["_id"]))
+# group = Group(by="$category", query={"total":{"$count":{}}})
+# sort = Sort(ascending=set(["_id"]))
 
-pipeline = Pipeline(
-    db = db,
-    collection = "PU05",
-    stages = [group, sort]
-)
+# pipeline = Pipeline(
+#     db = db,
+#     collection = "PU05",
+#     stages = [group, sort]
+# )
 
 if __name__ == "__main__":
+    pipeline = Pipeline(
+        db=db,
+        collection="PU02"
+        ).match(
+            query={"category":"PU02C01"}
+        ).limit(
+            value=3
+        )
+
     print("It's Ok !")
     print(pipeline())

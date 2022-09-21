@@ -135,8 +135,8 @@ class BucketAuto(Stage):
     statement: dict
     by : str = Field(...,alias="group_by")
     buckets : int
-    output : dict
-    granularity : GranularityEnum
+    output : dict | None
+    granularity : GranularityEnum | None
 
     @root_validator(pre=True)
     @classmethod
