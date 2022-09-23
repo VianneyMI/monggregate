@@ -6,7 +6,7 @@ from pydantic import BaseModel, BaseConfig
 from app.stages import (
     Stage,
     Bucket, BucketAuto,
-    Count, Group, Limit,
+    Count, Group, Limit,Lookup,
     Match, Project,
     ReplaceRoot,
     Sample,
@@ -14,33 +14,77 @@ from app.stages import (
     Sort, SortByCount,
     Unwind
 )
+from app.utils import StrEnum
+
+
+class OnCallEnum(StrEnum):
+    """Possible behaviors on pipeline call"""
+
+    RUN = "run"
+    EXPORT = "export"
 
 
 class Pipeline(BaseModel):
     """MongoDB aggregation pipeline abstraction"""
 
     db : Database # TODO : Make private
+    on_call : OnCallEnum = OnCallEnum.EXPORT
     collection : str
     stages : list[Stage] = []
+
+    class Config(BaseConfig):
+        """Configuration Class for Pipeline"""
+        arbitrary_types_allowed = True
+
+    # ------------------------------------------------
+    # Pipeline Internal Methods
+    #-------------------------------------------------
 
     def __call__(self)->list[dict]:
         """Makes a pipeline instance callable and executes the entire pipeline when called"""
 
-        return self.run()
+        _on_call_map = {
+            OnCallEnum.EXPORT:self.export,
+            OnCallEnum.RUN:self.run
+        }
+
+        return _on_call_map[self.on_call]()
 
 
     def run(self)->list[dict]:
         """Executes the entire pipeline"""
 
-        stages = []
-        for stage in self.stages:
-            print(stage())
-            stages.append(stage())
-
-
+        stages = self.export()
         array = list(self.db[self.collection].aggregate(pipeline=stages))
+
         return array
 
+
+    def export(self)->list[dict]:
+        """
+        Exports current pipeline to pymongo format.
+
+            >>> pipeline = Pipeline().match(...).project(...).limit(...).export()
+            >>> db.examples.aggregate(pipeline=pipeline)
+
+        """
+
+        stages = []
+        for stage in self.stages:
+            stages.append(stage())
+
+        return stages
+
+
+    def to_statements(self)->list[dict]:
+        """Alias for export method"""
+
+        return self.export()
+
+
+    #-----------------------------------------------------------
+    # Stages
+    #-----------------------------------------------------------
     def add_fields(self, **kwargs:Any)->"Pipeline":
         """Adds an add_fields stage to the current pipeline"""
 
@@ -96,6 +140,14 @@ class Pipeline(BaseModel):
         self.stages.append(
                 Limit(**kwargs)
             )
+        return self
+
+    def lookup(self, **kwargs:Any)->"Pipeline":
+        """Adds a lookup stage to the current pipeline"""
+
+        self.stages.append(
+            Lookup(**kwargs)
+        )
         return self
 
     def match(self, **kwargs:Any)->"Pipeline":
@@ -177,12 +229,6 @@ class Pipeline(BaseModel):
                 Unwind(**kwargs)
             )
         return self
-
-
-    class Config(BaseConfig):
-        """Configuration Class for Pipeline"""
-        arbitrary_types_allowed = True
-
 
 
 if __name__ == "__main__":
