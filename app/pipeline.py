@@ -230,6 +230,15 @@ class Pipeline(BaseModel):
             )
         return self
 
+    # Picke one name for getting the statements as a list of dict
+
+    def export(self)->list[dict]:
+        """x"""
+
+    def to_statements(self)->list[dict]:
+        """x"""
+
+
 
 if __name__ == "__main__":
     pipeline = Pipeline(stages=[])
