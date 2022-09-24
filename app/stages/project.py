@@ -133,7 +133,6 @@ class Project(Stage):
 
     """
 
-    statement : dict
     projection : dict | None
     include : set[str] | dict | None # TODO : Allow str and list[str] also
     exclude : set[str] | dict | None # TODO : Allow str and list[str] also
@@ -179,6 +178,6 @@ class Project(Stage):
                 raise ValueError("At least one of (include, exclude) must be valid when projection is not provided")
 
 
-        values["statement"] = {"$project":projection}
+        values["_statement"] = {"$project":projection}
 
         return values

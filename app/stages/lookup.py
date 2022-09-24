@@ -262,7 +262,6 @@ class Lookup(Stage):
         - as, str : name of the field containing the matches from the foreign collection
     """
 
-    statement : dict
     right : str = Field(..., alias="from")
     on : str | None #  shortcut for when left_on is the same than right_on
     left_on : str | None = Field(...,alias="local_field")
@@ -358,6 +357,6 @@ class Lookup(Stage):
                 }
             }
 
-        values["statement"] = statement
+        values["_statement"] = statement
 
         return values

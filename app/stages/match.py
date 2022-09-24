@@ -62,7 +62,6 @@ class Match(Stage):
 
     """
 
-    statement : dict # TODO : Fine tune type <VM, 16/09/2022> Ex : dict[str, str|dict]
     query : dict ={} #| None
 
     @root_validator(pre=True)
@@ -71,6 +70,6 @@ class Match(Stage):
         """Generates match stage statement from arguments"""
 
         query = values.get("query")
-        values["statement"] = {"$match":query}
+        values["_statement"] = {"$match":query}
 
         return values

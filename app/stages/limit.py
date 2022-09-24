@@ -61,7 +61,6 @@ class Limit(Stage):
 
     """
 
-    statement : dict
     value : int
 
     @root_validator(pre=True)
@@ -71,7 +70,7 @@ class Limit(Stage):
 
         value = values.get("value")
 
-        values["statement"] = {
+        values["_statement"] = {
             "$limit" : value
         }
 

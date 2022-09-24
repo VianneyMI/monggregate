@@ -51,7 +51,6 @@ class Count(Stage):
 
     """
 
-    statement : dict # TODO : Fine tune type <VM, 16/09/2022> Ex : dict[str, str|dict]
     name : str
 
 
@@ -66,7 +65,7 @@ class Count(Stage):
         if not name:
             raise TypeError("name is required")
 
-        values["statement"] = {
+        values["_statement"] = {
             "$count" : name
         }
 

@@ -24,10 +24,11 @@ class OnCallEnum(StrEnum):
     EXPORT = "export"
 
 
-class Pipeline(BaseModel):
+class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     """MongoDB aggregation pipeline abstraction"""
 
-    db : Database # TODO : Make private
+    _db : Database | None # necessary to execute the pipeline
+                        # TODO : allow to pass a URI and instantiates a database connection directly here
     on_call : OnCallEnum = OnCallEnum.EXPORT
     collection : str
     stages : list[Stage] = []
@@ -35,6 +36,8 @@ class Pipeline(BaseModel):
     class Config(BaseConfig):
         """Configuration Class for Pipeline"""
         arbitrary_types_allowed = True
+        underscore_attrs_are_private = True
+
 
     # ------------------------------------------------
     # Pipeline Internal Methods
@@ -55,7 +58,10 @@ class Pipeline(BaseModel):
         """Executes the entire pipeline"""
 
         stages = self.export()
-        array = list(self.db[self.collection].aggregate(pipeline=stages))
+        if self._db is not None:
+            array = list(self._db[self.collection].aggregate(pipeline=stages))
+        else:
+            raise AttributeError("run is not available when no database is provided")
 
         return array
 
@@ -230,13 +236,6 @@ class Pipeline(BaseModel):
             )
         return self
 
-    # Picke one name for getting the statements as a list of dict
-
-    def export(self)->list[dict]:
-        """x"""
-
-    def to_statements(self)->list[dict]:
-        """x"""
 
 
 

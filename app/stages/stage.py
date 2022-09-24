@@ -6,7 +6,7 @@ from pydantic import BaseModel, BaseConfig
 class Stage(BaseModel):
     """MongoDB pipeline stage interface bas class"""
 
-    statement : dict
+    _statement : dict # TODO : Fine tune type <VM, 16/09/2022> Ex : dict[str, str|dict]
 
     class Config(BaseConfig):
         """Configuration for Stage classes"""
@@ -17,4 +17,4 @@ class Stage(BaseModel):
     def __call__(self)->dict:
         """Makes an instance of stage callable"""
 
-        return self.statement
+        return self._statement

@@ -132,7 +132,6 @@ class BucketAuto(Stage):
 
     """
 
-    statement: dict
     by : str = Field(...,alias="group_by")
     buckets : int
     output : dict | None
@@ -153,7 +152,7 @@ class BucketAuto(Stage):
         # Handling aliases
         #--------------------------------------
 
-        values["statement"] = {
+        values["_statement"] = {
             "$bucketAuto" : {
                 "groupBy" : by,
                 "buckets" : buckets,

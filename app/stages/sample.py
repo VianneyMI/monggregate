@@ -63,7 +63,7 @@ class Sample(Stage):
 
     """
 
-    statement : dict
+
     value : int = Field(10, gt=0)
 
     @root_validator(pre=True)
@@ -73,7 +73,7 @@ class Sample(Stage):
 
         value = values.get("value")
 
-        values["statement"] = {
+        values["_statement"] = {
             "$sample" : {
                 "size" : value
             }

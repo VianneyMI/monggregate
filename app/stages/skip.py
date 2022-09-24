@@ -75,7 +75,6 @@ class Skip(Stage):
 
     """
 
-    statement : dict
     value : int
 
     @root_validator(pre=True)
@@ -85,7 +84,7 @@ class Skip(Stage):
 
         value = values.get("value")
 
-        values["statement"] = {
+        values["_statement"] = {
             "$skip" : value
         }
 

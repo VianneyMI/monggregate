@@ -125,7 +125,6 @@ class Sort(Stage):
 
     """
 
-    statement : dict # TODO : Fine tune type <VM, 16/09/2022> Ex : dict[str, str|dict]
     query : dict ={} #| None
     ascending  : set[str] | dict | None # TODO : Allow str and list[str] also and bool (when by is passed)
     descending : set[str] | dict | None # TODO : Allow str and list[str] also and bool (when by is passed)
@@ -181,6 +180,6 @@ class Sort(Stage):
                 raise ValueError("At least one of (ascending, exclude) must be valid when query is not provided")
 
 
-        values["statement"] = {"$sort":query}
+        values["_statement"] = {"$sort":query}
 
         return values

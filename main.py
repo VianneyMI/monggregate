@@ -24,7 +24,7 @@ db = client.Kompozite
 
 if __name__ == "__main__":
     pipeline = Pipeline(
-        db=db,
+        _db=db,
         collection="PU02"
         ).match(
             query={"category":"PU02C01"}
@@ -33,4 +33,3 @@ if __name__ == "__main__":
         )
 
     print("It's Ok !")
-    print(pipeline())

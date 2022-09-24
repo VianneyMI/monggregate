@@ -71,7 +71,7 @@ class SortByCount(Stage):
         if not by:
             raise TypeError("by is required")
 
-        values["statement"] = {
+        values["_statement"] = {
             "$sortByCount" : by
         }
 

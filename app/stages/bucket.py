@@ -96,7 +96,6 @@ class Bucket(Stage):
 
     """
 
-    statement: dict
     by : str = Field(...,alias="group_by")
     boundaries : list
     default : Any # TODO : Define more precise type
@@ -117,7 +116,7 @@ class Bucket(Stage):
         # Handling aliases
         #--------------------------------------
 
-        values["statement"] = {
+        values["_statement"] = {
             "$bucket" : {
                 "groupBy" : by,
                 "boundaries" :boundaries,

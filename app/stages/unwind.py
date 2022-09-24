@@ -83,7 +83,6 @@ class Unwind(Stage):
 
     """
 
-    statement : dict # TODO : Fine tune type <VM, 16/09/2022> Ex : dict[str, str|dict]
     path_to_array : str = Field(..., alias = "path")
     include_array_index : str | None #The name of a new field to hold the array index of the element.
                                         # The name cannot start with a dollar sign $
@@ -127,7 +126,7 @@ class Unwind(Stage):
 
         # Generate statement
         # -------------------------------------------------
-        values["statement"] = {
+        values["_statement"] = {
             "$unwind" : {
                 "path":path,
                 "includeArrayIndex":include_array_index,

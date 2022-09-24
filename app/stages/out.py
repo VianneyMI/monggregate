@@ -126,7 +126,6 @@ class Out(Stage):
 
     """
 
-    statement : dict
     db : str|None
     collection : str = Field(...,alias="coll")
 
@@ -161,6 +160,6 @@ class Out(Stage):
                 "$out" : coll
             }
 
-        values["statement"] = statement
+        values["_statement"] = statement
 
         return values

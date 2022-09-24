@@ -79,7 +79,6 @@ class Group(Stage):
 
     """
 
-    statement : dict # TODO : Fine tune type <VM, 16/09/2022> Ex : dict[str, str|dict]
     by : str | list[str] | set[str] = Field(..., alias = "_id")
     #operation : Operator # TODO  : After dealing with operators ($sum, $avg, $count, etc...)
     #result : Any
@@ -116,7 +115,7 @@ class Group(Stage):
         if not _id in query:
             query.update({"_id":_id})
 
-        values["statement"] = {
+        values["_statement"] = {
             "$group":query
         }
 
