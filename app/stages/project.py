@@ -185,6 +185,6 @@ class Project(Stage):
                 raise ValueError("At least one of (include, exclude) must be valid when projection is not provided")
 
 
-        values["_statement"] = {"$project":projection}
+        values["statement"] = {"$project":projection}
 
         return values

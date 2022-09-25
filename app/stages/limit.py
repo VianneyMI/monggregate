@@ -70,7 +70,7 @@ class Limit(Stage):
 
         value = values.get("value")
 
-        values["_statement"] = {
+        values["statement"] = {
             "$limit" : value
         }
 

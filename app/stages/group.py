@@ -115,7 +115,7 @@ class Group(Stage):
         if not _id in query:
             query.update({"_id":_id})
 
-        values["_statement"] = {
+        values["statement"] = {
             "$group":query
         }
 

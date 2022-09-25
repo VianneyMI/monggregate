@@ -357,6 +357,6 @@ class Lookup(Stage):
                 }
             }
 
-        values["_statement"] = statement
+        values["statement"] = statement
 
         return values

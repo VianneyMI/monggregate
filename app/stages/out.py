@@ -160,6 +160,6 @@ class Out(Stage):
                 "$out" : coll
             }
 
-        values["_statement"] = statement
+        values["statement"] = statement
 
         return values

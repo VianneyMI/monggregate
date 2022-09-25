@@ -57,6 +57,6 @@ class Set(Stage):
         """Generates set stage statement from arguments"""
 
         document = values.get("document")
-        values["_statement"] = {"$set":document}
+        values["statement"] = {"$set":document}
 
         return values

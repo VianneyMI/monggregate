@@ -73,7 +73,7 @@ class Sample(Stage):
 
         value = values.get("value")
 
-        values["_statement"] = {
+        values["statement"] = {
             "$sample" : {
                 "size" : value
             }

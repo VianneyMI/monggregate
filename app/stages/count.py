@@ -65,7 +65,7 @@ class Count(Stage):
         if not name:
             raise TypeError("name is required")
 
-        values["_statement"] = {
+        values["statement"] = {
             "$count" : name
         }
 

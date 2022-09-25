@@ -98,6 +98,6 @@ class ReplaceRoot(Stage):
             path_to_new_root = "$" + path_to_new_root
 
 
-        values["_statement"] = {"$replaceRoot":{"newRoot":path_to_new_root}}
+        values["statement"] = {"$replaceRoot":{"newRoot":path_to_new_root}}
 
         return values

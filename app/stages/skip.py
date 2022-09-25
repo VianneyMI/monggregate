@@ -84,7 +84,7 @@ class Skip(Stage):
 
         value = values.get("value")
 
-        values["_statement"] = {
+        values["statement"] = {
             "$skip" : value
         }
 

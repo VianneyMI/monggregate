@@ -126,7 +126,7 @@ class Unwind(Stage):
 
         # Generate statement
         # -------------------------------------------------
-        values["_statement"] = {
+        values["statement"] = {
             "$unwind" : {
                 "path":path,
                 "includeArrayIndex":include_array_index,

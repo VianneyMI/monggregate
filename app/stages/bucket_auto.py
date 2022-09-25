@@ -152,7 +152,7 @@ class BucketAuto(Stage):
         # Handling aliases
         #--------------------------------------
 
-        values["_statement"] = {
+        values["statement"] = {
             "$bucketAuto" : {
                 "groupBy" : by,
                 "buckets" : buckets,

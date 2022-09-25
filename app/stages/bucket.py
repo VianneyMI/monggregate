@@ -116,7 +116,7 @@ class Bucket(Stage):
         # Handling aliases
         #--------------------------------------
 
-        values["_statement"] = {
+        values["statement"] = {
             "$bucket" : {
                 "groupBy" : by,
                 "boundaries" :boundaries,

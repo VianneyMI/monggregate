@@ -180,6 +180,6 @@ class Sort(Stage):
                 raise ValueError("At least one of (ascending, exclude) must be valid when query is not provided")
 
 
-        values["_statement"] = {"$sort":query}
+        values["statement"] = {"$sort":query}
 
         return values
