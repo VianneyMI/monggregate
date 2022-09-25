@@ -57,7 +57,9 @@ class Limit(Stage):
 
     Attributes:
     ---------------------------------
-        * value, int : the actual limit to apply.
+        - value, int : the actual limit to apply.
+                       limits the number of documents returned by the stage to
+                       the provided value.
 
     """
 

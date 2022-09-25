@@ -54,7 +54,7 @@ class Match(Stage):
     """
     Creates a match statement for an aggregation pipeline match stage.
 
-    Attributes
+    Attributes:
     -------------------
 
         - statement, dict : the statement generated during instantiation after parsing the other arguments

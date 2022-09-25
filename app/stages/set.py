@@ -41,7 +41,7 @@ class Set(Stage):
     """
     Creates a set statement for a pipeline set aggregation stage
 
-    Attributes
+    Attributes:
     ---------------------------------
         - statement, dict :
         - document, dict : new fields to be added

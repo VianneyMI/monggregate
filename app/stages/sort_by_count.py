@@ -54,7 +54,7 @@ class SortByCount(Stage):
     """
     Creates a sort_by_count statement for an aggregation pipeline sort_by_count stage
 
-    Attributes
+    Attributes:
     -------------------------
         - _statement, dict : the statement generated during the validation process
         - by, str : the key to group, sort and count on

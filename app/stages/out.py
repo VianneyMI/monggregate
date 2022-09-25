@@ -119,7 +119,7 @@ class Out(Stage):
     """
     Creates a out statement for an aggregation pipeline out stage.
 
-    Attributes
+    Attributes:
     ---------------------------
         - db, str|None : name of the db to output the collection. Defaults to current collection.
         - collectin, str : name of the output collection

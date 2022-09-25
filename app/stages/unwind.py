@@ -73,7 +73,7 @@ class Unwind(Stage):
     """
     Creates a unwind statement for an aggregation pipeline unwind stage.
 
-    Attributes
+    Attributes:
     ---------------------------------
 
         - path_to_array (path), str : path to an array field

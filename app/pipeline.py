@@ -5,13 +5,21 @@ from pymongo.database import Database
 from pydantic import BaseModel, BaseConfig
 from app.stages import (
     Stage,
-    Bucket, BucketAuto,
-    Count, Group, Limit,Lookup,
-    Match, Project,
+    BucketAuto,
+    Bucket,
+    Count,
+    Group,
+    Limit,
+    Lookup,
+    Match,
+    Out,
+    Project,
     ReplaceRoot,
     Sample,
-    Set, Skip,
-    Sort, SortByCount,
+    Set,
+    Skip,
+    SortByCount,
+    Sort,
     Unwind
 )
 from app.utils import StrEnum
@@ -154,8 +162,18 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     #-----------------------------------------------------------
     # Stages
     #-----------------------------------------------------------
+    # The below methods wrap the constructors of the classes of the same name
+
     def add_fields(self, **kwargs:Any)->"Pipeline":
-        """Adds an add_fields stage to the current pipeline"""
+        """
+        Adds an add_fields stage to the current pipeline.
+
+        Arguments:
+        ---------------------------------
+            - statement, dict :
+            - document, dict : new fields to be added
+
+        """
 
         self.stages.append(
             Set(**kwargs)
@@ -163,7 +181,44 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         return self
 
     def bucket(self, **kwargs:Any)->"Pipeline":
-        """Adds a bucket stage to the current pipeline"""
+        """
+        Adds a bucket stage to the current pipeline.
+
+        Arguments:
+        ---------------------------------
+            by : str|list[str]|set[str], field or fields to group the documents
+                                        unless a default is provided, each input document
+                                        must resolve the groupBy field path or expression
+                                        to a value that falls within one of the ranges specified
+                                        by the boundaries
+            boundaries : list, an array of values that specify the boundaries for each bucket.
+                            Each adjacent pair of values acts as the inclusive lower boundary
+                            and the exclusive upper boundary for the bucket.
+                            NOTE : You must specify at least two boundaries.
+            default : Any, Optional. A literal that specifies the _id (group name) of an additional
+                                    bucket that contains all documents whoe groupBy expression result
+                                    does not fall into a bucket specified by the boundaries
+
+                                    If unspecified, each input document must resolve groupBy
+                                    expression to a value within one of the bucket ranges.
+
+                                    The default value must be less than the lowest boundary or greather
+                                    than or equal to the highest boundary value
+
+                                    The default value can be of a different type than the entries in boundaries
+            output : dict | None, A document that specifies the fields to include in the output documents in addition to
+                                the _id field. To specify the field to include you must use accumulator expressions
+                                    >>> {"outputField1" : {"accumulator":"expression1}}
+                                        ....
+                                        {"outputField2" : {"accumulator":"expression2}}
+                                If you do not specify an output document, the operation returns a count field containing
+                                the number of documents in each bucket.
+
+                                If you specify and output document, only the fields specified in the document are returned; i.e.
+                                the count field is not returned unless it is explicitly included in the output document
+
+
+        """
 
         self.stages.append(
             Bucket(**kwargs)
@@ -171,7 +226,33 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         return self
 
     def bucket_auto(self, **kwargs:Any)->"Pipeline":
-        """Adds a bucket_auto stage to the current pipeline"""
+        """
+        Adds a bucket_auto stage to the current pipeline
+
+        Arguments:
+        ---------------------------------
+        by : str|list[str]|set[str], An expression to group documents. To specify a field path
+                                     prefix the field name with a dollar sign $ and enclose it in quotes.
+        buckets : int, number of buckets desired
+        output : dict, A document that specifieds the fields to include in the oupput documents in addition
+                       to the _id field. To specify the field to include, you must use accumulator expressions.
+
+                       The defaut count field is not included in the output document when output is specified. Explicitly specify the count expression
+                       as part of the output document to include it:
+
+                       >>> {
+                                <outputfield1>: { <accumulator>: <expression1> },
+                                ...
+                                count: { $sum: 1 }
+                           }
+        granularity : str | None, A string that specifies the preferred number series to use to ensure that the calculated
+                                  boundary edges end on preferred round numbers of their powers of 10.
+
+                                  Available only if the all groupBy values are numeric and none of them are NaN.
+                                  https://en.wikipedia.org/wiki/Preferred_number
+                                  TODO : Need to understand this <VM, 18/09/2022>
+
+        """
 
         self.stages.append(
             BucketAuto(**kwargs)
@@ -180,7 +261,18 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
 
     def count(self, **kwargs:Any)->"Pipeline":
-        """Adds a count stage to the current pipeline"""
+        """
+        Adds a count stage to the current pipeline
+
+        Arguments
+        -------------------------------
+
+            - name, str : name of the output field which the count as its value.
+                        Must be a non-empty string,
+                        NOTE : Must not start with $ and must not contain the
+                                . character.
+
+        """
 
         self.stages.append(
                 Count(**kwargs)
@@ -188,7 +280,18 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         return self
 
     def explode(self, **kwargs:Any)->"Pipeline":
-        """Adds a unwind stage to the current pipeline"""
+        """
+        Adds a unwind stage to the current pipeline.
+
+        Arguments:
+        ---------------------------------
+
+            - path_to_array (path), str : path to an array field
+            - include_array_index, str : name of a new field to hold the array index of the element
+                                        NOTE : The name cannot start with a dollar sign
+            - always (preserve_null_and_empty_index), bool : whether to output documents for input documents where the path does not resolve to a valid array. Defaults to False
+
+        """
 
         self.stages.append(
                 Unwind(**kwargs)
@@ -196,7 +299,15 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         return self
 
     def group(self, **kwargs:Any)->"Pipeline":
-        """Adds a group stage to the current pipeline"""
+        """
+        Adds a group stage to the current pipeline.
+
+        Arguments:
+        ------------------------
+            - by / _id (offcial MongoDB name represented by a pydantic alias), str | list[str] | set[str] : field or group of fields to group on
+            - query, dict | None : Computed aggregated values (per group)
+
+        """
 
         self.stages.append(
                 Group(**kwargs)
@@ -204,7 +315,16 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         return self
 
     def limit(self, **kwargs:Any)->"Pipeline":
-        """Adds a limit stage to the current pipeline"""
+        """
+        Adds a limit stage to the current pipeline.
+
+        Arguments:
+        ---------------------------------
+            - value, int : the actual limit to apply.
+                           limits the number of documents returned by the stage to
+                           the provided value.
+
+        """
 
         self.stages.append(
                 Limit(**kwargs)
@@ -212,7 +332,19 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         return self
 
     def lookup(self, **kwargs:Any)->"Pipeline":
-        """Adds a lookup stage to the current pipeline"""
+        """
+        Adds a lookup stage to the current pipeline.
+
+        Arguments:
+        ----------------------------
+            - right / from (official MongoDB name), str : foreign collection
+            - left_on / local_field (official MongoDB name)), str | None : field of the current collection to join on
+            - right_on / foreign_field (official MongoDB name), str | None : field of the foreign collection to join on
+            - let, dict | None : variables to be used in the inner pipeline
+            - pipeline, list[dict] | None : pipeline to run on the foreign collection.
+            - as, str : name of the field containing the matches from the foreign collection
+
+        """
 
         self.stages.append(
             Lookup(**kwargs)
@@ -220,15 +352,47 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         return self
 
     def match(self, **kwargs:Any)->"Pipeline":
-        """Adds a match stage to the current pipeline"""
+        """
+        Adds a match stage to the current pipeline.
+
+        Arguments:
+        -------------------
+
+            - statement, dict : the statement generated during instantiation after parsing the other arguments
+            - query, dict : the query use to filter the documents
+
+
+        """
 
         self.stages.append(
                 Match(**kwargs)
             )
         return self
 
+    def out(self, **kwargs:Any)->"Pipeline":
+        """
+        Adds an out stage to the current pipeline.
+
+        Arguments:
+        ---------------------------
+            - db, str|None : name of the db to output the collection. Defaults to current collection.
+            - collectin, str : name of the output collection
+
+
+        """
+
     def project(self, **kwargs:Any)->"Pipeline":
-        """Adds a project stage to the current pipeline"""
+        """
+        Adds a project stage to the current pipeline.
+
+        Arguments:
+        ---------------------------
+            - projection, dict | None : projection to be applied
+            - include, str | list[str] | set[str] | dict | None : fields to be kept
+            - exclude, str | list[str] | set[str] | dict | None : fields to be excluded
+
+
+        """
 
         self.stages.append(
                 Project(**kwargs)
@@ -236,7 +400,18 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         return self
 
     def replace_root(self, **kwargs:Any)->"Pipeline":
-        """Adds a replace_root stage to the current pipeline"""
+        """
+        Adds a replace_root stage to the current pipeline.
+
+        Arguments:
+        -------------------------------------
+
+            - statement, dict : the statement generated during instantiation after parsing the other arguments
+            - path_to_new_root, str : the path to the embedded document to be promoted
+            - document, dict : documents being created and to be set as the new root (Not implemented yet)
+
+
+        """
 
         self.stages.append(
                 ReplaceRoot(**kwargs)
@@ -244,7 +419,17 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         return self
 
     def replace_with(self, **kwargs:Any)->"Pipeline":
-        """Adds a replace_with stage to the current pipeline"""
+        """
+        Adds a replace_with stage to the current pipeline.
+
+        Arguments:
+        -------------------------------------
+
+            - statement, dict : the statement generated during instantiation after parsing the other arguments
+            - path_to_new_root, str : the path to the embedded document to be promoted
+            - document, dict : documents being created and to be set as the new root (Not implemented yet)
+
+        """
 
         self.stages.append(
                 ReplaceRoot(**kwargs)
@@ -252,7 +437,16 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         return self
 
     def sample(self, **kwargs:Any)->"Pipeline":
-        """Adds a sample stage to the current pipeline"""
+        """
+        Adds a sample stage to the current pipeline.
+
+        Arguments:
+        -----------------------
+            - statement, dict : the statement generated after instantiation
+            - value, int : positive integer representing the number of documents to be randomly picked. Defaults to 10.
+
+
+        """
 
         self.stages.append(
                 Sample(**kwargs)
@@ -260,7 +454,15 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         return self
 
     def set(self, **kwargs:Any)->"Pipeline":
-        """Adds a set stage to the current pipeline"""
+        """
+        Adds a set stage to the current pipeline.
+
+        Arguments:
+        ---------------------------------
+            - statement, dict :
+            - document, dict : new fields to be added
+
+        """
 
         self.stages.append(
                 Set(**kwargs)
@@ -268,7 +470,15 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         return self
 
     def skip(self, **kwargs:Any)->"Pipeline":
-        """Adds a skip stage to the current pipeline"""
+        """
+        Adds a skip stage to the current pipeline.
+
+        Arguments:
+        -----------------------
+            - statement, dict : the statement generated after instantiation
+            - value, int : positive integer representing the number of documents to be skipped.
+
+        """
 
         self.stages.append(
                 Skip(**kwargs)
@@ -276,7 +486,33 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         return self
 
     def sort(self, **kwargs:Any)->"Pipeline":
-        """Adds a sort stage to the current pipeline"""
+        """
+        Adds a sort stage to the current pipeline.
+
+        Arguments:
+        -----------------------
+            - statement, dict : the statement generated after instantiation
+            - query, dict : fields-sort order mapping. 1 for ascending order, -1 for descending order. Defaults to {}
+                            if not provided, the query will be built from ascending and descending parameters.
+
+            - ascending, set[str] | dict | None : fields to sort on ascending order on
+            - descending, set[str] | dict | None : fields to sort on descending order on
+
+        NOTE : When trying to sort on several fields and opposite orders use query rather than using ascending and descending simunateously.
+
+        WARNING : If using the ascending and descending parameters at the same time, the generated query will have the following form:
+
+            >>> query = {
+                "ascending_field1" : 1,
+                ...
+                "ascending_fieldN" : 1,
+                "descending_field1" : -1,
+                ...
+                "descending_fieldN" : -1
+            }
+
+
+        """
 
         self.stages.append(
                 Sort(**kwargs)
@@ -284,7 +520,17 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         return self
 
     def sort_by_count(self, **kwargs:Any)->"Pipeline":
-        """Adds a sort_by_count stage to the current pipeline"""
+        """
+        Adds a sort_by_count stage to the current pipeline.
+
+
+        Arguments:
+        -------------------------
+            - _statement, dict : the statement generated during the validation process
+            - by, str : the key to group, sort and count on
+
+
+        """
 
         self.stages.append(
                 SortByCount(**kwargs)
@@ -292,7 +538,18 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         return self
 
     def unwind(self, **kwargs:Any)->"Pipeline":
-        """Adds a unwind stage to the current pipeline"""
+        """
+        Adds a unwind stage to the current pipeline.
+
+        Arguments:
+        ---------------------------------
+
+            - path_to_array (path), str : path to an array field
+            - include_array_index, str : name of a new field to hold the array index of the element
+                                    NOTE : The name cannot start with a dollar sign
+            - always (preserve_null_and_empty_index), bool : whether to output documents for input documents where the path does not resolve to a valid array. Defaults to False
+
+        """
 
         self.stages.append(
                 Unwind(**kwargs)

@@ -41,7 +41,7 @@ class Count(Stage):
     """
     Creates a count statement for an aggregation pipeline count stage
 
-    Attributes
+    Attributes:
     -------------------------------
 
         - name, str : name of the output field which the count as its value.

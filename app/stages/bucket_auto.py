@@ -107,8 +107,8 @@ class BucketAuto(Stage):
     This stage aggregates documents into buckets automatically computed to statisfy the number of buckets desired
     and provided as an input.
 
-    Attributes
-    -----------------
+    Attributes:
+    ---------------------------------
         by : str|list[str]|set[str], An expression to group documents. To specify a field path
                                      prefix the field name with a dollar sign $ and enclose it in quotes.
         buckets : int, number of buckets desired

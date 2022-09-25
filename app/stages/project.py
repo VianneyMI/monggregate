@@ -132,7 +132,7 @@ class Project(Stage):
     """"
     Creates a project statement for an aggregation pipeline project stage.
 
-    Attributes
+    Attributes:
     ---------------------------
         - projection, dict | None : projection to be applied
         - include, str | list[str] | set[str] | dict | None : fields to be kept

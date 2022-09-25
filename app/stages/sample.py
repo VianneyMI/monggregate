@@ -56,7 +56,7 @@ class Sample(Stage):
     """
     Creates a sample statement for an aggregation pipeline sample stage.
 
-    Attributes
+    Attributes:
     -----------------------
         - statement, dict : the statement generated after instantiation
         - value, int : positive integer representing the number of documents to be randomly picked. Defaults to 10.

@@ -68,7 +68,7 @@ class Skip(Stage):
     """
     Creates a skip statement for an aggregation pipeline skip stage.
 
-    Attributes
+    Attributes:
     -----------------------
         - statement, dict : the statement generated after instantiation
         - value, int : positive integer representing the number of documents to be skipped.

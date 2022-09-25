@@ -73,7 +73,7 @@ class ReplaceRoot(Stage):
     """
     Creates a replace root statement for an aggregation pipeline replace root stage.
 
-    Attributes
+    Attributes:
     ---------------------------
 
         - statement, dict : the statement generated during instantiation after parsing the other arguments

@@ -61,8 +61,8 @@ class Bucket(Stage):
     Creates a bucket statement for an aggregation pipeline bucket stage.
     This stage aggregates documents into buckets specified by the boundaries argument.
 
-    Attributes
-    ----------------
+    Attributes:
+    ---------------------------------
         by : str|list[str]|set[str], field or fields to group the documents
                                      unless a default is provided, each input document
                                      must resolve the groupBy field path or expression

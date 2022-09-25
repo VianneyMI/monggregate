@@ -252,7 +252,7 @@ class Lookup(Stage):
     """
     Creates a lookup statement for an aggregation pipeline lookup stage.
 
-    Attributes
+    Attributes:
     ----------------------------
         - right / from (official MongoDB name), str : foreign collection
         - left_on / local_field (official MongoDB name)), str | None : field of the current collection to join on

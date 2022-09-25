@@ -101,7 +101,7 @@ class Sort(Stage):
     """
     Creates a sort statement for an aggregation pipeline sort stage.
 
-    Attributes
+    Attributes:
     -----------------------
         - statement, dict : the statement generated after instantiation
         - query, dict : fields-sort order mapping. 1 for ascending order, -1 for descending order. Defaults to {}

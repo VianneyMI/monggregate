@@ -71,7 +71,7 @@ class Group(Stage):
     """
     Creates a group statement for an aggregation pipeline group stage.
 
-    Attributes
+    Attributes:
     ------------------------
         - by / _id (offcial MongoDB name represented by a pydantic alias), str | list[str] | set[str] : field or group of fields to group on
         - query, dict | None : Computed aggregated values (per group)
