@@ -178,6 +178,9 @@ class Project(Stage):
             include_projection, is_include_valid = _parse_include_exclude(include, True)
             exclude_projection, is_exclude_valid = _parse_include_exclude(exclude, False)
 
+            print("include_projection: ", include_projection)
+            print("exclude_projection", exclude_projection)
+
             projection = include_projection | exclude_projection
             is_valid = is_include_valid or is_exclude_valid
 

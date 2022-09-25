@@ -82,7 +82,9 @@ class Group(Stage):
     by : str | list[str] | set[str] = Field(..., alias = "_id")
     #operation : Operator # TODO  : After dealing with operators ($sum, $avg, $count, etc...)
     #result : Any
-    query : dict | None #= {}
+    query : dict | None #= {} FIXME : Needs cleaning
+                                # maybe split into 2 arguments when is "required" with a default
+                                # the other completely optional
 
 
 
@@ -108,7 +110,8 @@ class Group(Stage):
         # Validates query
         #---------------------------------------
         if not query:
-            raise TypeError("query is required")
+            #raise TypeError("query is required")
+            query = {}
 
         # Generate statement
         #--------------------------------------

@@ -65,7 +65,7 @@ Or, you can use $ifNullexpression to specify some other document to be root; for
 
 """
 
-from pydantic import root_validator
+from pydantic import root_validator, Field
 from app.stages.stage import Stage
 
 
@@ -82,7 +82,7 @@ class ReplaceRoot(Stage):
 
     """
 
-    path_to_new_root : str
+    path_to_new_root : str = Field(..., alias="path")
     #document : dict
 
     @root_validator(pre=True)
@@ -91,8 +91,10 @@ class ReplaceRoot(Stage):
         """Generate statements from argument"""
 
         path_to_new_root:str|None = values.get("path_to_new_root")
+        path = values.get("path")
+
         if not path_to_new_root:
-            raise TypeError("path_to_new_root is required")
+            path_to_new_root = path
 
         if not path_to_new_root.startswith("$"):
             path_to_new_root = "$" + path_to_new_root
@@ -101,3 +103,5 @@ class ReplaceRoot(Stage):
         values["statement"] = {"$replaceRoot":{"newRoot":path_to_new_root}}
 
         return values
+
+    # TODO : Add validator to check path/path_to_new_root correctness <VM, 25/09/2022>
