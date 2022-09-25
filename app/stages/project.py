@@ -130,6 +130,13 @@ from app.stages.stage import Stage
 
 class Project(Stage):
     """"
+    Creates a project statement for an aggregation pipeline project stage.
+
+    Attributes
+    ---------------------------
+        - projection, dict | None : projection to be applied
+        - include, str | list[str] | set[str] | dict | None : fields to be kept
+        - exclude, str | list[str] | set[str] | dict | None : fields to be excluded
 
     """
 

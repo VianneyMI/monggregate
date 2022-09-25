@@ -18,14 +18,77 @@ from app.utils import StrEnum
 
 
 class OnCallEnum(StrEnum):
-    """Possible behaviors on pipeline call"""
+    """
+    Possible behaviors on pipeline call
+
+        * RUN => the pipeline will execute itself and query the database
+
+        * EXPORT => the pipeline will generate a list of statements that will need
+                    to be run externally
+
+    """
 
     RUN = "run"
     EXPORT = "export"
 
 
 class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
-    """MongoDB aggregation pipeline abstraction"""
+    """
+    MongoDB aggregation pipeline abstraction
+
+    Attributes
+    -----------------------
+        - collection, str : reference collection for the pipeline.
+                            This is the collection where the aggregation will be done.
+                            However some stages in the pipeline might work with additional
+                            collections (e.g. lookup stage)
+
+        - stages, list[Stage] : the list of Stages that the pipeline is made of.
+                                Similarly to the pipeline itself. This package constructs
+                                abstraction for MongoDB aggregation framework pipeline stages.
+
+        - on_call, OnCallEnum : pipeline instances are callable. This defines the behavior of the instance
+                                when called. See OnCallEnum above. Defaults to export
+
+        - -db, Database : pymongo database instance. Can be optionally provided to make a pipeline instance self sufficient
+
+    Usage
+    -----------------------
+
+    You can instantiate a pipeline instance as follow:
+
+        >>> pipeline = Pipeline(collection="listingsAndReviews") # collection is the only mandatory attribute
+                                                                # example using MongoDB AirBnB demo dataset : https://www.mongodb.com/docs/atlas/sample-data/sample-airbnb/#std-label-sample-airbnb
+    and then add stages to the pipeline by calling its wrapper stages method as shown below:
+
+        >>> pipeline.match(
+            query = { "room_type": "Entire home/apt"}
+        ).sort_by_count(
+            by =  "bed_type"
+        )
+
+    and then use this pipeline in your own code:
+
+        >>> db["listingsAndReviews"].aggregate(pipeline=pipeline()) # pipeline() here is actually equivalent to  pipeline.export()
+
+    Alternatively, your pipeline can be self sufficient and executes itself directly using the following approach:
+
+        >>> pipeline = Pipeline(
+            _db=db,  # TODO : Update this when adding the uri parameter
+            collection="listingsAndReviews",
+            on_call="run"
+        )
+
+        >>> pipeline.match(
+            query = { "room_type": "Entire home/apt"}
+        ).sort_by_count(
+            by =  "bed_type"
+        )
+
+        >>> pipeline() # pipeline() there is actually equivalent to  pipeline.run()
+
+
+    """
 
     _db : Database | None # necessary to execute the pipeline
                         # TODO : allow to pass a URI and instantiates a database connection directly here

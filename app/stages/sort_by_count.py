@@ -52,18 +52,22 @@ from app.stages.stage import Stage
 
 class SortByCount(Stage):
     """
-    TBD
+    Creates a sort_by_count statement for an aggregation pipeline sort_by_count stage
+
+    Attributes
+    -------------------------
+        - _statement, dict : the statement generated during the validation process
+        - by, str : the key to group, sort and count on
 
     """
 
-    statement : dict # TODO : Fine tune type <VM, 16/09/2022> Ex : dict[str, str|dict]
     by : str # TODO : Allow more types <VM, 17/09/2022>
 
 
     @root_validator(pre=True)
     @classmethod
     def generate_statement(cls, values:dict)->dict[str, dict]:
-        """Generates set stage statement from arguments"""
+        """Generates sort_by_count stage statement from SortByCount class keywords arguments"""
 
         # Retrieving the values
         #---------------------------------------

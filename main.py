@@ -30,6 +30,6 @@ if __name__ == "__main__":
             query={"category":"PU02C01"}
         ).limit(
             value=3
-        )
+        )()
 
     print("It's Ok !")
