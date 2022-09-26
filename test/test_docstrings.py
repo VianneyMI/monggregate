@@ -16,8 +16,8 @@ import humps
 
 # Package imports
 # ---------------------------
-from app import stages # pylint: disable=import-error
-from app.pipeline import Pipeline # pylint: disable=import-error
+from monggregate import stages # pylint: disable=import-error
+from monggregate import Pipeline # pylint: disable=import-error
 
 
 

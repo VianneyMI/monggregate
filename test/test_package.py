@@ -3,7 +3,7 @@
 """Testes that the package is corretly import and/or installed locally"""
 
 
-import app # pylint: disable=import-error, unused-import
+import monggregate # pylint: disable=import-error, unused-import
 
 
 def test_test()->None:
