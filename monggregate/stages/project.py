@@ -126,7 +126,7 @@ $projectstage. See Array Indexes are Unsupported.
 # (on top[on the side] of the below)
 from pydantic import root_validator
 
-from app.stages.stage import Stage
+from monggregate.stages.stage import Stage
 
 class Project(Stage):
     """"

@@ -66,7 +66,7 @@ Or, you can use $ifNullexpression to specify some other document to be root; for
 """
 
 from pydantic import root_validator, Field
-from app.stages.stage import Stage
+from monggregate.stages.stage import Stage
 
 
 class ReplaceRoot(Stage):

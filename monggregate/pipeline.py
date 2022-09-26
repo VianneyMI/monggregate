@@ -3,7 +3,7 @@
 from typing import Any
 from pymongo.database import Database
 from pydantic import BaseModel, BaseConfig
-from app.stages import (
+from monggregate.stages import (
     Stage,
     BucketAuto,
     Bucket,
@@ -22,7 +22,7 @@ from app.stages import (
     Sort,
     Unwind
 )
-from app.utils import StrEnum
+from monggregate.utils import StrEnum
 
 
 class OnCallEnum(StrEnum):

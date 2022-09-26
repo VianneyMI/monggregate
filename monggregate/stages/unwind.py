@@ -67,7 +67,7 @@ preserveNullAndEmptyArrays option.
 """
 
 from pydantic import root_validator, Field
-from app.stages.stage import Stage
+from monggregate.stages.stage import Stage
 
 class Unwind(Stage):
     """

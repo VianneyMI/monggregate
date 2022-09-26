@@ -35,7 +35,7 @@ See example : https://www.mongodb.com/docs/manual/reference/operator/aggregation
 """
 
 from pydantic import root_validator
-from app.stages.stage import Stage
+from monggregate.stages.stage import Stage
 
 class Set(Stage):
     """

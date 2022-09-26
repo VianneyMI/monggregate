@@ -81,8 +81,8 @@ The values of the series are multiplied by a power of 10 when the groupBy values
 """
 
 from pydantic import root_validator, Field
-from app.stages.stage import Stage
-from app.utils import StrEnum
+from monggregate.stages.stage import Stage
+from monggregate.utils import StrEnum
 
 class GranularityEnum(StrEnum):
     """Supported values of granularity are"""

@@ -1,22 +1,22 @@
 """Stage Sub-package"""
 
-from app.stages.stage import Stage
-from app.stages.bucket_auto import BucketAuto
-from app.stages.bucket import Bucket
-from app.stages.count import Count
-from app.stages.group import Group
-from app.stages.limit import Limit
-from app.stages.lookup import Lookup
-from app.stages.match import Match
-from app.stages.out import Out
-from app.stages.project import Project
-from app.stages.replace_root import ReplaceRoot
-from app.stages.sample import Sample
-from app.stages.set import Set
-from app.stages.skip import Skip
-from app.stages.sort_by_count import SortByCount
-from app.stages.sort import Sort
-from app.stages.unwind import Unwind
+from monggregate.stages.stage import Stage
+from monggregate.stages.bucket_auto import BucketAuto
+from monggregate.stages.bucket import Bucket
+from monggregate.stages.count import Count
+from monggregate.stages.group import Group
+from monggregate.stages.limit import Limit
+from monggregate.stages.lookup import Lookup
+from monggregate.stages.match import Match
+from monggregate.stages.out import Out
+from monggregate.stages.project import Project
+from monggregate.stages.replace_root import ReplaceRoot
+from monggregate.stages.sample import Sample
+from monggregate.stages.set import Set
+from monggregate.stages.skip import Skip
+from monggregate.stages.sort_by_count import SortByCount
+from monggregate.stages.sort import Sort
+from monggregate.stages.unwind import Unwind
 
 
 # TODO : Add the greater than 0 constraints on the models <VM, 18/09/2022>

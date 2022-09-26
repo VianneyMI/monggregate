@@ -35,7 +35,7 @@ where myCount would be the output field that contains the count. You can specify
 """
 
 from pydantic import root_validator
-from app.stages.stage import Stage
+from monggregate.stages.stage import Stage
 
 class Count(Stage):
     """

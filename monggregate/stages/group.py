@@ -65,7 +65,7 @@ For more information, see $group Optimization.
 """
 
 from pydantic import root_validator, Field
-from app.stages.stage import Stage
+from monggregate.stages.stage import Stage
 
 class Group(Stage):
     """

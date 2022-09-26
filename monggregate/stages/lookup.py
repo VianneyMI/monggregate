@@ -246,7 +246,7 @@ For more information, see [$lookup Optimization](https://www.mongodb.com/docs/ma
 """
 
 from pydantic import root_validator, Field
-from app.stages.stage import Stage
+from monggregate.stages.stage import Stage
 
 class Lookup(Stage):
     """

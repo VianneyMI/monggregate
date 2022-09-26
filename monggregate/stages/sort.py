@@ -95,7 +95,7 @@ the returned sort order will always be the same across multiple executions of th
 """
 
 from pydantic import root_validator
-from app.stages.stage import Stage
+from monggregate.stages.stage import Stage
 
 class Sort(Stage):
     """
