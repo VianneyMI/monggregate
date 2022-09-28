@@ -26,6 +26,8 @@ from monggregate.stages.unwind import Unwind
 #           - follow the same standard for code example (raw MongoDB example or example transformed in python dictionary)
 # TODO : Replace links by markdown links when/where relevant <VM, 21/09/2022>
 # TODO : Use #, ## or ### where relevant to create subsections <VM, 23/09/2022>
+# TODO : When handling the aliases ensure to set the appropriate variable in the values in the root validators <VM, 26/09/2022>
+# TODO : Validates field paths (they need to start with $) when relevant. Ex: In the BucketAuto stage, by should start with $ when it is a field path.
 
 
 # Aliases

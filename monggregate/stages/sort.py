@@ -96,6 +96,7 @@ the returned sort order will always be the same across multiple executions of th
 
 from pydantic import root_validator
 from monggregate.stages.stage import Stage
+from monggregate.utils import to_unique_list
 
 class Sort(Stage):
     """
@@ -153,7 +154,7 @@ class Sort(Stage):
             if ascending_or_descending and len(ascending_or_descending)>0:
                 is_valid = True
 
-                if isinstance(ascending_or_descending, set):
+                if isinstance(ascending_or_descending, list):
                     for field in ascending_or_descending:
                         query[field] = _sort_order_map[direction]
                 else:
@@ -163,8 +164,8 @@ class Sort(Stage):
             return query, is_valid
 
         query = values.get("query")
-        ascending = values.get("ascending")
-        descending = values.get("descending")
+        ascending = to_unique_list(values.get("ascending"))
+        descending = to_unique_list(values.get("descending"))
 
         if not (query or ascending or descending):
             raise TypeError("At least one of (query, ascending, descending) is required")

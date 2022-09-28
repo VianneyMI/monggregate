@@ -1,5 +1,5 @@
 """
-Module to test the documentatio
+Module to test consistency in  the documentation
 
 The goal of those tests is to ensure that the documentation (classes docstrings) of the stages stay consistent
 with the documentation of their mirrors in the Pipeline class.

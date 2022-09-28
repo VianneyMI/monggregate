@@ -333,3 +333,22 @@ def test_sort()->None:
 #-------------------------
 
 
+# ------------------------
+# Debugging:
+#-------------------------
+if __name__ == "__main__":
+    test_stage()
+    test_bucket_auto()
+    test_bucket()
+    test_count()
+    test_group()
+    test_limit()
+    test_match()
+    test_out()
+    test_project()
+    test_replace_root()
+    test_sample()
+    test_set()
+    test_skip()
+    test_sort_by_count()
+    test_sort()

@@ -127,6 +127,7 @@ $projectstage. See Array Indexes are Unsupported.
 from pydantic import root_validator
 
 from monggregate.stages.stage import Stage
+from monggregate.utils import to_unique_list
 
 class Project(Stage):
     """"
@@ -158,7 +159,7 @@ class Project(Stage):
             if include_or_exclude and len(include_or_exclude)>0:
                 is_valid = True
 
-                if isinstance(include_or_exclude, set):
+                if isinstance(include_or_exclude, list):
                     for field in include_or_exclude:
                         projection[field] = required
                 else:
@@ -168,8 +169,8 @@ class Project(Stage):
             return projection, is_valid
 
         projection = values.get("projection")
-        include = values.get("include")
-        exclude = values.get("exclude")
+        include = to_unique_list(values.get("include"))
+        exclude = to_unique_list(values.get("exclude"))
 
         if not (projection or include or exclude):
             raise TypeError("At least one of (projection, include, exclude) is required")
@@ -177,9 +178,6 @@ class Project(Stage):
         if not projection:
             include_projection, is_include_valid = _parse_include_exclude(include, True)
             exclude_projection, is_exclude_valid = _parse_include_exclude(exclude, False)
-
-            print("include_projection: ", include_projection)
-            print("exclude_projection", exclude_projection)
 
             projection = include_projection | exclude_projection
             is_valid = is_include_valid or is_exclude_valid

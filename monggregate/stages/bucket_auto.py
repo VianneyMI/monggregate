@@ -5,7 +5,7 @@ Online MongoDB documentation:
 --------------------------------------------------------------------------------------------------------------------
 
 Last Updated (in this package) : 16/09/2022
-Source :  https://www.mongodb.com/docs/manual/reference/operator/aggregation/match/#mongodb-pipeline-pipe.-match
+Source :  https://www.mongodb.com/docs/manual/reference/operator/aggregation/bucketAuto/
 
 
 Definition
@@ -82,7 +82,7 @@ The values of the series are multiplied by a power of 10 when the groupBy values
 
 from pydantic import root_validator, Field
 from monggregate.stages.stage import Stage
-from monggregate.utils import StrEnum
+from monggregate.utils import StrEnum, to_unique_list
 
 class GranularityEnum(StrEnum):
     """Supported values of granularity are"""
@@ -132,7 +132,7 @@ class BucketAuto(Stage):
 
     """
 
-    by : str = Field(...,alias="group_by")
+    by : str|list[str]|set[str] = Field(...,alias="group_by") # dict | expression
     buckets : int
     output : dict | None
     granularity : GranularityEnum | None
@@ -143,7 +143,7 @@ class BucketAuto(Stage):
         """Generates statement from arguments"""
 
         by = values.get("by")
-        #group_by
+        group_by = values.get("group_by")
 
         buckets = values.get("buckets")
         output = values.get("output")
@@ -151,7 +151,16 @@ class BucketAuto(Stage):
 
         # Handling aliases
         #--------------------------------------
+        if not by and group_by:
+            by = group_by
+            values["by"] = by
 
+        # Validating by
+        #--------------------------------------
+        by = to_unique_list(by)
+
+        # Generating statement
+        #--------------------------------------
         values["statement"] = {
             "$bucketAuto" : {
                 "groupBy" : by,

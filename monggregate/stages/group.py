@@ -66,6 +66,7 @@ For more information, see $group Optimization.
 
 from pydantic import root_validator, Field
 from monggregate.stages.stage import Stage
+from monggregate.utils import to_unique_list
 
 class Group(Stage):
     """
@@ -82,9 +83,7 @@ class Group(Stage):
     by : str | list[str] | set[str] = Field(..., alias = "_id")
     #operation : Operator # TODO  : After dealing with operators ($sum, $avg, $count, etc...)
     #result : Any
-    query : dict | None #= {} FIXME : Needs cleaning
-                                # maybe split into 2 arguments when is "required" with a default
-                                # the other completely optional
+    query : dict = {}
 
 
 
@@ -109,13 +108,14 @@ class Group(Stage):
 
         # Validates query
         #---------------------------------------
+        _id = to_unique_list(_id)
+
         if not query:
-            #raise TypeError("query is required")
             query = {}
 
         # Generate statement
         #--------------------------------------
-        if not _id in query:
+        if not "_id" in query:
             query.update({"_id":_id})
 
         values["statement"] = {

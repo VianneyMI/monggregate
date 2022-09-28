@@ -55,6 +55,7 @@ $sort.
 from typing import Any
 from pydantic import root_validator, Field
 from monggregate.stages.stage import Stage
+from monggregate.utils import to_unique_list
 
 class Bucket(Stage):
     """
@@ -96,7 +97,7 @@ class Bucket(Stage):
 
     """
 
-    by : str = Field(...,alias="group_by")
+    by : str|list[str]|set[str] = Field(...,alias="group_by")
     boundaries : list
     default : Any # TODO : Define more precise type
     output : dict | None
@@ -107,7 +108,7 @@ class Bucket(Stage):
         """Generates statement from arguments"""
 
         by = values.get("by")
-        #group_by
+        group_by = values.get("group_by")
 
         boundaries = values.get("boundaries")
         default = values.get("default")
@@ -115,7 +116,16 @@ class Bucket(Stage):
 
         # Handling aliases
         #--------------------------------------
+        if not by and group_by:
+            by = group_by
+            values["by"] = by
 
+        # Validates by
+        # -------------------------------------
+        by = to_unique_list(by)
+
+        # Generates statement
+        #--------------------------------------
         values["statement"] = {
             "$bucket" : {
                 "groupBy" : by,
