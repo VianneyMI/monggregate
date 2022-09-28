@@ -47,9 +47,8 @@ def test_()->None:
 def test_stage()->None:
     """Testes stage parent class"""
 
-    stage = Stage(statement={})
-    assert stage # checks instantiation
-    assert stage()=={} # checks call method
+    with pytest.raises(TypeError):
+        stage = Stage(statement={}) # checks that Stage cannot be instantiated
 
 @pytest.mark.unit
 def test_bucket_auto()->None:

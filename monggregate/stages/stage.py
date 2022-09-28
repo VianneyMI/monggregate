@@ -1,14 +1,27 @@
 """Stage Module"""
 
+# Standard Library imports
+#----------------------------
+from abc import ABC, abstractmethod
+
+# 3rd Party imports
+# ---------------------------
 from pydantic import BaseModel, BaseConfig
 
+# Package imports
+# ---------------------------
+
+
 # NOTE : Stage should be an abstract base class and all operators should be classes inheriting from the base class
-class Stage(BaseModel):
+class Stage(BaseModel, ABC):
     """MongoDB pipeline stage interface bas class"""
 
-    statement : dict # TODO : Fine tune type <VM, 16/09/2022> Ex : dict[str, str|dict]
+    _statement : dict = {}# TODO : Fine tune type <VM, 16/09/2022> Ex : dict[str, str|dict]
 
-    # TODO : Add validator to ensure statement is not provided from outside the class <VM, 25/09/2022>
+    @property
+    @abstractmethod
+    def statement(self)->dict:
+        """stage stament"""
 
     class Config(BaseConfig):
         """Configuration for Stage classes"""
