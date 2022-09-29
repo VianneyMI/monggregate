@@ -141,6 +141,7 @@ class Project(Stage):
     """
 
     projection : dict | None
+    #fields : str | list[str] | set[str] # additional fields or combine with above ? Similar case than sort
     include : str | list[str] | set[str] | dict | None
     exclude : str | list[str] | set[str] | dict | None
 

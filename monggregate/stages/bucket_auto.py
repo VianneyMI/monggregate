@@ -10,7 +10,8 @@ Source :  https://www.mongodb.com/docs/manual/reference/operator/aggregation/buc
 
 Definition
 ---------------------
-Categorizes incoming documents into a specific number of groups, called buckets, based on a specified expression. Bucket boundaries are automatically determined in an attempt to evenly distribute the documents into the specified number of buckets.
+Categorizes incoming documents into a specific number of groups, called buckets, based on a specified expression.
+Bucket boundaries are automatically determined in an attempt to evenly distribute the documents into the specified number of buckets.
 
 Each bucket is represented as a document in the output. The document for each bucket contains:
 
