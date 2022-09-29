@@ -23,11 +23,15 @@ class Stage(BaseModel, ABC):
     def statement(self)->dict:
         """stage stament"""
 
+        # this is a lazy attribute
+        # what is currently in generate statement should go in here
+        # TODO : Implement cache
+
     class Config(BaseConfig):
         """Configuration for Stage classes"""
 
         allow_population_by_field_name = True
-
+        underscore_attrs_are_private = True
 
     def __call__(self)->dict:
         """Makes an instance of stage callable"""

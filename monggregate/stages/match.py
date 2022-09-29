@@ -64,12 +64,17 @@ class Match(Stage):
 
     query : dict ={} #| None
 
-    @root_validator(pre=True)
-    @classmethod
-    def generate_statement(cls, values:dict)->dict[str, dict]:
-        """Generates match stage statement from arguments"""
+    @property
+    def statement(self) -> dict:
 
-        query = values.get("query")
-        values["statement"] = {"$match":query}
+        return {"$match":self.query}
 
-        return values
+    # @root_validator(pre=True)
+    # @classmethod
+    # def generate_statement(cls, values:dict)->dict[str, dict]:
+    #     """Generates match stage statement from arguments"""
+
+    #     query = values.get("query")
+    #     values["statement"] = {"$match":query}
+
+    #     return values
