@@ -245,7 +245,7 @@ For more information, see [$lookup Optimization](https://www.mongodb.com/docs/ma
 
 """
 
-from pydantic import root_validator, Field
+from pydantic import Field
 from monggregate.stages.stage import Stage
 
 class Lookup(Stage):
@@ -274,89 +274,68 @@ class Lookup(Stage):
     let : dict | None
     pipeline : list[dict] | None
 
-    @root_validator(pre=True)
-    @classmethod
-    def generate_statement(cls, values:dict)->dict:
+    @property
+    def statement(self)->dict:
         """Generates statement from attributes"""
 
-        # Retrieving the values passed
-        # ----------------------------------
-        right = values.get("right") # necessary to use an alias here as from is a python keyword
-        on = values.get("on") # pylint: disable=invalid-name
-        local_field = values.get("local_field")
-        foreign_field = values.get("foreign_field")
-        let = values.get("let")
-        pipeline = values.get("pipeline")
 
-        name = values.get("name") # necessary to use an alias here as as is a python keyword
-
+        # TODO : Move the logic below into field validators <VM, 29/09/2022>
         # Handling aliases
         # ----------------------------------
-        if not right:
-            right = values.get("from")
+        if self.on:
+            self.left_on = self.right_on = self.on
 
-        if not local_field:
-            local_field = values.get("left_on")
 
-        if not foreign_field:
-            foreign_field = values.get("right_on")
-
-        if on:
-            local_field = foreign_field = on
-
-        if not name:
-            name = values.get("as")
 
         # Validates combination of argument
         # ------------------------------------
-        if right and local_field and foreign_field and not(let or pipeline is None):
+        if self.right and self.left_on and self.right_on and \
+            not(self.let or self.pipeline is None):
             # in a subquery to select all on the foreign collection
             # pipeline can be an empty list which is falsy
             type_ = "simple"
 
-        elif let and pipeline is not None and not(local_field or foreign_field):
+        elif self.let and self.pipeline is not None and not(self.left_on or self.right_on):
             type_ =  "uncorrelated"
 
-        elif let and pipeline is None and local_field and foreign_field:
+        elif self.let and self.pipeline is None and self.left_on and self.right_on:
             type_ = "correlated"
 
         else:
             raise TypeError("Incompatible combination of arguments")
 
-        values["type_"] = type_
+        self.type_ = type_
 
         # Generate statement:
         # -----------------------------------------------
         if type_ == "simple":
             statement = {
                 "$lookup":{
-                    "from":right,
-                    "localField":local_field,
-                    "foreignField":foreign_field,
-                    "as":name
+                    "from":self.right,
+                    "localField":self.left_on,
+                    "foreignField":self.right_on,
+                    "as":self.name
                 }
             }
         elif type_ == "uncorrelated":
             statement = {
                 "$lookup":{
-                    "from":right,
-                    "let":let,
-                    "pipeline":pipeline,
-                    "as":name
+                    "from":self.right,
+                    "let":self.let,
+                    "pipeline":self.pipeline,
+                    "as":self.name
                 }
             }
         else: # should be correlated case
             statement = {
                 "$lookup":{
-                    "from":right,
-                    "localField":local_field,
-                    "foreignField":foreign_field,
-                    "let":let,
-                    "pipeline":pipeline,
-                    "as":name
+                    "from":self.right,
+                    "localField":self.right_on,
+                    "foreignField":self.right_on,
+                    "let":self.let,
+                    "pipeline":self.pipeline,
+                    "as":self.name
                 }
             }
 
-        values["statement"] = statement
-
-        return values
+        return statement

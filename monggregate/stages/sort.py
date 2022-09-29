@@ -94,7 +94,6 @@ the returned sort order will always be the same across multiple executions of th
 
 """
 
-from pydantic import root_validator
 from monggregate.stages.stage import Stage
 from monggregate.utils import to_unique_list
 
@@ -127,12 +126,12 @@ class Sort(Stage):
     """
 
     query : dict ={} #| None
-    ascending  : set[str] | dict | None # TODO : Allow str and list[str] also and bool (when by is passed)
-    descending : set[str] | dict | None # TODO : Allow str and list[str] also and bool (when by is passed)
+    #by # TODO
+    ascending  : str | list[str] | set[str] | dict | None # TODO : Allow bool (when by is passed)
+    descending : str | list[str] | set[str] | dict | None # TODO : Allow bool (when by is passed)
 
-    @root_validator(pre=True)
-    @classmethod
-    def generate_statement(cls, values:dict)->dict[str, dict]:
+    @property
+    def statement(self)->dict[str, dict]:
         """Generates statelent from other attributes"""
 
         # NOTE : Unlike in the case of the projection, the order of the fields matter here <VM, 17/09/2022>
@@ -163,24 +162,21 @@ class Sort(Stage):
 
             return query, is_valid
 
-        query = values.get("query")
-        ascending = to_unique_list(values.get("ascending"))
-        descending = to_unique_list(values.get("descending"))
+        ascending = to_unique_list(self.ascending)
+        descending = to_unique_list(self.descending)
 
-        if not (query or ascending or descending):
+        if not (self.query or ascending or descending):
             raise TypeError("At least one of (query, ascending, descending) is required")
 
-        if not query:
+        if not self.query:
             ascending_query, is_ascending_valid = _parse_ascending_descending(ascending, True)
             descending_query, is_descending_valid = _parse_ascending_descending(descending, False)
 
-            query = ascending_query | descending_query
+            self.query = ascending_query | descending_query
             is_valid = is_ascending_valid or is_descending_valid
 
             if not is_valid:
                 raise ValueError("At least one of (ascending, exclude) must be valid when query is not provided")
 
 
-        values["statement"] = {"$sort":query}
-
-        return values
+        return  {"$sort":self.query}

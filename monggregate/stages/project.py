@@ -124,7 +124,6 @@ $projectstage. See Array Indexes are Unsupported.
 
 # NOTE : Would be nice and useful to have something keywords arguments based to generate the projection <VM, 16/09/2022>
 # (on top[on the side] of the below)
-from pydantic import root_validator
 
 from monggregate.stages.stage import Stage
 from monggregate.utils import to_unique_list
@@ -142,12 +141,11 @@ class Project(Stage):
     """
 
     projection : dict | None
-    include : set[str] | dict | None # TODO : Allow str and list[str] also
-    exclude : set[str] | dict | None # TODO : Allow str and list[str] also
+    include : str | list[str] | set[str] | dict | None
+    exclude : str | list[str] | set[str] | dict | None
 
-    @root_validator(pre=True)
-    @classmethod
-    def generate_statement(cls, values:dict)->dict[str, dict]:
+    @property
+    def statement(self)->dict[str, dict]:
         """Generates statelent from other attributes"""
 
 
@@ -168,24 +166,22 @@ class Project(Stage):
 
             return projection, is_valid
 
-        projection = values.get("projection")
-        include = to_unique_list(values.get("include"))
-        exclude = to_unique_list(values.get("exclude"))
 
-        if not (projection or include or exclude):
+        include = to_unique_list(self.include)
+        exclude = to_unique_list(self.exclude)
+
+        if not (self.projection or include or exclude):
             raise TypeError("At least one of (projection, include, exclude) is required")
 
-        if not projection:
+        if not self.projection:
             include_projection, is_include_valid = _parse_include_exclude(include, True)
             exclude_projection, is_exclude_valid = _parse_include_exclude(exclude, False)
 
-            projection = include_projection | exclude_projection
+            self.projection = include_projection | exclude_projection
             is_valid = is_include_valid or is_exclude_valid
 
             if not is_valid:
                 raise ValueError("At least one of (include, exclude) must be valid when projection is not provided")
 
 
-        values["statement"] = {"$project":projection}
-
-        return values
+        return {"$project":self.projection}

@@ -47,7 +47,6 @@ $group + $sort sequence:
 
 """
 
-from pydantic import root_validator
 from monggregate.stages.stage import Stage
 
 class SortByCount(Stage):
@@ -64,19 +63,10 @@ class SortByCount(Stage):
     by : str # TODO : Allow more types <VM, 17/09/2022>
 
 
-    @root_validator(pre=True)
-    @classmethod
-    def generate_statement(cls, values:dict)->dict[str, dict]:
+    @property
+    def statement(self)->dict[str, dict]:
         """Generates sort_by_count stage statement from SortByCount class keywords arguments"""
 
-        # Retrieving the values
-        #---------------------------------------
-        by = values.get("by")
-        if not by:
-            raise TypeError("by is required")
-
-        values["statement"] = {
-            "$sortByCount" : by
+        return  {
+            "$sortByCount" : self.by
         }
-
-        return values

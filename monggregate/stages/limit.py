@@ -48,7 +48,7 @@ See the following for more information on each:
 
 """
 
-from pydantic import root_validator
+from pydantic import Field
 from monggregate.stages.stage import Stage
 
 class Limit(Stage):
@@ -63,17 +63,11 @@ class Limit(Stage):
 
     """
 
-    value : int
+    value : int = Field(gt=0)
 
-    @root_validator(pre=True)
-    @classmethod
-    def generate_statement(cls, values:dict)->dict:
-        """Generate statement from arguments"""
+    @property
+    def statement(self)->dict:
 
-        value = values.get("value")
-
-        values["statement"] = {
-            "$limit" : value
+        return {
+            "$limit" : self.value
         }
-
-        return values

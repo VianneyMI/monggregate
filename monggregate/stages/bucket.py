@@ -53,7 +53,7 @@ $sort.
 # No validation, no helpers, no intelligence just generating the statement for now
 
 from typing import Any
-from pydantic import root_validator, Field
+from pydantic import Field
 from monggregate.stages.stage import Stage
 from monggregate.utils import to_unique_list
 
@@ -102,43 +102,20 @@ class Bucket(Stage):
     default : Any # TODO : Define more precise type
     output : dict | None
 
-    @root_validator(pre=True)
-    @classmethod
-    def generate_statement(cls, values:dict)->dict:
-        """Generates statement from arguments"""
-
-        by = values.get("by")
-        group_by = values.get("group_by")
-
-        boundaries = values.get("boundaries")
-        default = values.get("default")
-        output = values.get("output")
-
-        # Handling aliases
-        #--------------------------------------
-        if not by and group_by:
-            by = group_by
-            values["by"] = by
+    @property
+    def statement(self) -> dict:
 
         # Validates by
         # -------------------------------------
-        by = to_unique_list(by)
+        by = to_unique_list(self.by)
 
         # Generates statement
         #--------------------------------------
-        values["statement"] = {
+        return {
             "$bucket" : {
                 "groupBy" : by,
-                "boundaries" :boundaries,
-                "default" : default,
-                "output" : output
+                "boundaries" :self.boundaries,
+                "default" : self.default,
+                "output" : self.output
             }
         }
-
-        return values
-
-
-
-
-
-

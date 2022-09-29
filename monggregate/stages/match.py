@@ -47,7 +47,6 @@ Restrictions
 
 """
 
-from pydantic import root_validator
 from monggregate.stages.stage import Stage
 
 class Match(Stage):
@@ -68,13 +67,3 @@ class Match(Stage):
     def statement(self) -> dict:
 
         return {"$match":self.query}
-
-    # @root_validator(pre=True)
-    # @classmethod
-    # def generate_statement(cls, values:dict)->dict[str, dict]:
-    #     """Generates match stage statement from arguments"""
-
-    #     query = values.get("query")
-    #     values["statement"] = {"$match":query}
-
-    #     return values

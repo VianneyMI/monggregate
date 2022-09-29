@@ -80,7 +80,7 @@ The values of the series are multiplied by a power of 10 when the groupBy values
 
 """
 
-from pydantic import root_validator, Field
+from pydantic import Field
 from monggregate.stages.stage import Stage
 from monggregate.utils import StrEnum, to_unique_list
 
@@ -137,37 +137,17 @@ class BucketAuto(Stage):
     output : dict | None
     granularity : GranularityEnum | None
 
-    @root_validator(pre=True)
-    @classmethod
-    def generate_statement(cls, values:dict)->dict:
-        """Generates statement from arguments"""
 
-        by = values.get("by")
-        group_by = values.get("group_by")
+    @property
+    def statement(self) -> dict:
 
-        buckets = values.get("buckets")
-        output = values.get("output")
-        granularity = values.get("granularity")
-
-        # Handling aliases
-        #--------------------------------------
-        if not by and group_by:
-            by = group_by
-            values["by"] = by
-
-        # Validating by
-        #--------------------------------------
-        by = to_unique_list(by)
-
-        # Generating statement
-        #--------------------------------------
-        values["statement"] = {
+      # NOTE : maybe it would be better to use _to_unique_list here
+      # or to further validate by.
+      return   {
             "$bucketAuto" : {
-                "groupBy" : by,
-                "buckets" : buckets,
-                "output" : output,
-                "ganularity" : granularity
+                "groupBy" : to_unique_list(self.by),
+                "buckets" : self.buckets,
+                "output" : self.output,
+                "ganularity" : self.granularity
             }
         }
-
-        return values
