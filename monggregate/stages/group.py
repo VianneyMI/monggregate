@@ -81,6 +81,8 @@ class Group(Stage):
     """
 
     by : str | list[str] | set[str] = Field(..., alias = "_id")
+    # FIXME : by can be null # NOTE : the type of by determine the type of the output field _id
+    # NOTE : by can be an expre
     #operation : Operator # TODO  : After dealing with operators ($sum, $avg, $count, etc...)
     #result : Any
     query : dict = {}

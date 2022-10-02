@@ -53,7 +53,7 @@ $sort.
 # No validation, no helpers, no intelligence just generating the statement for now
 
 from typing import Any
-from pydantic import Field
+from pydantic import Field, validator
 from monggregate.stages.stage import Stage
 from monggregate.utils import to_unique_list
 
@@ -97,7 +97,7 @@ class Bucket(Stage):
 
     """
 
-    by : str|list[str]|set[str] = Field(...,alias="group_by")
+    by : str|list[str]|set[str] = Field(...,alias="group_by") # NOTE : From the examples in the docs, it looks like by is necessarily a FieldPath
     boundaries : list
     default : Any # TODO : Define more precise type
     output : dict | None

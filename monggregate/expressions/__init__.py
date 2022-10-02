@@ -94,5 +94,6 @@ from monggregate.expressions.miscellaneous import(
     REMOVE,
     DESCEND,
     PRUNE,
-    KEEP
+    KEEP,
+    FieldPath
 )
