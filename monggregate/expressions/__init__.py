@@ -101,3 +101,6 @@ from monggregate.expressions.miscellaneous import(
     KEEP,
     FieldPath
 )
+from monggregate.expressions.expressions import(
+    Expression, ExpressionObject
+)
