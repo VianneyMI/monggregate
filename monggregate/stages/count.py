@@ -46,11 +46,11 @@ class Count(Stage):
         - name, str : name of the output field which the count as its value.
                       Must be a non-empty string,
                       NOTE : Must not start with $ and must not contain the
-                             . character.
+                             . character and must not be empty
 
     """
 
-    name : str
+    name : str # TODO : Implement ConstrainedStr subclass that does the above validation <VM, 09/10/2022>
 
     @property
     def statement(self)-> dict:

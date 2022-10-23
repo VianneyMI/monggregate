@@ -53,9 +53,10 @@ $sort.
 # No validation, no helpers, no intelligence just generating the statement for now
 
 from typing import Any
-from pydantic import Field, validator
+from pydantic import Field
+
 from monggregate.stages.stage import Stage
-from monggregate.utils import to_unique_list
+from monggregate.expressions import Expression
 
 class Bucket(Stage):
     """
@@ -97,7 +98,7 @@ class Bucket(Stage):
 
     """
 
-    by : str|list[str]|set[str] = Field(...,alias="group_by") # NOTE : From the examples in the docs, it looks like by is necessarily a FieldPath
+    by : Expression = Field(...,alias="group_by")
     boundaries : list
     default : Any # TODO : Define more precise type
     output : dict | None
@@ -105,15 +106,11 @@ class Bucket(Stage):
     @property
     def statement(self) -> dict:
 
-        # Validates by
-        # -------------------------------------
-        by = to_unique_list(self.by)
-
         # Generates statement
         #--------------------------------------
         return {
             "$bucket" : {
-                "groupBy" : by,
+                "groupBy" : self.by,
                 "boundaries" :self.boundaries,
                 "default" : self.default,
                 "output" : self.output

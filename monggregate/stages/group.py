@@ -66,7 +66,7 @@ For more information, see $group Optimization.
 from typing import Any
 from pydantic import Field, validator
 from monggregate.stages.stage import Stage
-from monggregate.utils import to_unique_list
+from monggregate.expressions import Expression
 
 class Group(Stage):
     """
@@ -80,12 +80,11 @@ class Group(Stage):
 
     """
 
-    by : str | list[str] | set[str] = Field(..., alias = "_id")
-    # FIXME : by can be null # NOTE : the type of by determine the type of the output field _id
-    # NOTE : by can be an expre
+    by : Expression = Field(..., alias = "_id") # | or any constant value, in this case
+                                                # the stage returns a single document that aggregates values across all of the input documents.
     #operation : Operator # TODO  : After dealing with operators ($sum, $avg, $count, etc...)
     #result : Any
-    query : dict = {}
+    query : dict = {} # aggregation wanted
 
     @validator("query", always=True)
     @classmethod
@@ -105,15 +104,6 @@ class Group(Stage):
     def statement(self) -> dict[str, dict]:
         """Generates set stage statement from arguments"""
 
-
-        # Validates query
-        #---------------------------------------
-        by = to_unique_list(self.by)
-
-        # Generate statement
-        #--------------------------------------
-        if "_id" not in self.query:
-            self.query.update({"_id":by})
 
         return  {
             "$group":self.query
