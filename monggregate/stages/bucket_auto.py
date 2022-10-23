@@ -84,7 +84,7 @@ The values of the series are multiplied by a power of 10 when the groupBy values
 from pydantic import Field
 from monggregate.stages.stage import Stage
 from monggregate.expressions import Expression
-from monggregate.utils import StrEnum, to_unique_list
+from monggregate.utils import StrEnum
 
 class GranularityEnum(StrEnum):
     """Supported values of granularity are"""
@@ -130,13 +130,12 @@ class BucketAuto(Stage):
 
                                   Available only if the all groupBy values are numeric and none of them are NaN.
                                   https://en.wikipedia.org/wiki/Preferred_number
-                                  TODO : Need to understand this <VM, 18/09/2022>
 
     """
 
     by : Expression = Field(...,alias="group_by")
-    buckets : int
-    output : dict | None # Accumulator Expressions
+    buckets : int = Field(..., gt=0)
+    output : dict | None # Accumulator Expressions #TODO : Define type and use it here
     granularity : GranularityEnum | None
 
 

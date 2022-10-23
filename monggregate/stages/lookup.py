@@ -245,7 +245,7 @@ For more information, see [$lookup Optimization](https://www.mongodb.com/docs/ma
 
 """
 
-from pydantic import Field
+from pydantic import Field, validator
 from monggregate.stages.stage import Stage
 
 class Lookup(Stage):
@@ -260,31 +260,58 @@ class Lookup(Stage):
         - let, dict | None : variables to be used in the inner pipeline
         - pipeline, list[dict] | None : pipeline to run on the foreign collection.
         - as, str : name of the field containing the matches from the foreign collection
+
+        NOTE (pipeline and let attributes) : To reference variables in pipeline stages, use the "$$<variable>" syntax.
+
+        The let variables can be accessed by the stages in the pipeline, including additional $lookup
+        stages nested in the pipeline.
+
+        * A $match stage requires the use of an $expr operator to access the variables.
+          The $expr operator allows the use of aggregation expressions inside of the $match syntax.
+
+        Starting in MongoDB 5.0, the $eq, $lt, $lte, $gt, and $gte comparison operators placed in an
+        $expr operator can use an index on the from collection referenced in a $lookup stage. Limitations:
+
+            * Multikey indexes are not used.
+
+            * Indexes are not used for comparisons where the operand is an array or the operand type is undefined.
+
+            * Indexes are not used for comparisons with more than one field path operand.
+
+        * Other (non-$match) stages in the pipeline do not require an
+          $expr operator to access the variables.
+
     """
 
-    right : str = Field(..., alias="from")
+    right : str | None = Field(..., alias="from")
     on : str | None #  shortcut for when left_on is the same than right_on
     left_on : str | None = Field(...,alias="local_field")
     right_on : str | None = Field(..., alias="foreign_field")
     name : str | None = Field(...,alias="as")
-    type_ : str # internal variable to know the type of join (simple, correlated, uncorrelated)
+    type_ : str = Field(exclude=True)
+        # internal variable to know the type of join (simple, correlated, uncorrelated)
 
     # Subquery fields
     # ---------------------
-    let : dict | None
+    let : dict | None # the let variables can be accessed by the stages in the pipeline including additional $lookup stages
+                      # nested in
     pipeline : list[dict] | None
+
+    @validator("left_on", "right_on", pre=True, always=True)
+    @classmethod
+    def on_alias(cls, value:str, values:dict[str, str])->str:
+        """Automatically fills left_on and right_on attributes when on is provided"""
+
+        on = values.get("on")
+        if on:
+            value = on
+
+        return value
+
 
     @property
     def statement(self)->dict:
         """Generates statement from attributes"""
-
-
-        # TODO : Move the logic below into field validators <VM, 29/09/2022>
-        # Handling aliases
-        # ----------------------------------
-        if self.on:
-            self.left_on = self.right_on = self.on
-
 
 
         # Validates combination of argument
