@@ -135,7 +135,7 @@ class Sort(Stage):
     by : list[str] | None
     query : dict = {}
 
-
+    # NOTE : The below are validators are very close to what is used for project => CONSIDER factorizing <VM, 27/10/2022>
     @validator("ascending", "descending", pre=True, always=True)
     @classmethod
     def parse_ascending_descending(cls, value:SortArgs|dict|bool|None)->list[str]|dict|bool|None:

@@ -247,6 +247,14 @@ For more information, see [$lookup Optimization](https://www.mongodb.com/docs/ma
 
 from pydantic import Field, validator
 from monggregate.stages.stage import Stage
+from monggregate.utils import StrEnum
+
+class LookupTypeEnum(StrEnum):
+    """Enumeration of possible types of lookups"""
+
+    SIMPLE = "simple"
+    UNCORRELATED = "uncorrelated"
+    CORRELATED = "correlated"
 
 class Lookup(Stage):
     """
@@ -288,14 +296,15 @@ class Lookup(Stage):
     left_on : str | None = Field(...,alias="local_field")
     right_on : str | None = Field(..., alias="foreign_field")
     name : str | None = Field(...,alias="as")
-    type_ : str = Field(exclude=True)
-        # internal variable to know the type of join (simple, correlated, uncorrelated)
 
     # Subquery fields
     # ---------------------
     let : dict | None # the let variables can be accessed by the stages in the pipeline including additional $lookup stages
                       # nested in
     pipeline : list[dict] | None
+
+    type_ : LookupTypeEnum = Field("simple", exclude=True)
+        # internal variable to know the type of join (simple, correlated, uncorrelated)
 
     @validator("left_on", "right_on", pre=True, always=True)
     @classmethod
@@ -309,33 +318,44 @@ class Lookup(Stage):
         return value
 
 
-    @property
-    def statement(self)->dict:
-        """Generates statement from attributes"""
+    @validator("type_", pre=True, always=True)
+    @classmethod
+    def set_type(cls, value:str, values:dict)->str:
+        """Set types dynamically"""
 
+        # Retrieve previously validated values
+        right = values.get("right")
+        left_on = values.get("left_on")
+        right_on = values.get("right_on")
+        let = values.get("let")
+        pipeline = values.get("pipeline")
 
-        # Validates combination of argument
-        # ------------------------------------
-        if self.right and self.left_on and self.right_on and \
-            not(self.let or self.pipeline is None):
+        # Check combination of arguments
+        if right and left_on and right_on and \
+            not(let or pipeline is None):
             # in a subquery to select all on the foreign collection
             # pipeline can be an empty list which is falsy
             type_ = "simple"
 
-        elif self.let and self.pipeline is not None and not(self.left_on or self.right_on):
+        elif let and pipeline is not None and not(left_on or right_on):
             type_ =  "uncorrelated"
 
-        elif self.let and self.pipeline is None and self.left_on and self.right_on:
+        elif let and pipeline is None and left_on and right_on:
             type_ = "correlated"
 
         else:
             raise TypeError("Incompatible combination of arguments")
 
-        self.type_ = type_
+        return type_
+
+    @property
+    def statement(self)->dict:
+        """Generates statement from attributes"""
+
 
         # Generate statement:
         # -----------------------------------------------
-        if type_ == "simple":
+        if self.type_ == "simple":
             statement = {
                 "$lookup":{
                     "from":self.right,
@@ -344,7 +364,7 @@ class Lookup(Stage):
                     "as":self.name
                 }
             }
-        elif type_ == "uncorrelated":
+        elif self.type_ == "uncorrelated":
             statement = {
                 "$lookup":{
                     "from":self.right,
