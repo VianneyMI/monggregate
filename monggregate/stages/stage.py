@@ -18,6 +18,7 @@ class Stage(BaseModel, ABC):
 
     _statement : dict = {}# TODO : Fine tune type <VM, 16/09/2022> Ex : dict[str, str|dict]
 
+
     @property
     @abstractmethod
     def statement(self)->dict:

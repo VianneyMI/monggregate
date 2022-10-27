@@ -147,11 +147,11 @@ class Project(Stage):
     include : list[str] | dict | bool | None
     exclude : list[str] | dict | bool | None
     fields : list[str] | None
-    projection : dict | None
+    projection : dict = {}
 
     @validator("include", "exclude", pre=True, always=True)
     @classmethod
-    def parse_include_exclude(cls, value:ProjectionArgs|dict|bool|None)->list[str] | dict | bool | None:
+    def parse_include_exclude(cls, value:ProjectionArgs|dict|bool|None)->list[str]|dict|bool|None:
         """Parses include and exclude arguments"""
 
         return to_unique_list(value)
@@ -175,8 +175,8 @@ class Project(Stage):
         include = values.get("include")
         exclude = values.get("exclude")
 
-        if not isinstance(include, bool) and not isinstance(exclude, bool):
-            raise ValueError("Include or exclude must be set when using fields")
+        if value and not (isinstance(include, bool) or isinstance(exclude, bool)):
+            raise ValueError("Either include or exclude must be set and be a boolean when using fields")
 
         fields = to_unique_list(value)
         return fields
@@ -184,7 +184,7 @@ class Project(Stage):
 
     @validator("projection", pre=True, always=True)
     @classmethod
-    def generates_projection(cls, projection:dict|None, values:dict[str, list[str] | dict | bool | None])->dict:
+    def generates_projection(cls, projection:dict, values:dict[str, list[str] | dict | bool | None])->dict:
         """Validates and if necessary generates projection"""
 
         def _to_projection(projection:dict, projection_args:list[str]|dict, include:bool)->None:
@@ -194,7 +194,7 @@ class Project(Stage):
                 >>> _to_projection({}, projection_args=["abc", "xyz"], include=True)
                 {
                     "abc":True,
-                    "xyz":False
+                    "xyz":True
                 }
 
             Arguments
@@ -220,7 +220,6 @@ class Project(Stage):
         # Initizaling projection if not provided
         # --------------------------------------
         if not projection:
-            projection = {}
 
             # Case #1 : Fields is provided
             # ------------------------------

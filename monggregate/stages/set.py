@@ -47,7 +47,7 @@ class Set(Stage):
 
     """
 
-    document : dict ={} #| None
+    document : dict = {} #| None
 
     @property
     def statement(self)->dict[str, dict]:

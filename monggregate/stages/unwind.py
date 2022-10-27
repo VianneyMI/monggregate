@@ -66,7 +66,7 @@ preserveNullAndEmptyArrays option.
 
 """
 
-from pydantic import root_validator, Field
+from pydantic import Field
 from monggregate.stages.stage import Stage
 
 class Unwind(Stage):
@@ -91,8 +91,6 @@ class Unwind(Stage):
     @property
     def statement(self)->dict[str, dict]:
         """Generates set stage statement from arguments"""
-
-
 
         # Validates path
         #------------------------------------------
