@@ -67,6 +67,7 @@ from typing import Any
 from pydantic import Field, validator
 from monggregate.stages.stage import Stage
 from monggregate.expressions import Expression
+from monggregate.utils import validate_field_path
 
 class Group(Stage):
     """
@@ -86,13 +87,14 @@ class Group(Stage):
     #result : Any
     query : dict = {} # aggregation wanted
 
+    _validate_by = validator("by", pre=True, always=True, allow_reuse=True)(validate_field_path)
+
     @validator("query", always=True)
     @classmethod
-    def validate_query(cls, values:dict[str,Any]) -> dict:
+    def validate_query(cls, query, values:dict[str,Any]) -> dict:
         """Validates the query argument"""
 
         by = values.get("by") # maybe need to check that by is not empty list or empty set
-        query:dict = values.get("query")
 
         # maybe need to check query before
         if not "_id" in query:

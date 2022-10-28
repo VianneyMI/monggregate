@@ -12,7 +12,7 @@ from monggregate.stages import (
     Limit,
     Lookup,
     Match,
-    Out,
+#    Out,
     Project,
     ReplaceRoot,
     Sample,
@@ -270,7 +270,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             - name, str : name of the output field which the count as its value.
                         Must be a non-empty string,
                         NOTE : Must not start with $ and must not contain the
-                                . character.
+                                . character and must not be empty
 
         """
 
@@ -344,6 +344,26 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             - pipeline, list[dict] | None : pipeline to run on the foreign collection.
             - as, str : name of the field containing the matches from the foreign collection
 
+            NOTE (pipeline and let attributes) : To reference variables in pipeline stages, use the "$$<variable>" syntax.
+
+            The let variables can be accessed by the stages in the pipeline, including additional $lookup
+            stages nested in the pipeline.
+
+            * A $match stage requires the use of an $expr operator to access the variables.
+            The $expr operator allows the use of aggregation expressions inside of the $match syntax.
+
+            Starting in MongoDB 5.0, the $eq, $lt, $lte, $gt, and $gte comparison operators placed in an
+            $expr operator can use an index on the from collection referenced in a $lookup stage. Limitations:
+
+                * Multikey indexes are not used.
+
+                * Indexes are not used for comparisons where the operand is an array or the operand type is undefined.
+
+                * Indexes are not used for comparisons with more than one field path operand.
+
+            * Other (non-$match) stages in the pipeline do not require an
+            $expr operator to access the variables.
+
         """
 
         self.stages.append(
@@ -388,8 +408,9 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         Arguments:
         ---------------------------
             - projection, dict | None : projection to be applied
-            - include, str | list[str] | set[str] | dict | None : fields to be kept
-            - exclude, str | list[str] | set[str] | dict | None : fields to be excluded
+            - fields, ProjectionArgs | None : fields  to be kept or excluded (depending on include/exclude parameters when those are booleans)
+            - include, ProjectionArgs| dict | bool | None : fields to be kept
+            - exclude, ProjectionArgs | dict | bool | None : fields to be excluded
 
 
         """

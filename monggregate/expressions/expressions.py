@@ -7,7 +7,7 @@
 # Standard Library imports
 #----------------------------
 from typing import Any
-from numbers import Number
+#from numbers import Number
 # 3rd Party imports
 # ---------------------------
 
@@ -26,13 +26,13 @@ from monggregate.operators.operator import OperatorEnum
     # If operator accepts a single argument, you can omit the outer array designating the argument list:
         # { <operator>: <argument> }
 
-OperatorArgumentTypes = Number | str | bool # Possible types for operator epressions
+OperatorArgumentTypes = int | float | str | bool # Possible types for operator epressions # TODO : Replace int and float by number <VM, 28/10/2022>
                                             # each OperatorArgument can be a FieldPath or an expression
                                             # that must resolve (i.e evaluates) to the below types
                                             # or be a variable of this type directly
                                             # for example {"$abs":-1} is a valid operator expression
 
-OperatorArgumentsTypes =  list[Number] | list[str] | list[bool]
+OperatorArgumentsTypes =  list[int] | list[float] | list[str] | list[bool]
 OperatorArguments = OperatorArgumentTypes | OperatorArgumentsTypes | FieldPath | list[FieldPath] | dict[FieldPath, Any]
 
 OperatorExpression = dict[OperatorEnum, OperatorArguments]

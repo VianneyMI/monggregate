@@ -130,7 +130,7 @@ class Sort(Stage):
 
 
 
-    ascending  : list[str] | dict | bool | None = True
+    ascending  : list[str] | dict | bool | None
     descending : list[str] | dict | bool | None
     by : list[str] | None
     query : dict = {}
@@ -145,7 +145,7 @@ class Sort(Stage):
 
     @validator("descending")
     @classmethod
-    def validates_boolens(cls, descending:SortArgs|dict|bool|None, values:dict)->list[str]|bool|None:
+    def validates_booleans(cls, descending:SortArgs|dict|bool|None, values:dict)->list[str]|bool|None:
         """Validates combination of ascending and descending"""
 
         ascending = values.get("ascending")

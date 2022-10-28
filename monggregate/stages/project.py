@@ -239,6 +239,8 @@ class Project(Stage):
                     _to_projection(projection, exclude, False)
 
         # TODO : Validate final projection <VM, 23/10/2022>
+        if not projection:
+            raise ValueError(f"Invalid combination of arguments with include={include}, exclude={exclude} and fields={fields}.")
 
         return projection
 

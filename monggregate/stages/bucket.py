@@ -53,10 +53,11 @@ $sort.
 # No validation, no helpers, no intelligence just generating the statement for now
 
 from typing import Any
-from pydantic import Field
+from pydantic import Field, validator
 
 from monggregate.stages.stage import Stage
 from monggregate.expressions import Expression
+from monggregate.utils import validate_field_path
 
 class Bucket(Stage):
     """
@@ -102,6 +103,8 @@ class Bucket(Stage):
     boundaries : list
     default : Any # TODO : Define more precise type
     output : dict | None
+
+    _validate_by = validator("by", pre=True, always=True, allow_reuse=True)(validate_field_path)
 
     @property
     def statement(self) -> dict:

@@ -303,7 +303,7 @@ def test_sort()->None:
 
     # Testing mandatory attributes
     # -----------------------------
-    sort = Sort(query={"field1":1, "fieldN":0})
+    sort = Sort(query={"field1":1, "fieldN":0}) # TODO : This should be invalid, the values must 1 or -1 => add validator
     assert sort
     del sort
 

@@ -81,10 +81,10 @@ The values of the series are multiplied by a power of 10 when the groupBy values
 
 """
 
-from pydantic import Field
+from pydantic import Field, validator
 from monggregate.stages.stage import Stage
 from monggregate.expressions import Expression
-from monggregate.utils import StrEnum
+from monggregate.utils import StrEnum, validate_field_path
 
 class GranularityEnum(StrEnum):
     """Supported values of granularity are"""
@@ -138,6 +138,7 @@ class BucketAuto(Stage):
     output : dict | None # Accumulator Expressions #TODO : Define type and use it here
     granularity : GranularityEnum | None
 
+    _validate_by = validator("by", pre=True, always=True, allow_reuse=True)(validate_field_path)
 
     @property
     def statement(self) -> dict:
