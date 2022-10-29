@@ -94,9 +94,11 @@ the returned sort order will always be the same across multiple executions of th
 
 """
 
-from pydantic import root_validator
+from pydantic import validator
 from monggregate.stages.stage import Stage
 from monggregate.utils import to_unique_list
+
+SortArgs = str | list[str] | set[str]
 
 class Sort(Stage):
     """
@@ -126,61 +128,110 @@ class Sort(Stage):
 
     """
 
-    query : dict ={} #| None
-    ascending  : set[str] | dict | None # TODO : Allow str and list[str] also and bool (when by is passed)
-    descending : set[str] | dict | None # TODO : Allow str and list[str] also and bool (when by is passed)
 
-    @root_validator(pre=True)
+
+    ascending  : list[str] | dict | bool | None
+    descending : list[str] | dict | bool | None
+    by : list[str] | None
+    query : dict = {}
+
+    # NOTE : The below are validators are very close to what is used for project => CONSIDER factorizing <VM, 27/10/2022>
+    @validator("ascending", "descending", pre=True, always=True)
     @classmethod
-    def generate_statement(cls, values:dict)->dict[str, dict]:
-        """Generates statelent from other attributes"""
+    def parse_ascending_descending(cls, value:SortArgs|dict|bool|None)->list[str]|dict|bool|None:
+        """Parses ascending and descending"""
 
-        # NOTE : Unlike in the case of the projection, the order of the fields matter here <VM, 17/09/2022>
-        # Be providing the fields in two different keys, the order might be broken.
-        # So it is prefer to provide the query directly
+        return to_unique_list(value)
 
-        def _parse_ascending_descending(ascending_or_descending:set[str]|dict|None, direction:bool)->tuple[dict, bool]:
-            """Parses include and exclude arguments"""
+    @validator("descending")
+    @classmethod
+    def validates_booleans(cls, descending:SortArgs|dict|bool|None, values:dict)->list[str]|bool|None:
+        """Validates combination of ascending and descending"""
 
-            query = {}
+        ascending = values.get("ascending")
+        if isinstance(descending, bool) and isinstance(ascending, bool):
+            raise ValueError("Cannot use both ascending and descending as booleans at the same time")
+
+        return descending
+
+
+    @validator("by", pre=True)
+    @classmethod
+    def validates_by(cls, value:SortArgs|None, values:dict)->list[str]|None:
+        """Validates by"""
+
+        ascending = values.get("ascending")
+        descending = values.get("descending")
+
+        if value and not (isinstance(ascending, bool) or isinstance(descending, bool)):
+            raise ValueError("Either ascending or descending must be set and be a boolean when using fields")
+
+        return to_unique_list(value)
+
+
+    @validator("query", pre=True, always=True)
+    @classmethod
+    def generates_query(cls, query:dict, values:dict)->dict:
+        """Generates query if not provided"""
+
+        def _to_query(query:dict, sort_args:list[str]|dict, direction:bool)->None:
+            """
+            Inserts fields in ascending and descending arguments inside a query
+            Ex:
+                >>> _to_query({}, sort_args=["abc", "xyz"], direction=True)
+                {
+                    "abc":1,
+                    "xyz":-1
+                }
+
+            """
 
             _sort_order_map = {
                 True:1, # ascending
                 False:-1 # descending
             }
 
-            is_valid = False
-
-            if ascending_or_descending and len(ascending_or_descending)>0:
-                is_valid = True
-
-                if isinstance(ascending_or_descending, list):
-                    for field in ascending_or_descending:
+            if isinstance(sort_args, list):
+                    for field in sort_args:
                         query[field] = _sort_order_map[direction]
-                else:
-                    query.update(ascending_or_descending)
+            else:
+                query.update(sort_args)
 
 
-            return query, is_valid
+            # Retrieving validated fields
+        # -----------------------------
+        ascending = values.get("ascending")
+        descending = values.get("descending")
+        by = values.get("by")
 
-        query = values.get("query")
-        ascending = to_unique_list(values.get("ascending"))
-        descending = to_unique_list(values.get("descending"))
 
-        if not (query or ascending or descending):
-            raise TypeError("At least one of (query, ascending, descending) is required")
-
+        # Initizaling projection if not provided
+        # --------------------------------------
         if not query:
-            ascending_query, is_ascending_valid = _parse_ascending_descending(ascending, True)
-            descending_query, is_descending_valid = _parse_ascending_descending(descending, False)
 
-            query = ascending_query | descending_query
-            is_valid = is_ascending_valid or is_descending_valid
+            # Case #1 : By is provided
+            # ------------------------------
+            if by:
+                # validates_by ensures that ascending and descending are either None or booleans when by is provided
+                # None or boolean_value = boolean_value
+                # valdiates_booleans ensures that ascending or descending are not both, booleans at the same time
+                _to_query(query, by,  ascending or descending)
 
-            if not is_valid:
-                raise ValueError("At least one of (ascending, exclude) must be valid when query is not provided")
+            # Case #2 : by is not provided
+            # -------------------------------
+            else:
+                if ascending is not None:
+                    _to_query(query, ascending, True)
 
+                if descending is not None:
+                    _to_query(query, descending, False)
 
-        values["statement"] = {"$sort":query}
+        # TODO : Validate final query <VM, 23/10/2022>
 
-        return values
+        return query
+
+    @property
+    def statement(self)->dict[str, dict]:
+        """Generates statement from other attributes"""
+
+        return  {"$sort":self.query}

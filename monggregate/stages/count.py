@@ -34,7 +34,6 @@ where myCount would be the output field that contains the count. You can specify
 
 """
 
-from pydantic import root_validator
 from monggregate.stages.stage import Stage
 
 class Count(Stage):
@@ -47,26 +46,15 @@ class Count(Stage):
         - name, str : name of the output field which the count as its value.
                       Must be a non-empty string,
                       NOTE : Must not start with $ and must not contain the
-                             . character.
+                             . character and must not be empty
 
     """
 
-    name : str
+    name : str # TODO : Implement ConstrainedStr subclass that does the above validation <VM, 09/10/2022>
 
+    @property
+    def statement(self)-> dict:
 
-    @root_validator(pre=True)
-    @classmethod
-    def generate_statement(cls, values:dict)->dict[str, dict]:
-        """Generates set stage statement from arguments"""
-
-        # Retrieving the values
-        #---------------------------------------
-        name = values.get("name")
-        if not name:
-            raise TypeError("name is required")
-
-        values["statement"] = {
-            "$count" : name
+        return  {
+            "$count" : self.name
         }
-
-        return values

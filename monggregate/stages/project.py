@@ -124,10 +124,12 @@ $projectstage. See Array Indexes are Unsupported.
 
 # NOTE : Would be nice and useful to have something keywords arguments based to generate the projection <VM, 16/09/2022>
 # (on top[on the side] of the below)
-from pydantic import root_validator
 
+from pydantic import validator
 from monggregate.stages.stage import Stage
 from monggregate.utils import to_unique_list
+
+ProjectionArgs = str | list[str] | set[str]
 
 class Project(Stage):
     """"
@@ -136,56 +138,115 @@ class Project(Stage):
     Attributes:
     ---------------------------
         - projection, dict | None : projection to be applied
-        - include, str | list[str] | set[str] | dict | None : fields to be kept
-        - exclude, str | list[str] | set[str] | dict | None : fields to be excluded
+        - fields, ProjectionArgs | None : fields  to be kept or excluded (depending on include/exclude parameters when those are booleans)
+        - include, ProjectionArgs| dict | bool | None : fields to be kept
+        - exclude, ProjectionArgs | dict | bool | None : fields to be excluded
 
     """
 
-    projection : dict | None
-    include : set[str] | dict | None # TODO : Allow str and list[str] also
-    exclude : set[str] | dict | None # TODO : Allow str and list[str] also
+    include : list[str] | dict | bool | None
+    exclude : list[str] | dict | bool | None
+    fields : list[str] | None
+    projection : dict = {}
 
-    @root_validator(pre=True)
+    @validator("include", "exclude", pre=True, always=True)
     @classmethod
-    def generate_statement(cls, values:dict)->dict[str, dict]:
-        """Generates statelent from other attributes"""
+    def parse_include_exclude(cls, value:ProjectionArgs|dict|bool|None)->list[str]|dict|bool|None:
+        """Parses include and exclude arguments"""
+
+        return to_unique_list(value)
+
+    @validator("exclude")
+    @classmethod
+    def validates_booleans(cls, exclude:ProjectionArgs|dict|bool|None, values:dict[str, ProjectionArgs|dict|bool|None]) -> list[str]|bool|None:
+        """Validates combination of include and exclude"""
+
+        include = values.get("include")
+        if isinstance(include, bool) and isinstance(exclude, bool):
+            raise ValueError("Cannot both include and exclude fields when using include and exlude as booleans")
+
+        return exclude
+
+    @validator("fields", pre=True)
+    @classmethod
+    def validates_fields(cls, value:ProjectionArgs|None, values:dict[str, list[str]|dict|bool|None])-> list[str]|None:
+        """Validates fields"""
+
+        include = values.get("include")
+        exclude = values.get("exclude")
+
+        if value and not (isinstance(include, bool) or isinstance(exclude, bool)):
+            raise ValueError("Either include or exclude must be set and be a boolean when using fields")
+
+        fields = to_unique_list(value)
+        return fields
 
 
-        def _parse_include_exclude(include_or_exclude:set[str]|dict|None, required:bool)->tuple[dict, bool]:
-            """Parses include and exclude arguments"""
+    @validator("projection", pre=True, always=True)
+    @classmethod
+    def generates_projection(cls, projection:dict, values:dict[str, list[str] | dict | bool | None])->dict:
+        """Validates and if necessary generates projection"""
 
-            projection = {}
-            is_valid = False
-            if include_or_exclude and len(include_or_exclude)>0:
-                is_valid = True
+        def _to_projection(projection:dict, projection_args:list[str]|dict, include:bool)->None:
+            """
+            Inserts fields in include or exlude arguments inside a projection
+            Ex:
+                >>> _to_projection({}, projection_args=["abc", "xyz"], include=True)
+                {
+                    "abc":True,
+                    "xyz":True
+                }
 
-                if isinstance(include_or_exclude, list):
-                    for field in include_or_exclude:
-                        projection[field] = required
-                else:
-                    projection.update(include_or_exclude)
+            Arguments
+            ------------------
+                - projection_args, list[str]|dict : fields to include or exclude
+                - include, bool : whether the fields are to be included or excluded
+            """
 
 
-            return projection, is_valid
+            if isinstance(projection_args, list):
+                    for field in projection_args:
+                        projection[field] = include
+            else:
+                projection.update(projection_args)
 
-        projection = values.get("projection")
-        include = to_unique_list(values.get("include"))
-        exclude = to_unique_list(values.get("exclude"))
+        # Retrieving validated fields
+        # -----------------------------
+        include = values.get("include")
+        exclude = values.get("exclude")
+        fields = values.get("fields")
 
-        if not (projection or include or exclude):
-            raise TypeError("At least one of (projection, include, exclude) is required")
 
+        # Initizaling projection if not provided
+        # --------------------------------------
         if not projection:
-            include_projection, is_include_valid = _parse_include_exclude(include, True)
-            exclude_projection, is_exclude_valid = _parse_include_exclude(exclude, False)
 
-            projection = include_projection | exclude_projection
-            is_valid = is_include_valid or is_exclude_valid
+            # Case #1 : Fields is provided
+            # ------------------------------
+            if fields:
+                # validates_fields ensures that include and exclude are either None or booleans when fields is provided
+                # None or boolean_value = boolean_value
+                # valdiates_booleans ensures that include or exclude are not both, booleans at the same time
+                _to_projection(projection, fields,  include or exclude)
 
-            if not is_valid:
-                raise ValueError("At least one of (include, exclude) must be valid when projection is not provided")
+            # Case #2 : Fields is not provided
+            # -------------------------------
+            else:
+                if include is not None:
+                    _to_projection(projection, include, True)
+
+                if exclude is not None:
+                    _to_projection(projection, exclude, False)
+
+        # TODO : Validate final projection <VM, 23/10/2022>
+        if not projection:
+            raise ValueError(f"Invalid combination of arguments with include={include}, exclude={exclude} and fields={fields}.")
+
+        return projection
 
 
-        values["statement"] = {"$project":projection}
+    @property
+    def statement(self)->dict[str, dict]:
+        """Generates statement from other attributes"""
 
-        return values
+        return {"$project":self.projection}

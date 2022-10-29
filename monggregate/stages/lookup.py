@@ -245,8 +245,16 @@ For more information, see [$lookup Optimization](https://www.mongodb.com/docs/ma
 
 """
 
-from pydantic import root_validator, Field
+from pydantic import Field, validator
 from monggregate.stages.stage import Stage
+from monggregate.utils import StrEnum
+
+class LookupTypeEnum(StrEnum):
+    """Enumeration of possible types of lookups"""
+
+    SIMPLE = "simple"
+    UNCORRELATED = "uncorrelated"
+    CORRELATED = "correlated"
 
 class Lookup(Stage):
     """
@@ -260,103 +268,121 @@ class Lookup(Stage):
         - let, dict | None : variables to be used in the inner pipeline
         - pipeline, list[dict] | None : pipeline to run on the foreign collection.
         - as, str : name of the field containing the matches from the foreign collection
+
+        NOTE (pipeline and let attributes) : To reference variables in pipeline stages, use the "$$<variable>" syntax.
+
+        The let variables can be accessed by the stages in the pipeline, including additional $lookup
+        stages nested in the pipeline.
+
+        * A $match stage requires the use of an $expr operator to access the variables.
+          The $expr operator allows the use of aggregation expressions inside of the $match syntax.
+
+        Starting in MongoDB 5.0, the $eq, $lt, $lte, $gt, and $gte comparison operators placed in an
+        $expr operator can use an index on the from collection referenced in a $lookup stage. Limitations:
+
+            * Multikey indexes are not used.
+
+            * Indexes are not used for comparisons where the operand is an array or the operand type is undefined.
+
+            * Indexes are not used for comparisons with more than one field path operand.
+
+        * Other (non-$match) stages in the pipeline do not require an
+          $expr operator to access the variables.
+
     """
 
-    right : str = Field(..., alias="from")
+    right : str | None = Field(..., alias="from")
     on : str | None #  shortcut for when left_on is the same than right_on
     left_on : str | None = Field(...,alias="local_field")
     right_on : str | None = Field(..., alias="foreign_field")
     name : str | None = Field(...,alias="as")
-    type_ : str # internal variable to know the type of join (simple, correlated, uncorrelated)
 
     # Subquery fields
     # ---------------------
-    let : dict | None
+    let : dict | None # the let variables can be accessed by the stages in the pipeline including additional $lookup stages
+                      # nested in
     pipeline : list[dict] | None
 
-    @root_validator(pre=True)
-    @classmethod
-    def generate_statement(cls, values:dict)->dict:
-        """Generates statement from attributes"""
+    type_ : LookupTypeEnum = Field("simple", exclude=True)
+        # internal variable to know the type of join (simple, correlated, uncorrelated)
 
-        # Retrieving the values passed
-        # ----------------------------------
-        right = values.get("right") # necessary to use an alias here as from is a python keyword
-        on = values.get("on") # pylint: disable=invalid-name
-        local_field = values.get("local_field")
-        foreign_field = values.get("foreign_field")
+    @validator("left_on", "right_on", pre=True, always=True)
+    @classmethod
+    def on_alias(cls, value:str, values:dict[str, str])->str:
+        """Automatically fills left_on and right_on attributes when on is provided"""
+
+        on = values.get("on")
+        if on:
+            value = on
+
+        return value
+
+
+    @validator("type_", pre=True, always=True)
+    @classmethod
+    def set_type(cls, value:str, values:dict)->str:
+        """Set types dynamically"""
+
+        # Retrieve previously validated values
+        right = values.get("right")
+        left_on = values.get("left_on")
+        right_on = values.get("right_on")
         let = values.get("let")
         pipeline = values.get("pipeline")
 
-        name = values.get("name") # necessary to use an alias here as as is a python keyword
-
-        # Handling aliases
-        # ----------------------------------
-        if not right:
-            right = values.get("from")
-
-        if not local_field:
-            local_field = values.get("left_on")
-
-        if not foreign_field:
-            foreign_field = values.get("right_on")
-
-        if on:
-            local_field = foreign_field = on
-
-        if not name:
-            name = values.get("as")
-
-        # Validates combination of argument
-        # ------------------------------------
-        if right and local_field and foreign_field and not(let or pipeline is None):
+        # Check combination of arguments
+        if right and left_on and right_on and \
+            not(let or pipeline is None):
             # in a subquery to select all on the foreign collection
             # pipeline can be an empty list which is falsy
             type_ = "simple"
 
-        elif let and pipeline is not None and not(local_field or foreign_field):
+        elif let and pipeline is not None and not(left_on or right_on):
             type_ =  "uncorrelated"
 
-        elif let and pipeline is None and local_field and foreign_field:
+        elif let and pipeline is None and left_on and right_on:
             type_ = "correlated"
 
         else:
             raise TypeError("Incompatible combination of arguments")
 
-        values["type_"] = type_
+        return type_
+
+    @property
+    def statement(self)->dict:
+        """Generates statement from attributes"""
+
 
         # Generate statement:
         # -----------------------------------------------
-        if type_ == "simple":
+        if self.type_ == "simple":
             statement = {
                 "$lookup":{
-                    "from":right,
-                    "localField":local_field,
-                    "foreignField":foreign_field,
-                    "as":name
+                    "from":self.right,
+                    "localField":self.left_on,
+                    "foreignField":self.right_on,
+                    "as":self.name
                 }
             }
-        elif type_ == "uncorrelated":
+        elif self.type_ == "uncorrelated":
             statement = {
                 "$lookup":{
-                    "from":right,
-                    "let":let,
-                    "pipeline":pipeline,
-                    "as":name
+                    "from":self.right,
+                    "let":self.let,
+                    "pipeline":self.pipeline,
+                    "as":self.name
                 }
             }
         else: # should be correlated case
             statement = {
                 "$lookup":{
-                    "from":right,
-                    "localField":local_field,
-                    "foreignField":foreign_field,
-                    "let":let,
-                    "pipeline":pipeline,
-                    "as":name
+                    "from":self.right,
+                    "localField":self.right_on,
+                    "foreignField":self.right_on,
+                    "let":self.let,
+                    "pipeline":self.pipeline,
+                    "as":self.name
                 }
             }
 
-        values["statement"] = statement
-
-        return values
+        return statement

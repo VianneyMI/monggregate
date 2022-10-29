@@ -53,9 +53,11 @@ $sort.
 # No validation, no helpers, no intelligence just generating the statement for now
 
 from typing import Any
-from pydantic import root_validator, Field
+from pydantic import Field, validator
+
 from monggregate.stages.stage import Stage
-from monggregate.utils import to_unique_list
+from monggregate.expressions import Expression
+from monggregate.utils import validate_field_path
 
 class Bucket(Stage):
     """
@@ -97,48 +99,23 @@ class Bucket(Stage):
 
     """
 
-    by : str|list[str]|set[str] = Field(...,alias="group_by")
+    by : Expression = Field(...,alias="group_by")
     boundaries : list
     default : Any # TODO : Define more precise type
     output : dict | None
 
-    @root_validator(pre=True)
-    @classmethod
-    def generate_statement(cls, values:dict)->dict:
-        """Generates statement from arguments"""
+    _validate_by = validator("by", pre=True, always=True, allow_reuse=True)(validate_field_path)
 
-        by = values.get("by")
-        group_by = values.get("group_by")
-
-        boundaries = values.get("boundaries")
-        default = values.get("default")
-        output = values.get("output")
-
-        # Handling aliases
-        #--------------------------------------
-        if not by and group_by:
-            by = group_by
-            values["by"] = by
-
-        # Validates by
-        # -------------------------------------
-        by = to_unique_list(by)
+    @property
+    def statement(self) -> dict:
 
         # Generates statement
         #--------------------------------------
-        values["statement"] = {
+        return {
             "$bucket" : {
-                "groupBy" : by,
-                "boundaries" :boundaries,
-                "default" : default,
-                "output" : output
+                "groupBy" : self.by,
+                "boundaries" :self.boundaries,
+                "default" : self.default,
+                "output" : self.output
             }
         }
-
-        return values
-
-
-
-
-
-

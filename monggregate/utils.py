@@ -48,6 +48,7 @@ def _to_unique_list(keys:str|list[str]|set[str])->list[str]:
 
     return output
 
+# TODO : Fix typing using overload <VM, 26/10/2022>
 def to_unique_list(keys:T)->list[str]|T:
     """Returns a list of unique keys from the provided key(s) if keys is valid or returns keys if keys is not valid"""
 
@@ -57,3 +58,11 @@ def to_unique_list(keys:T)->list[str]|T:
         output = keys # type: ignore[assignment]
 
     return output
+
+def validate_field_path(path:str)->str:
+    """Validates field path"""
+
+    if not path.startswith("$"):
+        path =  "$" + path
+
+    return path

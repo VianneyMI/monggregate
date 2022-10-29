@@ -61,7 +61,7 @@ See the following for more information on each:
 
 """
 
-from pydantic import root_validator
+#from pydantic import Field
 from monggregate.stages.stage import Stage
 
 class Skip(Stage):
@@ -75,17 +75,12 @@ class Skip(Stage):
 
     """
 
-    value : int
+    value : int # Add gt 0 constraint ? check behavior with 0
 
-    @root_validator(pre=True)
-    @classmethod
-    def generate_statement(cls, values:dict)->dict:
+    @property
+    def statement(self)->dict:
         """Generate statement from arguments"""
 
-        value = values.get("value")
-
-        values["statement"] = {
-            "$skip" : value
+        return {
+            "$skip" : self.value
         }
-
-        return values

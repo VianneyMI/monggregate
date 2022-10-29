@@ -1,5 +1,11 @@
 """Stage Module"""
 
+# Standard Library imports
+#----------------------------
+from abc import ABC, abstractmethod
+
+# 3rd Party imports
+# ---------------------------
 from pydantic import BaseModel, BaseConfig
 
 # Package imports
@@ -7,18 +13,26 @@ from pydantic import BaseModel, BaseConfig
 from monggregate.utils import StrEnum
 
 # NOTE : Stage should be an abstract base class and all operators should be classes inheriting from the base class
-class Stage(BaseModel):
+class Stage(BaseModel, ABC):
     """MongoDB pipeline stage interface bas class"""
 
-    statement : dict # TODO : Fine tune type <VM, 16/09/2022> Ex : dict[str, str|dict]
+    _statement : dict = {}# TODO : Fine tune type <VM, 16/09/2022> Ex : dict[str, str|dict]
 
-    # TODO : Add validator to ensure statement is not provided from outside the class <VM, 25/09/2022>
+
+    @property
+    @abstractmethod
+    def statement(self)->dict:
+        """stage stament"""
+
+        # this is a lazy attribute
+        # what is currently in generate statement should go in here
+        # TODO : Implement cache
 
     class Config(BaseConfig):
         """Configuration for Stage classes"""
 
         allow_population_by_field_name = True
-
+        underscore_attrs_are_private = True
 
     def __call__(self)->dict:
         """Makes an instance of stage callable"""

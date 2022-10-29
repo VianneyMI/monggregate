@@ -112,7 +112,7 @@ Restrictions
 
 """
 
-from pydantic import root_validator, Field
+from pydantic import Field
 from monggregate.stages.stage import Stage
 
 class Out(Stage):
@@ -129,37 +129,23 @@ class Out(Stage):
     db : str|None
     collection : str = Field(...,alias="coll")
 
-    @root_validator(pre=True)
-    @classmethod
-    def generate_statement(cls, values:dict)->dict:
+    @property
+    def statement(self)->dict:
         """Generates statement from attributes"""
-
-        # Retrieving the values passed
-        # ----------------------------------
-        db = values.get("db")
-        coll = values.get("collection")
-
-        # Handling aliases
-        # --------------------------------
-        if not coll:
-            coll = values.get("coll")
-
 
 
         # Generate statement
         # -------------------------------
-        if db:
+        if self.db:
             statement = {
                 "$out" : {
-                    "db":db,
-                    "coll":coll
+                    "db":self.db,
+                    "coll":self.collection
                 }
             }
         else:
             statement = {
-                "$out" : coll
+                "$out" : self.collection
             }
 
-        values["statement"] = statement
-
-        return values
+        return statement

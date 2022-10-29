@@ -65,9 +65,9 @@ Or, you can use $ifNullexpression to specify some other document to be root; for
 
 """
 
-from pydantic import root_validator, Field
+from pydantic import Field, validator
 from monggregate.stages.stage import Stage
-
+from monggregate.utils import validate_field_path
 
 class ReplaceRoot(Stage):
     """
@@ -82,26 +82,17 @@ class ReplaceRoot(Stage):
 
     """
 
+    # Attributes
+    # --------------------------
     path_to_new_root : str = Field(..., alias="path")
     #document : dict
 
-    @root_validator(pre=True)
-    @classmethod
-    def generate_statement(cls, values:dict)->dict:
+    # Validators
+    # ---------------------------
+    _validates_path_to_new_root = validator("path_to_new_root", allow_reuse=True, pre=True, always=True)(validate_field_path)
+
+    @property
+    def statement(self)->dict:
         """Generate statements from argument"""
 
-        path_to_new_root:str|None = values.get("path_to_new_root")
-        path = values.get("path")
-
-        if not path_to_new_root:
-            path_to_new_root = path
-
-        if not path_to_new_root.startswith("$"):
-            path_to_new_root = "$" + path_to_new_root
-
-
-        values["statement"] = {"$replaceRoot":{"newRoot":path_to_new_root}}
-
-        return values
-
-    # TODO : Add validator to check path/path_to_new_root correctness <VM, 25/09/2022>
+        return  {"$replaceRoot":{"newRoot":self.path_to_new_root}}

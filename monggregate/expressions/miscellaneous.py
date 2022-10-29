@@ -35,7 +35,8 @@ class AggregationVariables(StrEnum):
                 # (Available in 4.2+)
 
 # Exposing direct constants to ease usage
-CLUSTER_TIME = AggregationVariables.NOW.value
+CLUSTER_TIME = AggregationVariables.CLUSTER_TIME.value
+NOW = AggregationVariables.NOW.value
 ROOT = AggregationVariables.ROOT.value
 CURRENT = AggregationVariables.CURRENT.value
 REMOVE = AggregationVariables.REMOVE.value

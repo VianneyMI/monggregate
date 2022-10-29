@@ -79,8 +79,8 @@ def test_sync_docstrings()->None:
         # Keeping the actual content only
         # (i.e we allow white spaces, new lines and tabs discrepancies)
         to_check = extract_content(class_.__doc__.split("Attributes:\n    ")[-1])
-
-        assert to_check in extract_content(pipeline_members[humps.decamelize(class_name)].__doc__)
+        assertion = to_check in extract_content(pipeline_members[humps.decamelize(class_name)].__doc__)
+        assert assertion , f"Docstring are not sync between class {class_name} and mirror pipeline method {pipeline_members[humps.decamelize(class_name)]}"
 
 # Utility functions
 # ----------------------------

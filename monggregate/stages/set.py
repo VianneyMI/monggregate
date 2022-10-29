@@ -34,7 +34,6 @@ See example : https://www.mongodb.com/docs/manual/reference/operator/aggregation
 
 """
 
-from pydantic import root_validator
 from monggregate.stages.stage import Stage
 
 class Set(Stage):
@@ -48,15 +47,10 @@ class Set(Stage):
 
     """
 
-    statement : dict # TODO : Fine tune type <VM, 16/09/2022> Ex : dict[str, str|dict]
-    document : dict ={} #| None
+    document : dict = {} #| None
 
-    @root_validator(pre=True)
-    @classmethod
-    def generate_statement(cls, values:dict)->dict[str, dict]:
+    @property
+    def statement(self)->dict[str, dict]:
         """Generates set stage statement from arguments"""
 
-        document = values.get("document")
-        values["statement"] = {"$set":document}
-
-        return values
+        return  {"$set":self.document}

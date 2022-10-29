@@ -49,7 +49,7 @@ If you are using the:
 
 """
 
-from pydantic import root_validator, Field
+from pydantic import Field
 from monggregate.stages.stage import Stage
 
 class Sample(Stage):
@@ -66,17 +66,12 @@ class Sample(Stage):
 
     value : int = Field(10, gt=0)
 
-    @root_validator(pre=True)
-    @classmethod
-    def generate_statement(cls, values:dict)->dict:
+    @property
+    def statement(self)->dict:
         """Generate statement from arguments"""
 
-        value = values.get("value")
-
-        values["statement"] = {
+        return {
             "$sample" : {
-                "size" : value
+                "size" : self.value
             }
         }
-
-        return values

@@ -66,8 +66,9 @@ preserveNullAndEmptyArrays option.
 
 """
 
-from pydantic import root_validator, Field
+from pydantic import Field, validator
 from monggregate.stages.stage import Stage
+from monggregate.utils import validate_field_path
 
 class Unwind(Stage):
     """
@@ -83,56 +84,26 @@ class Unwind(Stage):
 
     """
 
+    # Attributes
+    # ----------------------
     path_to_array : str = Field(..., alias = "path")
     include_array_index : str | None #The name of a new field to hold the array index of the element.
                                         # The name cannot start with a dollar sign $
     always: bool = Field(False, alias="preserve_null_and_empty_arrays")
 
-    @root_validator(pre=True)
-    @classmethod
-    def generate_statement(cls, values:dict)->dict[str, dict]:
+    # Validators
+    # ------------------------
+    _validates_path_to_array = validator("path_to_array", allow_reuse=True, pre=True, always=True)(validate_field_path)
+
+    @property
+    def statement(self)->dict[str, dict]:
         """Generates set stage statement from arguments"""
 
-        # Retrieving the values passed
-        #-------------------------------------------------
-        path_to_array:str|None = values.get("path_to_array")
-        path:str|None = values.get("path")
 
-        include_array_index:str|None = values.get("include_array_index")
-        # NOTE : In the root_validator ahs not set the default value yet when no value is provided for an argument
-        # with a default value
-        preserve_null_and_empty_arrays:bool|None = values.get("preserve_null_and_empty_arrays")
-        always:bool|None = values.get("always")
-
-
-        # Handling aliases
-        #--------------------------------------------------
-        if not(path_to_array or path):
-            raise TypeError("path_to_array (path) is required")
-        elif not path:
-            path = path_to_array
-
-        if not(always or preserve_null_and_empty_arrays):
-            raise TypeError("always (preserve_null_and_empty_arrays) is required")
-        elif not preserve_null_and_empty_arrays:
-            preserve_null_and_empty_arrays = always
-
-
-        # Validates path
-        #------------------------------------------
-        if not path.startswith("$"):
-            path = "$" + path
-
-
-        # Generate statement
-        # -------------------------------------------------
-        values["statement"] = {
+        return  {
             "$unwind" : {
-                "path":path,
-                "includeArrayIndex":include_array_index,
-                "preserveNullAndEmptyArrays":preserve_null_and_empty_arrays
+                "path":self.path_to_array,
+                "includeArrayIndex":self.include_array_index,
+                "preserveNullAndEmptyArrays":self.always
             }
         }
-
-
-        return values

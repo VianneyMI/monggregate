@@ -47,9 +47,8 @@ def test_()->None:
 def test_stage()->None:
     """Testes stage parent class"""
 
-    stage = Stage(statement={})
-    assert stage # checks instantiation
-    assert stage()=={} # checks call method
+    with pytest.raises(TypeError):
+        stage = Stage(statement={}) # checks that Stage cannot be instantiated
 
 @pytest.mark.unit
 def test_bucket_auto()->None:
@@ -304,7 +303,7 @@ def test_sort()->None:
 
     # Testing mandatory attributes
     # -----------------------------
-    sort = Sort(query={"field1":1, "fieldN":0})
+    sort = Sort(query={"field1":1, "fieldN":0}) # TODO : This should be invalid, the values must 1 or -1 => add validator
     assert sort
     del sort
 

@@ -10,7 +10,8 @@ Source :  https://www.mongodb.com/docs/manual/reference/operator/aggregation/buc
 
 Definition
 ---------------------
-Categorizes incoming documents into a specific number of groups, called buckets, based on a specified expression. Bucket boundaries are automatically determined in an attempt to evenly distribute the documents into the specified number of buckets.
+Categorizes incoming documents into a specific number of groups, called buckets, based on a specified expression.
+Bucket boundaries are automatically determined in an attempt to evenly distribute the documents into the specified number of buckets.
 
 Each bucket is represented as a document in the output. The document for each bucket contains:
 
@@ -80,9 +81,10 @@ The values of the series are multiplied by a power of 10 when the groupBy values
 
 """
 
-from pydantic import root_validator, Field
+from pydantic import Field, validator
 from monggregate.stages.stage import Stage
-from monggregate.utils import StrEnum, to_unique_list
+from monggregate.expressions import Expression
+from monggregate.utils import StrEnum, validate_field_path
 
 class GranularityEnum(StrEnum):
     """Supported values of granularity are"""
@@ -128,46 +130,26 @@ class BucketAuto(Stage):
 
                                   Available only if the all groupBy values are numeric and none of them are NaN.
                                   https://en.wikipedia.org/wiki/Preferred_number
-                                  TODO : Need to understand this <VM, 18/09/2022>
 
     """
 
-    by : str|list[str]|set[str] = Field(...,alias="group_by") # dict | expression
-    buckets : int
-    output : dict | None
+    by : Expression = Field(...,alias="group_by")
+    buckets : int = Field(..., gt=0)
+    output : dict | None # Accumulator Expressions #TODO : Define type and use it here
     granularity : GranularityEnum | None
 
-    @root_validator(pre=True)
-    @classmethod
-    def generate_statement(cls, values:dict)->dict:
-        """Generates statement from arguments"""
+    _validate_by = validator("by", pre=True, always=True, allow_reuse=True)(validate_field_path)
 
-        by = values.get("by")
-        group_by = values.get("group_by")
+    @property
+    def statement(self) -> dict:
 
-        buckets = values.get("buckets")
-        output = values.get("output")
-        granularity = values.get("granularity")
-
-        # Handling aliases
-        #--------------------------------------
-        if not by and group_by:
-            by = group_by
-            values["by"] = by
-
-        # Validating by
-        #--------------------------------------
-        by = to_unique_list(by)
-
-        # Generating statement
-        #--------------------------------------
-        values["statement"] = {
+      # NOTE : maybe it would be better to use _to_unique_list here
+      # or to further validate by.
+      return   {
             "$bucketAuto" : {
-                "groupBy" : by,
-                "buckets" : buckets,
-                "output" : output,
-                "ganularity" : granularity
+                "groupBy" : self.by,
+                "buckets" : self.buckets,
+                "output" : self.output,
+                "ganularity" : self.granularity
             }
         }
-
-        return values

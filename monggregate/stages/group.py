@@ -63,10 +63,11 @@ For more information, see $group Optimization.
 
 
 """
-
-from pydantic import root_validator, Field
+from typing import Any
+from pydantic import Field, validator
 from monggregate.stages.stage import Stage
-from monggregate.utils import to_unique_list
+from monggregate.expressions import Expression
+from monggregate.utils import validate_field_path
 
 class Group(Stage):
     """
@@ -80,46 +81,32 @@ class Group(Stage):
 
     """
 
-    by : str | list[str] | set[str] = Field(..., alias = "_id")
+    by : Expression = Field(..., alias = "_id") # | or any constant value, in this case
+                                                # the stage returns a single document that aggregates values across all of the input documents.
     #operation : Operator # TODO  : After dealing with operators ($sum, $avg, $count, etc...)
     #result : Any
-    query : dict = {}
+    query : dict = {} # aggregation wanted
 
+    _validate_by = validator("by", pre=True, always=True, allow_reuse=True)(validate_field_path)
 
-
-    @root_validator(pre=True)
+    @validator("query", always=True)
     @classmethod
-    def generate_statement(cls, values:dict)->dict[str, dict]:
+    def validate_query(cls, query, values:dict[str,Any]) -> dict:
+        """Validates the query argument"""
+
+        by = values.get("by") # maybe need to check that by is not empty list or empty set
+
+        # maybe need to check query before
+        if not "_id" in query:
+            query.update({"_id":by})
+
+        return query
+
+    @property
+    def statement(self) -> dict[str, dict]:
         """Generates set stage statement from arguments"""
 
-        # Retrieving the values
-        #---------------------------------------
-        by = values.get("by")
-        _id = values.get("_id")
-        query = values.get("query", {})
 
-        # Handling aliases
-        #---------------------------------------
-        if not (_id or by or (query and query.get("_id"))):
-            raise TypeError("by (_id) is required")
-
-        if not _id:
-            _id = by
-
-        # Validates query
-        #---------------------------------------
-        _id = to_unique_list(_id)
-
-        if not query:
-            query = {}
-
-        # Generate statement
-        #--------------------------------------
-        if not "_id" in query:
-            query.update({"_id":_id})
-
-        values["statement"] = {
-            "$group":query
+        return  {
+            "$group":self.query
         }
-
-        return values
