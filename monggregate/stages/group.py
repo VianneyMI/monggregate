@@ -81,7 +81,7 @@ class Group(Stage):
 
     """
 
-    by : Expression = Field(..., alias = "_id") # | or any constant value, in this case
+    by : Expression | None = Field(None, alias = "_id") # | or any constant value, in this case
                                                 # the stage returns a single document that aggregates values across all of the input documents.
     #operation : Operator # TODO  : After dealing with operators ($sum, $avg, $count, etc...)
     #result : Any
@@ -91,7 +91,7 @@ class Group(Stage):
 
     @validator("query", always=True)
     @classmethod
-    def validate_query(cls, query, values:dict[str,Any]) -> dict:
+    def validate_query(cls, query:dict, values:dict[str,Any]) -> dict:
         """Validates the query argument"""
 
         by = values.get("by") # maybe need to check that by is not empty list or empty set

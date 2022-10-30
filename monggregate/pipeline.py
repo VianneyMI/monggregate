@@ -12,7 +12,7 @@ from monggregate.stages import (
     Limit,
     Lookup,
     Match,
-#    Out,
+    Out,
     Project,
     ReplaceRoot,
     Sample,
@@ -396,10 +396,14 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         Arguments:
         ---------------------------
             - db, str|None : name of the db to output the collection. Defaults to current collection.
-            - collectin, str : name of the output collection
-
+            - collection, str : name of the output collection
 
         """
+
+        self.stages.append(
+            Out(**kwargs)
+        )
+        return self
 
     def project(self, **kwargs:Any)->"Pipeline":
         """

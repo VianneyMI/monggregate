@@ -122,7 +122,7 @@ class Out(Stage):
     Attributes:
     ---------------------------
         - db, str|None : name of the db to output the collection. Defaults to current collection.
-        - collectin, str : name of the output collection
+        - collection, str : name of the output collection
 
     """
 

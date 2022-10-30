@@ -291,11 +291,11 @@ class Lookup(Stage):
 
     """
 
-    right : str | None = Field(..., alias="from")
+    right : str | None = Field(None, alias = "from")
     on : str | None #  shortcut for when left_on is the same than right_on
-    left_on : str | None = Field(...,alias="local_field")
-    right_on : str | None = Field(..., alias="foreign_field")
-    name : str | None = Field(...,alias="as")
+    left_on : str | None = Field(None,alias = "local_field")
+    right_on : str | None = Field(None, alias = "foreign_field")
+    name : str = Field(...,alias = "as") # | None
 
     # Subquery fields
     # ---------------------
@@ -311,7 +311,7 @@ class Lookup(Stage):
     def on_alias(cls, value:str, values:dict[str, str])->str:
         """Automatically fills left_on and right_on attributes when on is provided"""
 
-        on = values.get("on")
+        on = values.get("on") # pylint: disable=invalid-name
         if on:
             value = on
 
@@ -323,6 +323,12 @@ class Lookup(Stage):
     def set_type(cls, value:str, values:dict)->str:
         """Set types dynamically"""
 
+        if value:
+            pass
+            # TODO : Raise a warning if passed
+            # and an error is passed and computed values
+            # do not match
+
         # Retrieve previously validated values
         right = values.get("right")
         left_on = values.get("left_on")
@@ -331,17 +337,22 @@ class Lookup(Stage):
         pipeline = values.get("pipeline")
 
         # Check combination of arguments
-        if right and left_on and right_on and \
-            not(let or pipeline is None):
-            # in a subquery to select all on the foreign collection
-            # pipeline can be an empty list which is falsy
+        if right and left_on and right_on\
+            and not (let or pipeline):
+
             type_ = "simple"
 
-        elif let and pipeline is not None and not(left_on or right_on):
+
+        elif let and left_on and right_on\
+            and pipeline is not None:
+
+            type_ = "correlated"
+
+        elif not let and pipeline is not None:
+                        # in a subquery to select all on the foreign collection
+                        # pipeline can be an empty list which is falsy
             type_ =  "uncorrelated"
 
-        elif let and pipeline is None and left_on and right_on:
-            type_ = "correlated"
 
         else:
             raise TypeError("Incompatible combination of arguments")
