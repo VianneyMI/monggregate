@@ -1,7 +1,7 @@
 """Stage Sub-package"""
 
 from monggregate.stages.stage import Stage
-from monggregate.stages.bucket_auto import BucketAuto
+from monggregate.stages.bucket_auto import BucketAuto, GranularityEnum
 from monggregate.stages.bucket import Bucket
 from monggregate.stages.count import Count
 from monggregate.stages.group import Group

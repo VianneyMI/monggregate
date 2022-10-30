@@ -48,9 +48,6 @@ If the groupBy expression resolves to an array or a document, $bucket arranges t
 $sort.
 
 """
-# WARNING : This is raw <VM, 17/09/2022>
-# No parsing of arguments
-# No validation, no helpers, no intelligence just generating the statement for now
 
 from typing import Any
 from pydantic import Field, validator

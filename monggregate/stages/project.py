@@ -206,8 +206,8 @@ class Project(Stage):
 
 
             if isinstance(projection_args, list):
-                    for field in projection_args:
-                        projection[field] = include
+                for field in projection_args:
+                    projection[field] = include
             else:
                 projection.update(projection_args)
 

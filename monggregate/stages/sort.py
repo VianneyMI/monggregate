@@ -213,8 +213,8 @@ class Sort(Stage):
             }
 
             if isinstance(sort_args, list):
-                    for field in sort_args:
-                        query[field] = _sort_order_map[direction]
+                for field in sort_args:
+                    query[field] = _sort_order_map[direction]
             else:
                 query.update(sort_args)
 

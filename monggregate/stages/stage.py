@@ -16,9 +16,6 @@ from monggregate.utils import StrEnum
 class Stage(BaseModel, ABC):
     """MongoDB pipeline stage interface bas class"""
 
-    _statement : dict = {}# TODO : Fine tune type <VM, 16/09/2022> Ex : dict[str, str|dict]
-
-
     @property
     @abstractmethod
     def statement(self)->dict:
