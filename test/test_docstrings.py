@@ -62,7 +62,7 @@ def test_sync_docstrings()->None:
 
 
     # Filtering non-classes stages members
-    stages_classes = [member for member in list(stages_members.keys()) if member[0].isupper() and member !="Stage"]
+    stages_classes = [member for member in list(stages_members.keys()) if member[0].isupper() and issubclass(stages_members[member], stages.Stage) and member !="Stage"]
     # stages_classes is a list containing the names of the class in the stages subpackage
 
         # FIXME: The above will break if constants are included into stages
