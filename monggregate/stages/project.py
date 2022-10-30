@@ -167,6 +167,7 @@ class Project(Stage):
 
         return exclude
 
+    # TODO : When using fields, consider include = True as default
     @validator("fields", pre=True)
     @classmethod
     def validates_fields(cls, value:ProjectionArgs|None, values:dict[str, list[str]|dict|bool|None])-> list[str]|None:

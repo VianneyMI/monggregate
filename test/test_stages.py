@@ -240,12 +240,20 @@ def test_project()->None:
     with pytest.raises(ValidationError):
         Project()
 
+    with pytest.raises(ValidationError):
+        Project(projection={})
+
     # Testing aliases
     # -----------------------------
-    # N/A
+    project = Project(
+        fields = "email",
+        include = True
+    )
+    assert project
 
     # Testing optional attributes
     # -----------------------------
+        # Include/Exclude as set
     project = Project(
         include=set(["name"])
     )
@@ -255,7 +263,19 @@ def test_project()->None:
     project = Project(
         exclude=set(["password"])
     )
+        # Include/Exclude as str or list of strings
+    project = Project(
+        include=set(["name"])
+    )
     assert project
+    del project
+
+    project = Project(
+        exclude=["name", "_id"]
+    )
+    assert project
+    del project
+
 
     # test with string parameters and list
 
@@ -378,7 +398,11 @@ def test_sort()->None:
 
     # Testing aliases
     # -----------------------------
-    # N/A
+    sort = Sort(
+        by = "count"
+    )
+    assert sort
+    del sort
 
     # Testing optional attributes
     # -----------------------------
