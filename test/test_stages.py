@@ -15,6 +15,7 @@ from monggregate import( # pylint: disable=import-error
     Count,
     Group,
     Limit,
+    Lookup,
     Match,
     Out,
     Project,
@@ -23,7 +24,8 @@ from monggregate import( # pylint: disable=import-error
     Set,
     Skip,
     SortByCount,
-    Sort
+    Sort,
+    Unwind
 )
 
 # ----------------------
@@ -31,7 +33,11 @@ from monggregate import( # pylint: disable=import-error
 # ----------------------
 @pytest.mark.unit
 def test_()->None:
-    """Testes the xxx stage"""
+    """
+    Test template.
+
+    Copy/Paste me to create new tests
+    """
 
     # Testing mandatory attributes
     # -----------------------------
@@ -110,11 +116,14 @@ def test_count()->None:
 def test_group()->None:
     """Testes the group stage"""
 
+    # Testing mandatory fields
+    # ------------------------
     group = Group(
-        by="count"
+        query = {"_id":"count"}
     )
     assert group
     del group
+
 
     # Tests aliases
     # -----------------------
@@ -140,6 +149,60 @@ def test_limit()->None:
 
     limit = Limit(value=10)
     assert limit
+
+@pytest.mark.unit
+def test_lookup()->None:
+    """Testes the lookup stage"""
+
+    # Testing mandatory attributes
+    # -----------------------------
+    simple = Lookup(
+        right = "other_collection",
+        left_on = "_id",
+        right_on = "foreign_key",
+        name = "matches"
+    )
+    assert simple
+    del simple
+
+    correlated = Lookup(
+        right = "restaurants",
+        left_on = "restaurant_name",
+        right_on = "name",
+        let = {"orders_drink":"$drink"},
+        pipeline = [
+            {
+                "$match" : {
+                    "$expr" : {
+                        "$in" : ["$$orders_drink", "$beverages"]
+                    }
+                }
+            }
+        ],
+        name = "matches"
+    )
+    assert correlated
+
+    # Testing aliases
+    # -----------------------------
+    params = {
+        "from" : "other_collection",
+        "local_field" : "_id",
+        "foreign_field" : "foreign_key",
+        "as" :"matches"
+    }
+    simple = Lookup(**params)
+    assert simple
+
+    # Testing optional attributes
+    # -----------------------------
+    uncorrelated = Lookup(
+        right = "other_collection",
+        pipeline = [],
+        name = "new_fields"
+    )
+    assert uncorrelated
+
 
 @pytest.mark.unit
 def test_match()->None:
@@ -177,12 +240,20 @@ def test_project()->None:
     with pytest.raises(ValidationError):
         Project()
 
+    with pytest.raises(ValidationError):
+        Project(projection={})
+
     # Testing aliases
     # -----------------------------
-    # N/A
+    project = Project(
+        fields = "email",
+        include = True
+    )
+    assert project
 
     # Testing optional attributes
     # -----------------------------
+        # Include/Exclude as set
     project = Project(
         include=set(["name"])
     )
@@ -192,7 +263,19 @@ def test_project()->None:
     project = Project(
         exclude=set(["password"])
     )
+        # Include/Exclude as str or list of strings
+    project = Project(
+        include=set(["name"])
+    )
     assert project
+    del project
+
+    project = Project(
+        exclude=["name", "_id"]
+    )
+    assert project
+    del project
+
 
     # test with string parameters and list
 
@@ -303,13 +386,23 @@ def test_sort()->None:
 
     # Testing mandatory attributes
     # -----------------------------
-    sort = Sort(query={"field1":1, "fieldN":0}) # TODO : This should be invalid, the values must 1 or -1 => add validator
+    with pytest.raises(ValidationError):
+        sort = Sort(query={"field1":1, "fieldN":0})
+
+    with pytest.raises(ValidationError):
+        sort = Sort(query={})
+
+    sort = Sort(query={"field1":1, "fieldN":-1})
     assert sort
     del sort
 
     # Testing aliases
     # -----------------------------
-    # N/A
+    sort = Sort(
+        by = "count"
+    )
+    assert sort
+    del sort
 
     # Testing optional attributes
     # -----------------------------
@@ -326,6 +419,35 @@ def test_sort()->None:
         descending=set(["field3", "fieldN"])
         )
     assert sort
+
+@pytest.mark.unit
+def test_unwind()->None:
+    """Testes the xxx stage"""
+
+    # Testing mandatory attributes
+    # -----------------------------
+    unwind = Unwind(
+        path_to_array = "xyz",
+    )
+    assert unwind
+    del unwind
+
+    # Testing aliases
+    # -----------------------------
+    unwind = Unwind(
+        path = "xyz"
+    )
+    assert unwind
+    del unwind
+
+    # Testing optional attributes
+    # -----------------------------
+    unwind = Unwind(
+        path = "xyz",
+        include_array_index = "index",
+        always = True
+    )
+    assert unwind
 
 #-------------------------
 # Functional Tests

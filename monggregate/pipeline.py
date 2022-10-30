@@ -1,18 +1,19 @@
 """Pipeline Module"""
 
-from typing import Any
+from typing import Any, Literal
 from pymongo.database import Database
 from pydantic import BaseModel, BaseConfig
 from monggregate.stages import (
     Stage,
     BucketAuto,
+    GranularityEnum,
     Bucket,
     Count,
     Group,
     Limit,
     Lookup,
     Match,
-#    Out,
+    Out,
     Project,
     ReplaceRoot,
     Sample,
@@ -22,6 +23,7 @@ from monggregate.stages import (
     Sort,
     Unwind
 )
+from monggregate.expressions import Expression
 from monggregate.utils import StrEnum
 
 
@@ -39,7 +41,8 @@ class OnCallEnum(StrEnum):
     RUN = "run"
     EXPORT = "export"
 
-
+# TODO : Remove {} as default value for some arguments
+# as it is dangerous as signaled by pylint <VM, 30/10/2022>
 class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     """
     MongoDB aggregation pipeline abstraction
@@ -164,7 +167,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     #-----------------------------------------------------------
     # The below methods wrap the constructors of the classes of the same name
 
-    def add_fields(self, **kwargs:Any)->"Pipeline":
+    def add_fields(self, document:dict={}, **kwargs:Any)->"Pipeline":
         """
         Adds an add_fields stage to the current pipeline.
 
@@ -175,12 +178,13 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         """
 
+        document = document | kwargs
         self.stages.append(
-            Set(**kwargs)
+            Set(document=document)
         )
         return self
 
-    def bucket(self, **kwargs:Any)->"Pipeline":
+    def bucket(self, *, by:Expression, boundaries:list, default:Any=None, output:dict|None=None)->"Pipeline":
         """
         Adds a bucket stage to the current pipeline.
 
@@ -221,11 +225,16 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         """
 
         self.stages.append(
-            Bucket(**kwargs)
+            Bucket(
+                by = by,
+                boundaries = boundaries,
+                default = default,
+                output = output
+            )
         )
         return self
 
-    def bucket_auto(self, **kwargs:Any)->"Pipeline":
+    def bucket_auto(self, *, by:Expression, buckets:int, output:dict=None, granularity:GranularityEnum|None=None)->"Pipeline":
         """
         Adds a bucket_auto stage to the current pipeline
 
@@ -255,12 +264,17 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         """
 
         self.stages.append(
-            BucketAuto(**kwargs)
+            BucketAuto(
+                by = by,
+                buckets = buckets,
+                output = output,
+                granularity = granularity
+            )
         )
         return self
 
 
-    def count(self, **kwargs:Any)->"Pipeline":
+    def count(self, name:str)->"Pipeline":
         """
         Adds a count stage to the current pipeline
 
@@ -275,11 +289,11 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         """
 
         self.stages.append(
-                Count(**kwargs)
+                Count(name=name)
             )
         return self
 
-    def explode(self, **kwargs:Any)->"Pipeline":
+    def explode(self, path:str, *,  include_array_index:str|None=None, always:bool=False)->"Pipeline":
         """
         Adds a unwind stage to the current pipeline.
 
@@ -294,11 +308,15 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         """
 
         self.stages.append(
-                Unwind(**kwargs)
+                Unwind(
+                    path=path,
+                    include_array_index=include_array_index,
+                    always=always
+                    )
             )
         return self
 
-    def group(self, **kwargs:Any)->"Pipeline":
+    def group(self, *,  by:Expression|None=None, query:dict={})->"Pipeline":
         """
         Adds a group stage to the current pipeline.
 
@@ -310,11 +328,14 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         """
 
         self.stages.append(
-                Group(**kwargs)
+                Group(
+                    by=by,
+                    query=query
+                )
             )
         return self
 
-    def limit(self, **kwargs:Any)->"Pipeline":
+    def limit(self, value:int)->"Pipeline":
         """
         Adds a limit stage to the current pipeline.
 
@@ -327,11 +348,16 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         """
 
         self.stages.append(
-                Limit(**kwargs)
+                Limit(value=value)
             )
         return self
 
-    def lookup(self, **kwargs:Any)->"Pipeline":
+    def lookup(self, *, \
+        name:str,
+        right:str|None=None,
+        on:str|None=None,
+        left_on:str|None=None,
+        right_on:str=None)->"Pipeline":
         """
         Adds a lookup stage to the current pipeline.
 
@@ -367,11 +393,17 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         """
 
         self.stages.append(
-            Lookup(**kwargs)
+            Lookup(
+                right = right,
+                on = on,
+                left_on = left_on,
+                right_on = right_on,
+                name =name
+            )
         )
         return self
 
-    def match(self, **kwargs:Any)->"Pipeline":
+    def match(self, query:dict={}, **kwargs:Any)->"Pipeline":
         """
         Adds a match stage to the current pipeline.
 
@@ -384,24 +416,37 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         """
 
+        query = query | kwargs
         self.stages.append(
-                Match(**kwargs)
+                Match(query=query)
             )
         return self
 
-    def out(self, **kwargs:Any)->"Pipeline":
+    def out(self, collection:str, *, db:str|None=None)->"Pipeline":
         """
         Adds an out stage to the current pipeline.
 
         Arguments:
         ---------------------------
             - db, str|None : name of the db to output the collection. Defaults to current collection.
-            - collectin, str : name of the output collection
-
+            - collection, str : name of the output collection
 
         """
 
-    def project(self, **kwargs:Any)->"Pipeline":
+        self.stages.append(
+            Out(
+                collection=collection,
+                db = db
+            )
+        )
+        return self
+
+    def project(self, *,\
+        include : str|set[str]|list[str]|dict|bool|None = None,
+        exclude : str|set[str]|list[str]|dict|bool|None = None,
+        fields : str|set[str]|list[str]|None = None,
+        projection : dict = {},
+        **kwargs:Any)->"Pipeline":
         """
         Adds a project stage to the current pipeline.
 
@@ -415,12 +460,18 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         """
 
+        projection = projection | kwargs
         self.stages.append(
-                Project(**kwargs)
+                Project(
+                    include = include,
+                    exclude = exclude,
+                    fields = fields,
+                    projection = projection
+                )
             )
         return self
 
-    def replace_root(self, **kwargs:Any)->"Pipeline":
+    def replace_root(self, path:str)->"Pipeline":
         """
         Adds a replace_root stage to the current pipeline.
 
@@ -435,11 +486,11 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         """
 
         self.stages.append(
-                ReplaceRoot(**kwargs)
+                ReplaceRoot(path=path)
             )
         return self
 
-    def replace_with(self, **kwargs:Any)->"Pipeline":
+    def replace_with(self, path:str)->"Pipeline":
         """
         Adds a replace_with stage to the current pipeline.
 
@@ -453,11 +504,11 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         """
 
         self.stages.append(
-                ReplaceRoot(**kwargs)
+                ReplaceRoot(path=path)
             )
         return self
 
-    def sample(self, **kwargs:Any)->"Pipeline":
+    def sample(self, value:int)->"Pipeline":
         """
         Adds a sample stage to the current pipeline.
 
@@ -470,11 +521,11 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         """
 
         self.stages.append(
-                Sample(**kwargs)
+                Sample(value=value)
             )
         return self
 
-    def set(self, **kwargs:Any)->"Pipeline":
+    def set(self, document:dict={}, **kwargs:Any)->"Pipeline":
         """
         Adds a set stage to the current pipeline.
 
@@ -485,12 +536,13 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         """
 
+        document = document | kwargs
         self.stages.append(
-                Set(**kwargs)
+                Set(document=document)
             )
         return self
 
-    def skip(self, **kwargs:Any)->"Pipeline":
+    def skip(self, value:int)->"Pipeline":
         """
         Adds a skip stage to the current pipeline.
 
@@ -502,11 +554,16 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         """
 
         self.stages.append(
-                Skip(**kwargs)
+                Skip(value=value)
             )
         return self
 
-    def sort(self, **kwargs:Any)->"Pipeline":
+    def sort(self, *,\
+        descending : str|list[str]|dict|bool|None = None,
+        ascending : str|list[str]|dict|bool|None = None,
+        by : list[str]|None = None,
+        query : dict[str, Literal[1, -1]] = {},
+        **kwargs:Any)->"Pipeline":
         """
         Adds a sort stage to the current pipeline.
 
@@ -535,12 +592,18 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         """
 
+        query = query | kwargs
         self.stages.append(
-                Sort(**kwargs)
+                Sort(
+                    descending = descending,
+                    ascending = ascending,
+                    by = by,
+                    query = query
+                )
             )
         return self
 
-    def sort_by_count(self, **kwargs:Any)->"Pipeline":
+    def sort_by_count(self, by:str)->"Pipeline":
         """
         Adds a sort_by_count stage to the current pipeline.
 
@@ -554,11 +617,11 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         """
 
         self.stages.append(
-                SortByCount(**kwargs)
+                SortByCount(by=by)
             )
         return self
 
-    def unwind(self, **kwargs:Any)->"Pipeline":
+    def unwind(self, path:str, include_array_index:str|None=None, always:bool=False)->"Pipeline":
         """
         Adds a unwind stage to the current pipeline.
 
@@ -573,7 +636,11 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         """
 
         self.stages.append(
-                Unwind(**kwargs)
+                Unwind(
+                    path = path,
+                    include_array_index = include_array_index,
+                    always = always
+                )
             )
         return self
 

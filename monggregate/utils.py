@@ -59,10 +59,10 @@ def to_unique_list(keys:T)->list[str]|T:
 
     return output
 
-def validate_field_path(path:str)->str:
+def validate_field_path(path:str|None)->str|None:
     """Validates field path"""
 
-    if not path.startswith("$"):
+    if path and not path.startswith("$"):
         path =  "$" + path
 
     return path

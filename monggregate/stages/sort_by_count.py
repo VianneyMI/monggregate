@@ -64,7 +64,7 @@ class SortByCount(Stage):
 
 
     @property
-    def statement(self)->dict[str, dict]:
+    def statement(self)->dict:
         """Generates sort_by_count stage statement from SortByCount class keywords arguments"""
 
         return  {

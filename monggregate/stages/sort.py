@@ -94,6 +94,7 @@ the returned sort order will always be the same across multiple executions of th
 
 """
 
+from typing import Literal
 from pydantic import validator
 from monggregate.stages.stage import Stage
 from monggregate.utils import to_unique_list
@@ -128,12 +129,10 @@ class Sort(Stage):
 
     """
 
-
-
-    ascending  : list[str] | dict | bool | None
     descending : list[str] | dict | bool | None
+    ascending  : list[str] | dict | bool | None
     by : list[str] | None
-    query : dict = {}
+    query : dict[str, Literal[1, -1]] = {}
 
     # NOTE : The below are validators are very close to what is used for project => CONSIDER factorizing <VM, 27/10/2022>
     @validator("ascending", "descending", pre=True, always=True)
@@ -143,16 +142,38 @@ class Sort(Stage):
 
         return to_unique_list(value)
 
-    @validator("descending")
+    @validator("ascending")
     @classmethod
-    def validates_booleans(cls, descending:SortArgs|dict|bool|None, values:dict)->list[str]|bool|None:
+    def validates_booleans(cls, ascending:SortArgs|dict|bool|None, values:dict)->list[str]|bool|None:
         """Validates combination of ascending and descending"""
 
-        ascending = values.get("ascending")
+        descending = values.get("descending")
+
+        # Preventing to use both aascending and descending as booleans at the same time
+        # to avoid conflicting behaviors
         if isinstance(descending, bool) and isinstance(ascending, bool):
             raise ValueError("Cannot use both ascending and descending as booleans at the same time")
 
-        return descending
+        # If neither is set, in case by is set, we set ascending as True by default
+        # so that the documents will be sorted by the fields provided in by in ascending order
+        elif ascending is None and descending is None:
+            ascending = True
+
+        # If descending is provided as a bool, we symetrically compute ascending, so that we can only need one of argument
+        # in validates_by below
+        elif ascending is None and isinstance(descending, bool):
+            ascending = not descending
+
+        elif isinstance(ascending, list) or isinstance(descending, list):
+            pass
+
+        else:
+            raise TypeError(
+                f"Wrong combination of arguments.\
+                     Cannot have ascending with type {type(ascending)} and descending with type {type(descending)} at the same time"
+                     )
+
+        return ascending
 
 
     @validator("by", pre=True)
@@ -192,17 +213,17 @@ class Sort(Stage):
             }
 
             if isinstance(sort_args, list):
-                    for field in sort_args:
-                        query[field] = _sort_order_map[direction]
+                for field in sort_args:
+                    query[field] = _sort_order_map[direction]
             else:
                 query.update(sort_args)
 
 
-            # Retrieving validated fields
+        # Retrieving validated fields
         # -----------------------------
-        ascending = values.get("ascending")
-        descending = values.get("descending")
-        by = values.get("by")
+        ascending:list[str]|dict|bool|None = values.get("ascending")
+        descending:list[str]|dict|bool|None = values.get("descending")
+        by:list[str]|None = values.get("by")
 
 
         # Initizaling projection if not provided
@@ -215,7 +236,7 @@ class Sort(Stage):
                 # validates_by ensures that ascending and descending are either None or booleans when by is provided
                 # None or boolean_value = boolean_value
                 # valdiates_booleans ensures that ascending or descending are not both, booleans at the same time
-                _to_query(query, by,  ascending or descending)
+                _to_query(query, by,  ascending)
 
             # Case #2 : by is not provided
             # -------------------------------
@@ -225,8 +246,6 @@ class Sort(Stage):
 
                 if descending is not None:
                     _to_query(query, descending, False)
-
-        # TODO : Validate final query <VM, 23/10/2022>
 
         return query
 
