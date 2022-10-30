@@ -1,7 +1,7 @@
 ## Overview
 
-Monggregate is a library that aims at simplyfing usage of MongoDB aggregation pipeline in python.
-It is based on MongoDB official python driver, pymongo and on pydantic.
+Monggregate is a library that aims at simplifying usage of MongoDB aggregation pipeline in python.
+It is based on MongoDB official python driver, pymongo and on [pydantic](https://pydantic-docs.helpmanual.io/).
 
 ### Features
 
@@ -29,7 +29,7 @@ The below examples reference the  MongoDB sample_mflix database
 
 from dotenv import load_dotenv
 import pymongo
-from mongregatte.app.stages import Match, Limit Sort
+from monggregate.app.stages import Match, Limit Sort
 
 # Load config from a .env file:
 load_dotenv(verbose=True)
@@ -77,7 +77,7 @@ results = move_collection.aggregate(pipeline)
 
 from dotenv import load_dotenv
 import pymongo
-from mongregatte.app.pipeline import Pipeline
+from monggregate.app.pipeline import Pipeline
 
 # Load config from a .env file:
 load_dotenv(verbose=True)
@@ -117,7 +117,7 @@ db["movies"].aggregate(pipeline())
 
 from dotenv import load_dotenv
 import pymongo
-from mongregatte.app.pipeline import Pipeline
+from monggregate.app.pipeline import Pipeline
 
 # Load config from a .env file:
 load_dotenv(verbose=True)
