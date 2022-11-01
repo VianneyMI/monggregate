@@ -20,4 +20,4 @@ class GreatherThan(Comparator):
         else:
             output = value
 
-        return value
+        return output
