@@ -71,3 +71,13 @@ class Sum(Accumulator):
         return {
             "$sum" : self.operand or self.operands
         }
+
+def sum(*args:Expression)->dict:
+    """Creates a $sum statement"""
+
+    if len(args>1):
+        output = Sum(operands=args).statement
+    else:
+        output = Sum(operand=args).statement
+
+    return output
