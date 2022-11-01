@@ -1,17 +1,17 @@
 """
-Module defining an interface to MongoDB $gt operator
+Module defining an interface to MongoDB $eq operator
 """
 
 from monggregate.operators.comparison.comparator import Comparator
 
-class GreatherThan(Comparator):
+class Equal(Comparator):
     """Creates a $gt expression"""
 
     @property
     def statement(self) -> dict:
 
         return {
-            "$gt":[self.left, self.right]
+            "$eq":[self.left, self.right]
         }
 
-Gt = GreatherThan
+Eq = Equal
