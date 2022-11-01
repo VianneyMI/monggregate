@@ -82,14 +82,14 @@ def test_bucket()->None:
 
     bucket = Bucket(
         group_by="income",
-        boundaries=[25000, 40000, 60000, 10000],
+        boundaries=[25000, 40000, 60000, 100000],
     )
     assert bucket
     del bucket
 
     bucket = Bucket(
         group_by="income",
-        boundaries=[25000, 40000, 60000, 10000],
+        boundaries=[25000, 40000, 60000, 100000],
         default="other"
     )
 
@@ -98,7 +98,7 @@ def test_bucket()->None:
 
     bucket = Bucket(
         group_by="income",
-        boundaries=[25000, 40000, 60000, 10000],
+        boundaries=[25000, 40000, 60000, 100000],
         default="other",
         output={"output":"expression"}
     )
@@ -452,7 +452,66 @@ def test_unwind()->None:
 #-------------------------
 # Functional Tests
 #-------------------------
+# TODO : Use deeepdiff to make tests easier to debug
+@pytest.mark.functional
+def test_bucket_auto_statement()->None:
+    """Testes that the BucketAuto class produces the correct statement"""
 
+    bucket_auto = BucketAuto(
+        group_by="test",
+        buckets=10
+    )
+    assert bucket_auto.statement == {
+        "$bucketAuto" : {
+            "groupBy" : "$test",
+            "buckets" : 10,
+            "output" : None,
+            "granularity" : None
+        }
+    }
+
+
+    bucket_auto = BucketAuto(
+        group_by="test",
+        buckets = 4,
+        output = {"new_var":{"$sum":"my_expression"}},
+        granularity="E12"
+    )
+
+    assert bucket_auto.statement == {
+        "$bucketAuto" : {
+            "groupBy" : "$test",
+            "buckets" : 4,
+            "output" : {
+                "new_var" : {
+                    "$sum" : "my_expression"
+                }
+            },
+            "granularity" : "E12"
+        }
+    }
+
+@pytest.mark.functional
+def test_bucket_statement()->None:
+    """
+    Test template.
+
+    Copy/Paste me to create new tests
+    """
+
+    bucket = Bucket(
+        group_by="income",
+        boundaries=[25000, 40000, 60000, 100000],
+        default = "other"
+    )
+    assert bucket.statement == {
+        "$bucket" : {
+            "groupBy" : "$income",
+            "boundaries" : [25000, 40000, 60000, 100000],
+            "default" : "other",
+            "output" : None
+        }
+    }
 
 # ------------------------
 # Debugging:

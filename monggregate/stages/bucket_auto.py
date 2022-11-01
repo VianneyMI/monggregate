@@ -150,6 +150,6 @@ class BucketAuto(Stage):
                 "groupBy" : self.by,
                 "buckets" : self.buckets,
                 "output" : self.output,
-                "ganularity" : self.granularity
+                "granularity" : self.granularity.value if self.granularity else None
             }
         }
