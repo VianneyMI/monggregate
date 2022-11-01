@@ -104,7 +104,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     _db : Database | None # necessary to execute the pipeline
                         # TODO : allow to pass a URI and instantiates a database connection directly here
     on_call : OnCallEnum = OnCallEnum.EXPORT
-    collection : str
+    collection : str | None
     stages : list[Stage] = []
 
     class Config(BaseConfig):
