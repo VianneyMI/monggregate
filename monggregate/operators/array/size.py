@@ -1,9 +1,9 @@
 """Module defining an interface to $size operator"""
 
 from monggregate.expressions import Expression
-from monggregate.operators.array.array import ArrayOperator
+from monggregate.operators.array.array import ArrayOnlyOperator
 
-class Size(ArrayOperator):
+class Size(ArrayOnlyOperator):
     """Creates a $size expression"""
 
     @property
