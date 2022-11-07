@@ -1,25 +1,24 @@
-"""Module defining an interface to $inoperator"""
+"""Module defining an interface to $maxn operator"""
 
 from pydantic import Field
 from monggregate.expressions import Expression
 from monggregate.operators.array.array import ArrayOperator
 
-class IN(ArrayOperator):
+class MaxN(ArrayOperator):
     """Creates a $maxN expression"""
 
-    expression : Expression = Field(1, alias="n")
     array : Expression = Field(alias="input")
-
+    limit : Expression = Field(1, alias="n")
 
     @property
     def statement(self) -> dict:
         return {
-            "$in":[self.expression, self.array]
+            "$maxN":self.expression
         }
 
-def in_(array:Expression)->dict:
+def max_n(array:Expression)->dict:
     """Returns a $maxN statement"""
 
-    return IN(
+    return MaxN(
         expression = array
     ).statement
