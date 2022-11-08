@@ -3,13 +3,34 @@
 # Standard Library imports
 #----------------------------
 from abc import ABC, abstractmethod
+from typing import Any
 
 # 3rd Party imports
 # ---------------------------
-from pydantic import BaseModel as PydanticBaseModel, BaseConfig
+from pydantic import BaseModel as PydanticBaseModel, BaseConfig, validator
 
 class BaseModel(PydanticBaseModel, ABC):
-    """MongoDB pipeline stage interface bas class"""
+    """Mongreggate base class"""
+
+    @validator("*", pre=True)
+    @classmethod
+    def resolve(cls, expression:Any)->dict|list[dict]:
+        """Resolves an expression encapsulated in an object from a class inheriting from BaseModel"""
+
+        if isinstance(expression, BaseModel):
+            output:dict|list = expression.statement
+        elif isinstance(expression, list):
+            for element in expression:
+                output = []
+                if isinstance(element, BaseModel):
+                    output.append(element.statement)
+                else:
+                    output.append(element)
+        #elif isinstance(expression, dict): # Does this case really exist ?
+        else:
+            output = expression
+
+        return output
 
     @property
     @abstractmethod
