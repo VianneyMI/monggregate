@@ -37,6 +37,7 @@ class Average(Accumulator):
         return {
             "$push" : self.expression
         }
+Avg = Average
 
 def average(expression:Expression)->dict:
     """Creates a push statement"""

@@ -2,6 +2,7 @@
 Module defining an interface to MongoDB $lt operator
 """
 
+from monggregate.expressions import Expression
 from monggregate.operators.comparison.comparator import Comparator
 
 class LowerThan(Comparator):
@@ -15,3 +16,13 @@ class LowerThan(Comparator):
         }
 
 Lt = LowerThan
+
+def lower_than(left:Expression, right:Expression)->dict:
+    """Returns a $lt statement"""
+
+    return LowerThan(
+        left=left,
+        right=right
+    ).statement
+
+lt = lower_than

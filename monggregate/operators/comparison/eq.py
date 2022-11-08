@@ -2,6 +2,7 @@
 Module defining an interface to MongoDB $eq operator
 """
 
+from monggregate.expressions import Expression
 from monggregate.operators.comparison.comparator import Comparator
 
 class Equal(Comparator):
@@ -15,3 +16,13 @@ class Equal(Comparator):
         }
 
 Eq = Equal
+
+def equal(left:Expression, right:Expression)->dict:
+    """Creates an $eq statement"""
+
+    return Equal(
+        left=left,
+        right=right
+    ).statement
+
+eq = equal

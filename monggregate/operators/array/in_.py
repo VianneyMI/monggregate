@@ -4,7 +4,7 @@ from pydantic import Field
 from monggregate.expressions import Expression
 from monggregate.operators.array.array import ArrayOperator
 
-class IN(ArrayOperator):
+class In(ArrayOperator):
     """Creates a $maxN expression"""
 
     expression : Expression = Field(1, alias="n")
@@ -20,6 +20,6 @@ class IN(ArrayOperator):
 def in_(array:Expression)->dict:
     """Returns a $maxN statement"""
 
-    return IN(
+    return In(
         expression = array
     ).statement

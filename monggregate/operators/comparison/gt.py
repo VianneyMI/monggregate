@@ -17,9 +17,12 @@ class GreatherThan(Comparator):
 
 Gt = GreatherThan
 
-def gt(left:Expression, right:Expression)->dict:
+def greather_than(left:Expression, right:Expression)->dict:
+    """Returns a $gt statement"""
 
     return GreatherThan(
         left = left,
         right = right
         ).statement
+
+gt= greather_than
