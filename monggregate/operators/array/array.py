@@ -1,4 +1,4 @@
-"""Base accumulator module"""
+"""Base array operator module"""
 
 from abc import ABC
 
