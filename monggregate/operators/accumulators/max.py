@@ -14,28 +14,18 @@ from monggregate.operators.accumulators.accumulator import Accumulator
 
 class Max(Accumulator):
     """
-    Creates a sum expression.
+    Creates a $ max expression.
     """
 
     expression : Expression
 
-    @validator("expression", pre=True, always=True)
-    @classmethod
-    def convert_expression(cls, expression : Expression)->Expression|dict:
-        """Converts expression"""
 
-        if isinstance(expression, Accumulator):
-            output = expression.statement
-        else:
-            output = expression
-
-        return output
 
     @property
     def statement(self) -> dict:
 
         return {
-            "$push" : self.expression
+            "$max" : self.expression
         }
 
 def max(expression:Expression)->dict:

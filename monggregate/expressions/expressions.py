@@ -13,8 +13,9 @@ from typing import Any
 
 # Package imports
 # ---------------------------
+from monggregate.index import OperatorEnum
 from monggregate.expressions.miscellaneous import FieldPath, AggregationVariables,  Literal_
-from monggregate.operators.operator import OperatorEnum
+
 
 # Typing
 # ----------------------------
@@ -35,7 +36,7 @@ OperatorArgumentTypes = int | float | str | bool # Possible types for operator e
 OperatorArgumentsTypes =  list[int] | list[float] | list[str] | list[bool]
 OperatorArguments = OperatorArgumentTypes | OperatorArgumentsTypes | FieldPath | list[FieldPath] | dict[FieldPath, Any]
 
-OperatorExpression = dict[OperatorEnum, OperatorArguments]
+OperatorExpression =  dict[OperatorEnum, OperatorArguments]
 
     # Expression Object
     # -------------------------

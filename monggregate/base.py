@@ -17,11 +17,17 @@ class BaseModel(PydanticBaseModel, ABC):
     def resolve(cls, expression:Any)->dict|list[dict]:
         """Resolves an expression encapsulated in an object from a class inheriting from BaseModel"""
 
-        if isinstance(expression, BaseModel):
+    # TODO : optimize and ensure robustness <VM, 09/11/2022>
+        def isbasemodel(instance:Any)->bool:
+            """Returns true if instance is an instance of BaseModel"""
+
+            return isinstance(instance, BaseModel)
+
+        if isbasemodel(expression):
             output:dict|list = expression.statement
-        elif isinstance(expression, list):
+        elif isinstance(expression, list) and any(map(isbasemodel, expression)):
+            output = []
             for element in expression:
-                output = []
                 if isinstance(element, BaseModel):
                     output.append(element.statement)
                 else:

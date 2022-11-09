@@ -14,33 +14,17 @@ from monggregate.operators.accumulators.accumulator import Accumulator
 
 class Sum(Accumulator):
     """
-    Creates a sum expression.
+    Creates a $sum expression.
     """
 
     operands : list[Expression] | None
     operand : Expression | None
 
-    @validator("operands", pre=True, always=True)
-    @classmethod
-    def convert_operands(cls, operands:list[Expression]|None)->list|None:
-        """Converts operands"""
 
-        output = []
-        if isinstance(operands, list):
-            for operand in operands:
-                # TODO : Replace accumulator by parent ancestor of stages and operators.
-                if isinstance(operand, Accumulator):
-                    output.append(operand.statement)
-                else:
-                    output.append(operand)
-        else:
-            output = operands
-
-        return output
 
     @validator("operand", pre=True, always=True)
     @classmethod
-    def convert_operand(cls, operand:Expression|None, values:dict)->Expression|dict|None:
+    def validate_operand(cls, operand:Expression|None, values:dict)->Expression|dict|None:
         """Valdidates and converts operand"""
 
 
@@ -55,14 +39,8 @@ class Sum(Accumulator):
         if operand and operands:
             raise ValueError("Operand and Operands cannot be both set")
 
-        # Conversion
-        # ---------------------------------------
-        if isinstance(operand, Accumulator):
-            output = operand.statement
-        else:
-            output = operand
 
-        return output
+        return operand
 
 
     @property
@@ -72,7 +50,7 @@ class Sum(Accumulator):
             "$sum" : self.operand or self.operands
         }
 
-def sum(*args:Expression)->dict:
+def sum(*args:Expression)->dict: # pylint: disable=redefined-builtin
     """Creates a $sum statement"""
 
     if len(args>1):

@@ -19,18 +19,6 @@ class Average(Accumulator):
 
     expression : Expression
 
-    @validator("expression", pre=True, always=True)
-    @classmethod
-    def convert_expression(cls, expression : Expression)->Expression|dict:
-        """Converts expression"""
-
-        if isinstance(expression, Accumulator):
-            output = expression.statement
-        else:
-            output = expression
-
-        return output
-
     @property
     def statement(self) -> dict:
 

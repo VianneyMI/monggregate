@@ -13,7 +13,7 @@ from monggregate.operators.accumulators.accumulator import Accumulator
 
 class Count(Accumulator):
     """
-    Creates a sum expression.
+    Creates a $count expression.
     """
 
 
@@ -22,11 +22,11 @@ class Count(Accumulator):
     def statement(self) -> dict:
 
         return {
-            "$push" : self.expression
+            "$count" : {}
         }
 
 def count()->dict:
-    """Creates a push statement"""
+    """Creates a $count statement"""
 
     return Count().statement
 

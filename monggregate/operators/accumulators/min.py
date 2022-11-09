@@ -14,31 +14,21 @@ from monggregate.operators.accumulators.accumulator import Accumulator
 
 class Min(Accumulator):
     """
-    Creates a sum expression.
+    Creates a $min expression.
     """
 
     expression : Expression
 
-    @validator("expression", pre=True, always=True)
-    @classmethod
-    def convert_expression(cls, expression : Expression)->Expression|dict:
-        """Converts expression"""
 
-        if isinstance(expression, Accumulator):
-            output = expression.statement
-        else:
-            output = expression
-
-        return output
 
     @property
     def statement(self) -> dict:
 
         return {
-            "$push" : self.expression
+            "$min" : self.expression
         }
 
 def min(expression:Expression)->dict:
-    """Creates a push statement"""
+    """Creates a $min statement"""
 
     return Min(expression=expression).statement
