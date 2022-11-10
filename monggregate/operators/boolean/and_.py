@@ -20,5 +20,5 @@ def and_(*args:Expression)->dict:
     """Returns an $and statement"""
 
     return And(
-        expressions=args
+        expressions=list(args)
     ).statement

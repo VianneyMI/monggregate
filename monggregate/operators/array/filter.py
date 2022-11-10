@@ -28,24 +28,27 @@ class Filter(ArrayOperator):
 
     array : Expression =  Field(alias="input")
     query : Expression = Field(alias="cond")
-    name : str | None = Field("this", alias="as")
+    let : str | None = Field("this", alias="as")
     limit : Expression | None = Field(ge=1)
 
     # TODO : Add a validator in package parent class to automatically translate expressions to their statement when used as arguments <VM, 07/11/2022>
     @property
     def statement(self) -> dict:
         return {
-            "$first":{
+            "$filter":{
                "input" : self.array,
                "cond" : self.query,
-               "as" : self.name,
+               "as" : self.let,
                "limit" : self.limit
             }
         }
 
-def filter(array:Expression)->dict: # pylint: disable=redefined-builtin
+def filter(array:Expression, let:str, query:Expression, limit:int|None=None)->dict: # pylint: disable=redefined-builtin
     """Returns a $filter statement"""
 
     return Filter(
-        expression = array
+        array = array,
+        query = query,
+        let = let,
+        limit = limit
     ).statement

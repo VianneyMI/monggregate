@@ -8,7 +8,7 @@ Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/avg/
 
 """
 
-from pydantic import validator
+
 from monggregate.expressions import Expression
 from monggregate.operators.accumulators.accumulator import Accumulator
 
@@ -23,7 +23,7 @@ class Average(Accumulator):
     def statement(self) -> dict:
 
         return {
-            "$push" : self.expression
+            "$avg" : self.expression
         }
 Avg = Average
 

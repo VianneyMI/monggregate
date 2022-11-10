@@ -53,9 +53,9 @@ class Sum(Accumulator):
 def sum(*args:Expression)->dict: # pylint: disable=redefined-builtin
     """Creates a $sum statement"""
 
-    if len(args>1):
-        output = Sum(operands=args).statement
+    if len(args)>1:
+        output = Sum(operands=list(args)).statement
     else:
-        output = Sum(operand=args).statement
+        output = Sum(operand=args[0]).statement
 
     return output
