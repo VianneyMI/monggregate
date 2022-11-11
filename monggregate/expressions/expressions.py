@@ -53,6 +53,6 @@ ExpressionObject = dict[FieldPath, Any]
     # Expressions can be nested.
     # (You can have expressions in OperatorExpression and ExpressionObject)
 
-Expression = FieldPath | list[FieldPath] | AggregationVariables | OperatorArguments | OperatorExpression | ExpressionObject | Literal_
-
+_Expression = FieldPath | list[FieldPath] | AggregationVariables | OperatorArguments | OperatorExpression | ExpressionObject | Literal_
+Expression = _Expression | dict[str, _Expression]
 # TODO : Define more precise types for OperatorArguments, ExpressionObject and Expression when pydantic allows recursive types <VM, 05/10/2022>

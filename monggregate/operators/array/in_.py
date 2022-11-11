@@ -17,9 +17,10 @@ class In(ArrayOperator):
             "$in":[self.expression, self.array]
         }
 
-def in_(array:Expression)->dict:
+def in_(expression:Expression, array:Expression)->dict:
     """Returns a $maxN statement"""
 
     return In(
-        expression = array
+        expression = expression,
+        array = array
     ).statement

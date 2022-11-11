@@ -7,7 +7,7 @@ from monggregate.operators.array.array import ArrayOperator
 class MinN(ArrayOperator):
     """Creates a $minN expression"""
 
-    array : Expression = Field(alias="input")
+    expression : Expression = Field(alias="input")
     limit : Expression = Field(1, alias="n")
 
     @property
@@ -15,13 +15,14 @@ class MinN(ArrayOperator):
         return {
             "$minN" : {
                 "n" : self.limit,
-                "input" : self.array
+                "input" : self.expression
             }
         }
 
-def min_n(array:Expression)->dict:
+def min_n(expression:Expression, limit:Expression=1)->dict:
     """Returns a $minN statement"""
 
     return MinN(
-        expression = array
+        expression = expression,
+        limit = limit
     ).statement
