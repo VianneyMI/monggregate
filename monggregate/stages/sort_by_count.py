@@ -47,7 +47,9 @@ $group + $sort sequence:
 
 """
 
+from pydantic import validator
 from monggregate.stages.stage import Stage
+from monggregate.utils import validate_field_path
 
 class SortByCount(Stage):
     """
@@ -61,6 +63,10 @@ class SortByCount(Stage):
     """
 
     by : str # TODO : Allow more types <VM, 17/09/2022>
+
+    # Validators
+    # ------------------------
+    _validates_path_to_array = validator("by", allow_reuse=True, pre=True, always=True)(validate_field_path)
 
 
     @property

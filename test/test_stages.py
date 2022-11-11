@@ -203,7 +203,7 @@ class TestStages:
     def test_match(self, state:State)->None:
         """Testes the match stage"""
 
-        match = Match(query={"_id":"123455"})
+        match = Match(query={"_id":"12345"})
         assert match
         state["match"] = match
 
@@ -223,7 +223,6 @@ class TestStages:
         assert Out(db="other_db", coll="new_collection")
 
 
-
     def test_project(self, state:State)->None:
         """Testes the project stage"""
 
@@ -231,7 +230,7 @@ class TestStages:
         # -----------------------------
         project = Project(projection={"_id":0}) #projection is not really mandatory
         assert project
-        state["proejct"] = project
+        state["project"] = project
 
         with pytest.raises(ValidationError):
             Project()
@@ -307,7 +306,6 @@ class TestStages:
 
         assert sample
         assert sample.value == 10
-
 
 
     def test_set(self, state:State)->None:
@@ -460,6 +458,168 @@ class TestStagesFunctional(TestStages):
                 "boundaries" : [25000, 40000, 60000, 100000],
                 "default" : None,
                 "output" : None
+            }
+        }
+
+    def test_count_statement(self, state:State)->None:
+        """Testes the Count class statement and its mirror function"""
+
+        count = state["count"]
+        assert count.statement == Pipeline().count(name="count")[0].statement == {
+            "$count" : "count"
+        }
+
+    def test_group_statement(self, state:State)->None:
+        """Testes the Group class statement and its mirror function"""
+
+        group = state["group"]
+        assert group.statement == Pipeline().group(
+            query = {
+                "_id" :"count"
+            }
+        )[0].statement == {
+            "$group" : {
+                "_id" :"count"
+            }
+        }
+
+    def test_limit_statement(self, state:State)->None:
+        """Testes the Limit class statement and its mirror function"""
+
+        limit = state["limit"]
+        assert limit.statement == Pipeline().limit(10)[0].statement == {
+            "$limit" : 10
+        }
+
+    def test_lookup_statement(self, state:State)->None:
+        """Testes the Limit class statement and its mirror function"""
+
+        lookup = state["lookup"]
+        assert lookup.statement == Pipeline().lookup(
+            right = "other_collection",
+            left_on = "_id",
+            right_on = "foreign_key",
+            name = "matches"
+        )[0].statement == {
+                "$lookup" :{
+                "from" : "other_collection",
+                "localField" : "_id",
+                "foreignField" : "foreign_key",
+                "as" : "matches"
+            }
+        }
+
+    def test_match_statement(self, state:State)->None:
+        """Testes the Match class and its mirror function"""
+
+        match = state["match"]
+        assert match.statement == Pipeline().match(
+            query = {
+                "_id":"12345"
+            }
+        )[0].statement == {
+            "$match" : {
+                "_id" : "12345"
+            }
+        }
+
+    def test_out_satement(self, state:State)->None:
+        """Testes the Out class and its mirror function"""
+
+        out = state["out"]
+        assert out.statement == Pipeline().out("my_collection")[0].statement == {
+            "$out" : "my_collection"
+        }
+
+    def test_project_statement(self, state:State)->None:
+        """Testes the Project class and its mirror function"""
+
+        project = state["project"]
+        assert project.statement == Pipeline().project(
+            exclude = "_id"
+        )[0].statement == {
+            "$project" : {
+                "_id" : 0
+            }
+        }
+
+    def test_replace_root_statement(self, state:State)->None:
+        """Testes the ReplaceRoot class and its mirror function"""
+
+        replace_root = state["replace_root"]
+        assert replace_root.statement == Pipeline().replace_root(
+            "myarray.mydocument"
+        )[0].statement == {
+            "$replaceRoot" : {
+                "newRoot" : "$myarray.mydocument"
+            }
+        }
+
+    def test_sample_statement(self, state:State) -> None:
+        """Testes the Sample class and its mirror function"""
+
+        sample = state["sample"]
+        assert sample.statement == Pipeline().sample(3)[0].statement == {
+            "$sample" : {
+                "size" : 3
+            }
+        }
+
+    def test_set_statement(self, state:State) -> None:
+        """Testes the Set class and its mirror function"""
+
+        set = state["set"]
+        assert set.statement == Pipeline().set(
+            {
+                "field1":"value1",
+                "fieldN":"valueN"
+            }
+        )[0].statement == {
+            "$set" : {
+                "field1":"value1",
+                "fieldN":"valueN"
+            }
+        }
+
+    def test_skip_statement(self, state:State)->None:
+        """Testes the Skip class and its mirror function"""
+
+        skip = state["skip"]
+        assert skip.statement == Pipeline().skip(10)[0].statement == {
+            "$skip" : 10
+        }
+
+
+    def test_sort_by_count_statement(self, state:State)->None:
+        """Testes the SortByCount class and its mirror function"""
+
+        sort_by_count = state["sort_by_count"]
+        assert sort_by_count.statement == Pipeline().sort_by_count(
+            by = "name"
+        )[0].statement == {
+            "$sortByCount" : "$name"
+        }
+
+    def test_sort_statement(self, state:State)->None:
+        """Testes the Sort class and its mirror function"""
+
+        sort = state["sort"]
+        assert sort.statement == Pipeline().sort(field1=1, fieldN=-1)[0].statement == {
+            "$sort" : {
+                "field1" : 1,
+                "fieldN" : -1
+            }
+        }
+
+    def test_unwind_statement(self, state:State)->None:
+        """Testes the Unwind class and its mirror function"""
+
+        unwind = state["unwind"]
+        assert unwind.statement == Pipeline().unwind("xyz")[0].statement == {
+            "$unwind" : {
+                "path" : "$xyz",
+                "includeArrayIndex" : None,
+                "preserveNullAndEmptyArrays" : False
             }
         }
 
