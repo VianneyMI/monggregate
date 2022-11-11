@@ -12,7 +12,7 @@ from monggregate.operators.comparison import(
    Ne, ne
 )
 
-@pytest.mark.operator
+@pytest.mark.operators
 @pytest.mark.unit
 @pytest.mark.functional
 class TestBooleanOperators:

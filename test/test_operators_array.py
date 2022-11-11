@@ -20,7 +20,7 @@ from monggregate.operators.array import(
 # but will not be tested in this module
 from monggregate.operators.comparison import greather_than
 
-@pytest.mark.operator
+@pytest.mark.operators
 @pytest.mark.unit
 @pytest.mark.functional
 class TestArrayOperators:

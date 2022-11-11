@@ -10,7 +10,7 @@ from monggregate.operators.boolean import(
 from monggregate.operators.accumulators import First
 from monggregate.operators.comparison import greather_than
 
-@pytest.mark.operator
+@pytest.mark.operators
 @pytest.mark.unit
 @pytest.mark.functional
 class TestBooleanOperators:

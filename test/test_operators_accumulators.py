@@ -13,7 +13,7 @@ from monggregate.operators.accumulators import( # pylint: disable=import-error
     Sum, sum
 )
 
-@pytest.mark.operator
+@pytest.mark.operators
 @pytest.mark.unit
 @pytest.mark.functional
 class TestAccumulatorOperators:

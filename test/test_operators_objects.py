@@ -7,7 +7,7 @@ from monggregate.operators.objects import(
     ObjectToArray, object_to_array
 )
 
-@pytest.mark.operator
+@pytest.mark.operators
 @pytest.mark.unit
 @pytest.mark.functional
 class TestObjectsOperators:
