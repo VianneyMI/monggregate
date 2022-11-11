@@ -20,5 +20,5 @@ def or_(*args:Expression)->dict:
     """Returns an $or statement"""
 
     return Or(
-        expressions=args
+        expressions=list(args)
     ).statement
