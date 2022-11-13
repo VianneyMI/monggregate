@@ -78,7 +78,7 @@ class Filter(ArrayOperator):
     def statement(self) -> dict:
         return {
             "$filter":{
-               "input" : self.array,
+               "input" : self.expression,
                "cond" : self.query,
                "as" : self.let,
                "limit" : self.limit

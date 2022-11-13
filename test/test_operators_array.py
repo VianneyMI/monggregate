@@ -47,7 +47,7 @@ class TestArrayOperators:
 
 
         filter_op = Filter(
-            array = [1, 2, 3, 4],
+            expression = [1, 2, 3, 4],
             let = "num",
             query = greather_than("$$num", 2),
         )
@@ -95,8 +95,8 @@ class TestArrayOperators:
         """Testes the $in operator class and mirror function"""
 
         in_op = In(
-            expression = 1,
-            array = [1, 2, 3, 4]
+            left = 1,
+            right = [1, 2, 3, 4]
         )
 
         # Unit test
