@@ -44,7 +44,6 @@ $bucketAuto returns an error. To allow more space for stage processing, use the 
 
 Behavior
 -----------------------
-
 There may be less than the specified number of buckets if:
 
     * The number of input documents is less than the specified number of buckets.
