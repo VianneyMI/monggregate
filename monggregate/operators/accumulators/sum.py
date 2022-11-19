@@ -99,6 +99,7 @@ class Sum(Accumulator):
         - operand, Expression : Any valid expression
     """
 
+    # TODO : Other operators have similar behavior, but were not treated that way => Standardize <VM, 13/11/2022>
     operands : list[Expression] | None
     operand : Expression | None
 
