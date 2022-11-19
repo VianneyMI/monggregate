@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "monggregate"
-version = "0.6.0"
+version = "0.7.0"
 description = "Interface to ease creation and usage of MongoDB aggregation pipelines in python"
 readme = "README.md"
 authors = [{ name = "Vianney Mixtur", email = "vianney.mixtur@outlook.fr" }]

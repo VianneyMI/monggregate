@@ -104,7 +104,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     _db : Database | None # necessary to execute the pipeline
                         # TODO : allow to pass a URI and instantiates a database connection directly here
     on_call : OnCallEnum = OnCallEnum.EXPORT
-    collection : str
+    collection : str | None
     stages : list[Stage] = []
 
     class Config(BaseConfig):
@@ -116,7 +116,6 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     # ------------------------------------------------
     # Pipeline Internal Methods
     #-------------------------------------------------
-
     def __call__(self)->list[dict]:
         """Makes a pipeline instance callable and executes the entire pipeline when called"""
 
@@ -126,6 +125,11 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         }
 
         return _on_call_map[self.on_call]()
+
+    def __getitem__(self, index:int)->Stage:
+        """Returns a stage from the pipeline"""
+        # https://realpython.com/inherit-python-list/
+        return self.stages[index]
 
 
     def run(self)->list[dict]:

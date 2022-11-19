@@ -44,7 +44,6 @@ $bucketAuto returns an error. To allow more space for stage processing, use the 
 
 Behavior
 -----------------------
-
 There may be less than the specified number of buckets if:
 
     * The number of input documents is less than the specified number of buckets.
@@ -150,6 +149,6 @@ class BucketAuto(Stage):
                 "groupBy" : self.by,
                 "buckets" : self.buckets,
                 "output" : self.output,
-                "ganularity" : self.granularity
+                "granularity" : self.granularity.value if self.granularity else None
             }
         }
