@@ -1,5 +1,5 @@
 """
-Module defining an interface to $minn operator
+Module defining an interface to $minN operator
 
 Online MongoDB documentation:
 --------------------------------------------------------------------------------------

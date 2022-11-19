@@ -1,5 +1,5 @@
 """
-Module defining an interface to MongoDB $avg accumulator operator
+Module defining an interface to MongoDB $count accumulator operator
 
 Online MongoDB documentation:
 --------------------------------------------------------------------------------------------------------------------

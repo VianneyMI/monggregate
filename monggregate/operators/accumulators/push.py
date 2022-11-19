@@ -1,5 +1,5 @@
 """
-Module defining an interface to MongoDB $sum accumulator operator
+Module defining an interface to MongoDB $push accumulator operator
 
 Online MongoDB documentation:
 --------------------------------------------------------------------------------------------------------------------

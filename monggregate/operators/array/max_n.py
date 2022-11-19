@@ -1,5 +1,5 @@
 """
-Module defining an interface to $maxn operator
+Module defining an interface to $maxN operator
 
 Online MongoDB documentation:
 --------------------------------------------------------------------------------------
