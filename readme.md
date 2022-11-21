@@ -5,12 +5,15 @@ It is based on MongoDB official python driver, pymongo and on [pydantic](https:/
 
 ### Features
 
-Monggregate:
 
-    * provides an OOP interface to the aggregation pipeline and allows you to not having to remember all the syntatical details of the aggregation framework.
-    * integrates all the MongoDB documentation and allows you to quickly refer to it without having to navigate to the website.
-    * offers a pandas-style way to chain operations on data.
+- provides an OOP interface to the aggregation pipeline.
+- allows you to focus on your requirements rather than MongoDB syntax
+- integrates all the MongoDB documentation and allows you to quickly refer to it without having to navigate to the website.
+- offers a pandas-style way to chain operations on data.
 
+## Requirements
+
+This package requires python > 3.10, pydantic > 1.8.0
 
 ## Installation
 
@@ -29,7 +32,7 @@ The below examples reference the  MongoDB sample_mflix database
 
 from dotenv import load_dotenv
 import pymongo
-from monggregate.app.stages import Match, Limit Sort
+from monggregate.stages import Match, Limit Sort
 
 # Load config from a .env file:
 load_dotenv(verbose=True)
@@ -77,7 +80,7 @@ results = move_collection.aggregate(pipeline)
 
 from dotenv import load_dotenv
 import pymongo
-from monggregate.app.pipeline import Pipeline
+from monggregate.pipeline import Pipeline
 
 # Load config from a .env file:
 load_dotenv(verbose=True)
@@ -117,7 +120,7 @@ db["movies"].aggregate(pipeline())
 
 from dotenv import load_dotenv
 import pymongo
-from monggregate.app.pipeline import Pipeline
+from monggregate.pipeline import Pipeline
 
 # Load config from a .env file:
 load_dotenv(verbose=True)
@@ -150,3 +153,21 @@ pipeline.match(
 
 # Executing the pipeline
 pipeline()
+```
+
+## Motivation
+
+The main driver for building this package was how unconvenient it was for me to build aggregation pipelines using pymongo or any other tool.
+
+With pymongo, which is the official MongoDB driver for python, there is no direct support for aggregation pipelines.
+
+pymongo exposes an `aggregate` method but the pipeline inside is just a list of complex dictionaries that quickly become quite big and overwhelming.
+
+At the end, it is barely readable for the one who built the pipeline. Let alone other developers.
+Besides, during the development process, it is often necessary to refer to the online documentation multiple times. Thus, the package aims at integrating the online document through the various docstrings of the classes and modules of the package.
+
+## Roadmap
+
+The goal is to publish the package to PyPI, before the end of the year.
+For now, I am stil building.
+Feel free to open an issue, if you find a bug or to propose enhancements.
