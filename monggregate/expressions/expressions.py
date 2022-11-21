@@ -13,8 +13,9 @@ from typing import Any
 
 # Package imports
 # ---------------------------
+from monggregate.index import OperatorEnum
 from monggregate.expressions.miscellaneous import FieldPath, AggregationVariables,  Literal_
-from monggregate.operators.operator import OperatorEnum
+
 
 # Typing
 # ----------------------------
@@ -35,7 +36,7 @@ OperatorArgumentTypes = int | float | str | bool # Possible types for operator e
 OperatorArgumentsTypes =  list[int] | list[float] | list[str] | list[bool]
 OperatorArguments = OperatorArgumentTypes | OperatorArgumentsTypes | FieldPath | list[FieldPath] | dict[FieldPath, Any]
 
-OperatorExpression = dict[OperatorEnum, OperatorArguments]
+OperatorExpression =  dict[OperatorEnum, OperatorArguments]
 
     # Expression Object
     # -------------------------
@@ -52,6 +53,6 @@ ExpressionObject = dict[FieldPath, Any]
     # Expressions can be nested.
     # (You can have expressions in OperatorExpression and ExpressionObject)
 
-Expression = FieldPath | list[FieldPath] | AggregationVariables | OperatorExpression | ExpressionObject | Literal_
-
+_Expression = FieldPath | list[FieldPath] | AggregationVariables | OperatorArguments | OperatorExpression | ExpressionObject | Literal_
+Expression = _Expression | dict[str, _Expression]
 # TODO : Define more precise types for OperatorArguments, ExpressionObject and Expression when pydantic allows recursive types <VM, 05/10/2022>
