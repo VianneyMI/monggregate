@@ -19,7 +19,7 @@ This package requires python > 3.10, pydantic > 1.8.0
 
 1. Download the repo from https://github.com/VianneyMI/mongreggate
 2. Copy the repo to your project
-3. Navigate to the folder containing the dowloaded repo
+3. Navigate to the folder containing the downloaded repo
 4. Install the repo locally by executing the following command: ` python -m pip install -e .`
 
 ## Usage
