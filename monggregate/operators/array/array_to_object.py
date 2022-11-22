@@ -48,7 +48,7 @@ If the name of a field repeats in the array,
 
 """
 
-from monggregate.expressions import Expression
+from typing import Any
 from monggregate.operators.array.array import ArrayOperator
 
 class ArrayToObject(ArrayOperator):
@@ -63,7 +63,7 @@ class ArrayToObject(ArrayOperator):
 
     """
 
-    expression : Expression
+    expression : Any
 
 
     @property
@@ -72,7 +72,7 @@ class ArrayToObject(ArrayOperator):
             "$arrayToObject" : self.expression
         }
 
-def array_to_object(expression:Expression)->dict:
+def array_to_object(expression:Any)->dict:
     """Returns an $arrayToObject statement"""
 
     return ArrayToObject(expression=expression).statement

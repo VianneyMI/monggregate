@@ -53,7 +53,7 @@ from typing import Any
 from pydantic import Field, validator
 
 from monggregate.stages.stage import Stage
-from monggregate.expressions import Expression
+from typing import Any
 from monggregate.utils import validate_field_path
 
 class Bucket(Stage):
@@ -96,7 +96,7 @@ class Bucket(Stage):
 
     """
 
-    by : Expression = Field(...,alias="group_by")
+    by : Any = Field(...,alias="group_by")
     boundaries : list
     default : Any # TODO : Define more precise type
     output : dict | None

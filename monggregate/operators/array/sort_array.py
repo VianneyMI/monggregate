@@ -83,7 +83,7 @@ $sortArray to use a particular sorting algorithm.
 
 from typing import Literal
 from pydantic import Field
-from monggregate.expressions import Expression
+from typing import Any
 from monggregate.operators.array.array import ArrayOperator
 
 class SortArray(ArrayOperator):
@@ -96,7 +96,7 @@ class SortArray(ArrayOperator):
 
     """
 
-    expression : Expression = Field(alias="input")
+    expression : Any = Field(alias="input")
     by : dict[str, Literal[1, -1]] = Field(1, alias="sort_by")
 
     @property
@@ -108,7 +108,7 @@ class SortArray(ArrayOperator):
             }
         }
 
-def sort_array(expression:Expression, sort_by:dict[str, Literal[1, -1]])->dict:
+def sort_array(expression:Any, sort_by:dict[str, Literal[1, -1]])->dict:
     """Returns a $first statement"""
 
     return SortArray(

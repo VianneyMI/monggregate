@@ -45,7 +45,7 @@ Behavior
 """
 
 from pydantic import Field
-from monggregate.expressions import Expression
+from typing import Any
 from monggregate.operators.array.array import ArrayOperator
 
 class MaxN(ArrayOperator):
@@ -60,8 +60,8 @@ class MaxN(ArrayOperator):
 
     """
 
-    expression : Expression = Field(alias="input")
-    limit : Expression = Field(1, alias="n")
+    expression : Any = Field(alias="input")
+    limit : Any = Field(1, alias="n")
 
     @property
     def statement(self) -> dict:
@@ -72,7 +72,7 @@ class MaxN(ArrayOperator):
             }
         }
 
-def max_n(expression:Expression, limit:Expression=1)->dict:
+def max_n(expression:Any, limit:Any=1)->dict:
     """Returns a $maxN statement"""
 
     return MaxN(

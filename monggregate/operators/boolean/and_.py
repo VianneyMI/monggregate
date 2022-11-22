@@ -49,7 +49,7 @@ The following query, which contains multiple expressions supplied to $and, may p
 
 """
 
-from monggregate.expressions import Expression
+from typing import Any
 from monggregate.operators.boolean.boolean import BooleanOperator
 
 class And(BooleanOperator):
@@ -64,7 +64,7 @@ class And(BooleanOperator):
 
     """
 
-    expressions : list[Expression]
+    expressions : list[Any]
 
     # TODO : Add validator to convert expressions
 
@@ -74,7 +74,7 @@ class And(BooleanOperator):
             "$and" : self.expressions
         }
 
-def and_(*args:Expression)->dict:
+def and_(*args:Any)->dict:
     """Returns an $and statement"""
 
     return And(

@@ -97,7 +97,7 @@ That is, the operation returns the following:
 
 """
 
-from monggregate.expressions import Expression
+from typing import Any
 from monggregate.operators.array.array import ArrayOnlyOperator
 
 class First(ArrayOnlyOperator):
@@ -116,7 +116,7 @@ class First(ArrayOnlyOperator):
             "$first":self.expression
         }
 
-def first(array:Expression)->dict:
+def first(array:Any)->dict:
     """Returns a $first statement"""
 
     return First(

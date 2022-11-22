@@ -26,7 +26,7 @@ The arguments can be any valid expression. For more information on expressions, 
 
 """
 
-from monggregate.expressions import Expression
+from typing import Any
 from monggregate.operators.comparison.comparator import Comparator
 
 class Equal(Comparator):
@@ -49,7 +49,7 @@ class Equal(Comparator):
 
 Eq = Equal
 
-def equal(left:Expression, right:Expression)->dict:
+def equal(left:Any, right:Any)->dict:
     """Creates an $eq statement"""
 
     return Equal(

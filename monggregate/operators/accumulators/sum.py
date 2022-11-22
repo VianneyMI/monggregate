@@ -86,7 +86,7 @@ In the other supported stages:
 """
 
 from pydantic import validator
-from monggregate.expressions import Expression
+from typing import Any
 from monggregate.operators.accumulators.accumulator import Accumulator
 
 class Sum(Accumulator):
@@ -100,14 +100,14 @@ class Sum(Accumulator):
     """
 
     # TODO : Other operators have similar behavior, but were not treated that way => Standardize <VM, 13/11/2022>
-    operands : list[Expression] | None
-    operand : Expression | None
+    operands : list[Any] | None
+    operand : Any | None
 
 
 
     @validator("operand", pre=True, always=True)
     @classmethod
-    def validate_operand(cls, operand:Expression|None, values:dict)->Expression|dict|None:
+    def validate_operand(cls, operand:Any|None, values:dict)->Any|dict|None:
         """Valdidates and converts operand"""
 
 
@@ -133,7 +133,7 @@ class Sum(Accumulator):
             "$sum" : self.operand or self.operands
         }
 
-def sum(*args:Expression)->dict: # pylint: disable=redefined-builtin
+def sum(*args:Any)->dict: # pylint: disable=redefined-builtin
     """Creates a $sum statement"""
 
     if len(args)>1:

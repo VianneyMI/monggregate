@@ -22,7 +22,7 @@ $lt has the following syntax:
 For more information on expressions, see Expressions.
 """
 
-from monggregate.expressions import Expression
+from typing import Any
 from monggregate.operators.comparison.comparator import Comparator
 
 class LowerThanOrEqual(Comparator):
@@ -45,7 +45,7 @@ class LowerThanOrEqual(Comparator):
 
 Lte = LowerThanOrEqual
 
-def lower_than_or_equal(left:Expression, right:Expression)->dict:
+def lower_than_or_equal(left:Any, right:Any)->dict:
     """Returns a $lt statement"""
 
     return LowerThanOrEqual(

@@ -23,7 +23,7 @@ from monggregate.stages import (
     Sort,
     Unwind
 )
-from monggregate.expressions import Expression
+from typing import Any
 from monggregate.utils import StrEnum
 
 
@@ -188,7 +188,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         )
         return self
 
-    def bucket(self, *, by:Expression, boundaries:list, default:Any=None, output:dict|None=None)->"Pipeline":
+    def bucket(self, *, by:Any, boundaries:list, default:Any=None, output:dict|None=None)->"Pipeline":
         """
         Adds a bucket stage to the current pipeline.
 
@@ -238,7 +238,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         )
         return self
 
-    def bucket_auto(self, *, by:Expression, buckets:int, output:dict=None, granularity:GranularityEnum|None=None)->"Pipeline":
+    def bucket_auto(self, *, by:Any, buckets:int, output:dict=None, granularity:GranularityEnum|None=None)->"Pipeline":
         """
         Adds a bucket_auto stage to the current pipeline
 
@@ -320,7 +320,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             )
         return self
 
-    def group(self, *,  by:Expression|None=None, query:dict={})->"Pipeline":
+    def group(self, *,  by:Any|None=None, query:dict={})->"Pipeline":
         """
         Adds a group stage to the current pipeline.
 

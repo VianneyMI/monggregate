@@ -66,7 +66,7 @@ For more information, see $group Optimization.
 from typing import Any
 from pydantic import Field, validator
 from monggregate.stages.stage import Stage
-from monggregate.expressions import Expression
+from typing import Any
 from monggregate.utils import validate_field_path
 
 class Group(Stage):
@@ -81,7 +81,7 @@ class Group(Stage):
 
     """
 
-    by : Expression | None = Field(None, alias = "_id") # | or any constant value, in this case
+    by : Any | None = Field(None, alias = "_id") # | or any constant value, in this case
                                                 # the stage returns a single document that aggregates values across all of the input documents.
     #operation : Operator # TODO  : After dealing with operators ($sum, $avg, $count, etc...)
     #result : Any

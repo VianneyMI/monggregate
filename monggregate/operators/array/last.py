@@ -101,7 +101,7 @@ That is, the operation returns the following:
 
 """
 
-from monggregate.expressions import Expression
+from typing import Any
 from monggregate.operators.array.array import ArrayOnlyOperator
 
 class Last(ArrayOnlyOperator):
@@ -120,7 +120,7 @@ class Last(ArrayOnlyOperator):
             "$last":self.expression
         }
 
-def last(array:Expression)->dict:
+def last(array:Any)->dict:
     """Returns a $last statement"""
 
     return Last(

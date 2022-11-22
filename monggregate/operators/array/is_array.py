@@ -25,7 +25,7 @@ NOTE : Aggregation expressions accept a variable number of arguments. These argu
 
 """
 
-from monggregate.expressions import Expression
+from typing import Any
 from monggregate.operators.array.array import ArrayOnlyOperator
 
 class IsArray(ArrayOnlyOperator):
@@ -44,7 +44,7 @@ class IsArray(ArrayOnlyOperator):
             "$isArray":self.expression
         }
 
-def is_array(array:Expression)->dict:
+def is_array(array:Any)->dict:
     """Returns a $isArray statement"""
 
     return IsArray(
