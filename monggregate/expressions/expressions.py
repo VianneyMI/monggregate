@@ -8,14 +8,27 @@
 #----------------------------
 from typing import Any
 from monggregate.base import BaseModel
+from monggregate.expressions.field_paths import FieldPath, Variable
 from monggregate.operators.boolean import And, Or, Not
 #from numbers import Number
 # 3rd Party imports
 # ---------------------------
 
-class Expression(BaseModel):
+#Expressions can include field paths, literals, system variables, expression objects, and expression operators. Expressions can be nested.
+#ExpressionObjects {field1: Expression}
+#OperatorExpression {operator:[arg, .. argN]} or {operator:arg}
 
-    field : str
+
+class Expression(BaseModel):
+    """Expression Generator"""
+
+    field : FieldPath | None
+    variable : Variable | None
+    constant : int | float | str | None
+    key : str | None
+    value : "Expression" | None
+    document : dict[str, "Expression"] | None
+
 
     @property
     def statement(self)->Any:
@@ -30,3 +43,26 @@ class Expression(BaseModel):
 if __name__ == "__main__":
     result = Expression(field="left") & Expression(field="right")
     print(result)
+
+# Examples of expression:
+
+{"$sum":1}
+
+{"$type" : "number"}
+
+{ "$avg": { "$multiply": [ "$price", "$quantity" ] } } # awesome example
+
+{ "$avg": "$quantity" }
+
+{ "$first": "$date" }
+
+{ "$mergeObjects": [ { "$arrayElemAt": [ "$fromItems", 0 ] }, "$$ROOT" ] }
+
+{
+    "$map":
+        {
+        "input": "$quizzes",
+        "as": "grade",
+        "in": { "$add": [ "$$grade", 2 ] }
+        }
+}
