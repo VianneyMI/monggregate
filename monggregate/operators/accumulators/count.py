@@ -51,10 +51,6 @@ class Count(Accumulator):
     """
     Creates a $count expression.
 
-    Attributes
-    -----------------------------
-        - expression, Expression : Any valid expression
-
     """
 
 

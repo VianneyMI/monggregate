@@ -41,7 +41,7 @@ class BaseModel(PydanticBaseModel, ABC):
     @property
     @abstractmethod
     def statement(self)->dict:
-        """stage stament"""
+        """Stage statement absctract method"""
 
         # this is a lazy attribute
         # what is currently in generate statement should go in here
@@ -53,7 +53,7 @@ class BaseModel(PydanticBaseModel, ABC):
         return self.statement
 
     class Config(BaseConfig):
-        """Configuration for Stage classes"""
+        """Base configuration for classes inheriting from this"""
 
         allow_population_by_field_name = True
         underscore_attrs_are_private = True
