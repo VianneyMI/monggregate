@@ -6,7 +6,7 @@
 
 # Standard Library imports
 #----------------------------
-from typing import Any
+from typing import Any, Literal
 
 
 # 3rd Party imports
@@ -17,6 +17,7 @@ from pydantic import validator
 # ----------------------------
 from monggregate.base import BaseModel
 from monggregate.expressions.field_paths import FieldPath, Variable
+from monggregate.operators.operator import Operator
 from monggregate.operators.accumulators import(
     Avg,
     Count,
@@ -60,7 +61,7 @@ from monggregate.operators.boolean import And, Or, Not
 # ContentType = ArgumentType | dict[str, ArgumentType]
 #                                 # expression object / operator expressions
 
-Content = dict[str, Any] | Variable | FieldPath | int | float | str | bool | None
+Content = Operator | dict[str, Any] | Variable | FieldPath | int | float | str | bool | None
 # dict[str, Any] represents Operator Expressions, Expression Objects and nested expressions
 
 class Expression(BaseModel):
@@ -254,8 +255,44 @@ class Expression(BaseModel):
 
         return self.in_(right=right)
 
+    def filter(self, query:"Expression", let:str|None=None, limit:int|None=None)->"Expression":
+        """"Creates a $filter expression"""
 
+        #self._clear()
+        self.content = Filter(
+            expression=self,
+            query=query,
+            let=let,
+            limit=limit
+        )
+        return self
 
+    def is_array(self)->"Expression":
+        """Creates a $isArray expression"""
+
+        #self._clear()
+        self.content = IsArray(expression=self)
+
+    def max_n(self, limit:int=1)->"Expression":
+        """Creates a $maxN expression"""
+
+        #self._clear()
+        self.content = MaxN(expression=self, limit=limit)
+        return self
+
+    def min_n(self, limit:int=1)->"Expression":
+        """Creates a $maxN expression"""
+
+        #self._clear()
+        self.content = MinN(expression=self, limit=limit)
+        return self
+
+    def sort_array(self, by:dict[str, Literal[1, -1]])->"Expression":
+        """Creates a $sortArray expression"""
+
+        #self._clear()
+        self.content = SortArray(expression=self, by=by)
+        return self
 
 if __name__ == "__main__":
     result = Expression(field="left") & Expression(field="right")

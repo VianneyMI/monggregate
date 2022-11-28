@@ -93,7 +93,7 @@ class SortArray(ArrayOperator):
     Attributes
     --------------------------
         - expression, Expression : Any valid expression that resolves to an array
-
+        - by, dict[str, Literal[1, -1]] :  document indicating a sort order
     """
 
     expression : Any = Field(alias="input")
