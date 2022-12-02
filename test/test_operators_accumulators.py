@@ -159,7 +159,7 @@ class TestAccumulatorOperators:
 
 
         sum_op = Sum(
-            operands = [1, 2, 3, 4]
+            expression = [1, 2, 3, {"$literal":4}]
         )
 
         # Unit test
@@ -168,6 +168,6 @@ class TestAccumulatorOperators:
 
         # Functional test
         # ---------------------
-        assert sum_op.statement  == sum([1, 2, 3, 4]) == {
-            "$sum" : [1, 2, 3, 4]
+        assert sum_op.statement  == sum([1, 2, 3, {"$literal":4}]) == {
+            "$sum" : [1, 2, 3, {"$literal":4}]
         }

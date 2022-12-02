@@ -16,7 +16,7 @@ from pydantic import validator
 # ----------------------------
 from monggregate.base import BaseModel
 from monggregate.expressions.fields import FieldPath, Variable
-from monggregate.operators.operator import Operator
+from monggregate.expressions.content import Content
 from monggregate.operators.accumulators import(
     Avg,
     Count,
@@ -56,22 +56,21 @@ from monggregate.operators.boolean import And, Or, Not
 #ExpressionObjects {field1: Expression}
 #OperatorExpression {operator:[arg, .. argN]} or {operator:arg}
 
-# ArgumentType = Variable | FieldPath | int | float | str | bool | None
-# ContentType = ArgumentType | dict[str, ArgumentType]
-#                                 # expression object / operator expressions
-
-Content = Operator | dict[str, Any] | Variable | FieldPath | int | float | str | bool | None
-# dict[str, Any] represents Operator Expressions, Expression Objects and nested expressions
 
 class Expression(BaseModel):
-    """Expression Generator"""
+    """
+    MongoDB expression interface.
+
+    Expressions can include field paths, literals, systems variables, expression objects of the form {field1: Expression}
+    and expression operators of the form {operator:[arg, .. argN]} or {operator:arg}.
+
+    Expressions can be nested.
+    """
 
     constant : int | float | str | bool | None
     field : FieldPath | None
     variable : Variable | None
-    # key : str | None
-    # value : "Expression" | None
-    # document : dict[str, "Expression"] | None
+
     content : Content
 
     @validator("variable", pre=True, always=True)
@@ -309,7 +308,8 @@ class Expression(BaseModel):
     def sum(self)->"Expression":
         """Creates a $sum expression"""
 
-        raise NotImplementedError
+        self.content = Sum(expression=self)
+        return self
 
     #---------------------------------------------------
     # Array Operators

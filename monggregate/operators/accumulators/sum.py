@@ -85,9 +85,8 @@ In the other supported stages:
 
 """
 
-from pydantic import validator
-from typing import Any
 from monggregate.operators.accumulators.accumulator import Accumulator
+from monggregate.expressions.content import Content
 
 class Sum(Accumulator):
     """
@@ -99,46 +98,22 @@ class Sum(Accumulator):
         - operand, Expression : Any valid expression
     """
 
-    # TODO : Other operators have similar behavior, but were not treated that way => Standardize <VM, 13/11/2022>
-    operands : list[Any] | None
-    operand : Any | None
-
-
-
-    @validator("operand", pre=True, always=True)
-    @classmethod
-    def validate_operand(cls, operand:Any|None, values:dict)->Any|dict|None:
-        """Valdidates and converts operand"""
-
-
-        operands = values.get("operands")
-
-        # Validation
-        # --------------------------------------
-        if not (operand or operands):
-            raise ValueError("At least one of operand is required")
-
-
-        if operand and operands:
-            raise ValueError("Operand and Operands cannot be both set")
-
-
-        return operand
+    expression : Content | list[Content]
 
 
     @property
     def statement(self) -> dict:
 
         return {
-            "$sum" : self.operand or self.operands
+            "$sum" : self.expression
         }
 
-def sum(*args:Any)->dict: # pylint: disable=redefined-builtin
+def sum(*args:Content)->dict: # pylint: disable=redefined-builtin
     """Creates a $sum statement"""
 
     if len(args)>1:
-        output = Sum(operands=list(args)).statement
+        output = Sum(expression=list(args)).statement
     else:
-        output = Sum(operand=args[0]).statement
+        output = Sum(expression=args[0]).statement
 
     return output

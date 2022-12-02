@@ -73,6 +73,7 @@ In the other supported stages:
 from typing import Any
 from monggregate.operators.accumulators.accumulator import Accumulator
 
+
 class Average(Accumulator):
     """
     Creates a $avg expression.
