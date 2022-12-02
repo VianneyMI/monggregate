@@ -1,9 +1,5 @@
 """Constants and types definitions related to expressions"""
 
-# 3rd Party imports
-# ---------------------------
-from pydantic import ConstrainedStr
-
 # Package imports
 # ---------------------------
 from monggregate.index import AggregationVariableEnum

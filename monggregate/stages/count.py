@@ -33,15 +33,12 @@ where myCount would be the output field that contains the count. You can specify
 
 
 """
-import re
-from pydantic import ConstrainedStr
+
 from monggregate.stages.stage import Stage
+from monggregate.expressions.fields import FieldName
 
 
-class FieldName(ConstrainedStr):
-    """Regex to validate field names"""
 
-    regex = re.compile(r"^[^\$][^\.]+$")
 
 class Count(Stage):
     """

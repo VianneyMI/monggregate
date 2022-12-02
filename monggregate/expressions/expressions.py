@@ -15,7 +15,7 @@ from pydantic import validator
 # Local imports
 # ----------------------------
 from monggregate.base import BaseModel
-from monggregate.expressions.field_paths import FieldPath, Variable
+from monggregate.expressions.fields import FieldPath, Variable
 from monggregate.operators.operator import Operator
 from monggregate.operators.accumulators import(
     Avg,
