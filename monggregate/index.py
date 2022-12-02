@@ -30,7 +30,7 @@ class StageEnum(StrEnum):
 class OperatorEnum(StrEnum):
     """Enumeration of available operators"""
 
-    # TODO : Check for mispelling <VM, 05/10/2022>
+
     ABS = "$abs"
     ACCUMULATOR = "$accumulator"
     ACOS = "$acos"
@@ -46,7 +46,7 @@ class OperatorEnum(StrEnum):
     ASINH = "$asinh"
     ATAN = "$atan"
     ATAN2 = "$atan2"
-    ATANH = "$atanh2"
+    ATANH = "$atanh"
     AVG = "$avg"
     BINARY_SIZE = "$binarySize"
     BSON_SIZE ="$bsonSize"
@@ -87,7 +87,7 @@ class OperatorEnum(StrEnum):
     ISO_DAY_OF_WEEK = "$isoDayOfWeek"
     ISO_WEEK = "$isoWeek"
     ISO_WEEK_YEAR ="$isoWeekYear"
-    LAST = "$last"
+    LAST = "$last"  # two operators one for array one for accumulator
     LET ="$let"
     LITERAL = "$literal"
     LN = "$ln"
@@ -133,14 +133,14 @@ class OperatorEnum(StrEnum):
     SET_UNION = "$setUnion"
     SIN = "$sin"
     SINH = "$sinh"
-    SIZE ="$size"
+    SIZE = "$size"
     SLICE = "$slice"
     SPLIT = "$split"
     SQRT = "$sqrt"
     STD_DEV_POP = "$stdDevPop"
     STD_DEV_SAMP = "$stdDevSamp"
     STR_LEN_BYTES = "$strLenBytes"
-    STR_LEN_CP ="$strLenCP"
+    STR_LEN_CP = "$strLenCP"
     STR_CASE_CMP = "$strcasecmp"
     SUBSTR = "$substr"
     SUBSTR_BYTES = "$substrBytes"

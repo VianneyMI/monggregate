@@ -263,7 +263,6 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
                                   Available only if the all groupBy values are numeric and none of them are NaN.
                                   https://en.wikipedia.org/wiki/Preferred_number
-                                  TODO : Need to understand this <VM, 18/09/2022>
 
         """
 

@@ -66,8 +66,6 @@ class And(BooleanOperator):
 
     expressions : list[Any]
 
-    # TODO : Add validator to convert expressions
-
     @property
     def statement(self) -> dict:
         return {

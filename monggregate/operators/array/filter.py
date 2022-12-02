@@ -73,7 +73,6 @@ class Filter(ArrayOperator):
     let : str | None = Field("this", alias="as")
     limit : int | None = Field(ge=1) # NOTE : limit can actually be an expression but constraints are  invalid with any type
 
-    # TODO : Add a validator in package parent class to automatically translate expressions to their statement when used as arguments <VM, 07/11/2022>
     @property
     def statement(self) -> dict:
         return {
