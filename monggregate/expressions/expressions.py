@@ -8,7 +8,6 @@
 #----------------------------
 from typing import Any, Literal
 
-
 # 3rd Party imports
 # ---------------------------
 from pydantic import validator
@@ -180,6 +179,82 @@ class Expression(BaseModel):
         return self
 
     #---------------------------------------------------
+    # Comparison Operators
+    #---------------------------------------------------
+    def __eq__(self, other:"Expression")->"Expression":
+        """
+        Creates a $eq expression.
+
+        Overloads python Equal to operator (==).
+        """
+
+        #self._clear()
+        self.content = Eq(left=self, right=other)
+        return self
+
+    def __lt__(self, other:"Expression")->"Expression":
+        """
+        Creates a $lt expression.
+
+        Overloads python Less than operator (<).
+        """
+
+        #self._clear()
+        self.content = Lt(left=self, right=other)
+        return self
+
+    def __le__(self, other:"Expression")->"Expression":
+        """
+        Creates a $le expression.
+
+        Overloads python Less than or equal to operator (<=).
+        """
+
+        #self._clear()
+        self.content = Lte(left=self, right=other)
+        return self
+
+    def __gt__(self, other:"Expression")->"Expression":
+        """
+        Creates a $gt expression.
+
+        Overloads python Greater than operator (>).
+        """
+
+        #self._clear()
+        self.content = Gt(left=self, right=other)
+        return self
+
+    def __ge__(self, other:"Expression")->"Expression":
+        """
+        Creates a $gte expression.
+
+        Overloads python Greather than or equal to operator (>=).
+        """
+
+        #self._clear()
+        self.content = Gte(left=self, right=other)
+        return self
+
+    def __ne__(self, other:"Expression")->"Expression":
+        """
+        Creates a $lt expression.
+
+        Overloads python Not equal to operator (!=).
+        """
+
+        #self._clear()
+        self.content = Ne(left=self, right=other)
+        return self
+
+    def compare(self, other:"Expression")->"Expression":
+        """Creates a $cmp expression."""
+
+        #self._clear()
+        self.content = Cmp(left=self, right=other)
+        return self
+
+    #---------------------------------------------------
     # Accumulators (Aggregation) Operators
     #---------------------------------------------------
     def average(self)->"Expression":
@@ -236,6 +311,9 @@ class Expression(BaseModel):
 
         raise NotImplementedError
 
+    #---------------------------------------------------
+    # Array Operators
+    #---------------------------------------------------
     def array_to_object(self)->"Expression":
         """Creates a $arrayToObject expression"""
 
@@ -272,6 +350,7 @@ class Expression(BaseModel):
 
         #self._clear()
         self.content = IsArray(expression=self)
+        return self
 
     def max_n(self, limit:int=1)->"Expression":
         """Creates a $maxN expression"""
@@ -292,6 +371,23 @@ class Expression(BaseModel):
 
         #self._clear()
         self.content = SortArray(expression=self, by=by)
+        return self
+
+    #---------------------------------------------------
+    # Objects Operators
+    #---------------------------------------------------
+    def merge_objects(self, )->"Expression":
+        """Creates a $mergeObjects operator"""
+
+        #self._clear()
+        self.content = MergeObjects(expression=self)
+        return self
+
+    def object_to_array(self, )->"Expression":
+        """Creates a $objectToArray operator"""
+
+        #self._clear()
+        self.content = ObjectToArray(expression=self)
         return self
 
 if __name__ == "__main__":
