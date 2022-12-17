@@ -71,7 +71,7 @@ class Expression(BaseModel):
     field : FieldPath | None
     variable : Variable | None
 
-    content : Content
+    content : Content | None
 
     @validator("variable", pre=True, always=True)
     @classmethod

@@ -53,7 +53,9 @@ from typing import Any
 from pydantic import Field, validator
 
 from monggregate.stages.stage import Stage
-from typing import Any
+from monggregate.expressions.content import Content, Literal, Literals
+from monggregate.expressions.fields import FieldName
+from monggregate.operators.accumulators.accumulator import AccumulatorEnum
 from monggregate.utils import validate_field_path
 
 class Bucket(Stage):
@@ -96,10 +98,10 @@ class Bucket(Stage):
 
     """
 
-    by : Any = Field(...,alias="group_by")
-    boundaries : list
-    default : Any # TODO : Define more precise type
-    output : dict | None
+    by : Content = Field(...,alias="group_by")
+    boundaries : Literals
+    default : Literal
+    output : dict[FieldName, dict[AccumulatorEnum, Any]] | None
 
     _validate_by = validator("by", pre=True, always=True, allow_reuse=True)(validate_field_path)
 
