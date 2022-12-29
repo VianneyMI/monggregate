@@ -17,7 +17,6 @@ class BaseModel(PydanticBaseModel, ABC):
     def resolve(cls, expression:Any)->dict|list[dict]:
         """Resolves an expression encapsulated in an object from a class inheriting from BaseModel"""
 
-    # TODO : optimize and ensure robustness <VM, 09/11/2022>
         def isbasemodel(instance:Any)->bool:
             """Returns true if instance is an instance of BaseModel"""
 
@@ -45,7 +44,7 @@ class BaseModel(PydanticBaseModel, ABC):
 
         # this is a lazy attribute
         # what is currently in generate statement should go in here
-        # TODO : Implement cache
+
 
     def __call__(self)->dict:
         """Makes an instance of any class inheriting from this class callable"""
