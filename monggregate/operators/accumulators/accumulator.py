@@ -1,13 +1,18 @@
 """Base accumulator module"""
 
+# Standard Library Imports
+# -----------------------------------------
 from abc import ABC
+from typing import Any
 
+# Local imports
+# -----------------------------------------
 from monggregate.operators import Operator
 from monggregate.utils import StrEnum
 
-class Accumulator(Operator, ABC):
-    """Base class for accumulators"""
 
+# Enums
+# -----------------------------------------
 class AccumulatorEnum(StrEnum):
     """Enumeration of available accumulators"""
 
@@ -31,3 +36,12 @@ class AccumulatorEnum(StrEnum):
     SUM = "$sum"
     TOP = "$top"
     TOP_N = "$topN"
+
+# Classes
+# -----------------------------------------
+class Accumulator(Operator, ABC):
+    """Base class for accumulators"""
+
+# Type aliases
+# -----------------------------------------
+AccumulatorExpression = dict[AccumulatorEnum, Any]
