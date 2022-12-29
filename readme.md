@@ -29,7 +29,7 @@ This package requires python > 3.10, pydantic > 1.8.0
 The repo is now available on PyPI:
 
 ```shell
-pip install beanie
+pip install monggregate
 ```
 
 ## Usage
