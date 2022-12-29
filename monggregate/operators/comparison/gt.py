@@ -24,7 +24,7 @@ $gt has the following syntax:
 For more information on expressions, see Expressions.
 """
 
-from monggregate.expressions import Expression
+from typing import Any
 from monggregate.operators.comparison.comparator import Comparator
 
 class GreatherThan(Comparator):
@@ -47,7 +47,7 @@ class GreatherThan(Comparator):
 
 Gt = GreatherThan
 
-def greather_than(left:Expression, right:Expression)->dict:
+def greather_than(left:Any, right:Any)->dict:
     """Returns a $gt statement"""
 
     return GreatherThan(

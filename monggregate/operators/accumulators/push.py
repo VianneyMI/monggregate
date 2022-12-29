@@ -28,7 +28,7 @@ For more information on expressions, see Expressions.
 
 """
 
-from monggregate.expressions import Expression
+from typing import Any
 from monggregate.operators.accumulators.accumulator import Accumulator
 
 class Push(Accumulator):
@@ -41,7 +41,7 @@ class Push(Accumulator):
 
     """
 
-    expression : Expression
+    expression : Any
 
 
 
@@ -52,7 +52,7 @@ class Push(Accumulator):
             "$push" : self.expression
         }
 
-def push(expression:Expression)->dict:
+def push(expression:Any)->dict:
     """Creates a push statement"""
 
     return Push(expression=expression).statement

@@ -30,7 +30,7 @@ or if the second argument does not resolve to an array.
 
 """
 
-from monggregate.expressions import Expression
+from typing import Any
 from monggregate.operators.array.array import ArrayOperator
 
 class In(ArrayOperator):
@@ -44,8 +44,8 @@ class In(ArrayOperator):
 
     """
 
-    left : Expression
-    right : Expression
+    left : Any
+    right : Any
 
 
     @property
@@ -54,7 +54,7 @@ class In(ArrayOperator):
             "$in":[self.left, self.right]
         }
 
-def in_(left:Expression, right:Expression)->dict:
+def in_(left:Any, right:Any)->dict:
     """Returns a $maxN statement"""
 
     return In(

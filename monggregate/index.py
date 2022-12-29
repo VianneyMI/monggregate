@@ -1,6 +1,28 @@
 """Module listing the available operators and stages"""
 
+# Package imports
+# ---------------------------
 from monggregate.utils import StrEnum
+
+
+# Enums
+# ---------------------------
+class AggregationVariableEnum(StrEnum):
+    """Enumeration of available aggregation variables"""
+
+    NOW = "$$NOW" # Returns the current datetime value,
+                # which is same across all members of the deployment and remains constant throughout the aggregation pipeline.
+                # (Available in 4.2+)
+    CLUSTER_TIME = "$$CLUSTER_TIME" # Returns the current timestamp value, which is same across all members of the deployment and remains constant throughout the aggregation pipeline.
+                                    # For replica sets and sharded clusters only. (Available in 4.2+)
+    ROOT = "$$ROOT" # References the root document, i.e. the top-level document.
+    CURRENT = "$$CURRENT" # References the start of the field path, which by default is ROOT but can be changed.
+    REMOVE = "$$REMOVE" # Allows for the conditional exclusion of fields. (Available in 3.6+)
+    DESCEND = "$$DESCEND" # One of the allowed results of a $redact expression.
+    PRUNE = "$$PRUNE" # One of the allowed results of a $redact expression.
+    KEEP = "$$KEEP" # One of the allowed results of a $redact expression.NOW = "$$NOW" # Returns the current datetime value,
+                # which is same across all members of the deployment and remains constant throughout the aggregation pipeline.
+                # (Available in 4.2+)
 
 class StageEnum(StrEnum):
     """"Enumeration of available stages"""
@@ -8,7 +30,7 @@ class StageEnum(StrEnum):
 class OperatorEnum(StrEnum):
     """Enumeration of available operators"""
 
-    # TODO : Check for mispelling <VM, 05/10/2022>
+
     ABS = "$abs"
     ACCUMULATOR = "$accumulator"
     ACOS = "$acos"
@@ -24,7 +46,7 @@ class OperatorEnum(StrEnum):
     ASINH = "$asinh"
     ATAN = "$atan"
     ATAN2 = "$atan2"
-    ATANH = "$atanh2"
+    ATANH = "$atanh"
     AVG = "$avg"
     BINARY_SIZE = "$binarySize"
     BSON_SIZE ="$bsonSize"
@@ -65,7 +87,7 @@ class OperatorEnum(StrEnum):
     ISO_DAY_OF_WEEK = "$isoDayOfWeek"
     ISO_WEEK = "$isoWeek"
     ISO_WEEK_YEAR ="$isoWeekYear"
-    LAST = "$last"
+    LAST = "$last"  # two operators one for array one for accumulator
     LET ="$let"
     LITERAL = "$literal"
     LN = "$ln"
@@ -111,14 +133,14 @@ class OperatorEnum(StrEnum):
     SET_UNION = "$setUnion"
     SIN = "$sin"
     SINH = "$sinh"
-    SIZE ="$size"
+    SIZE = "$size"
     SLICE = "$slice"
     SPLIT = "$split"
     SQRT = "$sqrt"
     STD_DEV_POP = "$stdDevPop"
     STD_DEV_SAMP = "$stdDevSamp"
     STR_LEN_BYTES = "$strLenBytes"
-    STR_LEN_CP ="$strLenCP"
+    STR_LEN_CP = "$strLenCP"
     STR_CASE_CMP = "$strcasecmp"
     SUBSTR = "$substr"
     SUBSTR_BYTES = "$substrBytes"

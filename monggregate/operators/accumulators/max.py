@@ -76,7 +76,7 @@ $max does not traverse into the array but instead treats the array as a non-nume
 """
 
 
-from monggregate.expressions import Expression
+from typing import Any
 from monggregate.operators.accumulators.accumulator import Accumulator
 
 class Max(Accumulator):
@@ -88,7 +88,7 @@ class Max(Accumulator):
         - expression, Expression : Any valid expression
     """
 
-    expression : Expression
+    expression : Any
 
 
 
@@ -99,7 +99,7 @@ class Max(Accumulator):
             "$max" : self.expression
         }
 
-def max(expression:Expression)->dict: # pylint: disable=redefined-builtin
+def max(expression:Any)->dict: # pylint: disable=redefined-builtin
     """Creates a push statement"""
 
     return Max(expression=expression).statement

@@ -43,7 +43,7 @@ $filter has the following syntax:
 """
 
 from pydantic import validator, Field
-from monggregate.expressions import Expression
+from typing import Any
 from monggregate.operators.array.array import ArrayOperator
 
 class Filter(ArrayOperator):
@@ -68,12 +68,11 @@ class Filter(ArrayOperator):
 
     """
 
-    expression : Expression =  Field(alias="input")
-    query : Expression = Field(alias="cond")
+    expression : Any =  Field(alias="input")
+    query : Any = Field(alias="cond")
     let : str | None = Field("this", alias="as")
-    limit : Expression | None = Field(ge=1)
+    limit : int | None = Field(ge=1) # NOTE : limit can actually be an expression but constraints are  invalid with any type
 
-    # TODO : Add a validator in package parent class to automatically translate expressions to their statement when used as arguments <VM, 07/11/2022>
     @property
     def statement(self) -> dict:
         return {
@@ -85,7 +84,7 @@ class Filter(ArrayOperator):
             }
         }
 
-def filter(expression:Expression, let:str, query:Expression, limit:int|None=None)->dict: # pylint: disable=redefined-builtin
+def filter(expression:Any, let:str, query:Any, limit:int|None=None)->dict: # pylint: disable=redefined-builtin
     """Returns a $filter statement"""
 
     return Filter(

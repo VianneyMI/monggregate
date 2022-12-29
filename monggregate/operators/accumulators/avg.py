@@ -70,8 +70,9 @@ In the other supported stages:
 """
 
 
-from monggregate.expressions import Expression
+from typing import Any
 from monggregate.operators.accumulators.accumulator import Accumulator
+from monggregate.expressions.content import Content
 
 class Average(Accumulator):
     """
@@ -83,7 +84,7 @@ class Average(Accumulator):
 
     """
 
-    expression : Expression
+    expression : Content
 
     @property
     def statement(self) -> dict:
@@ -93,7 +94,7 @@ class Average(Accumulator):
         }
 Avg = Average
 
-def average(expression:Expression)->dict:
+def average(expression:Any)->dict:
     """Creates a push statement"""
 
     return Average(expression=expression).statement

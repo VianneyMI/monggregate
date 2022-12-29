@@ -89,18 +89,3 @@ TODO : To be continued <VM, 18/09/2022>
 
 
 """
-
-from monggregate.expressions.miscellaneous import(
-    ROOT,
-    CURRENT,
-    CLUSTER_TIME,
-    NOW,
-    REMOVE,
-    DESCEND,
-    PRUNE,
-    KEEP,
-    FieldPath
-)
-from monggregate.expressions.expressions import(
-    Expression, ExpressionObject
-)

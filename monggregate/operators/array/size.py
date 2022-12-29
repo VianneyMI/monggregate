@@ -27,7 +27,7 @@ $size errors.
 
 """
 
-from monggregate.expressions import Expression
+from typing import Any
 from monggregate.operators.array.array import ArrayOnlyOperator
 
 class Size(ArrayOnlyOperator):
@@ -46,7 +46,7 @@ class Size(ArrayOnlyOperator):
             "$size":self.expression
         }
 
-def size(array:Expression)->dict:
+def size(array:Any)->dict:
     """Returns a $size statement"""
 
     return Size(

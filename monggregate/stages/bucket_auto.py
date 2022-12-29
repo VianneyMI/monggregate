@@ -80,9 +80,12 @@ The values of the series are multiplied by a power of 10 when the groupBy values
 
 """
 
+from typing import Any
 from pydantic import Field, validator
 from monggregate.stages.stage import Stage
-from monggregate.expressions import Expression
+from monggregate.expressions.content import Content
+from monggregate.expressions.fields import FieldName
+from monggregate.operators.accumulators.accumulator import AccumulatorExpression
 from monggregate.utils import StrEnum, validate_field_path
 
 class GranularityEnum(StrEnum):
@@ -116,8 +119,8 @@ class BucketAuto(Stage):
         output : dict, A document that specifieds the fields to include in the oupput documents in addition
                        to the _id field. To specify the field to include, you must use accumulator expressions.
 
-                       The defaut count field is not included in the output document when output is specified. Explicitly specify the count expression
-                       as part of the output document to include it:
+                       The defaut count field is not included in the output document when output is specified.
+                       Explicitly specify the count expression as part of the output document to include it:
 
                        >>> {
                                 <outputfield1>: { <accumulator>: <expression1> },
@@ -132,13 +135,20 @@ class BucketAuto(Stage):
 
     """
 
-    by : Expression = Field(...,alias="group_by")
+    # Attributes
+    # ----------------------------------------------------------------------------
+    by : Content = Field(...,alias="group_by") # probably should restrict type to field_paths an operator expressions
     buckets : int = Field(..., gt=0)
-    output : dict | None # Accumulator Expressions #TODO : Define type and use it here
+    output : dict[FieldName, AccumulatorExpression] | None # Accumulator Expressions #TODO : Define type and use it here
     granularity : GranularityEnum | None
 
-    _validate_by = validator("by", pre=True, always=True, allow_reuse=True)(validate_field_path)
 
+    # Validators
+    # ----------------------------------------------------------------------------
+    _validate_by = validator("by", pre=True, always=True, allow_reuse=True)(validate_field_path) # re-used validators
+
+    # Output
+    #-----------------------------------------------------------------------------
     @property
     def statement(self) -> dict:
 

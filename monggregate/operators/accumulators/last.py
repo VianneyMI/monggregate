@@ -51,7 +51,7 @@ An example empty window is a { documents: [ -1, -1 ] } documents window on the l
 """
 
 
-from monggregate.expressions import Expression
+from typing import Any
 from monggregate.operators.accumulators.accumulator import Accumulator
 
 class Last(Accumulator):
@@ -64,7 +64,7 @@ class Last(Accumulator):
 
     """
 
-    expression : Expression
+    expression : Any
 
 
 
@@ -75,7 +75,7 @@ class Last(Accumulator):
             "$last" : self.expression
         }
 
-def last(expression:Expression)->dict:
+def last(expression:Any)->dict:
     """Creates a push statement"""
 
     return Last(expression=expression).statement

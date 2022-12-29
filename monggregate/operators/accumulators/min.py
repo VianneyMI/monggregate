@@ -76,7 +76,7 @@ $min does not traverse into the array but instead treats the array as a non-nume
 
 """
 
-from monggregate.expressions import Expression
+from typing import Any
 from monggregate.operators.accumulators.accumulator import Accumulator
 
 class Min(Accumulator):
@@ -88,7 +88,7 @@ class Min(Accumulator):
         - expression, Expression : Any valid expression
     """
 
-    expression : Expression
+    expression : Any
 
 
 
@@ -99,7 +99,7 @@ class Min(Accumulator):
             "$min" : self.expression
         }
 
-def min(expression:Expression)->dict:
+def min(expression:Any)->dict:
     """Creates a $min statement"""
 
     return Min(expression=expression).statement

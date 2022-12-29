@@ -35,6 +35,8 @@ where myCount would be the output field that contains the count. You can specify
 """
 
 from monggregate.stages.stage import Stage
+from monggregate.expressions.fields import FieldName
+
 
 class Count(Stage):
     """
@@ -50,7 +52,7 @@ class Count(Stage):
 
     """
 
-    name : str # TODO : Implement ConstrainedStr subclass that does the above validation <VM, 09/10/2022>
+    name : FieldName
 
     @property
     def statement(self)-> dict:

@@ -27,7 +27,7 @@ For more information on expressions, see Expressions.
 
 """
 
-from monggregate.expressions import Expression
+from typing import Any
 from monggregate.operators.comparison.comparator import Comparator
 
 class Compare(Comparator):
@@ -50,7 +50,7 @@ class Compare(Comparator):
 
 Cmp = Compare
 
-def compare(left:Expression, right:Expression)->dict:
+def compare(left:Any, right:Any)->dict:
     """Returns a $cmp stament"""
 
     return Compare(

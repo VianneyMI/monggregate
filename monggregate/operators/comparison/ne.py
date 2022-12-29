@@ -25,7 +25,7 @@ The arguments can be any valid expression. For more information on expressions, 
 
 """
 
-from monggregate.expressions import Expression
+from typing import Any
 from monggregate.operators.comparison.comparator import Comparator
 
 class NotEqual(Comparator):
@@ -48,7 +48,7 @@ class NotEqual(Comparator):
 
 Ne = NotEqual
 
-def not_equal(left:Expression, right:Expression)->dict:
+def not_equal(left:Any, right:Any)->dict:
     """Returns a $ne statement"""
 
     return NotEqual(

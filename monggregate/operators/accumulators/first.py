@@ -59,7 +59,7 @@ See the missing data example.
 """
 
 
-from monggregate.expressions import Expression
+from typing import Any
 from monggregate.operators.accumulators.accumulator import Accumulator
 
 class First(Accumulator):
@@ -71,7 +71,7 @@ class First(Accumulator):
         - expression, Expression : Any valid expression
     """
 
-    expression : Expression
+    expression : Any
 
 
     @property
@@ -81,7 +81,7 @@ class First(Accumulator):
             "$first" : self.expression
         }
 
-def first(expression:Expression)->dict:
+def first(expression:Any)->dict:
     """Creates a push statement"""
 
     return First(expression=expression).statement
