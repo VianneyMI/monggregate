@@ -22,3 +22,23 @@ dependencies = [
     "pymongo >= 3.0",
 ]
 requires-python = ">=3.10"
+
+[tool.bumpver]
+current_version = "0.7.0"
+version_pattern = "MAJOR.MINOR.PATCH"
+commit_message = "bump version {old_version} -> {new_version}"
+commit = true
+tag = true
+push = true
+
+[tool.bumpver.file_patterns]
+"pyproject.toml" = [
+    'current_version = "{version}"',
+    'version = "{version}"'
+]
+"README.md" = [
+    "{version}",
+    "{pep440_version}",
+]
+"monggregate/__init__.py" = ['__version__="{version}"']
+
