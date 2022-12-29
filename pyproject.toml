@@ -15,13 +15,22 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent"
 ]
 keywords = ["nosql", "mongo", "aggregation", "pymongo", "pandas", "pydantic"]
 dependencies = [
-    "pydantic >= 1.8.0",
-    "pymongo >= 3.0",
+    "pydantic >= 1.8.0"
 ]
 requires-python = ">=3.10"
+
+[project.optional-dependencies]
+mongo = ["pymongo >= 3.0.0"]
+dev = ["bumpver", "pytest", "mypy", "pylint"]
+
+[project.urls]
+Homepage = "https://github.com/VianneyMI/monggregate"
 
 [tool.bumpver]
 current_version = "0.8.0"
