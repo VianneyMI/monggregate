@@ -9,7 +9,7 @@ import pytest
 from pydantic import ValidationError
 
 from monggregate import Pipeline
-from monggregate import( # pylint: disable=import-error
+from monggregate.stages import( # pylint: disable=import-error
     Stage,
     BucketAuto,
     Bucket,
