@@ -38,8 +38,6 @@ from monggregate.stages.stage import Stage
 from monggregate.expressions.fields import FieldName
 
 
-
-
 class Count(Stage):
     """
     Creates a count statement for an aggregation pipeline count stage

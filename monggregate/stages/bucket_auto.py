@@ -85,7 +85,7 @@ from pydantic import Field, validator
 from monggregate.stages.stage import Stage
 from monggregate.expressions.content import Content
 from monggregate.expressions.fields import FieldName
-from monggregate.operators.accumulators.accumulator import AccumulatorEnum
+from monggregate.operators.accumulators.accumulator import AccumulatorExpression
 from monggregate.utils import StrEnum, validate_field_path
 
 class GranularityEnum(StrEnum):
@@ -139,13 +139,13 @@ class BucketAuto(Stage):
     # ----------------------------------------------------------------------------
     by : Content = Field(...,alias="group_by") # probably should restrict type to field_paths an operator expressions
     buckets : int = Field(..., gt=0)
-    output : dict[FieldName, dict[AccumulatorEnum, Any]] | None # Accumulator Expressions #TODO : Define type and use it here
+    output : dict[FieldName, AccumulatorExpression] | None # Accumulator Expressions #TODO : Define type and use it here
     granularity : GranularityEnum | None
 
 
     # Validators
     # ----------------------------------------------------------------------------
-    _validate_by = validator("by", pre=True, always=True, allow_reuse=True)(validate_field_path)
+    _validate_by = validator("by", pre=True, always=True, allow_reuse=True)(validate_field_path) # re-used validators
 
     # Output
     #-----------------------------------------------------------------------------

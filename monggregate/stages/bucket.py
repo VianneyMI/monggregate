@@ -55,7 +55,7 @@ from pydantic import Field, validator
 from monggregate.stages.stage import Stage
 from monggregate.expressions.content import Content, Const, Consts
 from monggregate.expressions.fields import FieldName
-from monggregate.operators.accumulators.accumulator import AccumulatorEnum
+from monggregate.operators.accumulators.accumulator import AccumulatorExpression
 from monggregate.utils import validate_field_path
 
 class Bucket(Stage):
@@ -101,9 +101,11 @@ class Bucket(Stage):
     by : Content = Field(...,alias="group_by")
     boundaries : Consts
     default : Const
-    output : dict[FieldName, dict[AccumulatorEnum, Any]] | None
+    output : dict[FieldName, AccumulatorExpression] | None
 
-    _validate_by = validator("by", pre=True, always=True, allow_reuse=True)(validate_field_path)
+    # Validators
+    # ------------------------------
+    _validate_by = validator("by", pre=True, always=True, allow_reuse=True)(validate_field_path) # re-used validators
 
     @property
     def statement(self) -> dict:
