@@ -100,7 +100,7 @@ class Bucket(Stage):
 
     by : Content = Field(...,alias="group_by")
     boundaries : Consts
-    default : Const
+    default : Const | None
     output : dict[FieldName, AccumulatorExpression] | None
 
     # Validators

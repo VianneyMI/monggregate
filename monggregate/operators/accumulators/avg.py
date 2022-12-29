@@ -84,7 +84,7 @@ class Average(Accumulator):
 
     """
 
-    expression : Any
+    expression : Content
 
     @property
     def statement(self) -> dict:

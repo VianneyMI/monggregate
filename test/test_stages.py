@@ -100,7 +100,7 @@ class TestStages:
             group_by="income",
             boundaries=[25000, 40000, 60000, 100000],
             default="other",
-            output={"output":"expression"}
+            output={"output":{"$sum":1}}
         )
 
 
