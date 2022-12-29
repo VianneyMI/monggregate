@@ -7,7 +7,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "monggregate"
 version = "0.9.0"
-description = "Interface to ease creation and usage of MongoDB aggregation pipelines in python"
+description = "MongoDB aggregation pipelines made easy. Joins, grouping, counting and much more..."
 readme = "README.md"
 authors = [{ name = "Vianney Mixtur", email = "vianney.mixtur@outlook.fr" }]
 license = { file = "LICENSE" }
