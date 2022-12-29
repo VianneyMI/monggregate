@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "monggregate"
-version = "0.7.1"
+version = "0.8.0"
 description = "Interface to ease creation and usage of MongoDB aggregation pipelines in python"
 readme = "README.md"
 authors = [{ name = "Vianney Mixtur", email = "vianney.mixtur@outlook.fr" }]
@@ -24,7 +24,7 @@ dependencies = [
 requires-python = ">=3.10"
 
 [tool.bumpver]
-current_version = "0.7.1"
+current_version = "0.8.0"
 version_pattern = "MAJOR.MINOR.PATCH"
 commit_message = "bump version {old_version} -> {new_version}"
 commit = true
