@@ -36,9 +36,5 @@ push = true
     'current_version = "{version}"',
     'version = "{version}"'
 ]
-"README.md" = [
-    "{version}",
-    "{pep440_version}",
-]
 "monggregate/__init__.py" = ['__version__ = "{version}"']
 
