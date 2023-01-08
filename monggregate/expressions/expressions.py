@@ -84,7 +84,6 @@ class Expression(BaseModel):
 
         return variable
 
-    # TODO : Reuse validate_field from utils.py module (to be validators.py) <VM, 27/11/2022>
     @validator("field", pre=True, always=True)
     @classmethod
     def validate_field(cls, path:str|None)-> FieldPath | None:

@@ -41,8 +41,7 @@ class OnCallEnum(StrEnum):
     RUN = "run"
     EXPORT = "export"
 
-# TODO : Remove {} as default value for some arguments
-# as it is dangerous as signaled by pylint <VM, 30/10/2022>
+
 class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     """
     MongoDB aggregation pipeline abstraction
@@ -85,7 +84,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     Alternatively, your pipeline can be self sufficient and executes itself directly using the following approach:
 
         >>> pipeline = Pipeline(
-            _db=db,  # TODO : Update this when adding the uri parameter
+            _db=db,
             collection="listingsAndReviews",
             on_call="run"
         )
@@ -102,7 +101,6 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     """
 
     _db : Database | None # necessary to execute the pipeline
-                        # TODO : allow to pass a URI and instantiates a database connection directly here
     on_call : OnCallEnum = OnCallEnum.EXPORT
     collection : str | None
     stages : list[Stage] = []

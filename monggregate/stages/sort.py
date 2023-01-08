@@ -144,12 +144,12 @@ class Sort(Stage):
 
     @validator("ascending")
     @classmethod
-    def validates_booleans(cls, ascending:SortArgs|dict|bool|None, values:dict)->list[str]|bool|None:
+    def validates_booleans(cls, ascending:list[str]|dict|bool|None, values:dict)->list[str]|bool|None:
         """Validates combination of ascending and descending"""
 
         descending = values.get("descending")
 
-        # Preventing to use both aascending and descending as booleans at the same time
+        # Preventing to use both ascending and descending as booleans at the same time
         # to avoid conflicting behaviors
         if isinstance(descending, bool) and isinstance(ascending, bool):
             raise ValueError("Cannot use both ascending and descending as booleans at the same time")
@@ -159,14 +159,25 @@ class Sort(Stage):
         elif ascending is None and descending is None:
             ascending = True
 
-        # If descending is provided as a bool, we symetrically compute ascending, so that we can only need one of argument
+        # If descending is provided as a bool, we symetrically compute ascending, so that we only need one of argument
         # in validates_by below
         elif ascending is None and isinstance(descending, bool):
             ascending = not descending
 
+        # and reciprocally, if ascending is provided as a bool, we symetrically compute descending.
+        # (WARNING: removing this branch breaks the validator on a functional stand point)
+        elif descending is None and isinstance(ascending, bool):
+            descending = not ascending
+
         elif isinstance(ascending, list) or isinstance(descending, list):
             pass
 
+
+        elif isinstance(ascending, dict) or isinstance(descending, dict):
+            pass
+
+
+        # if we are in none of the cases above, we raise an error. Hopefully we don't have false positives !
         else:
             raise TypeError(
                 f"Wrong combination of arguments.\

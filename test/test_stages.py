@@ -9,7 +9,7 @@ import pytest
 from pydantic import ValidationError
 
 from monggregate import Pipeline
-from monggregate import( # pylint: disable=import-error
+from monggregate.stages import( # pylint: disable=import-error
     Stage,
     BucketAuto,
     Bucket,
@@ -396,6 +396,17 @@ class TestStages:
             ascending=set(["field1", "field2"]),
             descending=set(["field3", "fieldN"])
             )
+
+        # Further testing ascending and descending complex logic
+        # ----------------------------
+        assert Sort(
+            by = "year",
+            ascending = True
+            )
+
+        assert Sort(
+            ascending = {"year":1}
+        )
 
 
     def test_unwind(self, state:State)->None:

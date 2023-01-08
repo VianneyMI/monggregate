@@ -8,4 +8,6 @@ notes.md
 tracker.xlsx
 ~$tracker.xlsx
 monggregate.egg-info
+UNKNOWN.egg-info
+dist
 test.py

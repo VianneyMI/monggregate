@@ -22,8 +22,6 @@ Aggregation Variables
 ---------------------
 MongoDB provides various aggregation system variables for use in expressions. To access variables, prefix the variable name with $$. For example:
 
-TODO : <Insert document table here>  <VM, 18/09/2022>
-
 For a more detailed description of these variables, see system variables.
 
 Literals
@@ -84,8 +82,6 @@ Comparison expressions return a boolean excep for $cmp which returns a number.
 
 The comparison expressions take two argument expressions and compare both value and type,
 using the specified BSON comparison order for values of different types.
-
-TODO : To be continued <VM, 18/09/2022>
 
 
 """
