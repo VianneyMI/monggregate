@@ -397,6 +397,17 @@ class TestStages:
             descending=set(["field3", "fieldN"])
             )
 
+        # Further testing ascending and descending complex logic
+        # ----------------------------
+        assert Sort(
+            by = "year",
+            ascending = True
+            )
+
+        assert Sort(
+            ascending = {"year":1}
+        )
+
 
     def test_unwind(self, state:State)->None:
         """Testes the $unwind stage"""
