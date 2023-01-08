@@ -46,4 +46,3 @@ push = true
     'version = "{version}"'
 ]
 "monggregate/__init__.py" = ['__version__ = "{version}"']
-
