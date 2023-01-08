@@ -188,3 +188,8 @@ There are already a couple issue, that I noted myself for the next tasks that ar
 
 Feel free to open an issue, if you found a bug or to propose enhancements.
 Feel free to do a PR, to propose new interfaces for stages that have not been dealt with yet.
+
+## Going further
+
+* Check out this GitHub [repo](https://github.com/VianneyMI/doc_monggregate) for more examples.
+* A medium article is on its way to introduce the library. Follow me on LinkedIn, Twitter, whatever to know when it is ready.
