@@ -192,4 +192,4 @@ Feel free to do a PR, to propose new interfaces for stages that have not been de
 ## Going further
 
 * Check out this GitHub [repo](https://github.com/VianneyMI/doc_monggregate) for more examples.
-* A medium article is on its way to introduce the library. Follow me on LinkedIn, Twitter, whatever to know when it is ready.
+* Check out this [tutorial](https://medium.com/@vianney.mixtur_39698/mongo-db-aggregations-pipelines-made-easy-with-monggregate-680b322167d2) on Medium. (It's not under the paywall)
