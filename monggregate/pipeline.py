@@ -369,7 +369,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             - right_on / foreign_field (official MongoDB name), str | None : field of the foreign collection to join on
             - let, dict | None : variables to be used in the inner pipeline
             - pipeline, list[dict] | None : pipeline to run on the foreign collection.
-            - as, str : name of the field containing the matches from the foreign collection
+            - name / as, str : name of the field containing the matches from the foreign collection
 
             NOTE (pipeline and let attributes) : To reference variables in pipeline stages, use the "$$<variable>" syntax.
 
@@ -403,6 +403,38 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             )
         )
         return self
+
+    def join(
+            self,
+            *,
+            other:str,
+            how:Literal["left", "right", "inner"]="left", # TODO : Implement outer and cross joins <VM, 10/04/2023>
+            on:str|None=None,
+            left_on:str|None=None,
+            right_on:str|None=None  
+            )->"Pipeline":
+        """
+        Adds a lookup stage to the current pipeline.
+        Virtual extension of the lookup function aimint at reproducing SQL behaviors
+
+        Arguments:
+        -------------------
+            - other, str : collection to join
+            - how, 'left', 'right', 'inner' : type of join to be performed
+                                              'left' preserve the left collection
+                                              'right' preserve the right collection
+                                              'inner' returns only documents from
+                                                      the left collection that match
+                                                      documents from the right collection
+
+            - on, str|None=None: key to use to perform the join, 
+                                 if the key name is the same in both collections
+            - left_on:str|None=None: key to use on the left collection to perform the join.
+                                     Must be use with right_on.
+            - right_on;str|None=None: key to use on the right collection to perform the join
+                                      Must be use with left_on. 
+        """
+
 
     def match(self, query:dict={}, **kwargs:Any)->"Pipeline":
         """
