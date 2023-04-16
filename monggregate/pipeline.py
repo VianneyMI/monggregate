@@ -23,7 +23,8 @@ from monggregate.stages import (
     Sort,
     Unwind
 )
-from typing import Any
+from monggregate.operators import MergeObjects
+from monggregate.expressions.aggregation_variables import ROOT
 from monggregate.utils import StrEnum
 
 
@@ -435,6 +436,78 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
                                       Must be use with left_on. 
         """
 
+        # NOTE : Currently chose to implement a real SQL join, that is we chose to promote the matches in the local collection, the matches of the foreign collection
+        # instead of gathering them in an array as the lone lookup stage does.
+        # Could be better to leave this choice to the user and implement both approach using a variable to determine which implementation to take
+
+        if how == "left":
+            self.__left_join(right=other, on=on, left_on=left_on, right_on=right_on)
+        elif how == "right":
+            self.__right_join(left=other, on=on, left_on=left_on, right_on=right_on)
+        elif how == "inner":
+            self.__inner_join(right=other, on=on, left_on=left_on, right_on=right_on)
+
+        return self
+    
+    def __join_common(self, right:str, on:str|None, left_on:str|None, right_on:str|None)->str:
+        """Common parts between various join types"""
+
+
+        _prefix = right.lower()
+        join_field = "__" + _prefix + "__"
+        self.stages.append(
+            Lookup(
+                right = right,
+                on = on,
+                left_on = left_on,
+                right_on = right_on,
+                name = join_field
+            )
+        )
+        self.stages.append(
+            Unwind(path_to_array=join_field)
+        )
+        self.stages.append(
+            ReplaceRoot(
+                document=MergeObjects(
+                    expression=[ROOT, "$"+join_field]
+                ).statement
+            )
+        )
+        self.stages.append(
+            Project(exclude=join_field)
+        )
+        return join_field
+
+    def __left_join(self, right:str, on:str|None, left_on:str|None, right_on:str|None) -> None:
+        """Implements left join"""
+
+        self.__join_common(right=right, on=on, left_on=left_on, right_on=right_on)
+    
+    def __right_join(self, left:str, on:str|None, left_on:str, right_on:str|None) -> None:
+        """Implements right join"""
+
+        # TODO : Warns that his will override current pipeline collection by left
+        # TODO : Append collection name in foreign collection documents field names to avoid collision and override of field when promoting sub-documents
+        # Ex : {"a":1, "b":2, "c":{"a":3, "d":0}} after promoting "c" would become {"a":3, "b":2, "d":0} and we want to prevent this
+        # TODO : Add tests <VM, 16/04/2023>
+
+        right = self.collection
+        self.collection = left
+        self.__join_common(right=right, on=on, left_on=left_on, right_on=right_on)
+        
+    def __inner_join(self, right:str, on:str|None, left_on:str|None, right_on:str|None) -> None:
+        """Implements inner join"""
+
+        join_field = self.__join_common(right=right, on=on, left_on=left_on, right_on=right_on)
+        
+        filter_no_match = Match(
+            query = {
+                join_field : []
+            }
+        ) # used to filter out documents in the left collection, that has no match in the right collection
+
+        self.stages.insert(-3, filter_no_match)
 
     def match(self, query:dict={}, **kwargs:Any)->"Pipeline":
         """

@@ -84,7 +84,7 @@ class ReplaceRoot(Stage):
 
     # Attributes
     # --------------------------
-    path_to_new_root : str = Field(..., alias="path")
+    path_to_new_root : str|None = Field(None, alias="path")
     #document : dict
 
     # Validators
@@ -95,4 +95,6 @@ class ReplaceRoot(Stage):
     def statement(self)->dict:
         """Generate statements from argument"""
 
+        # FIXME : Without improving this stage and allowing to use document, the join alias in Pipeline class 
+        # is useless <VM, 16/04/2023>
         return  {"$replaceRoot":{"newRoot":self.path_to_new_root}}

@@ -323,6 +323,7 @@ class Lookup(Stage):
     def set_type(cls, value:str, values:dict)->str:
         """Set types dynamically"""
 
+        
         if value:
             pass
             # TODO : Raise a warning if passed
@@ -355,6 +356,10 @@ class Lookup(Stage):
 
 
         else:
+            # TODO : Inprove this error message
+            # Either maybe just print received arguments
+            # Or even better parse received arguments and give reason
+            # that is either missing argument or superflous argument <VM, 16/04/2023>
             raise TypeError("Incompatible combination of arguments")
 
         return type_
