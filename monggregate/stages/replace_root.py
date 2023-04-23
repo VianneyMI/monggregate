@@ -77,15 +77,15 @@ class ReplaceRoot(Stage):
     ---------------------------
 
         - statement, dict : the statement generated during instantiation after parsing the other arguments
-        - path_to_new_root, str : the path to the embedded document to be promoted
-        - document, dict : documents being created and to be set as the new root (Not implemented yet)
+        - path_to_new_root, str|None : the path to the embedded document to be promoted
+        - document, dict|None : documents being created and to be set as the new root.
 
     """
 
     # Attributes
     # --------------------------
     path_to_new_root : str|None = Field(None, alias="path")
-    #document : dict
+    document : dict|None 
 
     # Validators
     # ---------------------------
@@ -95,6 +95,10 @@ class ReplaceRoot(Stage):
     def statement(self)->dict:
         """Generate statements from argument"""
 
-        # FIXME : Without improving this stage and allowing to use document, the join alias in Pipeline class 
-        # is useless <VM, 16/04/2023>
-        return  {"$replaceRoot":{"newRoot":self.path_to_new_root}}
+        if self.path_to_new_root:
+            expression = self.path_to_new_root
+        else:
+            expression = self.document
+
+    
+        return  {"$replaceRoot":{"newRoot":expression}}

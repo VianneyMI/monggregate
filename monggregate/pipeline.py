@@ -1,6 +1,7 @@
 """Pipeline Module"""
 
 from typing import Any, Literal
+from warnings import warn
 from pymongo.database import Database
 from pydantic import BaseModel, BaseConfig
 from monggregate.stages import (
@@ -415,8 +416,9 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             right_on:str|None=None  
             )->"Pipeline":
         """
-        Adds a lookup stage to the current pipeline.
-        Virtual extension of the lookup function aimint at reproducing SQL behaviors
+        Adds a combination of stages, that together reproduce SQL joins.
+        This is a virtual and unofficial stage. It is not documented on MongoDB aggregation pipeline reference page.
+        As such, there is no Join class implementation in this package.
 
         Arguments:
         -------------------
@@ -430,15 +432,21 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
             - on, str|None=None: key to use to perform the join, 
                                  if the key name is the same in both collections
-            - left_on:str|None=None: key to use on the left collection to perform the join.
+            - left_on, str|None=None: key to use on the left collection to perform the join.
                                      Must be use with right_on.
-            - right_on;str|None=None: key to use on the right collection to perform the join
+            - right_on, str|None=None: key to use on the right collection to perform the join
                                       Must be use with left_on. 
         """
 
         # NOTE : Currently chose to implement a real SQL join, that is we chose to promote the matches in the local collection, the matches of the foreign collection
         # instead of gathering them in an array as the lone lookup stage does.
         # Could be better to leave this choice to the user and implement both approach using a variable to determine which implementation to take
+        warning_message = """ 
+        If the two collections contain identical key names, the right collection keys will override the left collection keys.
+        In a future version, this will be improved and the common keys will be prefixed by the collection name. 
+        """
+
+        warn(warning_message)
 
         if how == "left":
             self.__left_join(right=other, on=on, left_on=left_on, right_on=right_on)
@@ -480,24 +488,24 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         return join_field
 
     def __left_join(self, right:str, on:str|None, left_on:str|None, right_on:str|None) -> None:
-        """Implements left join"""
+        """Implements SQL left join"""
 
         self.__join_common(right=right, on=on, left_on=left_on, right_on=right_on)
     
     def __right_join(self, left:str, on:str|None, left_on:str, right_on:str|None) -> None:
-        """Implements right join"""
-
-        # TODO : Warns that his will override current pipeline collection by left
+        """Implements SQL right join"""
+        
+        warn("This stage will override the collection attribute of the pipeline with left and may lead to strange behaviors if not anticipated.")
+        # TODO : Warns that this will override current pipeline collection by left
         # TODO : Append collection name in foreign collection documents field names to avoid collision and override of field when promoting sub-documents
         # Ex : {"a":1, "b":2, "c":{"a":3, "d":0}} after promoting "c" would become {"a":3, "b":2, "d":0} and we want to prevent this
-        # TODO : Add tests <VM, 16/04/2023>
 
         right = self.collection
         self.collection = left
         self.__join_common(right=right, on=on, left_on=left_on, right_on=right_on)
         
     def __inner_join(self, right:str, on:str|None, left_on:str|None, right_on:str|None) -> None:
-        """Implements inner join"""
+        """Implements SQL inner join"""
 
         join_field = self.__join_common(right=right, on=on, left_on=left_on, right_on=right_on)
         
