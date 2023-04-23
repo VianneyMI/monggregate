@@ -585,7 +585,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             )
         return self
 
-    def replace_root(self, path:str)->"Pipeline":
+    def replace_root(self, path:str|None=None, *,document:dict|None=None)->"Pipeline":
         """
         Adds a replace_root stage to the current pipeline.
 
@@ -593,8 +593,8 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         -------------------------------------
 
             - statement, dict : the statement generated during instantiation after parsing the other arguments
-            - path_to_new_root, str : the path to the embedded document to be promoted
-            - document, dict : documents being created and to be set as the new root (Not implemented yet)
+            - path_to_new_root, str|None : the path to the embedded document to be promoted
+            - document, dict|None : document being created and to be set as the new root or expression
 
 
         """
@@ -604,7 +604,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             )
         return self
 
-    def replace_with(self, path:str)->"Pipeline":
+    def replace_with(self, path:str|None=None, *,document:dict|None=None)->"Pipeline":
         """
         Adds a replace_with stage to the current pipeline.
 
@@ -612,8 +612,8 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         -------------------------------------
 
             - statement, dict : the statement generated during instantiation after parsing the other arguments
-            - path_to_new_root, str : the path to the embedded document to be promoted
-            - document, dict : documents being created and to be set as the new root (Not implemented yet)
+            - path_to_new_root, str|None : the path to the embedded document to be promoted
+            - document, dict|None : document being created and to be set as the new root or expression
 
         """
 

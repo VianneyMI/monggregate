@@ -60,7 +60,7 @@ def test_inner_join()->None:
     pipeline = Pipeline(collection="left")
     pipeline.join(
         other = "right",
-        how = "left",
+        how = "inner",
         on = "zipcode"
     )
 
@@ -70,7 +70,7 @@ def test_inner_join()->None:
     # The only difference with Left join is that there is an additional Match stage
     # in order to filter out documents from left, with no matches in right.
 
-    assert isinstance(pipeline[-3], Match)
+    assert isinstance(pipeline[1], Match)
     assert pipeline[0]() == {
         "$lookup":{
             "from" : "right", # from references the right collection

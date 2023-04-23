@@ -267,7 +267,7 @@ class Lookup(Stage):
         - right_on / foreign_field (official MongoDB name), str | None : field of the foreign collection to join on
         - let, dict | None : variables to be used in the inner pipeline
         - pipeline, list[dict] | None : pipeline to run on the foreign collection.
-        - as, str : name of the field containing the matches from the foreign collection
+        - name / as, str : name of the field containing the matches from the foreign collection
 
         NOTE (pipeline and let attributes) : To reference variables in pipeline stages, use the "$$<variable>" syntax.
 
