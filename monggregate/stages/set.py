@@ -1,5 +1,5 @@
 """
-Module definining an interface to MongoDB $set stage operation in aggrgation pipeline
+Module definining an interface to MongoDB $set stage operation in aggregation pipeline
 
 Online MongoDB documentation:
 --------------------------------------------------------------------------------------------------------------------
