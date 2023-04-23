@@ -77,15 +77,15 @@ class ReplaceRoot(Stage):
     ---------------------------
 
         - statement, dict : the statement generated during instantiation after parsing the other arguments
-        - path_to_new_root, str : the path to the embedded document to be promoted
-        - document, dict : documents being created and to be set as the new root (Not implemented yet)
+        - path_to_new_root, str|None : the path to the embedded document to be promoted
+        - document, dict|None : document being created and to be set as the new root or expression
 
     """
 
     # Attributes
     # --------------------------
-    path_to_new_root : str = Field(..., alias="path")
-    #document : dict
+    path_to_new_root : str|None = Field(None, alias="path")
+    document : dict|None 
 
     # Validators
     # ---------------------------
@@ -95,4 +95,10 @@ class ReplaceRoot(Stage):
     def statement(self)->dict:
         """Generate statements from argument"""
 
-        return  {"$replaceRoot":{"newRoot":self.path_to_new_root}}
+        if self.path_to_new_root:
+            expression = self.path_to_new_root
+        else:
+            expression = self.document
+
+    
+        return  {"$replaceRoot":{"newRoot":expression}}

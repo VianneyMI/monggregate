@@ -99,11 +99,12 @@ class Unwind(Stage):
     def statement(self)->dict[str, dict]:
         """Generates set stage statement from arguments"""
 
+        params = {"path":self.path_to_array}
 
-        return  {
-            "$unwind" : {
-                "path":self.path_to_array,
-                "includeArrayIndex":self.include_array_index,
-                "preserveNullAndEmptyArrays":self.always
-            }
-        }
+        if self.include_array_index:
+            params["includeArrayIndex"] = self.include_array_index
+
+        if self.always:
+            params["preserveNullAndEmptyArrays"] = self.always
+
+        return  {"$unwind" : params}

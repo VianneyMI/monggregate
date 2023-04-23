@@ -267,7 +267,7 @@ class Lookup(Stage):
         - right_on / foreign_field (official MongoDB name), str | None : field of the foreign collection to join on
         - let, dict | None : variables to be used in the inner pipeline
         - pipeline, list[dict] | None : pipeline to run on the foreign collection.
-        - as, str : name of the field containing the matches from the foreign collection
+        - name / as, str : name of the field containing the matches from the foreign collection
 
         NOTE (pipeline and let attributes) : To reference variables in pipeline stages, use the "$$<variable>" syntax.
 
@@ -323,6 +323,7 @@ class Lookup(Stage):
     def set_type(cls, value:str, values:dict)->str:
         """Set types dynamically"""
 
+        
         if value:
             pass
             # TODO : Raise a warning if passed
@@ -355,6 +356,10 @@ class Lookup(Stage):
 
 
         else:
+            # TODO : Inprove this error message
+            # Either maybe just print received arguments
+            # Or even better parse received arguments and give reason
+            # that is either missing argument or superflous argument <VM, 16/04/2023>
             raise TypeError("Incompatible combination of arguments")
 
         return type_

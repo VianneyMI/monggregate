@@ -628,9 +628,7 @@ class TestStagesFunctional(TestStages):
         unwind = state["unwind"]
         assert unwind.statement == Pipeline().unwind("xyz")[0].statement == {
             "$unwind" : {
-                "path" : "$xyz",
-                "includeArrayIndex" : None,
-                "preserveNullAndEmptyArrays" : False
+                "path" : "$xyz"
             }
         }
 
