@@ -166,3 +166,4 @@ class OperatorEnum(StrEnum):
     WEEK = "$week"
     YEAR = "$year"
     ZIP = "$zip"
+
