@@ -68,6 +68,7 @@ The $$SEARCH_META aggregation variable can't be used in any subsequent stage aft
                                                        
 """
 
+from datetime import datetime
 from typing import Any
 from pydantic import Field, validator
 from monggregate.stages.stage import Stage
@@ -172,38 +173,98 @@ class Search(SearchBase):
     # Constructors
     #---------------------------------------------------------
     @classmethod
-    def from_operator(operator:str, *kwargs:Any)->"Search":
+    def from_operator(
+        cls, 
+        operator:str,
+        path:str|list[str],
+        query:str|list[str]|None=None,
+        fuzzy:dict|None=None,
+        score:dict|None=None,
+        **kwargs:Any)->"Search":
         """Instantiates a search stage from a search operator"""
 
     @classmethod
     def autocomplete(
+        cls,
         query:str|list[str], 
         path:str, 
         token_order:str="any",
         fuzzy:dict|None=None,
-        score:dict|None=None)->"Search":
+        score:dict|None=None,
+        **kwargs:Any)->"Search":
+        """xxx"""
+
+        base_params = SearchBase(**kwargs).dict()
+        autocomplete_params = Autocomplete(
+            query=query,
+            path=path,
+            token_order=token_order,
+            fuzzy=fuzzy,
+            score=score
+        ).statement
+
+        return Search(**base_params, operator=autocomplete_params)
+
+    @classmethod
+    def equals(
+        cls,
+        path:str,
+        value:str|int|float|bool|datetime,
+        score:dict|None=None,
+        **kwargs:Any
+        )->"Search":
         """xxx"""
 
     @classmethod
-    def equals()->"Search":
+    def exists(cls, path:str, **kwargs:Any)->"Search":
         """xxx"""
 
     @classmethod
-    def exists()->"Search":
+    def more_like_this(cls, like:dict|list[dict], **kwargs:Any)->"Search":
         """xxx"""
 
     @classmethod
-    def more_like_this()->"Search":
+    def range(
+        cls,
+        path:str|list[str],
+        gt:int|float|datetime|None=None,
+        lt:int|float|datetime|None=None,
+        gte:int|float|datetime|None=None,
+        score:dict|None=None,
+        **kwargs:Any
+    )->"Search":
         """xxx"""
 
     @classmethod
-    def range()->"Search":
+    def regex(
+        cls,
+        query:str|list[str],
+        path:str|list[str],
+        allow_analyzed_field:bool=False,
+        score:dict|None=None,
+        **kwargs:Any
+    )->"Search":
         """xxx"""
 
     @classmethod
-    def text()->"Search":
+    def text(
+        cls,
+        query:str|list[str],
+        path:str|list[str],
+        fuzzy:dict|None=None,
+        score:dict|None=None,
+        synonyms:str|None=None,
+        **kwargs:Any
+    )->"Search":
         """xxx"""
 
     @classmethod
-    def wildcard()->"Search":
+    def wildcard(
+        cls,
+        query:str|list[str],
+        path:str|list[str],
+        allow_analyzed_field:bool=False,
+        score:dict|None=None,
+        **kwargs:Any
+    )->"Search":
         """xxx"""

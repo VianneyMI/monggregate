@@ -78,7 +78,7 @@ class Regex(SearchOperator):
     query : str | list[str]
     path : str | list[str]
     allow_analyzed_field: bool = False
-    score : dict
+    score : dict | None = None
 
     @property
     def statement(self) -> dict:

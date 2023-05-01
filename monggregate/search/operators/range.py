@@ -94,7 +94,7 @@ class Range(SearchOperator):
     lt : int | float | datetime | None
     gte : int | float | datetime | None
     lte : int | float | datetime | None
-    score : dict
+    score : dict|None
 
     @validator("gte", pre=True, always=True)
     def at_least_one_lower(cls, value, values):
