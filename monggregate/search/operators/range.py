@@ -77,15 +77,19 @@ class Range(SearchOperator):
 
     Description
     --------------------
-
+    You can use the range operator to find results that are within a given numeric or date range.
     
 
     Attributes
     --------------------
+        - gt/gte, numeric or date : Upper bound (exclusive/inclusive) of the range 
+        - lt/lte, numeric or date : Lower bound (exclusive/inclusive) of the range
+        - path, str | list[str] : Indexed field or fields to search.
+        - score, dict : Scoring options
 
     """
 
-    path : str
+    path : str | list[str]
     gt : int | float | datetime | None
     lt : int | float | datetime | None
     gte : int | float | datetime | None
@@ -124,3 +128,4 @@ class Range(SearchOperator):
                 params["lte"] = self.lte
 
             return {"range":params}
+    

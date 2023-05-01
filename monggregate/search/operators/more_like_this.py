@@ -101,4 +101,11 @@ class MoreLikeThis(SearchOperator):
     """
 
     like : dict | list[dict]
+
+    @property
+    def statement(self) -> dict:
+        
+        return {
+            "moreLikeThis" : self.like
+        }
     

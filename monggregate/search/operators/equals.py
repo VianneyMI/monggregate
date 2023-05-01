@@ -91,7 +91,7 @@ class Equals(SearchOperator):
 
     """
 
-    path : str
+    path : str # does not allow list
     value : str | int | float | bool | datetime
     score : dict
 
