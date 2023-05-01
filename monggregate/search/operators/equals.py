@@ -93,7 +93,7 @@ class Equals(SearchOperator):
 
     path : str # does not allow list
     value : str | int | float | bool | datetime
-    score : dict
+    score : dict|None
 
     @property
     def statement(self) -> dict:

@@ -195,7 +195,7 @@ class Search(SearchBase):
         """xxx"""
 
         base_params = SearchBase(**kwargs).dict()
-        autocomplete_params = Autocomplete(
+        autocomplete_statement = Autocomplete(
             query=query,
             path=path,
             token_order=token_order,
@@ -203,7 +203,7 @@ class Search(SearchBase):
             score=score
         ).statement
 
-        return Search(**base_params, operator=autocomplete_params)
+        return Search(**base_params, operator=autocomplete_statement)
 
     @classmethod
     def equals(
@@ -215,13 +215,26 @@ class Search(SearchBase):
         )->"Search":
         """xxx"""
 
+        base_params = SearchBase(**kwargs).dict()
+        equals_statement = Equals(
+            path=path,
+            value=value,
+            score=score
+        ).statement
+
+        return Search(**base_params, operator=equals_statement)
+
     @classmethod
     def exists(cls, path:str, **kwargs:Any)->"Search":
         """xxx"""
 
+        base_params = SearchBase(**kwargs).dict()
+
     @classmethod
     def more_like_this(cls, like:dict|list[dict], **kwargs:Any)->"Search":
         """xxx"""
+        
+        base_params = SearchBase(**kwargs).dict()
 
     @classmethod
     def range(
@@ -235,6 +248,8 @@ class Search(SearchBase):
     )->"Search":
         """xxx"""
 
+        base_params = SearchBase(**kwargs).dict()
+
     @classmethod
     def regex(
         cls,
@@ -245,6 +260,8 @@ class Search(SearchBase):
         **kwargs:Any
     )->"Search":
         """xxx"""
+
+        base_params = SearchBase(**kwargs).dict()
 
     @classmethod
     def text(
@@ -258,6 +275,8 @@ class Search(SearchBase):
     )->"Search":
         """xxx"""
 
+        base_params = SearchBase(**kwargs).dict()
+
     @classmethod
     def wildcard(
         cls,
@@ -268,3 +287,5 @@ class Search(SearchBase):
         **kwargs:Any
     )->"Search":
         """xxx"""
+
+        base_params = SearchBase(**kwargs).dict()
