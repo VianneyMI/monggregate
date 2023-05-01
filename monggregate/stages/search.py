@@ -100,7 +100,7 @@ class Search(Stage):
                 "index":self.index,
                 "highlight":self.highlight,
                 "count":self.count,
-                "retunStoredSource":self.return_stored_source,
+                "returnStoredSource":self.return_stored_source,
                 "scoreDetails":self.score_details
             }
         

@@ -67,7 +67,7 @@ class Text(SearchOperator):
     query : str|list[str]
     path : str
     fuzzy : dict | None
-    score : dict
+    score : dict | None
     synonyms : str | None
 
     @property
