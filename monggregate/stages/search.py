@@ -68,19 +68,72 @@ The $$SEARCH_META aggregation variable can't be used in any subsequent stage aft
                                                        
 """
 
+from typing import Any
 from pydantic import Field, validator
 from monggregate.stages.stage import Stage
+from monggregate.search.operators import(
+    Autocomplete,
+    Equals,
+    Exists,
+    MoreLikeThis,
+    Range,
+    Regex,
+    Text,
+    Wilcard
+)
 
-class Search(Stage):
-    """"xxx"""
+class SearchBase(Stage):
+    """Internals"""
 
     index : str = "default"
     count : dict|None
     highlight : dict|None
-    collector : dict|None
-    operator : dict|None
     return_stored_source : bool = Field(False, alias="returnStoredSource")
     score_details : bool = Field(False, alias="scoreDetails")
+
+
+class Search(SearchBase):
+    """"
+    Creates a $search statement in an aggregation pipeline
+
+    Descrtiption
+    -----------------------
+    The $search stage performs a full-text search on the specified field or fields 
+    which must be covered by an Atlas Search index.
+
+    Attributes:
+    -----------------------
+        - index, str : name of the Atlas Search index to use. Defaults to default.
+
+        - count, dict|None : Document that specifies the count options for retrieving a count
+                             of the results. 
+
+        - highlight, dict|None : Document that specifies the highlight options for displaying
+                                 search terms in their original context.
+
+        - return_stored_source, bool : Flag that specifies whether to perform a full document lookup
+                                       on the backend database (mongod) or return only stored source fields
+                                       directly from Atlas Search. Defaults to false.
+
+        - score_details, bool : Flag that specifies whether to retrieve a detailed breakdown of
+                                the score for the documents in the results. Defaults to false
+                                To view the details, you must use the $meta expression in the
+                                $project stage.
+
+        - <operator-name>, dict|None : Name of the operator to search with. You can provide a document
+                                  that contains the operator-specific options as the value for this field
+                                  Either this or <collector-name> is required.
+
+        - <collector-name>, dict|None : Name of the collector to use with the query. You can provide
+                                        a document that contains the collector-specific options as the value
+                                        for this field. Either this or <operator-name> is required.
+
+    """
+
+    
+    collector : dict|None
+    operator : dict|None
+    
 
     @validator("operator", pre=True, always=True)
     @classmethod
@@ -113,3 +166,44 @@ class Search(Stage):
         }
      
         return _statement
+    
+
+    #---------------------------------------------------------
+    # Constructors
+    #---------------------------------------------------------
+    @classmethod
+    def from_operator(operator:str, *kwargs:Any)->"Search":
+        """Instantiates a search stage from a search operator"""
+
+    @classmethod
+    def autocomplete(
+        query:str|list[str], 
+        path:str, 
+        token_order:str="any",
+        fuzzy:dict|None=None,
+        score:dict|None=None)->"Search":
+        """xxx"""
+
+    @classmethod
+    def equals()->"Search":
+        """xxx"""
+
+    @classmethod
+    def exists()->"Search":
+        """xxx"""
+
+    @classmethod
+    def more_like_this()->"Search":
+        """xxx"""
+
+    @classmethod
+    def range()->"Search":
+        """xxx"""
+
+    @classmethod
+    def text()->"Search":
+        """xxx"""
+
+    @classmethod
+    def wildcard()->"Search":
+        """xxx"""
