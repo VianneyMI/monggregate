@@ -80,6 +80,7 @@ class Search(Stage):
     collector : dict|None
     operator : dict|None
     return_stored_source : bool = Field(False, alias="returnStoredSource")
+    score_details : bool = Field(False, alias="scoreDetails")
 
     @validator("operator", pre=True, always=True)
     @classmethod
@@ -99,7 +100,8 @@ class Search(Stage):
                 "index":self.index,
                 "highlight":self.highlight,
                 "count":self.count,
-                "retunStoredSource":self.return_stored_source
+                "retunStoredSource":self.return_stored_source,
+                "scoreDetails":self.score_details
             }
         
         method:dict[str, dict] = self.collector or self.operator

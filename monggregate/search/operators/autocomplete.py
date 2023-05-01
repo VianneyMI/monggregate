@@ -1,5 +1,5 @@
 """
-Module defining an interface to MongoDB Atlas Search operator autcomplete
+Module defining an interface to MongoDB Atlas Search autocomplete operator 
 
 Online MongoDB documentation:
 ----------------------------------------------
@@ -141,7 +141,7 @@ class TokenOrderEnum(StrEnum):
 
 class Autocomplete(SearchOperator):
     """
-    Creates an autocomplete operation statementin an Atlas Search query.
+    Creates an autocomplete operation statement in an Atlas Search query.
 
     Description:
     -------------------------------
@@ -181,3 +181,4 @@ class Autocomplete(SearchOperator):
                 "score": self.score
             }
         }
+    

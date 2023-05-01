@@ -1,9 +1,89 @@
-"""xxx"""
+"""
+Module defining an interface to MongoDB Atlas Search range operator 
+
+Online MongoDB documentation:
+----------------------------------------------
+Last updated (in this package) : 26/04/2023
+Source : https://www.mongodb.com/docs/atlas/atlas-search/range/
+
+# Definition
+# --------------------------------------------
+
+The range operator supports querying and scoring numeric and date values. 
+This operator can be used to perform a search over:
+
+    *  Number fields of BSON int32, int64, and double data types.
+
+    * Date fields of BSON date data type in ISODate format.
+
+You can use the range operator to find results that are within a given numeric or date range.
+
+# Syntax
+# ----------------------------------------------
+range has the following syntax:
+
+    >>> {
+            "$search": {
+            "index": <index name>, // optional, defaults to "default"
+            "range": {
+                "path": "<field-to-search>",
+                "gt | gte": <value-to-search>,
+                "lt | lte": <value-to-search>,
+                "score": <score-options>
+            }
+            }
+        }
+
+# Options
+# ---------------------------------------------
+
+Field           Type                    Description                             Necessity
+
+gt or gte       date or number          Find values greater (>) than            no
+                                        or greater than or equal to (>=)    
+                                        the given value.
+                                        * For number fields, the value
+                                          can be an int32, int64, or double.
+                                          data type.
+                                        * For date fields, the value must an
+                                          ISODate formatted date.
+
+lt or lte       date or number          Find values less (<) than               no
+                                        or less than or equal to (<=)
+                                        the given value.
+                                        * For number fields, the value
+                                          can be an int32, int64, or double.
+                                        * For date fields, the value must an
+                                          ISODate formatted date.
+
+path            string                  Indexed field or fields.                 yes
+
+score           object                  Modify the score assigned to matching    no
+                                        search results. Options are:
+                                        * boost: multiply the score by the
+                                                 given positive number.
+                                        *constant: replace the score with the
+                                                   given number.                       
+"""
+
 
 from datetime import datetime
+from pydantic import validator
 from monggregate.search.operators.operator import SearchOperator
 
 class Range(SearchOperator):
+    """
+    Creates a range operator for MongoDB Atlas Search query.
+
+    Description
+    --------------------
+
+    
+
+    Attributes
+    --------------------
+
+    """
 
     path : str
     gt : int | float | datetime | None
