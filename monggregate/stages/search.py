@@ -69,7 +69,7 @@ The $$SEARCH_META aggregation variable can't be used in any subsequent stage aft
 """
 
 from datetime import datetime
-from typing import Any
+from typing import Any, Callable
 from pydantic import Field, validator
 from monggregate.stages.stage import Stage
 from monggregate.search.operators import(
@@ -173,6 +173,23 @@ class Search(SearchBase):
     # Constructors
     #---------------------------------------------------------
     @classmethod
+    def __get_constructors_map__(cls, operator:str)->Callable:
+        """Returns appropriate constructor from operator name"""
+
+        _constructors_map = {
+            "autcomplete":cls.autocomplete,
+            "equals":cls.equals,
+            "exists":cls.exists,
+            "more_like_this":cls.more_like_this,
+            "range":cls.range,
+            "regex":cls.regex,
+            "text":cls.text,
+            "wilcard":cls.wildcard
+        }
+
+        return _constructors_map[operator]
+
+    @classmethod
     def from_operator(
         cls, 
         operator:str,
@@ -182,6 +199,18 @@ class Search(SearchBase):
         score:dict|None=None,
         **kwargs:Any)->"Search":
         """Instantiates a search stage from a search operator"""
+
+        # FIXME : This could lead in duplicated arguments in kwargs <VM, 02/05/2023>
+        kwargs.update(
+            {
+                "path":path,
+                "query":query,
+                "fuzzy":fuzzy,
+                "score":score
+            }
+        )
+
+        return cls.__get_constructors_map__(operator)(**kwargs)
 
     @classmethod
     def autocomplete(
@@ -229,12 +258,18 @@ class Search(SearchBase):
         """xxx"""
 
         base_params = SearchBase(**kwargs).dict()
+        exists_statement = Exists(path=path).statement
+
+        return Search(**base_params, operator=exists_statement)
 
     @classmethod
     def more_like_this(cls, like:dict|list[dict], **kwargs:Any)->"Search":
         """xxx"""
         
         base_params = SearchBase(**kwargs).dict()
+        more_like_this_stasement = MoreLikeThis(like=like).statement
+
+        return Search(**base_params, operator=more_like_this_stasement)
 
     @classmethod
     def range(
@@ -243,12 +278,23 @@ class Search(SearchBase):
         gt:int|float|datetime|None=None,
         lt:int|float|datetime|None=None,
         gte:int|float|datetime|None=None,
+        lte:int|float|datetime|None=None,
         score:dict|None=None,
         **kwargs:Any
     )->"Search":
         """xxx"""
 
         base_params = SearchBase(**kwargs).dict()
+        range_statement = Range(
+            path=path,
+            gt=gt,
+            gte=gte,
+            lt=lt,
+            lte=lte,
+            score=score
+        ).statement
+
+        return Search(**base_params, operator=range_statement)
 
     @classmethod
     def regex(
@@ -262,6 +308,16 @@ class Search(SearchBase):
         """xxx"""
 
         base_params = SearchBase(**kwargs).dict()
+        regex_statement = Regex(
+            query=query,
+            path=path,
+            allow_analyzed_field=allow_analyzed_field,
+            score=score
+        ).statement
+
+        return Search(**base_params, operator=regex_statement)
+
+
 
     @classmethod
     def text(
@@ -276,6 +332,14 @@ class Search(SearchBase):
         """xxx"""
 
         base_params = SearchBase(**kwargs).dict()
+        text_statement = Text(
+            query=query,
+            path=path,
+            fuzzy=fuzzy,
+            synonyms=synonyms
+        ).statement
+
+        return Search(**base_params, operator=text_statement)
 
     @classmethod
     def wildcard(
@@ -289,3 +353,11 @@ class Search(SearchBase):
         """xxx"""
 
         base_params = SearchBase(**kwargs).dict()
+        wilcard_statement = Wilcard(
+            query=query,
+            path=path,
+            allow_analyzed_field=allow_analyzed_field,
+            score=score
+        ).statement
+
+        return Search(**base_params, operator=wilcard_statement)
