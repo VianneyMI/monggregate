@@ -18,11 +18,14 @@ from monggregate.stages import (
     Project,
     ReplaceRoot,
     Sample,
+    Search,
     Set,
     Skip,
     SortByCount,
     Sort,
-    Unwind
+    UnionWith,
+    Unwind,
+    Unset
 )
 from monggregate.operators import MergeObjects
 from monggregate.expressions.aggregation_variables import ROOT
@@ -638,6 +641,53 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
                 Sample(value=value)
             )
         return self
+    
+
+    # def search(
+    #         self,
+    #         operator:str,
+    #         index:str="default",
+    #         count:dict|None=None,
+    #         highlight:dict|None=None,
+    #         return_stored_source:bool=False,
+    #         score_details:bool=False,
+    #         path:str|list[str]|None=None,
+    #         query:str|list[str]|None=None,
+    #         fuzzy:dict|None=None,
+    #         score:dict|None=None,
+    #         token_order:str="any",
+    # )->"Pipeline":
+    #     """xxx"""
+
+    def search(
+            self,
+            path:str|list[str]=None,
+            query:str|list[str]=None,
+            *,
+            operaror:str="text",
+            index:str="default",
+            count:dict|None=None,
+            highlight:dict|None=None,
+            return_stored_source:bool=False,
+            score_details:bool=False,
+            **kwargs:Any
+    )->"Pipeline":
+        
+        self.stages.append(
+            Search.from_operator(
+                operator=operaror,
+                path=path,
+                query=query,
+                index=index,
+                count=count,
+                highlight=highlight,
+                return_stored_source=return_stored_source,
+                score_details=score_details,
+                **kwargs
+            )
+        )
+
+        return self
 
     def set(self, document:dict={}, **kwargs:Any)->"Pipeline":
         """
@@ -734,6 +784,15 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
                 SortByCount(by=by)
             )
         return self
+    
+    def union_with(self, collection:str, pipeline:list[dict]|"Pipeline"|None=None)->"Pipeline":
+        """xxx"""
+
+        self.stages.append(
+            UnionWith(collection=collection, pipeline=pipeline)
+        )
+
+        return self
 
     def unwind(self, path:str, include_array_index:str|None=None, always:bool=False)->"Pipeline":
         """
@@ -756,6 +815,16 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
                     always = always
                 )
             )
+        return self
+    
+
+    def unset(self, field:str=None, fields:list[str]|None=None)->"Pipeline":
+        """xxx"""
+
+        self.stages.append(
+            Unset(field=field, fields=fields)
+        )
+
         return self
 
 
