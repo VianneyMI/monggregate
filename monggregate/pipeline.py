@@ -664,7 +664,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             path:str|list[str]=None,
             query:str|list[str]=None,
             *,
-            operaror:str="text",
+            operator:str="text",
             index:str="default",
             count:dict|None=None,
             highlight:dict|None=None,
@@ -675,7 +675,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         
         self.stages.append(
             Search.from_operator(
-                operator=operaror,
+                operator=operator,
                 path=path,
                 query=query,
                 index=index,
@@ -785,7 +785,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             )
         return self
     
-    def union_with(self, collection:str, pipeline:list[dict]|"Pipeline"|None=None)->"Pipeline":
+    def union_with(self, collection:str, pipeline:list[dict]|None=None)->"Pipeline":
         """xxx"""
 
         self.stages.append(

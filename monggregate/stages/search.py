@@ -92,6 +92,24 @@ class SearchBase(Stage):
     return_stored_source : bool = Field(False, alias="returnStoredSource")
     score_details : bool = Field(False, alias="scoreDetails")
 
+    @property
+    def statement(self) -> dict[str, dict]:
+    
+        config = {
+                "index":self.index,
+                "highlight":self.highlight,
+                "count":self.count,
+                "returnStoredSource":self.return_stored_source,
+                "scoreDetails":self.score_details
+            }
+        
+     
+        _statement = {
+            "$search":config
+        }
+     
+        return _statement
+
 
 class Search(SearchBase):
     """"
