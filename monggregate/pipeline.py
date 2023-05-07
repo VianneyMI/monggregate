@@ -27,6 +27,7 @@ from monggregate.stages import (
     Unwind,
     Unset
 )
+from monggregate.stages.search import OperatorLiteral
 from monggregate.operators import MergeObjects
 from monggregate.expressions.aggregation_variables import ROOT
 from monggregate.utils import StrEnum
@@ -647,7 +648,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             path:str|list[str]=None,
             query:str|list[str]=None,
             *,
-            operator:str="text",
+            operator:OperatorLiteral="text",
             index:str="default",
             count:dict|None=None,
             highlight:dict|None=None,
@@ -655,20 +656,6 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             score_details:bool=False,
             **kwargs:Any
     )->"Pipeline":
-        
-        self.stages.append(
-            Search.from_operator(
-                operator=operator,
-                path=path,
-                query=query,
-                index=index,
-                count=count,
-                highlight=highlight,
-                return_stored_source=return_stored_source,
-                score_details=score_details,
-                **kwargs
-            )
-        )
         """
         Adds a search stage to the current pipeline
         NOTE : if used, search has to be the first stage of the pipeline
@@ -703,6 +690,21 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
                             - synonyms
                             - like, dict|list[dict] (allow looking for similar documents)
         """
+        
+        self.stages.append(
+            Search.from_operator(
+                operator=operator,
+                path=path,
+                query=query,
+                index=index,
+                count=count,
+                highlight=highlight,
+                return_stored_source=return_stored_source,
+                score_details=score_details,
+                **kwargs
+            )
+        )
+        
 
         return self
 
@@ -803,7 +805,15 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         return self
     
     def union_with(self, collection:str, pipeline:list[dict]|None=None)->"Pipeline":
-        """xxx"""
+        """
+        Adds a union_with stage to the current pipeline.
+
+        Arguments:
+        ------------------------------
+            - collection / coll, str : The collection or view whose pipeline results you wish to include in the result set
+            - pipeline, list[dict] | Pipeline | None : An aggregation pipeline to apply to the specified coll.
+
+        """
 
         self.stages.append(
             UnionWith(collection=collection, pipeline=pipeline)
@@ -836,7 +846,16 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     
 
     def unset(self, field:str=None, fields:list[str]|None=None)->"Pipeline":
-        """xxx"""
+        """
+        Adds an unset stage to the current pipeline.
+        
+        Arguments:
+        -------------------------------
+
+            - field, str|None: field to be removed
+            - fields, list[str]|None, list of fields to be removed
+        
+        """
 
         self.stages.append(
             Unset(field=field, fields=fields)

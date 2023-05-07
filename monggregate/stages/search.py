@@ -69,7 +69,7 @@ The $$SEARCH_META aggregation variable can't be used in any subsequent stage aft
 """
 
 from datetime import datetime
-from typing import Any, Callable
+from typing import Any, Callable, Literal
 from pydantic import Field, validator
 from monggregate.stages.stage import Stage
 from monggregate.search.operators import(
@@ -83,6 +83,21 @@ from monggregate.search.operators import(
     Wilcard
 )
 
+# Enums
+# -----------------------------------------------------
+OperatorLiteral = Literal[
+    "autocomplete",
+    "equals",
+    "exists",
+    "more_like_this",
+    "range",
+    "regex",
+    "text",
+    "wildcard"
+]
+
+# Classes
+# -----------------------------------------------------
 class SearchBase(Stage):
     """Internals"""
 
@@ -210,7 +225,7 @@ class Search(SearchBase):
     @classmethod
     def from_operator(
         cls, 
-        operator:str,
+        operator:OperatorLiteral,
         path:str|list[str],
         query:str|list[str]|None=None,
         fuzzy:dict|None=None,
