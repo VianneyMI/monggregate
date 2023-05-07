@@ -809,7 +809,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         Adds a union_with stage to the current pipeline.
 
         Arguments:
-        ------------------------------
+        ---------------------------------
             - collection / coll, str : The collection or view whose pipeline results you wish to include in the result set
             - pipeline, list[dict] | Pipeline | None : An aggregation pipeline to apply to the specified coll.
 

@@ -49,7 +49,12 @@ def test_dynamic_docstrings()->None:
 def test_sync_docstrings()->None:
     """Testes synchronization between stages classes and their mirror in the pipeline class"""
 
-
+    # Exempted stages
+    # --------------------------------------
+    exempts = [
+        "Stage", # Base class, not a real stage
+        "Search", # Implementation a bit particular. Has multiple constructors
+    ]
     # Retrieving the members of the pipeline class
     # to access them dynamically
     # --------------------------------------
@@ -62,7 +67,10 @@ def test_sync_docstrings()->None:
 
 
     # Filtering non-classes stages members
-    stages_classes = [member for member in list(stages_members.keys()) if member[0].isupper() and issubclass(stages_members[member], stages.Stage) and member !="Stage"]
+    stages_classes = [
+        member for member in list(stages_members.keys()) 
+        if member[0].isupper() and issubclass(stages_members[member], stages.Stage) and member not in exempts
+        ]
     # stages_classes is a list containing the names of the class in the stages subpackage
 
         # FIXME: The above will break if constants are included into stages
