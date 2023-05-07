@@ -239,7 +239,14 @@ class Search(SearchBase):
         fuzzy:dict|None=None,
         score:dict|None=None,
         **kwargs:Any)->"Search":
-        """xxx"""
+        """
+        Creates a search stage with an autocomplete operator
+        
+        Summary:
+        -----------------------------
+        This stage searches for a word or phrase that contains a sequence of characters from an incomplete input string.
+
+        """
 
         base_params = SearchBase(**kwargs).dict()
         autocomplete_statement = Autocomplete(
@@ -260,7 +267,16 @@ class Search(SearchBase):
         score:dict|None=None,
         **kwargs:Any
         )->"Search":
-        """xxx"""
+        """
+        Creates a search stage with an equals operator
+
+        Summary:
+        --------------------------------
+        This checks whether a field matches a value you specify.
+        You may want to use this for filtering purposes post textual search.
+        That is you may want to use it in a compound query or as, the second stage of your search.
+        
+        """
 
         base_params = SearchBase(**kwargs).dict()
         equals_statement = Equals(
@@ -273,7 +289,16 @@ class Search(SearchBase):
 
     @classmethod
     def exists(cls, path:str, **kwargs:Any)->"Search":
-        """xxx"""
+        """
+        Creates a search stage with an exists operator
+
+        Summary:
+        --------------------------------
+        This checks whether a field matches a value you specify.
+        You may want to use this for filtering purposes post textual search.
+        That is you may want to use it in a compound query or as, the second stage of your search.
+        
+        """
 
         base_params = SearchBase(**kwargs).dict()
         exists_statement = Exists(path=path).statement
@@ -282,7 +307,16 @@ class Search(SearchBase):
 
     @classmethod
     def more_like_this(cls, like:dict|list[dict], **kwargs:Any)->"Search":
-        """xxx"""
+        """
+        Creates a search stage  with a more_like_this operator
+
+        Summary:
+        --------------------------------
+        The moreLikeThis operator returns documents similar to input documents. 
+        The moreLikeThis operator allows you to build features for your applications 
+        that display similar or alternative results based on one or more given documents.
+
+        """
         
         base_params = SearchBase(**kwargs).dict()
         more_like_this_stasement = MoreLikeThis(like=like).statement
@@ -300,7 +334,17 @@ class Search(SearchBase):
         score:dict|None=None,
         **kwargs:Any
     )->"Search":
-        """xxx"""
+        """
+        Creates a search stage with a range operator
+
+        Summary:
+        --------------------------------
+        This checks whether a field value falls into a specific range
+        You may want to use this for filtering purposes post textual search.
+        That is you may want to use it in a compound query or as, the second stage of your search.
+        
+        
+        """
 
         base_params = SearchBase(**kwargs).dict()
         range_statement = Range(
@@ -323,7 +367,14 @@ class Search(SearchBase):
         score:dict|None=None,
         **kwargs:Any
     )->"Search":
-        """xxx"""
+        """
+        Creates a search stage with a regex operator.
+
+        Summary:
+        ----------------------------
+        regex interprets the query field as a regular expression. regex is a term-level operator, meaning that the query field isn't analyzed (read processed).
+        
+        """
 
         base_params = SearchBase(**kwargs).dict()
         regex_statement = Regex(
@@ -347,12 +398,21 @@ class Search(SearchBase):
         synonyms:str|None=None,
         **kwargs:Any
     )->"Search":
-        """xxx"""
+        """
+        Creates a search stage with a text opertor
+
+        Summary:
+        ---------------------------------
+        The text operator performs a full-text search using the analyzer that you specify in the index configuration. 
+        If you omit an analyzer, the text operator uses the default standard analyzer.
+        
+        """
 
         base_params = SearchBase(**kwargs).dict()
         text_statement = Text(
             query=query,
             path=path,
+            score=score,
             fuzzy=fuzzy,
             synonyms=synonyms
         ).statement
@@ -368,7 +428,14 @@ class Search(SearchBase):
         score:dict|None=None,
         **kwargs:Any
     )->"Search":
-        """xxx"""
+        """
+        Creates a search stage with a wildcard opertor
+
+        Summary:
+        ---------------------------------
+        The wildcard operator enables queries which use special characters in the search string that can match any character.
+        
+        """
 
         base_params = SearchBase(**kwargs).dict()
         wilcard_statement = Wilcard(
