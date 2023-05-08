@@ -176,7 +176,7 @@ class Autocomplete(SearchOperator):
             "autocomplete":{
                 "query": self.query,
                 "path": self.path,
-                "tokenOrder": self.token_order,
+                "tokenOrder": str(self.token_order),
                 "fuzzy": self.fuzzy,
                 "score": self.score
             }
