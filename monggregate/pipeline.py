@@ -28,6 +28,7 @@ from monggregate.stages import (
     Unset
 )
 from monggregate.stages.search import OperatorLiteral
+from monggregate.search.operators.compound import Compound
 from monggregate.operators import MergeObjects
 from monggregate.expressions.aggregation_variables import ROOT
 from monggregate.utils import StrEnum
@@ -713,6 +714,9 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         
 
         return self
+    
+    def search_compound()->"Compound":
+        """Adds a compound search stage"""
 
     def set(self, document:dict={}, **kwargs:Any)->"Pipeline":
         """

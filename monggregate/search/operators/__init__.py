@@ -25,6 +25,7 @@ wildcard            Supports special characters in the query string that can mat
 """
 
 from monggregate.search.operators.autocomplete import Autocomplete
+from monggregate.search.operators.compound import Compound
 from monggregate.search.operators.equals import Equals
 from monggregate.search.operators.exists import Exists
 from monggregate.search.operators.more_like_this import MoreLikeThis

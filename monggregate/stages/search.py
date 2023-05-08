@@ -74,6 +74,7 @@ from pydantic import Field, validator
 from monggregate.stages.stage import Stage
 from monggregate.search.operators import(
     Autocomplete,
+    Compound,
     Equals,
     Exists,
     MoreLikeThis,
@@ -211,6 +212,7 @@ class Search(SearchBase):
 
         _constructors_map = {
             "autcomplete":cls.autocomplete,
+            "compound":cls.compound,
             "equals":cls.equals,
             "exists":cls.exists,
             "more_like_this":cls.more_like_this,
@@ -273,6 +275,12 @@ class Search(SearchBase):
         ).statement
 
         return Search(**base_params, operator=autocomplete_statement)
+    
+    @classmethod
+    def compound()->"Compound":
+
+        # TODO : Explore yield options
+        pass
 
     @classmethod
     def equals(
