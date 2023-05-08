@@ -226,7 +226,7 @@ class Search(SearchBase):
     def from_operator(
         cls, 
         operator:OperatorLiteral,
-        path:str|list[str],
+        path:str|list[str]|None=None,
         query:str|list[str]|None=None,
         fuzzy:dict|None=None,
         score:dict|None=None,

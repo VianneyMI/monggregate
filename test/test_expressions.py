@@ -10,7 +10,7 @@ from monggregate.stages.count import FieldName
 
 def test_constraints_in_hybrid_types()->None:
     """
-    Testes pydantic constraints on Union types
+    Tests pydantic constraints on Union types
 
     Ensures that constraints are taken into account for Union types, only for the relevant type of the Union.
     """
@@ -26,7 +26,7 @@ def test_constraints_in_hybrid_types()->None:
         assert Test(x=0)
 
 def test_field_name()->None:
-    """Testes the FieldName regex"""
+    """Tests the FieldName regex"""
 
     assert FieldName.validate("good_name")
 

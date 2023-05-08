@@ -24,7 +24,7 @@ from monggregate import Pipeline # pylint: disable=import-error
 @pytest.mark.unit
 def test_dynamic_docstrings()->None:
     """
-    Testes that reference docstring is included in dummy docstring.
+    Tests that reference docstring is included in dummy docstring.
 
     Prelude to ensure that the below tests will work properly.
 
@@ -47,7 +47,7 @@ def test_dynamic_docstrings()->None:
 @pytest.mark.unit
 @pytest.mark.latest
 def test_sync_docstrings()->None:
-    """Testes synchronization between stages classes and their mirror in the pipeline class"""
+    """Tests synchronization between stages classes and their mirror in the pipeline class"""
 
     # Exempted stages
     # --------------------------------------

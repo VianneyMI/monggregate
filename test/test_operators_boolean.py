@@ -17,7 +17,7 @@ class TestBooleanOperators:
     """This class only aims at reusing the markers"""
 
     def test_and(self)->None:
-        """Testes $and operator class and mirror function"""
+        """Tests $and operator class and mirror function"""
 
         # Unit test
         # ---------------------------
@@ -45,7 +45,7 @@ class TestBooleanOperators:
 
 
     def test_not(self)->None:
-        """Testes the $not operator class and mirror function"""
+        """Tests the $not operator class and mirror function"""
 
         not_op = Not(expression=greather_than("$qty", 250))
 
@@ -61,7 +61,7 @@ class TestBooleanOperators:
 
 
     def test_or(self)->None:
-        """Testes $or operator class and mirror function"""
+        """Tests $or operator class and mirror function"""
 
         # Unit test
         # ---------------------------

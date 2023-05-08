@@ -27,7 +27,7 @@ class TestArrayOperators:
     """This class only aims at reusing the markers"""
 
     def test_array_to_object(self)->None:
-        """Testes the $arrayToObject operator class and mirror function"""
+        """Tests the $arrayToObject operator class and mirror function"""
 
         array_to_object_op = ArrayToObject(expression="$dimensions")
 
@@ -43,7 +43,7 @@ class TestArrayOperators:
 
 
     def test_filter(self)->None:
-        """Testes $filter operator"""
+        """Tests $filter operator"""
 
 
         filter_op = Filter(
@@ -74,7 +74,7 @@ class TestArrayOperators:
         }
 
     def test_first(self)->None:
-        """Testes $first operator class and mirror function"""
+        """Tests $first operator class and mirror function"""
 
 
         first_op = First(
@@ -92,7 +92,7 @@ class TestArrayOperators:
         }
 
     def test_in(self)->None:
-        """Testes the $in operator class and mirror function"""
+        """Tests the $in operator class and mirror function"""
 
         in_op = In(
             left = 1,
@@ -110,7 +110,7 @@ class TestArrayOperators:
         }
 
     def test_is_array(self)->None:
-        """Testes the $isArray operator class and mirror function"""
+        """Tests the $isArray operator class and mirror function"""
 
         is_array_op = IsArray(expression=[1, 2, 3,4])
 
@@ -125,7 +125,7 @@ class TestArrayOperators:
         }
 
     def test_last(self)->None:
-        """Testes $last operator class and mirror function"""
+        """Tests $last operator class and mirror function"""
 
 
         last_op = Last(
@@ -144,7 +144,7 @@ class TestArrayOperators:
 
 
     def test_max_n(self)->None:
-        """Testes the $maxN operator class and mirror function"""
+        """Tests the $maxN operator class and mirror function"""
 
         max_n_op = MaxN(
             limit = 1,
@@ -165,7 +165,7 @@ class TestArrayOperators:
         }
 
     def test_min_n(self)->None:
-        """Testes the $minN operator class and mirror function"""
+        """Tests the $minN operator class and mirror function"""
 
         min_n_op = MinN(
             limit = 1,
@@ -186,7 +186,7 @@ class TestArrayOperators:
         }
 
     def test_size(self)->None:
-        """Testes the $size operator class and mirror function"""
+        """Tests the $size operator class and mirror function"""
 
         size_op = Size(
             expression = [1, 2, 3, 4]
@@ -204,7 +204,7 @@ class TestArrayOperators:
 
 
     def test_sort_array(self)->None:
-        """Testes the $sortArray operator class and mirror function"""
+        """Tests the $sortArray operator class and mirror function"""
 
         sort_array_op = SortArray(
             expression ="$team",
