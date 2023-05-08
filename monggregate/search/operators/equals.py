@@ -71,7 +71,7 @@ A document that matches one search clause receives a score of 1, while a documen
 from datetime import datetime
 from monggregate.search.operators.operator import SearchOperator
 
-class Equals(SearchOperator):
+class Equals(SearchOperator, smart_union=True):
     """
     Creates an equals operation statement in an Atlas Search query.
 
@@ -92,7 +92,7 @@ class Equals(SearchOperator):
     """
 
     path : str # does not allow list
-    value : str | int | float | bool | datetime
+    value : str | int | float | bool | datetime 
     score : dict|None
 
     @property
