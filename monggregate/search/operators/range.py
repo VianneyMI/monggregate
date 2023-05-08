@@ -71,7 +71,7 @@ from datetime import datetime
 from pydantic import validator
 from monggregate.search.operators.operator import SearchOperator
 
-class Range(SearchOperator):
+class Range(SearchOperator, smart_union=True):
     """
     Creates a range operator for MongoDB Atlas Search query.
 
