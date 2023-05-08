@@ -12,7 +12,7 @@ from monggregate.search.operators import(
     Text,
     Wilcard
 )
-from monggregate.search.commons.fuzzy import Fuzzy
+from monggregate.search.commons.fuzzy import FuzzyOptions
 from monggregate.search.commons.highlight import HighlightOptions
 
 @pytest.mark.operators
@@ -29,7 +29,7 @@ class TestSearchOperators:
         autocomplete_op = Autocomplete(
             query = "m",
             path = "title",
-            fuzzy=Fuzzy(),
+            fuzzy=FuzzyOptions(),
             score={"boost": {"value": 1.0}},
         )
 
