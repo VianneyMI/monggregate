@@ -27,6 +27,8 @@ from monggregate.stages import( # pylint: disable=import-error
     Skip,
     SortByCount,
     Sort,
+    UnionWith,
+    Unset,
     Unwind
 )
 
@@ -430,6 +432,44 @@ class TestStages:
         assert Sort(
             ascending = {"year":1}
         )
+    
+    def test_union_with(self, state:State)->None:
+        """Tests the $unionWith stage"""
+
+        # Testing mandatory attributes
+        # -----------------------------
+        union_with = UnionWith(
+            collection="other_collection",
+            pipeline = Pipeline().match({"name":"test"})
+        )
+        assert union_with
+        state["union_with"] = union_with
+
+        # Testing aliases
+        # -----------------------------
+        # N/A
+
+        # Testing optional attributes
+        # -----------------------------
+        # N/A
+
+
+    def test_unset(self, state:State)->None:
+        """Tests the $unset stage"""
+
+        # Testing mandatory attributes
+        # -----------------------------
+        unset = Unset(fields=["field1", "fieldN"])
+        assert unset
+        state["unset"] = unset
+
+        # Testing aliases
+        # -----------------------------
+        # N/A
+
+        # Testing optional attributes
+        # -----------------------------
+        # N/A
 
 
     def test_unwind(self, state:State)->None:
