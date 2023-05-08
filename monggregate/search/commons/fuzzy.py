@@ -1,10 +1,10 @@
-"""xxxx"""
+"""Module defining an interface to define the fuzzy search parameters."""
 
 from pydantic import Field
 from monggregate.base import BaseModel
 
-class Fuzzy(BaseModel):
-    """xxx"""
+class FuzzyOptions(BaseModel):
+    """Class defining the fuzzy search parameters."""
 
     max_edits : int = Field(2, alias="maxEdits")
     max_expansions : int = Field(50, alias="maxExpansions")
@@ -14,3 +14,4 @@ class Fuzzy(BaseModel):
     def statement(self) -> dict:
         
         return self.dict(by_alias=True)
+    
