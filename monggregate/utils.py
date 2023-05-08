@@ -14,6 +14,10 @@ T =  TypeVar("T")
 class StrEnum(str, Enum):
     """Base Class for string enums"""
 
+    def __str__(self)->str:
+        """Returns the value of the enum"""
+        return self.value
+
 # Functions
 #-------------------------------
 def _to_unique_list(keys:str|list[str]|set[str])->list[str]:
