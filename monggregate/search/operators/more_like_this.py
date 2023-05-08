@@ -84,7 +84,9 @@ You can't use the moreLikeThis operator inside the embeddedDocument operator to 
 
 """
 
+from pydantic import validator
 from monggregate.search.operators.operator import SearchOperator
+
 
 class MoreLikeThis(SearchOperator):
     """
@@ -102,10 +104,20 @@ class MoreLikeThis(SearchOperator):
 
     like : dict | list[dict]
 
+    @validator("like", pre=True, always=True)
+    def validate_like(cls, v):
+        if isinstance(v, list):
+            if len(v)==0:
+                raise ValueError("The 'like' field must be a non-empty list of BSON documents.")
+
+        return v
+    
     @property
     def statement(self) -> dict:
         
         return {
-            "moreLikeThis" : self.like
+            "moreLikeThis" : {
+                "like" : self.like
+            }
         }
     
