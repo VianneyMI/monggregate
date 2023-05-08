@@ -3,7 +3,7 @@
 from typing import Any, Literal
 from warnings import warn
 from pymongo.database import Database
-from pydantic import BaseModel, BaseConfig
+from monggregate.base import BaseModel, BaseConfig
 from monggregate.stages import (
     Stage,
     BucketAuto,
@@ -110,6 +110,12 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     on_call : OnCallEnum = OnCallEnum.EXPORT
     collection : str | None
     stages : list[Stage] = []
+
+    @property
+    def statement(self)->list[dict]:
+        """Returns the pipeline statement"""
+
+        return [stage.statement for stage in self.stages]
 
     class Config(BaseConfig):
         """Configuration Class for Pipeline"""
