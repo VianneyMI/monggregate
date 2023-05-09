@@ -57,22 +57,41 @@ such as autocomplete, text, or span, to specify query criteria.
 
 
 """
-
-from typing import Literal
+from datetime import datetime
+from typing import Any, Literal
 from pydantic import Field
 from monggregate.search.operators.operator import SearchOperator, Clause
-from monggregate.search.operators.clause import Autocomplete
+from monggregate.search.operators.clause import (
+    Autocomplete,
+    Equals,
+    Exists,
+    Range,
+    Regex,
+    Text,
+    Wilcard
+    )
+
+ClauseType = Literal["must", "mustNot", "should", "filter"]
 
 class Compound(SearchOperator):
     """
     Class defining an interface to MongoDB Atlas Search compound operator
+
+    Description:
+    ---------------------
+    The compound operator combines two or more operators into a single query. 
+    Each element of a compound query is called a clause, and each clause consists of one or more sub-queries.
+
+    Documents in the result set are returned with a match score, 
+    which is calculated by summing the score that each document received for each individual clause which generated a match. 
+    The result set is ordered by score, highest to lowest.
     
     Attributes:
     ----------------------
-        - must
-        - must_not
-        - should
-        - filter
+        - must, list[dict] : Clauses that must match for a document to be included in the results
+        - must_not, list[dict] : Clauses that must not match for a document to be included in the results
+        - should, list[dict] : Clauses that you prefer to match but that are not mandatory.
+        - filter, list[dict] : Clauses that must for a document to be included but which don't affect the score.
         - minimum_should_match, int : Specifies a minimum number of should clauses that must match 
                                       for a document to be included.
 
@@ -86,9 +105,23 @@ class Compound(SearchOperator):
     filter : list[Clause] = []
     minimum_should_clause : int = 1
 
+    def _register_clause(self, type:ClauseType, statement:dict)->None:
+        """xxx"""
+
+        if type == "must":
+            self.must.append(statement)
+        elif type == "mustNot":
+            self.must_not.append(statement)
+        elif type == "filter":
+            self.filter.append(statement)
+        elif type == "should":
+            self.should.append(statement)
+
+
     def autocomplete(
             self,
-            type:Literal["must", "mustNot", "should", "filter"],
+            type:ClauseType,
+            *,
             query:str|list[str], 
             path:str, 
             token_order:str="any",
@@ -104,14 +137,128 @@ class Compound(SearchOperator):
             score=score
         ).statement
 
-        if type == "must":
-            self.must.append(autocomplete_statement)
-        elif type == "mustNot":
-            self.must_not.append(autocomplete_statement)
-        elif type == "filter":
-            self.filter.append(autocomplete_statement)
-        elif type == "should":
-            self.should.append(autocomplete_statement)
+        self._register_clause(type, autocomplete_statement)
+    
+        return self
+    
+    def equals(
+            self,
+            type,
+            path:str,
+            value:str|int|float|bool|datetime,
+            score:dict|None=None
+    )->"Compound":
+        """xxx"""
+
+        equals_statement = Equals(
+            path=path,
+            value=value,
+            score=score
+        ).statement
+
+        self._register_clause(type, equals_statement)
 
         return self
 
+
+
+    def exists(self, type:ClauseType, path:str)->"Compound":
+        """xxx"""
+
+        exists_statement = Exists(path=path).statement
+        self._register_clause(type)
+
+        return self
+
+    def range(
+            self,
+            type:ClauseType,
+            *,
+            path:str|list[str],
+            gt:int|float|datetime|None=None,
+            lt:int|float|datetime|None=None,
+            gte:int|float|datetime|None=None,
+            lte:int|float|datetime|None=None,
+            score:dict|None=None
+    )->"Compound":
+        """xxx"""
+
+        range_statement = Range(
+            path=path,
+            gt=gt,
+            gte=gte,
+            lt=lt,
+            lte=lte,
+            score=score
+        ).statement
+
+        self._register_clause(type, range_statement)
+
+        return self
+
+    def regex(
+            self,
+            type:ClauseType,
+            *,
+            query:str|list[str],
+            path:str|list[str],
+            allow_analyzed_field:bool=False,
+            score:dict|None=None
+    )->"Compound":
+        """xxx"""
+
+        regex_statement = Regex(
+            query=query,
+            path=path,
+            allow_analyzed_field=allow_analyzed_field,
+            score=score
+        ).statement
+
+
+        self._register_clause(type, regex_statement)
+
+    def text(
+            self,
+            type:ClauseType,
+            *,
+            query:str|list[str],
+            path:str|list[str],
+            fuzzy:dict|None=None,
+            score:dict|None=None,
+            synonyms:str|None=None
+    )->"Compound":
+        """xxx"""
+
+        text_statement = Text(
+            query=query,
+            path=path,
+            score=score,
+            fuzzy=fuzzy,
+            synonyms=synonyms
+        ).statement
+
+        self._register_clause(type, text_statement)
+
+        return self
+
+    def wildcard(
+            self,
+            type:ClauseType,
+            *,
+            query:str|list[str],
+            path:str|list[str],
+            allow_analyzed_field:bool=False,
+            score:dict|None=None,
+    )->"Compound":
+        """xxx"""
+
+        wildcard_statement = Wilcard(
+            query=query,
+            path=path,
+            allow_analyzed_field=allow_analyzed_field,
+            score=score
+        ).statement
+
+        self._register_clause(type, wildcard_statement)
+
+        return self

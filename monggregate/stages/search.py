@@ -277,10 +277,28 @@ class Search(SearchBase):
         return Search(**base_params, operator=autocomplete_statement)
     
     @classmethod
-    def compound()->"Compound":
+    def compound(
+        cls,
+        minimum_should_clause:int=1,
+        *,
+        must : list[dict]=[],
+        must_not : list[dict]=[],
+        should : list[dict]=[],
+        filter : list[dict]=[],
+        **kwargs:Any
+        
+    )->"Compound":
 
-        # TODO : Explore yield options
-        pass
+        base_params = SearchBase(**kwargs).dict()
+        compound_statement = Compound(
+            must=must,
+            must_not=must_not,
+            should=should,
+            filter=filter,
+            minimum_should_clause=minimum_should_clause
+        ).statement
+
+        return Search(**base_params, operator=compound_statement)
 
     @classmethod
     def equals(
