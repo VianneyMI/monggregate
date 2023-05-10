@@ -12,6 +12,7 @@ from pydantic import BaseModel as PydanticBaseModel, BaseConfig, validator
 class BaseModel(PydanticBaseModel, ABC):
     """Mongreggate base class"""
 
+    # FIXME : Maybe we should not do the below at instantiation time but only when calling statement at the root level
     @validator("*", pre=True)
     @classmethod
     def resolve(cls, expression:Any)->dict|list[dict]:
