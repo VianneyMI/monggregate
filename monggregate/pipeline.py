@@ -715,8 +715,14 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         return self
     
-    def search_compound()->"Compound":
+    def search_compound(self)->"Compound":
         """Adds a compound search stage"""
+
+        self.stages.insert(
+            0,
+            Search.compound()
+        )
+        return self.stages[0]
 
     def set(self, document:dict={}, **kwargs:Any)->"Pipeline":
         """
