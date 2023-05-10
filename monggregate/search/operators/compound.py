@@ -105,6 +105,23 @@ class Compound(SearchOperator):
     filter : list[Clause] = []
     minimum_should_clause : int = 1
 
+    @property
+    def statement(self) -> dict:
+
+
+        clauses = {}
+        if self.must:
+            clauses["must"] = self.must
+        if self.must_not:
+            clauses["mustNot"] = self.must_not
+        if self.should:
+            clauses["should"] = self.should
+        if self.filter:
+            clauses["filter"] = self.filter
+        return {
+                "compound":clauses
+            }
+
     def _register_clause(self, type:ClauseType, statement:dict)->None:
         """xxx"""
 
@@ -166,7 +183,7 @@ class Compound(SearchOperator):
         """xxx"""
 
         exists_statement = Exists(path=path).statement
-        self._register_clause(type)
+        self._register_clause(type, exists_statement)
 
         return self
 
