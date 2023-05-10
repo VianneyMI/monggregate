@@ -287,7 +287,7 @@ class Search(SearchBase):
         filter : list[dict]=[],
         **kwargs:Any
         
-    )->"Compound":
+    )->"Search":
 
         base_params = SearchBase(**kwargs).dict()
         compound_statement = Compound(
