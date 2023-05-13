@@ -8,3 +8,5 @@ The Atlas Search aggregation pipeline stage has the following collector:
 Collector           Description
 facet               Groups query results by values or ranges in specified, faceted fields and returns the count for each of those groups.
 """
+
+from monggregate.search.collectors.facet import Facet, Facets

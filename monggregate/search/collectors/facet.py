@@ -174,7 +174,7 @@ from monggregate.base import BaseModel
 from monggregate.expressions.fields import FieldName
 from monggregate.search.collectors.collector import SearchCollector
 
-# Results
+# Strings
 # ----------------------------------------------
 class FacetName(FieldName):
     """
@@ -184,6 +184,8 @@ class FacetName(FieldName):
 
     """
 
+# Results
+# ----------------------------------------------
 class FacetBucket(BaseModel):
     """
     Represents a facet bucket.
@@ -278,7 +280,10 @@ class DateFacet(FacetDefinition):
     boundaries : list[datetime]
     default : str
 
+Facets = dict[FacetName, FacetDefinition]
 
+# Collector
+# ----------------------------------------------
 class Facet(SearchCollector):
     """
     Creates a facet query to be used in a search pipeline.
@@ -296,5 +301,17 @@ class Facet(SearchCollector):
     """
 
     operator : dict|None
-    facets : dict[FacetName, FacetDefinition]
+    facets : Facets|dict
+
+    @property
+    def statement(self) -> dict:
+
+        _statement = {
+            "facets":self.facets
+        }
+
+        if self.operator:
+            _statement["operator"] = self.operator
+        
+        return _statement
     

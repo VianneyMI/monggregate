@@ -72,6 +72,7 @@ from datetime import datetime
 from typing import Any, Callable, Literal
 from pydantic import Field, validator
 from monggregate.stages.stage import Stage
+from monggregate.search.collectors import Facet, Facets
 from monggregate.search.operators import(
     Autocomplete,
     Compound,
@@ -84,12 +85,14 @@ from monggregate.search.operators import(
     Wilcard
 )
 
+
 # Enums
 # -----------------------------------------------------
 OperatorLiteral = Literal[
     "autocomplete",
     "equals",
     "exists",
+    "facet",
     "more_like_this",
     "range",
     "regex",
@@ -215,6 +218,7 @@ class Search(SearchBase):
             "compound":cls.compound,
             "equals":cls.equals,
             "exists":cls.exists,
+            "facet":cls.facet,
             "more_like_this":cls.more_like_this,
             "range":cls.range,
             "regex":cls.regex,
@@ -345,7 +349,22 @@ class Search(SearchBase):
         exists_statement = Exists(path=path).statement
 
         return Search(**base_params, operator=exists_statement)
+    
+    @classmethod
+    def facet(cls, operator:dict, facets:dict, **kwargs:Any)->"Search":
+        """
+        Creates a search stage with a facet operator
 
+        Summary:
+        --------------------------------
+
+        """
+        
+        base_params = SearchBase(**kwargs).dict()
+        facet_statement = Facet(operator=operator, facets=facets).statement
+
+        return Search(**base_params, operator=facet_statement)
+    
     @classmethod
     def more_like_this(cls, like:dict|list[dict], **kwargs:Any)->"Search":
         """
@@ -487,3 +506,9 @@ class Search(SearchBase):
         ).statement
 
         return Search(**base_params, operator=wilcard_statement)
+
+# TODO : pipelinize Search class
+# Instead of setting the search operator as a classmethods constructors
+# transform them into chainable instance methods using the compound operator to combined the chained operations
+
+#or offer both options by poviding init_<operator-name> and def <operator-name> methods
