@@ -13,6 +13,7 @@ class BaseModel(PydanticBaseModel, ABC):
     """Mongreggate base class"""
 
     # FIXME : Maybe we should not do the below at instantiation time but only when calling statement at the root level
+    # TODO SO: This function needs to be defined outside of the class
     @validator("*", pre=True)
     @classmethod
     def resolve(cls, expression:Any)->dict|list[dict]:
