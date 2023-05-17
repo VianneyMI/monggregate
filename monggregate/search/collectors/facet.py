@@ -168,7 +168,7 @@ The following limitations apply:
 from datetime import datetime
 from typing import Literal
 
-from pydantic import Field
+from pydantic import Field, validator
 
 from monggregate.base import BaseModel
 from monggregate.expressions.fields import FieldName
@@ -223,6 +223,11 @@ class FacetDefinition(BaseModel):
     used to define the facets that need to be computed in a search query.
     """
 
+    name : FacetName
+    path : str
+
+# TODO : Maybe include a facet name in the below classes <VM, 14/05/2023>
+# TODO : Define statements for the below classes
 class StringFacet(FacetDefinition):
     """
     String facet definition
@@ -239,8 +244,12 @@ class StringFacet(FacetDefinition):
     """
 
     type : Literal['string'] = 'string'
-    path : str
     num_buckets : int = Field(10, alias='numBuckets')
+
+    @property
+    def statement(self) -> dict:
+        
+        return {self.name : self.dict(by_alias=True)}
 
 
 class NumericFacet(FacetDefinition):
@@ -259,9 +268,13 @@ class NumericFacet(FacetDefinition):
     """
 
     type : Literal['number'] = 'number'
-    path : str
     boundaries : list[int|float]
     default : str|None
+
+    @property
+    def statement(self) -> dict:
+        
+        return {self.name : self.dict(by_alias=True)}
 
 class DateFacet(FacetDefinition):
     """
@@ -276,11 +289,15 @@ class DateFacet(FacetDefinition):
     """
 
     type : Literal['date'] = 'date'
-    path : str
     boundaries : list[datetime]
     default : str
 
-Facets = dict[FacetName, FacetDefinition]
+    @property
+    def statement(self) -> dict:
+        
+        return {self.name : self.dict(by_alias=True)}
+
+Facets = list[NumericFacet|DateFacet|StringFacet]
 
 # Collector
 # ----------------------------------------------
@@ -301,17 +318,42 @@ class Facet(SearchCollector):
     """
 
     operator : dict|None
-    facets : Facets|dict
+    facets : Facets|list[dict]
+
+    @validator("facets")
+    def validate_facets(cls, facets:Facets)->Facets:
+        """
+        Validates facets.
+        Ensures the facets names are unique
+        """
+
+        names = set()
+        for facet in facets:
+            names.add(facet.name)
+
+        if len(facets) > len(names):
+            raise ValueError("Some facets have identical names")
+        
+        return facets
+
 
     @property
     def statement(self) -> dict:
 
+        
         _statement = {
-            "facets":self.facets
+            "facets":{}
         }
+
+        # FIXME : The below will work only when change is made to not express objects as dict statement automatically
+        # <VM, 16/05/2023>
+        for facet in self.facets:
+            _statement["facets"].update(facet.statement)
 
         if self.operator:
             _statement["operator"] = self.operator
         
         return _statement
+    
+    # TODO : pipelinize this class for both operators and facet definitions
     
