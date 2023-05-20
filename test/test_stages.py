@@ -326,7 +326,7 @@ class TestStages:
         assert search
 
 
-        search = Search.from_operator(operator="more_like_this", like={})
+        search = Search.from_operator(operator_name="more_like_this", like={})
         assert search
 
         with pytest.raises(ValidationError):

@@ -655,7 +655,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             path:str|list[str]=None,
             query:str|list[str]=None,
             *,
-            operator:OperatorLiteral="text",
+            operator_name:OperatorLiteral="text",
             index:str="default",
             count:dict|None=None,
             highlight:dict|None=None,
@@ -686,7 +686,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
                                     the documents in the results. Defaults to False.
                                     To view the details, you must use the $meta expression in the 
                                     $project stage.
-            - operator, str : Name of the operator to search with. Use the compound operator to run a 
+            - operator_name, str : Name of the operator to search with. Use the compound operator to run a 
                               compound (i.e query with multiple operators).
             - kwargs, Any : Operators specific options.
                             Includes (non-exhaustive):
@@ -700,7 +700,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         
         self.stages.append(
             Search.from_operator(
-                operator=operator,
+                operator_name=operator_name,
                 path=path,
                 query=query,
                 index=index,

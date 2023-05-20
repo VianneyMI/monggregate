@@ -231,7 +231,7 @@ class Search(SearchBase):
     @classmethod
     def from_operator(
         cls, 
-        operator:OperatorLiteral,
+        operator_name:OperatorLiteral,
         path:str|list[str]|None=None,
         query:str|list[str]|None=None,
         fuzzy:dict|None=None,
@@ -249,7 +249,7 @@ class Search(SearchBase):
             }
         )
 
-        return cls.__get_constructors_map__(operator)(**kwargs)
+        return cls.__get_constructors_map__(operator_name)(**kwargs)
 
     @classmethod
     def autocomplete(
