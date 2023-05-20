@@ -1,3 +1,4 @@
+# TO BE DEPRECATED
 from monggregate.search.operators.autocomplete import Autocomplete
 from monggregate.search.operators.equals import Equals
 from monggregate.search.operators.exists import Exists

@@ -223,8 +223,10 @@ class FacetDefinition(BaseModel):
     used to define the facets that need to be computed in a search query.
     """
 
-    name : FacetName
     path : str
+    name : FacetName
+    # TODO : Make name optional and copy path in it when not provided <VM, 17/05/2023>
+    
 
 # TODO : Maybe include a facet name in the below classes <VM, 14/05/2023>
 # TODO : Define statements for the below classes
@@ -320,21 +322,22 @@ class Facet(SearchCollector):
     operator : dict|None
     facets : Facets|list[dict]
 
-    @validator("facets")
-    def validate_facets(cls, facets:Facets)->Facets:
-        """
-        Validates facets.
-        Ensures the facets names are unique
-        """
+    # FIXME : The below validator will be usable only when the automatic conversion to statement is deprecated <VM, 20/05/2023>
+    # @validator("facets")
+    # def validate_facets(cls, facets:Facets)->Facets:
+    #     """
+    #     Validates facets.
+    #     Ensures the facets names are unique
+    #     """
 
-        names = set()
-        for facet in facets:
-            names.add(facet.name)
+    #     names = set()
+    #     for facet in facets:
+    #         names.add(facet.name)
 
-        if len(facets) > len(names):
-            raise ValueError("Some facets have identical names")
+    #     if len(facets) > len(names):
+    #         raise ValueError("Some facets have identical names")
         
-        return facets
+    #     return facets
 
 
     @property
