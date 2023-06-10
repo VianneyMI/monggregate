@@ -7,35 +7,11 @@ from typing import Any
 
 # 3rd Party imports
 # ---------------------------
-from pydantic import BaseModel as PydanticBaseModel, BaseConfig, validator
+from pydantic import BaseModel as PydanticBaseModel, BaseConfig
+from humps import camelize
 
 class BaseModel(PydanticBaseModel, ABC):
     """Mongreggate base class"""
-
-    @validator("*", pre=True)
-    @classmethod
-    def resolve(cls, expression:Any)->dict|list[dict]:
-        """Resolves an expression encapsulated in an object from a class inheriting from BaseModel"""
-
-        def isbasemodel(instance:Any)->bool:
-            """Returns true if instance is an instance of BaseModel"""
-
-            return isinstance(instance, BaseModel)
-
-        if isbasemodel(expression):
-            output:dict|list = expression.statement
-        elif isinstance(expression, list) and any(map(isbasemodel, expression)):
-            output = []
-            for element in expression:
-                if isinstance(element, BaseModel):
-                    output.append(element.statement)
-                else:
-                    output.append(element)
-        #elif isinstance(expression, dict): # Does this case really exist ?
-        else:
-            output = expression
-
-        return output
 
     @property
     @abstractmethod
@@ -56,3 +32,28 @@ class BaseModel(PydanticBaseModel, ABC):
 
         allow_population_by_field_name = True
         underscore_attrs_are_private = True
+        alias_generator = camelize
+
+
+def isbasemodel(instance:Any)->bool:
+    """Returns true if instance is an instance of BaseModel"""
+
+    return isinstance(instance, BaseModel)
+
+def resolve(obj:Any)->dict|list[dict]:
+        """Resolves an expression encapsulated in an object from a class inheriting from BaseModel"""
+
+        if isbasemodel(obj):
+            output:dict|list = obj.statement
+        elif isinstance(obj, list) and any(map(isbasemodel, obj)):
+            output = []
+            for element in obj:
+                if isinstance(element, BaseModel):
+                    output.append(element.statement)
+                else:
+                    output.append(element)
+        #elif isinstance(expression, dict): # Does this case really exist ?
+        else:
+            output = obj
+
+        return output
