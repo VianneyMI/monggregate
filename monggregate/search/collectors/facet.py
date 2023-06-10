@@ -173,6 +173,15 @@ from pydantic import Field, validator
 from monggregate.base import BaseModel
 from monggregate.expressions.fields import FieldName
 from monggregate.search.collectors.collector import SearchCollector
+from monggregate.search.operators.clause import(
+    Autocomplete,
+    Equals,
+    Exists,
+    Range,
+    Regex,
+    Text,
+    Wilcard
+)
 
 # Strings
 # ----------------------------------------------
@@ -348,15 +357,162 @@ class Facet(SearchCollector):
             "facets":{}
         }
 
+        for facet in self.facets:
+            _statement["facets"].update(facet)
+
         # FIXME : The below will work only when change is made to not express objects as dict statement automatically
         # <VM, 16/05/2023>
-        for facet in self.facets:
-            _statement["facets"].update(facet.statement)
+        # for facet in self.facets:
+        #     _statement["facets"].update(facet.statement)
 
-        if self.operator:
-            _statement["operator"] = self.operator
+        # if self.operator:
+        #     _statement["operator"] = self.operator
         
-        return _statement
+        # return _statement
     
     # TODO : pipelinize this class for both operators and facet definitions
+    
+    def autocomplete(
+            self,
+            *,
+            query:str|list[str], 
+            path:str, 
+            token_order:str="any",
+            fuzzy:dict|None=None,
+            score:dict|None=None,
+    )->"Facet":
+        """Adds an autocomplete clause to the current facet instance."""
+        
+        autocomplete = Autocomplete(
+            query=query,
+            path=path,
+            token_order=token_order,
+            fuzzy=fuzzy,
+            score=score
+        )
+        self.operator = autocomplete
+
+        return self
+    
+    def equals(
+            self,
+            type,
+            path:str,
+            value:str|int|float|bool|datetime,
+            score:dict|None=None
+    )->"Facet":
+        """Adds an equals clause to the current facet instance."""
+
+        equals = Equals(
+            path=path,
+            value=value,
+            score=score
+        )
+
+        self.operator = equals
+
+
+        return self
+
+
+
+    def exists(self, path:str)->"Facet":
+        """Adds an exists clause to the current facet instance."""
+
+        exists = Exists(path=path)
+        self.operator = exists
+
+        return self
+
+    def range(
+            self,
+            *,
+            path:str|list[str],
+            gt:int|float|datetime|None=None,
+            lt:int|float|datetime|None=None,
+            gte:int|float|datetime|None=None,
+            lte:int|float|datetime|None=None,
+            score:dict|None=None
+    )->"Facet":
+        """Adds a range clause to the current facet instance."""
+
+        range_ = Range(
+            path=path,
+            gt=gt,
+            gte=gte,
+            lt=lt,
+            lte=lte,
+            score=score
+        )
+
+        self.operator = range_
+
+
+        return self
+
+    def regex(
+            self,
+            *,
+            query:str|list[str],
+            path:str|list[str],
+            allow_analyzed_field:bool=False,
+            score:dict|None=None
+    )->"Facet":
+        """Adds a regex clause to the current facet instance."""
+
+        regex = Regex(
+            query=query,
+            path=path,
+            allow_analyzed_field=allow_analyzed_field,
+            score=score
+        )
+
+        self.operator = regex
+
+        return self
+
+    def text(
+            self,
+            *,
+            query:str|list[str],
+            path:str|list[str],
+            fuzzy:dict|None=None,
+            score:dict|None=None,
+            synonyms:str|None=None
+    )->"Facet":
+        """Adds a text clause to the current facet instance."""
+
+        text = Text(
+            query=query,
+            path=path,
+            score=score,
+            fuzzy=fuzzy,
+            synonyms=synonyms
+        )
+
+        self.operator = text
+
+
+        return self
+
+    def wildcard(
+            self,
+            *,
+            query:str|list[str],
+            path:str|list[str],
+            allow_analyzed_field:bool=False,
+            score:dict|None=None,
+    )->"Facet":
+        """Adds a wildcard clause to the current facet instance."""
+
+        wildcard = Wilcard(
+            query=query,
+            path=path,
+            allow_analyzed_field=allow_analyzed_field,
+            score=score
+        )
+
+        self.operator = wildcard
+
+        return self
     
