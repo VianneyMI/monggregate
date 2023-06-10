@@ -244,6 +244,8 @@ class Compound(SearchOperator):
 
         self._register_clause(type, regex_statement)
 
+        return self
+
     def text(
             self,
             type:ClauseType,
