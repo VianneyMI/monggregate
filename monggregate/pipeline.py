@@ -29,20 +29,6 @@ from monggregate.expressions.aggregation_variables import ROOT
 from monggregate.utils import StrEnum
 
 
-class OnCallEnum(StrEnum):
-    """
-    Possible behaviors on pipeline call
-
-        * RUN => the pipeline will execute itself and query the database
-
-        * EXPORT => the pipeline will generate a list of statements that will need
-                    to be run externally
-
-    """
-
-    RUN = "run"
-    EXPORT = "export"
-
 
 class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     """
@@ -102,10 +88,10 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
     """
 
-    _db : Database | None # necessary to execute the pipeline
-    on_call : OnCallEnum = OnCallEnum.EXPORT
-    collection : str | None
     stages : list[Stage] = []
+    _db : Database | None # necessary to execute the pipeline
+    collection : str | None
+    
 
     class Config(BaseConfig):
         """Configuration Class for Pipeline"""
@@ -118,29 +104,21 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     #-------------------------------------------------
     def __call__(self)->list[dict]:
         """Makes a pipeline instance callable and executes the entire pipeline when called"""
+   
+        return self.run()
 
-        _on_call_map = {
-            OnCallEnum.EXPORT:self.export,
-            OnCallEnum.RUN:self.run
-        }
-
-        return _on_call_map[self.on_call]()
-
-    def __getitem__(self, index:int)->Stage:
-        """Returns a stage from the pipeline"""
-        # https://realpython.com/inherit-python-list/
-        return self.stages[index]
-
-
+    
     def run(self)->list[dict]:
         """Executes the entire pipeline"""
 
-        stages = self.export()
-        if self._db is not None:
-            array = list(self._db[self.collection].aggregate(pipeline=stages))
-        else:
-            raise AttributeError("run is not available when no database is provided")
+        if self._db is None:
+            raise ValueError("db is not defined. Please indicate which database to run the pipeline on")
 
+        if not self.collection:
+            raise ValueError("collection is not defined. Please indicate which collection to run the pipeline on")
+
+        stages = self.export()
+        array = list(self._db[self.collection].aggregate(pipeline=stages))
         return array
 
 
@@ -165,10 +143,53 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         return self.export()
 
+    # --------------------------------------------------
+    # Pipeline List Methods
+    #---------------------------------------------------
+    def __add__(self, other:"Pipeline")->"Pipeline":
+        """Concatenates two pipelines together"""
+        if not isinstance(other, Pipeline):
+            raise TypeError(f"unsupported operand type(s) for +: 'Pipeline' and '{type(other)}'")
+        
+        return Pipeline(
+            _db=self._db,
+            collection=self.collection, 
+            stages=self.stages + other.stages
+            )
+    
+    def __getitem__(self, index:int)->Stage:
+        """Returns a stage from the pipeline"""
+        # https://realpython.com/inherit-python-list/
+        return self.stages[index]
 
-    #-----------------------------------------------------------
+    def __setitem__(self, index:int, stage:Stage)->None:
+        """Sets a stage in the pipeline"""
+        self.stages[index] = stage
+
+    def __delitem__(self, index:int)->None:
+        """Deletes a stage from the pipeline"""
+        del self.stages[index]
+
+    def __len__(self)->int:
+        """Returns the length of the pipeline"""
+        return len(self.stages)
+    
+    def append(self, stage:Stage)->None:
+        """Appends a stage to the pipeline"""
+        self.stages.append(stage)
+
+    def insert(self, index:int, stage:Stage)->None:
+        """Inserts a stage in the pipeline"""
+        self.stages.insert(index, stage)
+
+    def extend(self, stages:list[Stage])->None:
+        """Extends the pipeline with a list of stages"""
+        self.stages.extend(stages)
+
+
+    #---------------------------------------------------
     # Stages
-    #-----------------------------------------------------------
+    #---------------------------------------------------
     # The below methods wrap the constructors of the classes of the same name
 
     def add_fields(self, document:dict={}, **kwargs:Any)->"Pipeline":
