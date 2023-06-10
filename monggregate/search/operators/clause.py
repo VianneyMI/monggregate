@@ -1,4 +1,5 @@
 # TO BE DEPRECATED
+# OR MAYBE NOT CURRENTLY USED TO AVOID CIRCULAR IMPORT <VM, 20/05/2023>
 from monggregate.search.operators.autocomplete import Autocomplete
 from monggregate.search.operators.equals import Equals
 from monggregate.search.operators.exists import Exists

@@ -179,7 +179,10 @@ class Search(SearchBase):
         """Ensures that either collector or operator is provided"""
 
         collector = values.get("collector")
-        if not collector and not value:
+        print("values: ", values)
+        print("value: ", value)
+        #if not collector and not value:
+        if collector is None and value is None:
             raise TypeError("Either collector or operator must be provided")
         
         return value
@@ -210,7 +213,7 @@ class Search(SearchBase):
     # Constructors
     #---------------------------------------------------------
     @classmethod
-    def __get_constructors_map__(cls, operator:str)->Callable:
+    def __get_constructors_map__(cls, operator_name:str)->Callable:
         """Returns appropriate constructor from operator name"""
 
         _constructors_map = {
@@ -226,7 +229,8 @@ class Search(SearchBase):
             "wilcard":cls.wildcard
         }
 
-        return _constructors_map[operator]
+        return _constructors_map[operator_name]
+    
 
     @classmethod
     def from_operator(
@@ -270,12 +274,14 @@ class Search(SearchBase):
         """
 
         base_params = SearchBase(**kwargs).dict()
+        cls.__reduce_kwargs(**kwargs)
         autocomplete_statement = Autocomplete(
             query=query,
             path=path,
             token_order=token_order,
             fuzzy=fuzzy,
-            score=score
+            score=score,
+            **kwargs
         ).statement
 
         return Search(**base_params, operator=autocomplete_statement)
@@ -294,12 +300,14 @@ class Search(SearchBase):
     )->"Search":
 
         base_params = SearchBase(**kwargs).dict()
+        cls.__reduce_kwargs(**kwargs)
         compound_statement = Compound(
             must=must,
             must_not=must_not,
             should=should,
             filter=filter,
-            minimum_should_clause=minimum_should_clause
+            minimum_should_clause=minimum_should_clause,
+            **kwargs
         ).statement
 
         return Search(**base_params, operator=compound_statement)
@@ -351,7 +359,7 @@ class Search(SearchBase):
         return Search(**base_params, operator=exists_statement)
     
     @classmethod
-    def facet(cls, operator:dict, facets:dict, **kwargs:Any)->"Search":
+    def facet(cls, **kwargs:Any)->"Search":
         """
         Creates a search stage with a facet operator
 
@@ -361,9 +369,12 @@ class Search(SearchBase):
         """
         
         base_params = SearchBase(**kwargs).dict()
-        facet_statement = Facet(operator=operator, facets=facets).statement
-
-        return Search(**base_params, operator=facet_statement)
+        cls.__reduce_kwargs(**kwargs)
+        facet_ = Facet(**kwargs)
+        print(kwargs)
+        facet_statement=facet_.statement
+        print(facet_)
+        return Search(**base_params, operator=facet_)
     
     @classmethod
     def more_like_this(cls, like:dict|list[dict], **kwargs:Any)->"Search":
@@ -506,6 +517,16 @@ class Search(SearchBase):
         ).statement
 
         return Search(**base_params, operator=wilcard_statement)
+    
+    @classmethod
+    def __reduce_kwargs(cls, **kwargs:Any)->dict:
+        """Parses kwargs arguments to avoid passing arguments twice"""
+
+        kwargs.pop("index", None)
+        kwargs.pop("count", None)
+        kwargs.pop("highlight", None)
+        kwargs.pop("return_stored_source", None)
+        kwargs.pop("score_details", None)
 
 # TODO : pipelinize Search class
 # Instead of setting the search operator as a classmethods constructors
