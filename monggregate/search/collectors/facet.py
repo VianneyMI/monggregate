@@ -168,7 +168,7 @@ The following limitations apply:
 from datetime import datetime
 from typing import Literal
 
-from pydantic import Field, validator
+from pydantic import validator
 
 from monggregate.base import BaseModel
 from monggregate.expressions.fields import FieldName
@@ -233,12 +233,21 @@ class FacetDefinition(BaseModel):
     """
 
     path : str
-    name : FacetName
-    # TODO : Make name optional and copy path in it when not provided <VM, 17/05/2023>
+    name : FacetName = ""
     
 
-# TODO : Maybe include a facet name in the below classes <VM, 14/05/2023>
-# TODO : Define statements for the below classes
+    @validator('name', pre=True, always=True)
+    def set_name(cls, name: str, values:dict[str,str]) -> FacetName:
+        """Sets the name from the field path"""
+
+        path = values["path"]
+        if not name:
+            name = path # TODO : Maybe the path might need to be cleaned ? (., $, etc) <VM, 11/06/2023>
+
+        return name
+        
+
+
 class StringFacet(FacetDefinition):
     """
     String facet definition
@@ -255,12 +264,12 @@ class StringFacet(FacetDefinition):
     """
 
     type : Literal['string'] = 'string'
-    num_buckets : int = Field(10, alias='numBuckets')
+    num_buckets : int = 10
 
     @property
     def statement(self) -> dict:
         
-        return {self.name : self.dict(by_alias=True)}
+        return self.resolve({self.name : self.dict(by_alias=True)})
 
 
 class NumericFacet(FacetDefinition):
@@ -285,7 +294,7 @@ class NumericFacet(FacetDefinition):
     @property
     def statement(self) -> dict:
         
-        return {self.name : self.dict(by_alias=True)}
+        return self.resolve({self.name : self.dict(by_alias=True)})
 
 class DateFacet(FacetDefinition):
     """
@@ -306,7 +315,7 @@ class DateFacet(FacetDefinition):
     @property
     def statement(self) -> dict:
         
-        return {self.name : self.dict(by_alias=True)}
+        return self.resolve({self.name : self.dict(by_alias=True)})
 
 Facets = list[NumericFacet|DateFacet|StringFacet]
 
@@ -329,28 +338,31 @@ class Facet(SearchCollector):
     """
 
     operator : dict|None
-    facets : Facets|list[dict]
+    facets : Facets = []
 
     # FIXME : The below validator will be usable only when the automatic conversion to statement is deprecated <VM, 20/05/2023>
-    # @validator("facets")
-    # def validate_facets(cls, facets:Facets)->Facets:
-    #     """
-    #     Validates facets.
-    #     Ensures the facets names are unique
-    #     """
+    @validator("facets")
+    def validate_facets(cls, facets:Facets)->Facets:
+        """
+        Validates facets.
+        Ensures the facets names are unique
+        """
 
-    #     names = set()
-    #     for facet in facets:
-    #         names.add(facet.name)
+        names = set()
+        for facet in facets:
+            names.add(facet.name)
 
-    #     if len(facets) > len(names):
-    #         raise ValueError("Some facets have identical names")
+        if len(facets) > len(names):
+            raise ValueError("Some facets have identical names")
         
-    #     return facets
+        return facets
 
 
     @property
     def statement(self) -> dict:
+
+        if not self.facets:
+            raise ValueError("No facets were defined")
 
         
         _statement = {
@@ -358,19 +370,12 @@ class Facet(SearchCollector):
         }
 
         for facet in self.facets:
-            _statement["facets"].update(facet)
+            _statement["facets"].update(facet.statement)
 
-        # FIXME : The below will work only when change is made to not express objects as dict statement automatically
-        # <VM, 16/05/2023>
-        # for facet in self.facets:
-        #     _statement["facets"].update(facet.statement)
-
-        # if self.operator:
-        #     _statement["operator"] = self.operator
+        if self.operator:
+            _statement["operator"] = self.operator
         
-        # return _statement
-    
-    # TODO : pipelinize this class for both operators and facet definitions
+        return self.resolve(_statement)
     
     def autocomplete(
             self,
@@ -413,8 +418,6 @@ class Facet(SearchCollector):
 
 
         return self
-
-
 
     def exists(self, path:str)->"Facet":
         """Adds an exists clause to the current facet instance."""
@@ -516,3 +519,30 @@ class Facet(SearchCollector):
 
         return self
     
+    def add(
+            self,
+            path:str,
+            name:str|None=None,
+            type:Literal['string', 'number', 'date']='string',
+            num_buckets:int=10,
+            boundaries:list[int|float]|list[datetime]|None=None,
+            default:str|None=None
+    )->"Facet":
+        
+        if type=="string":
+            facet = StringFacet(
+                name=name,
+                path=path,
+                num_buckets=num_buckets
+            )
+        else:
+            facet = NumericFacet(
+                name=name,
+                path=path,
+                boundaries=boundaries,
+                default=default
+            )
+
+        self.facets.append(facet)
+
+        return self
