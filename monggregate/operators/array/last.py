@@ -116,9 +116,9 @@ class Last(ArrayOnlyOperator):
 
     @property
     def statement(self) -> dict:
-        return {
+        return self.resolve({
             "$last":self.expression
-        }
+        })
 
 def last(array:Any)->dict:
     """Returns a $last statement"""

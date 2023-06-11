@@ -401,4 +401,4 @@ class Lookup(Stage):
                 }
             }
 
-        return statement
+        return self.resolve(statement)

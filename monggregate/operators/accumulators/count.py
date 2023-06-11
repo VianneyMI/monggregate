@@ -58,9 +58,9 @@ class Count(Accumulator):
     @property
     def statement(self) -> dict:
 
-        return {
+        return self.resolve({
             "$count" : {}
-        }
+        })
 
 def count()->dict:
     """Creates a $count statement"""

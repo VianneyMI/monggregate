@@ -81,6 +81,6 @@ class Skip(Stage):
     def statement(self)->dict:
         """Generate statement from arguments"""
 
-        return {
+        return self.resolve({
             "$skip" : self.value
-        }
+        })

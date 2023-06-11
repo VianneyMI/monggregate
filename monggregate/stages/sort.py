@@ -264,4 +264,4 @@ class Sort(Stage):
     def statement(self)->dict[str, dict]:
         """Generates statement from other attributes"""
 
-        return  {"$sort":self.query}
+        return  self.resolve({"$sort":self.query})

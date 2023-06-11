@@ -111,6 +111,6 @@ class Group(Stage):
         """Generates set stage statement from arguments"""
 
 
-        return  {
+        return  self.resolve({
             "$group":self.query
-        }
+        })

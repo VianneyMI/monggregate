@@ -95,9 +95,9 @@ class Min(Accumulator):
     @property
     def statement(self) -> dict:
 
-        return {
+        return self.resolve({
             "$min" : self.expression
-        }
+        })
 
 def min(expression:Any)->dict:
     """Creates a $min statement"""

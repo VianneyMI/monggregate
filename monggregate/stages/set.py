@@ -53,4 +53,4 @@ class Set(Stage):
     def statement(self)->dict[str, dict]:
         """Generates set stage statement from arguments"""
 
-        return  {"$set":self.document}
+        return  self.resolve({"$set":self.document})

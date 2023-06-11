@@ -250,4 +250,4 @@ class Project(Stage):
     def statement(self)->dict[str, dict]:
         """Generates statement from other attributes"""
 
-        return {"$project":self.projection}
+        return self.resolve({"$project":self.projection})

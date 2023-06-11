@@ -77,9 +77,9 @@ class First(Accumulator):
     @property
     def statement(self) -> dict:
 
-        return {
+        return self.resolve({
             "$first" : self.expression
-        }
+        })
 
 def first(expression:Any)->dict:
     """Creates a push statement"""

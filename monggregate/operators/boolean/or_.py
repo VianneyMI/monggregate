@@ -44,9 +44,9 @@ class Or(BooleanOperator):
 
     @property
     def statement(self) -> dict:
-        return {
+        return self.resolve({
             "$or" : self.expressions
-        }
+        })
 
 def or_(*args:Any)->dict:
     """Returns an $or statement"""
