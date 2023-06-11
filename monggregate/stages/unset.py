@@ -77,5 +77,5 @@ class Unset(Stage):
                 "$unset":self.fields
             }
 
-        return _statement
+        return self.resolve(_statement)
     

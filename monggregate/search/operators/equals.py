@@ -98,11 +98,11 @@ class Equals(SearchOperator, smart_union=True):
     @property
     def statement(self) -> dict:
             
-            return {
+            return self.resolve({
                 "equals":{
                     "path": self.path,
                     "value": self.value,
                     "score": self.score
                 }
-            }
+            })
     

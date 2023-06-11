@@ -53,8 +53,8 @@ class Exists(SearchOperator):
     @property
     def statement(self) -> dict:
         
-        return {
+        return self.resolve({
             "exists" : {
                 "path":self.path
             }
-        }
+        })

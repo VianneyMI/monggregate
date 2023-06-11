@@ -83,12 +83,12 @@ class Regex(SearchOperator):
     @property
     def statement(self) -> dict:
             
-            return {
+            return self.resolve({
                 "regex":{
                     "query": self.query,
                     "path": self.path,
                     "allowAnalyzedField": self.allow_analyzed_field,
                     "score": self.score
                 }
-            }
+            })
     

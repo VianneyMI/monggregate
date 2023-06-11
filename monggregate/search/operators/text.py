@@ -73,7 +73,7 @@ class Text(SearchOperator):
     @property
     def statement(self) -> dict:
         
-        return {
+        return self.resolve({
             "text" : self.dict(exclude_none=True)
-        }
+        })
             

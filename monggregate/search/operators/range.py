@@ -127,5 +127,5 @@ class Range(SearchOperator, smart_union=True):
             else:
                 params["lte"] = self.lte
 
-            return {"range":params}
+            return self.resolve({"range":params})
     

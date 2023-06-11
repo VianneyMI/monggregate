@@ -118,9 +118,10 @@ class Compound(SearchOperator):
             clauses["should"] = self.should
         if self.filter:
             clauses["filter"] = self.filter
-        return {
+
+        return self.resolve({
                 "compound":clauses
-            }
+            })
 
     def _register_clause(self, type:ClauseType, statement:dict)->None:
         """

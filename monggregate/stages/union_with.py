@@ -201,5 +201,5 @@ class UnionWith(Stage):
         else:
             statement = {"$unionWith":self.collection}
             
-        return statement
+        return self.resolve(statement)
         

@@ -127,7 +127,7 @@ class SearchBase(Stage):
             "$search":config
         }
      
-        return _statement
+        return self.resolve(_statement)
 
 
 class Search(SearchBase):
@@ -206,7 +206,7 @@ class Search(SearchBase):
             "$search":config
         }
      
-        return _statement
+        return self.resolve(_statement)
     
 
     #---------------------------------------------------------

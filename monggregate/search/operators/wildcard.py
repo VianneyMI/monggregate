@@ -94,6 +94,6 @@ class Wilcard(SearchOperator):
     @property
     def statement(self) -> dict:
         
-        return {
+        return self.resolve({
             "wildcard":self.dict(exclude_none=True, by_alias=True)
-        }
+        })

@@ -13,5 +13,5 @@ class FuzzyOptions(BaseModel):
     @property
     def statement(self) -> dict:
         
-        return self.dict(by_alias=True)
+        return self.resolve(self.dict(by_alias=True))
     

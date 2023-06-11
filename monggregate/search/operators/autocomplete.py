@@ -172,7 +172,7 @@ class Autocomplete(SearchOperator):
     @property
     def statement(self) -> dict:
         
-        return {
+        return self.resolve({
             "autocomplete":{
                 "query": self.query,
                 "path": self.path,
@@ -180,5 +180,5 @@ class Autocomplete(SearchOperator):
                 "fuzzy": self.fuzzy,
                 "score": self.score
             }
-        }
+        })
     
