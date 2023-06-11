@@ -43,9 +43,9 @@ class Equal(Comparator):
     @property
     def statement(self) -> dict:
 
-        return {
+        return self.resolve({
             "$eq":[self.left, self.right]
-        }
+        })
 
 Eq = Equal
 

@@ -39,9 +39,9 @@ class GreatherThanOrEqual(Comparator):
     @property
     def statement(self) -> dict:
 
-        return {
+        return self.resolve({
             "$gte":[self.left, self.right]
-        }
+        })
 
 Gte = GreatherThanOrEqual
 

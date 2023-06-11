@@ -112,9 +112,9 @@ class First(ArrayOnlyOperator):
 
     @property
     def statement(self) -> dict:
-        return {
+        return self.resolve({
             "$first":self.expression
-        }
+        })
 
 def first(array:Any)->dict:
     """Returns a $first statement"""

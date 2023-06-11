@@ -112,11 +112,11 @@ class Bucket(Stage):
 
         # Generates statement
         #--------------------------------------
-        return {
+        return self.resolve({
             "$bucket" : {
                 "groupBy" : self.by,
                 "boundaries" :self.boundaries,
                 "default" : self.default,
                 "output" : self.output
             }
-        }
+        })

@@ -42,9 +42,9 @@ class Size(ArrayOnlyOperator):
 
     @property
     def statement(self) -> dict:
-        return {
+        return self.resolve({
             "$size":self.expression
-        }
+        })
 
 def size(array:Any)->dict:
     """Returns a $size statement"""

@@ -104,9 +104,9 @@ class Sum(Accumulator):
     @property
     def statement(self) -> dict:
 
-        return {
+        return self.resolve({
             "$sum" : self.expression
-        }
+        })
 
 def sum(*args:Content)->dict: # pylint: disable=redefined-builtin
     """Creates a $sum statement"""

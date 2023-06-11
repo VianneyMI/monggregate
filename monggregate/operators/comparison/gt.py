@@ -41,9 +41,9 @@ class GreatherThan(Comparator):
     @property
     def statement(self) -> dict:
 
-        return {
+        return self.resolve({
             "$gt":[self.left, self.right]
-        }
+        })
 
 Gt = GreatherThan
 

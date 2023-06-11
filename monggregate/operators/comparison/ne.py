@@ -42,9 +42,9 @@ class NotEqual(Comparator):
     @property
     def statement(self) -> dict:
 
-        return {
+        return self.resolve({
             "$ne":[self.left, self.right]
-        }
+        })
 
 Ne = NotEqual
 

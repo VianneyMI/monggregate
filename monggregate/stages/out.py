@@ -148,4 +148,4 @@ class Out(Stage):
                 "$out" : self.collection
             }
 
-        return statement
+        return self.resolve(statement)

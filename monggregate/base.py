@@ -15,7 +15,7 @@ class BaseModel(PydanticBaseModel, ABC):
 
     @classmethod
     def resolve(cls, obj:Any)->dict|list[dict]:
-        """xxx"""
+        """Resolves an expression encapsulated in an object from a class inheriting from BaseModel"""
 
         return resolve(obj)
 

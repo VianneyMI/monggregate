@@ -65,12 +65,12 @@ class MaxN(ArrayOperator):
 
     @property
     def statement(self) -> dict:
-        return {
+        return self.resolve({
             "$maxN" : {
                 "n" : self.limit,
                 "input" : self.expression
             }
-        }
+        })
 
 def max_n(expression:Any, limit:Any=1)->dict:
     """Returns a $maxN statement"""

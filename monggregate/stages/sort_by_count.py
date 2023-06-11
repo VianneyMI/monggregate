@@ -73,6 +73,6 @@ class SortByCount(Stage):
     def statement(self)->dict:
         """Generates sort_by_count stage statement from SortByCount class keywords arguments"""
 
-        return  {
+        return  self.resolve({
             "$sortByCount" : self.by
-        }
+        })
