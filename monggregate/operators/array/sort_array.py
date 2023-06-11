@@ -101,12 +101,12 @@ class SortArray(ArrayOperator):
 
     @property
     def statement(self) -> dict:
-        return {
+        return self.resolve({
             "$sortArray":{
                 "input" : self.expression,
                 "sortBy" : self.by
             }
-        }
+        })
 
 def sort_array(expression:Any, sort_by:dict[str, Literal[1, -1]])->dict:
     """Returns a $first statement"""

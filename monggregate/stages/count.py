@@ -57,6 +57,6 @@ class Count(Stage):
     @property
     def statement(self)-> dict:
 
-        return  {
+        return  self.resolve({
             "$count" : self.name
-        }
+        })

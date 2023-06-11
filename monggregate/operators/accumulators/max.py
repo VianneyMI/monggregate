@@ -95,9 +95,9 @@ class Max(Accumulator):
     @property
     def statement(self) -> dict:
 
-        return {
+        return self.resolve({
             "$max" : self.expression
-        }
+        })
 
 def max(expression:Any)->dict: # pylint: disable=redefined-builtin
     """Creates a push statement"""

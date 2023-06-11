@@ -39,9 +39,9 @@ class LowerThanOrEqual(Comparator):
     @property
     def statement(self) -> dict:
 
-        return {
+        return self.resolve({
             "$lte":[self.left, self.right]
-        }
+        })
 
 Lte = LowerThanOrEqual
 

@@ -44,9 +44,9 @@ class Compare(Comparator):
     @property
     def statement(self) -> dict:
 
-        return {
+        return self.resolve({
             "$cmp":[self.left, self.right]
-        }
+        })
 
 Cmp = Compare
 

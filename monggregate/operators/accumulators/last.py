@@ -71,9 +71,9 @@ class Last(Accumulator):
     @property
     def statement(self) -> dict:
 
-        return {
+        return self.resolve({
             "$last" : self.expression
-        }
+        })
 
 def last(expression:Any)->dict:
     """Creates a push statement"""

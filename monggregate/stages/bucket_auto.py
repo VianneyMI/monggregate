@@ -154,11 +154,11 @@ class BucketAuto(Stage):
 
       # NOTE : maybe it would be better to use _to_unique_list here
       # or to further validate by.
-      return   {
+      return   self.resolve({
             "$bucketAuto" : {
                 "groupBy" : self.by,
                 "buckets" : self.buckets,
                 "output" : self.output,
                 "granularity" : self.granularity.value if self.granularity else None
             }
-        }
+        })

@@ -68,9 +68,9 @@ class ArrayToObject(ArrayOperator):
 
     @property
     def statement(self) -> dict:
-        return {
+        return self.resolve({
             "$arrayToObject" : self.expression
-        }
+        })
 
 def array_to_object(expression:Any)->dict:
     """Returns an $arrayToObject statement"""

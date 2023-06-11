@@ -59,9 +59,9 @@ class MergeObjects(ArrayOperator):
 
     @property
     def statement(self) -> dict:
-        return {
+        return self.resolve({
             "$mergeObjects" : self.expression
-        }
+        })
 
 def merge_objects(expression:Any)->dict:
     """Returns a merge_objects statement"""

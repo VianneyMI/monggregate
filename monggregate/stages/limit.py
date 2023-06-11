@@ -68,6 +68,6 @@ class Limit(Stage):
     @property
     def statement(self)->dict:
 
-        return {
+        return self.resolve({
             "$limit" : self.value
-        }
+        })

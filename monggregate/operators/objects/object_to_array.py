@@ -44,9 +44,9 @@ class ObjectToArray(ArrayOperator):
 
     @property
     def statement(self) -> dict:
-        return {
+        return self.resolve({
             "$objectToArray" : self.expression
-        }
+        })
 
 def object_to_array(expression:Any)->dict:
     """Returns a *objectToArray statement"""

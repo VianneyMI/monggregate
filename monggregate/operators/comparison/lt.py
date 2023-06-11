@@ -38,9 +38,9 @@ class LowerThan(Comparator):
     @property
     def statement(self) -> dict:
 
-        return {
+        return self.resolve({
             "$lt":[self.left, self.right]
-        }
+        })
 
 Lt = LowerThan
 

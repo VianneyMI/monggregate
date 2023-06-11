@@ -66,4 +66,4 @@ class Match(Stage):
     @property
     def statement(self) -> dict:
 
-        return {"$match":self.query}
+        return self.resolve({"$match":self.query})

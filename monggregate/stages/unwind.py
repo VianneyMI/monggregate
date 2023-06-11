@@ -107,4 +107,4 @@ class Unwind(Stage):
         if self.always:
             params["preserveNullAndEmptyArrays"] = self.always
 
-        return  {"$unwind" : params}
+        return  self.resolve({"$unwind" : params})

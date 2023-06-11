@@ -70,8 +70,8 @@ class Sample(Stage):
     def statement(self)->dict:
         """Generate statement from arguments"""
 
-        return {
+        return self.resolve({
             "$sample" : {
                 "size" : self.value
             }
-        }
+        })

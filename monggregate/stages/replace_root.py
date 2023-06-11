@@ -101,4 +101,4 @@ class ReplaceRoot(Stage):
             expression = self.document
 
     
-        return  {"$replaceRoot":{"newRoot":expression}}
+        return  self.resolve({"$replaceRoot":{"newRoot":expression}})

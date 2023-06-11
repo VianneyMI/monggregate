@@ -50,9 +50,9 @@ class In(ArrayOperator):
 
     @property
     def statement(self) -> dict:
-        return {
+        return self.resolve({
             "$in":[self.left, self.right]
-        }
+        })
 
 def in_(left:Any, right:Any)->dict:
     """Returns a $maxN statement"""

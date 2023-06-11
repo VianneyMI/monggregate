@@ -65,12 +65,12 @@ class MinN(ArrayOperator):
 
     @property
     def statement(self) -> dict:
-        return {
+        return self.resolve({
             "$minN" : {
                 "n" : self.limit,
                 "input" : self.expression
             }
-        }
+        })
 
 def min_n(expression:Any, limit:Any=1)->dict:
     """Returns a $minN statement"""

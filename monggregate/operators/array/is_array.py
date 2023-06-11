@@ -40,9 +40,9 @@ class IsArray(ArrayOnlyOperator):
 
     @property
     def statement(self) -> dict:
-        return {
+        return self.resolve({
             "$isArray":self.expression
-        }
+        })
 
 def is_array(array:Any)->dict:
     """Returns a $isArray statement"""

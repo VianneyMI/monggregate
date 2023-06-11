@@ -75,14 +75,14 @@ class Filter(ArrayOperator):
 
     @property
     def statement(self) -> dict:
-        return {
+        return self.resolve({
             "$filter":{
                "input" : self.expression,
                "cond" : self.query,
                "as" : self.let,
                "limit" : self.limit
             }
-        }
+        })
 
 def filter(expression:Any, let:str, query:Any, limit:int|None=None)->dict: # pylint: disable=redefined-builtin
     """Returns a $filter statement"""
