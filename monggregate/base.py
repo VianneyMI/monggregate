@@ -13,6 +13,12 @@ from humps import camelize
 class BaseModel(PydanticBaseModel, ABC):
     """Mongreggate base class"""
 
+    @classmethod
+    def resolve(cls, obj:Any)->dict|list[dict]:
+        """xxx"""
+
+        return resolve(obj)
+
     @property
     @abstractmethod
     def statement(self)->dict:
@@ -20,7 +26,6 @@ class BaseModel(PydanticBaseModel, ABC):
 
         # this is a lazy attribute
         # what is currently in generate statement should go in here
-
 
     def __call__(self)->dict:
         """Makes an instance of any class inheriting from this class callable"""
@@ -52,7 +57,13 @@ def resolve(obj:Any)->dict|list[dict]:
                     output.append(element.statement)
                 else:
                     output.append(element)
-        #elif isinstance(expression, dict): # Does this case really exist ?
+        elif isinstance(obj, dict):
+            output = {}
+            for key, value in obj.items():
+                if isinstance(value, BaseModel):
+                    output[key] = value.statement
+                else:
+                    output[key] = resolve(value)
         else:
             output = obj
 

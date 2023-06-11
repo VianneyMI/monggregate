@@ -68,9 +68,9 @@ class And(BooleanOperator):
 
     @property
     def statement(self) -> dict:
-        return {
+        return self.resolve({
             "$and" : self.expressions
-        }
+        })
 
 def and_(*args:Any)->dict:
     """Returns an $and statement"""
@@ -78,3 +78,4 @@ def and_(*args:Any)->dict:
     return And(
         expressions=list(args)
     ).statement
+
