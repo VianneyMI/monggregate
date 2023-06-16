@@ -173,14 +173,16 @@ from pydantic import validator
 from monggregate.base import BaseModel
 from monggregate.expressions.fields import FieldName
 from monggregate.search.collectors.collector import SearchCollector
-from monggregate.search.operators.clause import(
+from monggregate.search.operators import(
     Autocomplete,
     Equals,
     Exists,
     Range,
     Regex,
     Text,
-    Wilcard
+    Wilcard,
+    AnyOperator
+    
 )
 
 # Strings
@@ -269,7 +271,7 @@ class StringFacet(FacetDefinition):
     @property
     def statement(self) -> dict:
         
-        return self.resolve({self.name : self.dict(by_alias=True)})
+        return self.resolve({self.name : self.dict(by_alias=True, exclude={"name"})})
 
 
 class NumericFacet(FacetDefinition):
@@ -294,7 +296,7 @@ class NumericFacet(FacetDefinition):
     @property
     def statement(self) -> dict:
         
-        return self.resolve({self.name : self.dict(by_alias=True)})
+        return self.resolve({self.name : self.dict(by_alias=True, exclude={"name"})})
 
 class DateFacet(FacetDefinition):
     """
@@ -315,7 +317,7 @@ class DateFacet(FacetDefinition):
     @property
     def statement(self) -> dict:
         
-        return self.resolve({self.name : self.dict(by_alias=True)})
+        return self.resolve({self.name : self.dict(by_alias=True, exclude={"name"})})
 
 Facets = list[NumericFacet|DateFacet|StringFacet]
 
@@ -337,7 +339,7 @@ class Facet(SearchCollector):
     
     """
 
-    operator : dict|None
+    operator : AnyOperator|None
     facets : Facets = []
 
     # FIXME : The below validator will be usable only when the automatic conversion to statement is deprecated <VM, 20/05/2023>
@@ -366,14 +368,16 @@ class Facet(SearchCollector):
 
         
         _statement = {
-            "facets":{}
+            "facet":{
+                "facets":{}
+            }
         }
 
         for facet in self.facets:
-            _statement["facets"].update(facet.statement)
+            _statement["facet"]["facets"].update(facet.statement)
 
         if self.operator:
-            _statement["operator"] = self.operator
+            _statement["facet"].update({"operator":self.operator.statement})
         
         return self.resolve(_statement)
     

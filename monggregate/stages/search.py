@@ -82,7 +82,8 @@ from monggregate.search.operators import(
     Range,
     Regex,
     Text,
-    Wilcard
+    Wilcard,
+    AnyOperator
 )
 
 
@@ -169,8 +170,8 @@ class Search(SearchBase):
     """
 
     
-    collector : dict|None
-    operator : dict|None
+    collector : Facet|None
+    operator : AnyOperator|None
     
 
     @validator("operator", pre=True, always=True)
@@ -184,6 +185,8 @@ class Search(SearchBase):
         #if not collector and not value:
         if collector is None and value is None:
             raise TypeError("Either collector or operator must be provided")
+        elif collector and value:
+            raise TypeError("Only one of collector or operator can be provided")
         
         return value
     
@@ -198,9 +201,9 @@ class Search(SearchBase):
                 "scoreDetails":self.score_details
             }
         
-        method:dict[str, dict] = self.collector or self.operator
+        method = self.collector or self.operator
 
-        config.update(method)
+        config.update(method.statement)
 
         _statement = {
             "$search":config
@@ -370,11 +373,12 @@ class Search(SearchBase):
         
         base_params = SearchBase(**kwargs).dict()
         cls.__reduce_kwargs(**kwargs)
-        facet_ = Facet(**kwargs)
+        operator = kwargs.pop("operator", None)
+        facet_ = Facet(operator=operator, **kwargs)
         print(kwargs)
         facet_statement=facet_.statement
         print(facet_)
-        return Search(**base_params, operator=facet_)
+        return Search(**base_params, collector=facet_)
     
     @classmethod
     def more_like_this(cls, like:dict|list[dict], **kwargs:Any)->"Search":
@@ -520,7 +524,17 @@ class Search(SearchBase):
     
     @classmethod
     def __reduce_kwargs(cls, **kwargs:Any)->dict:
-        """Parses kwargs arguments to avoid passing arguments twice"""
+        """
+        Parses kwargs arguments to avoid passing arguments twice
+        
+        In particular removes SearchBase arguments from kwargs:
+            - index, 
+            - count, 
+            - highlight, 
+            - return_stored_source, 
+            - score_details
+        
+        """
 
         kwargs.pop("index", None)
         kwargs.pop("count", None)

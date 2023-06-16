@@ -33,3 +33,5 @@ from monggregate.search.operators.range import Range
 from monggregate.search.operators.regex import Regex
 from monggregate.search.operators.text import Text
 from monggregate.search.operators.wildcard import Wilcard
+
+AnyOperator = Autocomplete | Compound | Equals | Exists | MoreLikeThis | Range | Regex | Text | Wilcard
