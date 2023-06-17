@@ -966,19 +966,3 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         )
 
         return self
-
-
-
-
-if __name__ == "__main__":
-    from monggregate.search.operators import Range
-    from monggregate.search.collectors import StringFacet, NumericFacet
-    pipeline = Pipeline(stages=[])
-    pipeline.search(
-        operator_name="facet",
-        operator=Range(path="year", gte=2000, lte=2000),
-        facets=[StringFacet(path="directors", num_buckets=7), NumericFacet(path="year", boundaries=[2000, 2005, 2010, 2015])]
-        )
-    
-    print(pipeline.export())
-    

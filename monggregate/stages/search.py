@@ -69,7 +69,7 @@ The $$SEARCH_META aggregation variable can't be used in any subsequent stage aft
 """
 
 from datetime import datetime
-from typing import Any, Callable, Literal
+from typing import Any, Callable, Literal, Self
 from pydantic import Field, validator
 from monggregate.stages.stage import Stage
 from monggregate.search.collectors import Facet, Facets
@@ -180,9 +180,7 @@ class Search(SearchBase):
         """Ensures that either collector or operator is provided"""
 
         collector = values.get("collector")
-        print("values: ", values)
-        print("value: ", value)
-        #if not collector and not value:
+
         if collector is None and value is None:
             raise TypeError("Either collector or operator must be provided")
         elif collector and value:
@@ -243,7 +241,7 @@ class Search(SearchBase):
         query:str|list[str]|None=None,
         fuzzy:dict|None=None,
         score:dict|None=None,
-        **kwargs:Any)->"Search":
+        **kwargs:Any)->Self:
         """Instantiates a search stage from a search operator"""
 
         # FIXME : This could lead in duplicated arguments in kwargs <VM, 02/05/2023>
@@ -266,7 +264,7 @@ class Search(SearchBase):
         token_order:str="any",
         fuzzy:dict|None=None,
         score:dict|None=None,
-        **kwargs:Any)->"Search":
+        **kwargs:Any)->Self:
         """
         Creates a search stage with an autocomplete operator
         
@@ -277,7 +275,8 @@ class Search(SearchBase):
         """
 
         base_params = SearchBase(**kwargs).dict()
-        cls.__reduce_kwargs(**kwargs)
+        cls.__reduce_kwargs(kwargs)
+
         autocomplete_statement = Autocomplete(
             query=query,
             path=path,
@@ -287,7 +286,7 @@ class Search(SearchBase):
             **kwargs
         ).statement
 
-        return Search(**base_params, operator=autocomplete_statement)
+        return cls(**base_params, operator=autocomplete_statement)
     
     @classmethod
     def compound(
@@ -300,10 +299,11 @@ class Search(SearchBase):
         filter : list[dict]=[],
         **kwargs:Any
         
-    )->"Search":
+    )->Self:
 
         base_params = SearchBase(**kwargs).dict()
-        cls.__reduce_kwargs(**kwargs)
+        cls.__reduce_kwargs(kwargs)
+
         compound_statement = Compound(
             must=must,
             must_not=must_not,
@@ -313,7 +313,7 @@ class Search(SearchBase):
             **kwargs
         ).statement
 
-        return Search(**base_params, operator=compound_statement)
+        return cls(**base_params, operator=compound_statement)
 
     @classmethod
     def equals(
@@ -322,7 +322,7 @@ class Search(SearchBase):
         value:str|int|float|bool|datetime,
         score:dict|None=None,
         **kwargs:Any
-        )->"Search":
+        )->Self:
         """
         Creates a search stage with an equals operator
 
@@ -341,10 +341,10 @@ class Search(SearchBase):
             score=score
         ).statement
 
-        return Search(**base_params, operator=equals_statement)
+        return cls(**base_params, operator=equals_statement)
 
     @classmethod
-    def exists(cls, path:str, **kwargs:Any)->"Search":
+    def exists(cls, path:str, **kwargs:Any)->Self:
         """
         Creates a search stage with an exists operator
 
@@ -359,10 +359,10 @@ class Search(SearchBase):
         base_params = SearchBase(**kwargs).dict()
         exists_statement = Exists(path=path).statement
 
-        return Search(**base_params, operator=exists_statement)
+        return cls(**base_params, operator=exists_statement)
     
     @classmethod
-    def facet(cls, **kwargs:Any)->"Search":
+    def facet(cls, **kwargs:Any)->Self:
         """
         Creates a search stage with a facet operator
 
@@ -372,16 +372,15 @@ class Search(SearchBase):
         """
         
         base_params = SearchBase(**kwargs).dict()
-        cls.__reduce_kwargs(**kwargs)
+        cls.__reduce_kwargs(kwargs)
+        
         operator = kwargs.pop("operator", None)
         facet_ = Facet(operator=operator, **kwargs)
-        print(kwargs)
-        facet_statement=facet_.statement
-        print(facet_)
-        return Search(**base_params, collector=facet_)
+
+        return cls(**base_params, collector=facet_)
     
     @classmethod
-    def more_like_this(cls, like:dict|list[dict], **kwargs:Any)->"Search":
+    def more_like_this(cls, like:dict|list[dict], **kwargs:Any)->Self:
         """
         Creates a search stage  with a more_like_this operator
 
@@ -396,7 +395,7 @@ class Search(SearchBase):
         base_params = SearchBase(**kwargs).dict()
         more_like_this_stasement = MoreLikeThis(like=like).statement
 
-        return Search(**base_params, operator=more_like_this_stasement)
+        return cls(**base_params, operator=more_like_this_stasement)
 
     @classmethod
     def range(
@@ -408,7 +407,7 @@ class Search(SearchBase):
         lte:int|float|datetime|None=None,
         score:dict|None=None,
         **kwargs:Any
-    )->"Search":
+    )->Self:
         """
         Creates a search stage with a range operator
 
@@ -431,7 +430,7 @@ class Search(SearchBase):
             score=score
         ).statement
 
-        return Search(**base_params, operator=range_statement)
+        return cls(**base_params, operator=range_statement)
 
     @classmethod
     def regex(
@@ -441,7 +440,7 @@ class Search(SearchBase):
         allow_analyzed_field:bool=False,
         score:dict|None=None,
         **kwargs:Any
-    )->"Search":
+    )->Self:
         """
         Creates a search stage with a regex operator.
 
@@ -459,7 +458,7 @@ class Search(SearchBase):
             score=score
         ).statement
 
-        return Search(**base_params, operator=regex_statement)
+        return cls(**base_params, operator=regex_statement)
 
 
 
@@ -472,7 +471,7 @@ class Search(SearchBase):
         score:dict|None=None,
         synonyms:str|None=None,
         **kwargs:Any
-    )->"Search":
+    )->Self:
         """
         Creates a search stage with a text opertor
 
@@ -502,7 +501,7 @@ class Search(SearchBase):
         allow_analyzed_field:bool=False,
         score:dict|None=None,
         **kwargs:Any
-    )->"Search":
+    )->Self:
         """
         Creates a search stage with a wildcard opertor
 
@@ -520,10 +519,10 @@ class Search(SearchBase):
             score=score
         ).statement
 
-        return Search(**base_params, operator=wilcard_statement)
+        return cls(**base_params, operator=wilcard_statement)
     
     @classmethod
-    def __reduce_kwargs(cls, **kwargs:Any)->dict:
+    def __reduce_kwargs(cls, kwargs:dict)->None:
         """
         Parses kwargs arguments to avoid passing arguments twice
         
