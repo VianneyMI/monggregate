@@ -22,10 +22,13 @@ from monggregate.stages import( # pylint: disable=import-error
     Project,
     ReplaceRoot,
     Sample,
+    Search,
     Set,
     Skip,
     SortByCount,
     Sort,
+    UnionWith,
+    Unset,
     Unwind
 )
 
@@ -47,14 +50,14 @@ class TestStages:
                      Using the state to avoid code repetition in the functional tests
                      Besides, the functional tests are still independent from one another.
                      Each functional test will depend on its equivalent unit test.
-                     Downside is that if the all the tests are launched, the unit tests will be run
+                     Downside is that if all the tests are launched, the unit tests will be run
                      several times.
                      Thus the test suite should either be run using at least one of the markers (unit, functional)
         """
         return {}
 
     def test_stage(self)->None:
-        """Testes the stage parent class"""
+        """Tests the stage parent class"""
 
         with pytest.raises(TypeError):
             # Checking that Stage cannot be instantiated
@@ -62,7 +65,7 @@ class TestStages:
 
 
     def test_bucket_auto(self, state:State)->None:
-        """Testes $bucketAuto stage class and mirror function"""
+        """Tests $bucketAuto stage class and mirror function"""
 
         bucket_auto = BucketAuto(
             group_by="test",
@@ -80,7 +83,7 @@ class TestStages:
 
 
     def test_bucket(self, state:State)->None:
-        """Testes the $bucket stage class and mirror function"""
+        """Tests the $bucket stage class and mirror function"""
 
         bucket = Bucket(
             group_by="income",
@@ -106,14 +109,14 @@ class TestStages:
 
 
     def test_count(self, state:State)->None:
-        """Testes the count stage"""
+        """Tests the count stage"""
 
         count = Count(name="count")
         assert count
         state["count"] = count
 
     def test_group(self, state:State)->None:
-        """Testes the group stage"""
+        """Tests the group stage"""
 
         # Testing mandatory fields
         # ------------------------
@@ -140,7 +143,7 @@ class TestStages:
 
 
     def test_limit(self, state:State)->None:
-        """Testes the limit stage"""
+        """Tests the limit stage"""
 
         limit = Limit(value=10)
         assert limit
@@ -148,7 +151,7 @@ class TestStages:
 
 
     def test_lookup(self, state:State)->None:
-        """Testes the lookup stage"""
+        """Tests the lookup stage"""
 
         # Testing mandatory attributes
         # -----------------------------
@@ -201,14 +204,14 @@ class TestStages:
 
 
     def test_match(self, state:State)->None:
-        """Testes the match stage"""
+        """Tests the match stage"""
 
         match = Match(query={"_id":"12345"})
         assert match
         state["match"] = match
 
     def test_out(self, state:State)->None:
-        """Testes the out stage"""
+        """Tests the out stage"""
 
         out = Out(coll="my_collection")
         assert out
@@ -224,7 +227,7 @@ class TestStages:
 
 
     def test_project(self, state:State)->None:
-        """Testes the project stage"""
+        """Tests the project stage"""
 
         # Testing mandatory attributes
         # -----------------------------
@@ -269,7 +272,7 @@ class TestStages:
 
 
     def test_replace_root(self, state:State)->None:
-        """Testes the replace_root stage"""
+        """Tests the replace_root stage"""
 
         # Testing mandatory attributes
         # -----------------------------
@@ -287,7 +290,7 @@ class TestStages:
         # N/A
 
     def test_sample(self, state:State)->None:
-        """Testes the sample stage"""
+        """Tests the sample stage"""
 
         # Testing mandatory attributes
         # -----------------------------
@@ -307,9 +310,31 @@ class TestStages:
         assert sample
         assert sample.value == 10
 
+    
+    def test_search(self, state:State)->None:
+        """Tests the search stage"""
+
+        search = Search(
+            operator={
+                "text":{
+                    "query":"test",
+                    "path":"description"
+                }
+            }
+        )
+        state["search"] = search
+        assert search
+
+
+        search = Search.from_operator(operator_name="more_like_this", like={})
+        assert search
+
+        with pytest.raises(ValidationError):
+            Search()
+
 
     def test_set(self, state:State)->None:
-        """Testes the xxx stage"""
+        """Tests the set stage"""
 
         # Testing mandatory attributes
         # -----------------------------
@@ -330,7 +355,7 @@ class TestStages:
 
 
     def test_skip(self, state:State)->None:
-        """Testes the skip stage"""
+        """Tests the skip stage"""
 
         # Testing mandatory attributes
         # -----------------------------
@@ -348,7 +373,7 @@ class TestStages:
 
 
     def test_sort_by_count(self, state:State)->None:
-        """Testes the sort_by_count stage"""
+        """Tests the sort_by_count stage"""
 
         # Testing mandatory attributes
         # -----------------------------
@@ -368,7 +393,7 @@ class TestStages:
 
 
     def test_sort(self, state:State)->None:
-        """Testes the sort stage"""
+        """Tests the sort stage"""
 
         # Testing mandatory attributes
         # -----------------------------
@@ -407,10 +432,48 @@ class TestStages:
         assert Sort(
             ascending = {"year":1}
         )
+    
+    def test_union_with(self, state:State)->None:
+        """Tests the $unionWith stage"""
+
+        # Testing mandatory attributes
+        # -----------------------------
+        union_with = UnionWith(
+            collection="other_collection",
+            pipeline = Pipeline().match({"name":"test"})
+        )
+        assert union_with
+        state["union_with"] = union_with
+
+        # Testing aliases
+        # -----------------------------
+        # N/A
+
+        # Testing optional attributes
+        # -----------------------------
+        # N/A
+
+
+    def test_unset(self, state:State)->None:
+        """Tests the $unset stage"""
+
+        # Testing mandatory attributes
+        # -----------------------------
+        unset = Unset(fields=["field1", "fieldN"])
+        assert unset
+        state["unset"] = unset
+
+        # Testing aliases
+        # -----------------------------
+        # N/A
+
+        # Testing optional attributes
+        # -----------------------------
+        # N/A
 
 
     def test_unwind(self, state:State)->None:
-        """Testes the $unwind stage"""
+        """Tests the $unwind stage"""
 
         # Testing mandatory attributes
         # -----------------------------
@@ -441,7 +504,7 @@ class TestStagesFunctional(TestStages):
 
 
     def test_bucket_auto_statement(self, state:State)->None:
-        """Testes the BucketAuto class statement and its mirror function"""
+        """Tests the BucketAuto class statement and its mirror function"""
 
         assert state["bucket_auto"].statement == Pipeline().bucket_auto(
             by = "test",
@@ -457,7 +520,7 @@ class TestStagesFunctional(TestStages):
 
     def test_bucket_statement(self, state:State)->None:
         """
-        Testes the Bucket class statement and its mirror function
+        Tests the Bucket class statement and its mirror function
         """
 
         bucket = state["bucket"]
@@ -473,7 +536,7 @@ class TestStagesFunctional(TestStages):
         }
 
     def test_count_statement(self, state:State)->None:
-        """Testes the Count class statement and its mirror function"""
+        """Tests the Count class statement and its mirror function"""
 
         count = state["count"]
         assert count.statement == Pipeline().count(name="count")[0].statement == {
@@ -481,7 +544,7 @@ class TestStagesFunctional(TestStages):
         }
 
     def test_group_statement(self, state:State)->None:
-        """Testes the Group class statement and its mirror function"""
+        """Tests the Group class statement and its mirror function"""
 
         group = state["group"]
         assert group.statement == Pipeline().group(
@@ -495,7 +558,7 @@ class TestStagesFunctional(TestStages):
         }
 
     def test_limit_statement(self, state:State)->None:
-        """Testes the Limit class statement and its mirror function"""
+        """Tests the Limit class statement and its mirror function"""
 
         limit = state["limit"]
         assert limit.statement == Pipeline().limit(10)[0].statement == {
@@ -503,7 +566,7 @@ class TestStagesFunctional(TestStages):
         }
 
     def test_lookup_statement(self, state:State)->None:
-        """Testes the Limit class statement and its mirror function"""
+        """Tests the Limit class statement and its mirror function"""
 
         lookup = state["lookup"]
         assert lookup.statement == Pipeline().lookup(
@@ -521,7 +584,7 @@ class TestStagesFunctional(TestStages):
         }
 
     def test_match_statement(self, state:State)->None:
-        """Testes the Match class and its mirror function"""
+        """Tests the Match class and its mirror function"""
 
         match = state["match"]
         assert match.statement == Pipeline().match(
@@ -535,7 +598,7 @@ class TestStagesFunctional(TestStages):
         }
 
     def test_out_satement(self, state:State)->None:
-        """Testes the Out class and its mirror function"""
+        """Tests the Out class and its mirror function"""
 
         out = state["out"]
         assert out.statement == Pipeline().out("my_collection")[0].statement == {
@@ -543,7 +606,7 @@ class TestStagesFunctional(TestStages):
         }
 
     def test_project_statement(self, state:State)->None:
-        """Testes the Project class and its mirror function"""
+        """Tests the Project class and its mirror function"""
 
         project = state["project"]
         assert project.statement == Pipeline().project(
@@ -555,7 +618,7 @@ class TestStagesFunctional(TestStages):
         }
 
     def test_replace_root_statement(self, state:State)->None:
-        """Testes the ReplaceRoot class and its mirror function"""
+        """Tests the ReplaceRoot class and its mirror function"""
 
         replace_root = state["replace_root"]
         assert replace_root.statement == Pipeline().replace_root(
@@ -567,7 +630,7 @@ class TestStagesFunctional(TestStages):
         }
 
     def test_sample_statement(self, state:State) -> None:
-        """Testes the Sample class and its mirror function"""
+        """Tests the Sample class and its mirror function"""
 
         sample = state["sample"]
         assert sample.statement == Pipeline().sample(3)[0].statement == {
@@ -577,7 +640,7 @@ class TestStagesFunctional(TestStages):
         }
 
     def test_set_statement(self, state:State) -> None:
-        """Testes the Set class and its mirror function"""
+        """Tests the Set class and its mirror function"""
 
         set = state["set"]
         assert set.statement == Pipeline().set(
@@ -593,7 +656,7 @@ class TestStagesFunctional(TestStages):
         }
 
     def test_skip_statement(self, state:State)->None:
-        """Testes the Skip class and its mirror function"""
+        """Tests the Skip class and its mirror function"""
 
         skip = state["skip"]
         assert skip.statement == Pipeline().skip(10)[0].statement == {
@@ -602,7 +665,7 @@ class TestStagesFunctional(TestStages):
 
 
     def test_sort_by_count_statement(self, state:State)->None:
-        """Testes the SortByCount class and its mirror function"""
+        """Tests the SortByCount class and its mirror function"""
 
         sort_by_count = state["sort_by_count"]
         assert sort_by_count.statement == Pipeline().sort_by_count(
@@ -612,7 +675,7 @@ class TestStagesFunctional(TestStages):
         }
 
     def test_sort_statement(self, state:State)->None:
-        """Testes the Sort class and its mirror function"""
+        """Tests the Sort class and its mirror function"""
 
         sort = state["sort"]
         assert sort.statement == Pipeline().sort(field1=1, fieldN=-1)[0].statement == {
@@ -623,7 +686,7 @@ class TestStagesFunctional(TestStages):
         }
 
     def test_unwind_statement(self, state:State)->None:
-        """Testes the Unwind class and its mirror function"""
+        """Tests the Unwind class and its mirror function"""
 
         unwind = state["unwind"]
         assert unwind.statement == Pipeline().unwind("xyz")[0].statement == {
@@ -648,6 +711,7 @@ if __name__ == "__main__":
     TestStages().test_replace_root({})
     TestStages().test_sample({})
     TestStages().test_set({})
+    TestStages().test_search({})
     TestStages().test_skip({})
     TestStages().test_sort_by_count({})
     TestStages().test_sort({})

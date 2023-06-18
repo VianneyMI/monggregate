@@ -1,6 +1,6 @@
 
 
-"""Testes that the package is corretly import and/or installed locally"""
+"""Tests that the package is corretly import and/or installed locally"""
 
 
 import monggregate # pylint: disable=import-error, unused-import

@@ -3,7 +3,7 @@
 from typing import Any, Literal
 from warnings import warn
 from pymongo.database import Database
-from pydantic import BaseModel, BaseConfig
+from monggregate.base import BaseModel, BaseConfig
 from monggregate.stages import (
     Stage,
     BucketAuto,
@@ -18,12 +18,18 @@ from monggregate.stages import (
     Project,
     ReplaceRoot,
     Sample,
+    Search,
+    SearchMeta,
     Set,
     Skip,
     SortByCount,
     Sort,
-    Unwind
+    UnionWith,
+    Unwind,
+    Unset
 )
+from monggregate.stages.search import OperatorLiteral
+from monggregate.search.operators.compound import Compound
 from monggregate.operators import MergeObjects
 from monggregate.expressions.aggregation_variables import ROOT
 from monggregate.utils import StrEnum
@@ -92,6 +98,12 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     _db : Database | None # necessary to execute the pipeline
     collection : str | None
     
+
+    @property
+    def statement(self)->list[dict]:
+        """Returns the pipeline statement"""
+
+        return [stage.statement for stage in self.stages]
 
     class Config(BaseConfig):
         """Configuration Class for Pipeline"""
@@ -659,6 +671,146 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
                 Sample(value=value)
             )
         return self
+    
+    def search(
+            self,
+            path:str|list[str]=None,
+            query:str|list[str]=None,
+            *,
+            operator_name:OperatorLiteral="text",
+            index:str="default",
+            count:dict|None=None,
+            highlight:dict|None=None,
+            return_stored_source:bool=False,
+            score_details:bool=False,
+            **kwargs:Any
+    )->"Pipeline":
+        """
+        Adds a search stage to the current pipeline
+        NOTE : if used, search has to be the first stage of the pipeline
+
+        Arguments:
+        -------------------------------
+            - path, str|list[str]|None : field to search in
+            - query, str|list[str]|None : text to search for
+            - index, str : name of the index to use for the search. Defaults to defaut
+            - count, dict|None : document that specifies the count options for retrieving
+                                 a count of the results
+            - highlight, dict|None : document that specifies the highlight options for 
+                                     displaying search terms in their original context
+            - return_stored_source, bool : Indicates whether to use the copy of the documents
+                                           in the Atlas Search index (with just a subset of the fields)
+                                           or to return the original full document (slower).
+                                           Defaults to False.
+                                           True => Use the copy
+                                           False => Do a lookup and return the original documents.
+            - score_details, bool : Indicates whether to retrieve the detailed breakdown of the score for
+                                    the documents in the results. Defaults to False.
+                                    To view the details, you must use the $meta expression in the 
+                                    $project stage.
+            - operator_name, str : Name of the operator to search with. Use the compound operator to run a 
+                              compound (i.e query with multiple operators).
+            - kwargs, Any : Operators specific options.
+                            Includes (non-exhaustive):
+                            - fuzzy, FuzzyOptions (controls fuzzy matching options)
+                            - score, dict (controls scoring options)
+                            - value, numeric|bool|date (for filtering)
+                            - allow_analyzed_field, bool (controls index scanning)
+                            - synonyms
+                            - like, dict|list[dict] (allow looking for similar documents)
+        """
+        
+        self.stages.append(
+            Search.from_operator(
+                operator_name=operator_name,
+                path=path,
+                query=query,
+                index=index,
+                count=count,
+                highlight=highlight,
+                return_stored_source=return_stored_source,
+                score_details=score_details,
+                **kwargs
+            )
+        )
+        
+
+        return self
+    
+    def search_compound(self)->"Compound":
+        """Adds a compound search stage"""
+
+        self.stages.insert(
+            0,
+            Search.compound()
+        )
+        return self.stages[0]
+
+    
+    def search_meta(
+            self,
+            path:str|list[str]=None,
+            query:str|list[str]=None,
+            *,
+            operator_name:OperatorLiteral="text",
+            index:str="default",
+            count:dict|None=None,
+            highlight:dict|None=None,
+            return_stored_source:bool=False,
+            score_details:bool=False,
+            **kwargs:Any
+    )->"Pipeline":
+        """
+        Adds a searchMeta stage to the current pipeline
+        NOTE : if used, search has to be the first stage of the pipeline
+
+        Arguments:
+        -------------------------------
+            - path, str|list[str]|None : field to search in
+            - query, str|list[str]|None : text to search for
+            - index, str : name of the index to use for the search. Defaults to defaut
+            - count, dict|None : document that specifies the count options for retrieving
+                                 a count of the results
+            - highlight, dict|None : document that specifies the highlight options for 
+                                     displaying search terms in their original context
+            - return_stored_source, bool : Indicates whether to use the copy of the documents
+                                           in the Atlas Search index (with just a subset of the fields)
+                                           or to return the original full document (slower).
+                                           Defaults to False.
+                                           True => Use the copy
+                                           False => Do a lookup and return the original documents.
+            - score_details, bool : Indicates whether to retrieve the detailed breakdown of the score for
+                                    the documents in the results. Defaults to False.
+                                    To view the details, you must use the $meta expression in the 
+                                    $project stage.
+            - operator_name, str : Name of the operator to search with. Use the compound operator to run a 
+                              compound (i.e query with multiple operators).
+            - kwargs, Any : Operators specific options.
+                            Includes (non-exhaustive):
+                            - fuzzy, FuzzyOptions (controls fuzzy matching options)
+                            - score, dict (controls scoring options)
+                            - value, numeric|bool|date (for filtering)
+                            - allow_analyzed_field, bool (controls index scanning)
+                            - synonyms
+                            - like, dict|list[dict] (allow looking for similar documents)
+        """
+        
+        self.stages.append(
+            SearchMeta.from_operator(
+                operator_name=operator_name,
+                path=path,
+                query=query,
+                index=index,
+                count=count,
+                highlight=highlight,
+                return_stored_source=return_stored_source,
+                score_details=score_details,
+                **kwargs
+            )
+        )
+        
+
+        return self
 
     def set(self, document:dict={}, **kwargs:Any)->"Pipeline":
         """
@@ -755,6 +907,23 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
                 SortByCount(by=by)
             )
         return self
+    
+    def union_with(self, collection:str, pipeline:list[dict]|None=None)->"Pipeline":
+        """
+        Adds a union_with stage to the current pipeline.
+
+        Arguments:
+        ---------------------------------
+            - collection / coll, str : The collection or view whose pipeline results you wish to include in the result set
+            - pipeline, list[dict] | Pipeline | None : An aggregation pipeline to apply to the specified coll.
+
+        """
+
+        self.stages.append(
+            UnionWith(collection=collection, pipeline=pipeline)
+        )
+
+        return self
 
     def unwind(self, path:str, include_array_index:str|None=None, always:bool=False)->"Pipeline":
         """
@@ -778,10 +947,22 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
                 )
             )
         return self
+    
 
+    def unset(self, field:str=None, fields:list[str]|None=None)->"Pipeline":
+        """
+        Adds an unset stage to the current pipeline.
+        
+        Arguments:
+        -------------------------------
 
+            - field, str|None: field to be removed
+            - fields, list[str]|None, list of fields to be removed
+        
+        """
 
+        self.stages.append(
+            Unset(field=field, fields=fields)
+        )
 
-if __name__ == "__main__":
-    pipeline = Pipeline(stages=[])
-    pipeline()
+        return self

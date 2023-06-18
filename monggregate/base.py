@@ -30,13 +30,14 @@ class BaseModel(PydanticBaseModel, ABC):
     def __call__(self)->dict:
         """Makes an instance of any class inheriting from this class callable"""
 
-        return self.statement
+        return self.resolve(self.statement)
 
     class Config(BaseConfig):
         """Base configuration for classes inheriting from this"""
 
         allow_population_by_field_name = True
         underscore_attrs_are_private = True
+        smart_union = True
         alias_generator = camelize
 
 

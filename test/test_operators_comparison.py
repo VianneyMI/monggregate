@@ -19,7 +19,7 @@ class TestBooleanOperators:
     """This class only aims at reusing the markers"""
 
     def test_cmp(self)->None:
-        """Testes the $cmp operator class and mirror function"""
+        """Tests the $cmp operator class and mirror function"""
 
         cmp_op = Cmp(
             left = "$qty",
@@ -37,7 +37,7 @@ class TestBooleanOperators:
         }
 
     def test_eq(self)->None:
-        """Testes the $eq operator class and mirror function"""
+        """Tests the $eq operator class and mirror function"""
 
         eq_op = Eq(
             left = "$qty",
@@ -55,7 +55,7 @@ class TestBooleanOperators:
         }
 
     def test_gt(self)->None:
-        """Testes the $gt operator class and mirror function"""
+        """Tests the $gt operator class and mirror function"""
 
         gt_op = Gt(
             left = "$qty",
@@ -73,7 +73,7 @@ class TestBooleanOperators:
         }
 
     def test_gte(self)->None:
-        """Testes the $gte operator class and mirror function"""
+        """Tests the $gte operator class and mirror function"""
 
         gte_op = Gte(
             left = "$qty",
@@ -91,7 +91,7 @@ class TestBooleanOperators:
         }
 
     def test_lt(self)->None:
-        """Testes the $lt operator class and mirror function"""
+        """Tests the $lt operator class and mirror function"""
 
         lt_op = Lt(
             left = "$qty",
@@ -109,7 +109,7 @@ class TestBooleanOperators:
         }
 
     def test_lte(self)->None:
-        """Testes the $lte operator class and mirror function"""
+        """Tests the $lte operator class and mirror function"""
 
         lte_op = Lte(
             left = "$qty",
@@ -127,7 +127,7 @@ class TestBooleanOperators:
         }
 
     def test_ne(self)->None:
-        """Testes the $ne operator class and mirror function"""
+        """Tests the $ne operator class and mirror function"""
 
         ne_op = Ne(
             left = "$qty",

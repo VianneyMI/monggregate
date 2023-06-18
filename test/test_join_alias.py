@@ -8,7 +8,7 @@ from monggregate import Pipeline
 from monggregate.stages import Lookup, Match
 
 def test_left_join()->None:
-    """Testes left join in pipeline class"""
+    """Tests left join in pipeline class"""
 
     pipeline = Pipeline(collection="left")
     pipeline.join(
@@ -28,7 +28,7 @@ def test_left_join()->None:
     }}
 
 def test_right_join()->None:
-    """Testes right join in pipeline class"""
+    """Tests right join in pipeline class"""
 
 
     pipeline = Pipeline(collection="left")
@@ -55,7 +55,7 @@ def test_right_join()->None:
 
 
 def test_inner_join()->None:
-    """Testes left join in pipeline class"""
+    """Tests left join in pipeline class"""
 
     pipeline = Pipeline(collection="left")
     pipeline.join(

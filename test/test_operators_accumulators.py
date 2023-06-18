@@ -20,7 +20,7 @@ class TestAccumulatorOperators:
     """This class only aims at reusing the markers"""
 
     def test_average(self)->None:
-        """Testes the $avg operator class and mirror function"""
+        """Tests the $avg operator class and mirror function"""
 
         average_op = Average(
         expression = [1, 2, 3, 4]
@@ -37,7 +37,7 @@ class TestAccumulatorOperators:
         }
 
     def test_count(self)->None:
-        """Testes the $count operator class and mirror function"""
+        """Tests the $count operator class and mirror function"""
 
         count_op = Count()
 
@@ -54,7 +54,7 @@ class TestAccumulatorOperators:
 
 
     def test_first(self)->None:
-        """Testes $first operator class and mirror function"""
+        """Tests $first operator class and mirror function"""
 
 
         first_op = First(
@@ -73,7 +73,7 @@ class TestAccumulatorOperators:
 
 
     def test_last(self)->None:
-        """Testes $last operator class and mirror function"""
+        """Tests $last operator class and mirror function"""
 
 
         last_op = Last(
@@ -91,7 +91,7 @@ class TestAccumulatorOperators:
         }
 
     def test_max(self)->None:
-        """Testes $max operator class and mirror function"""
+        """Tests $max operator class and mirror function"""
 
 
         max_op = Max(
@@ -109,7 +109,7 @@ class TestAccumulatorOperators:
         }
 
     def test_min(self)->None:
-        """Testes $min operator class and mirror function"""
+        """Tests $min operator class and mirror function"""
 
 
         min_op = Min(
@@ -128,7 +128,7 @@ class TestAccumulatorOperators:
 
 
     def test_push(self)->None:
-        """Testes the $push operator class and mirror function"""
+        """Tests the $push operator class and mirror function"""
 
         push_op = Push(
             expression = {
@@ -155,7 +155,7 @@ class TestAccumulatorOperators:
 
 
     def test_sum(self)->None:
-        """Testes $sum operator class and mirror function"""
+        """Tests $sum operator class and mirror function"""
 
 
         sum_op = Sum(

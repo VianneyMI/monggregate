@@ -14,7 +14,7 @@ class TestObjectsOperators:
     """This class only aims at reusing the markers"""
 
     def test_merge_objects(self)->None:
-        """Testes the $mergeObjects operator"""
+        """Tests the $mergeObjects operator"""
 
         merge_objects_op = MergeObjects(
             expression = "$quantity"
@@ -31,7 +31,7 @@ class TestObjectsOperators:
         }
 
     def test_object_to_array(self)->None:
-        """Testes the $mergeObjects operator"""
+        """Tests the $mergeObjects operator"""
 
         object_to_array_op = ObjectToArray(
             expression = "$dimensions"
