@@ -169,7 +169,9 @@ $merge              The $unionWith pipeline cannot include the $merge stage.
 
 """
 
-from pydantic import Field
+from typing import Any
+from pydantic import Field, validator
+from monggregate.base import BaseModel
 from monggregate.stages.stage import Stage
 
 
@@ -185,7 +187,18 @@ class UnionWith(Stage):
     """
 
     collection : str = Field(alias="coll")
+    # Find a way to better type pipeline while avoiding circular imports <VM, 18/06/2023>
     pipeline : list[dict] | None
+
+    @validator("pipeline", pre=True, always=True)
+    def validate_pipeline(cls, pipeline:Any):
+        """Validates pipeline"""
+
+        output = pipeline
+        if isinstance(pipeline, BaseModel):
+            output =  pipeline.statement
+        
+        return output
 
     @property
     def statement(self) -> dict[str, dict]:
