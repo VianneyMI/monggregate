@@ -131,6 +131,7 @@ For a demonstration of this workaround, [see Compound Example](https://www.mongo
 
 from monggregate.utils import StrEnum
 from monggregate.search.operators.operator import SearchOperator
+from monggregate.search.commons import FuzzyOptions
 #from monggregate.expressions.fields import FieldPath
 
 class TokenOrderEnum(StrEnum):
@@ -166,7 +167,7 @@ class Autocomplete(SearchOperator):
     query : str|list[str]
     path : str
     token_order : TokenOrderEnum = TokenOrderEnum.ANY
-    fuzzy : dict|None
+    fuzzy : FuzzyOptions|None
     score : dict|None
 
     @property

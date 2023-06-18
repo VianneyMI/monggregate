@@ -70,6 +70,7 @@ from monggregate.search.operators.clause import (
     Text,
     Wilcard
     )
+from monggregate.search.commons import FuzzyOptions
 
 ClauseType = Literal["must", "mustNot", "should", "filter"]
 
@@ -152,7 +153,7 @@ class Compound(SearchOperator):
             query:str|list[str], 
             path:str, 
             token_order:str="any",
-            fuzzy:dict|None=None,
+            fuzzy:FuzzyOptions|None=None,
             score:dict|None=None,
     )->"Compound":
         """Adds an autocomplete clause to the current compound instance."""
@@ -253,7 +254,7 @@ class Compound(SearchOperator):
             *,
             query:str|list[str],
             path:str|list[str],
-            fuzzy:dict|None=None,
+            fuzzy:FuzzyOptions|None=None,
             score:dict|None=None,
             synonyms:str|None=None
     )->"Compound":

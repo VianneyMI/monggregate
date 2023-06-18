@@ -85,7 +85,7 @@ from monggregate.search.operators import(
     Wilcard,
     AnyOperator
 )
-
+from monggregate.search.commons import FuzzyOptions
 
 # Enums
 # -----------------------------------------------------
@@ -239,7 +239,7 @@ class Search(SearchBase):
         operator_name:OperatorLiteral,
         path:str|list[str]|None=None,
         query:str|list[str]|None=None,
-        fuzzy:dict|None=None,
+        fuzzy:FuzzyOptions|None=None,
         score:dict|None=None,
         **kwargs:Any)->Self:
         """Instantiates a search stage from a search operator"""
@@ -262,7 +262,7 @@ class Search(SearchBase):
         query:str|list[str], 
         path:str, 
         token_order:str="any",
-        fuzzy:dict|None=None,
+        fuzzy:FuzzyOptions|None=None,
         score:dict|None=None,
         **kwargs:Any)->Self:
         """
@@ -467,7 +467,7 @@ class Search(SearchBase):
         cls,
         query:str|list[str],
         path:str|list[str],
-        fuzzy:dict|None=None,
+        fuzzy:FuzzyOptions|None=None,
         score:dict|None=None,
         synonyms:str|None=None,
         **kwargs:Any

@@ -184,6 +184,7 @@ from monggregate.search.operators import(
     AnyOperator
     
 )
+from monggregate.search.commons import FuzzyOptions
 
 # Strings
 # ----------------------------------------------
@@ -387,7 +388,7 @@ class Facet(SearchCollector):
             query:str|list[str], 
             path:str, 
             token_order:str="any",
-            fuzzy:dict|None=None,
+            fuzzy:FuzzyOptions|None=None,
             score:dict|None=None,
     )->"Facet":
         """Adds an autocomplete clause to the current facet instance."""
@@ -483,7 +484,7 @@ class Facet(SearchCollector):
             *,
             query:str|list[str],
             path:str|list[str],
-            fuzzy:dict|None=None,
+            fuzzy:FuzzyOptions|None=None,
             score:dict|None=None,
             synonyms:str|None=None
     )->"Facet":
