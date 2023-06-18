@@ -69,7 +69,11 @@ The $$SEARCH_META aggregation variable can't be used in any subsequent stage aft
 """
 
 from datetime import datetime
-from typing import Any, Callable, Literal, Self
+from typing import Any, Callable, Literal
+try:
+    from typing import Self
+except ImportError:
+    from typing_extensions import Self
 from pydantic import Field, validator
 from monggregate.stages.stage import Stage
 from monggregate.search.collectors import Facet, Facets
