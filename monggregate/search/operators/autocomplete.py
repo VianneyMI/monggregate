@@ -157,7 +157,7 @@ class Autocomplete(SearchOperator):
                                  terms in a string, Atlas Search also looks for a match
                                  for each term in the string separately.
         - path, str : Indexed autocomplete type of field to search.
-        - fuzzy, dict : Enable fuzzy search. Find strings which are similar to the search 
+        - fuzzy, FuzzyOptions : Enable fuzzy search. Find strings which are similar to the search 
                        term or terms.
         - score, dict : score assigned to matching search term results
         - token_order, "any"|"sequential" : Order in which to search for tokens.

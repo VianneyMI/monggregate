@@ -1,4 +1,4 @@
-"""Module definining an interface to MongoDB $limit stage operation in aggrgation pipeline.
+"""Module definining an interface to MongoDB $search stage operation in aggregation pipeline.
 
 Online MongoDB documentation:
 --------------------------------------------------------------------------------------------------

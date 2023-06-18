@@ -712,7 +712,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
                               compound (i.e query with multiple operators).
             - kwargs, Any : Operators specific options.
                             Includes (non-exhaustive):
-                            - fuzzy, dict (controls fuzzy matching options)
+                            - fuzzy, FuzzyOptions (controls fuzzy matching options)
                             - score, dict (controls scoring options)
                             - value, numeric|bool|date (for filtering)
                             - allow_analyzed_field, bool (controls index scanning)
@@ -761,7 +761,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             **kwargs:Any
     )->"Pipeline":
         """
-        Adds a search stage to the current pipeline
+        Adds a searchMeta stage to the current pipeline
         NOTE : if used, search has to be the first stage of the pipeline
 
         Arguments:
@@ -787,7 +787,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
                               compound (i.e query with multiple operators).
             - kwargs, Any : Operators specific options.
                             Includes (non-exhaustive):
-                            - fuzzy, dict (controls fuzzy matching options)
+                            - fuzzy, FuzzyOptions (controls fuzzy matching options)
                             - score, dict (controls scoring options)
                             - value, numeric|bool|date (for filtering)
                             - allow_analyzed_field, bool (controls index scanning)

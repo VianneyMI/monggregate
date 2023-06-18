@@ -51,7 +51,7 @@ class Text(SearchOperator):
         - path, str | list[str] : Indexed field or fields to search in. 
                                   You can also specify a wildcard path
                                   to search.
-        - fuzzy, dict : Enable fuzzy search. Find strings which are 
+        - fuzzy, FuzzyOptions : Enable fuzzy search. Find strings which are 
                         similar to the search term or terms. You can't use fuzzy with synonyms.
 
         - synonyms, str : Name of the synonym mapping definition in the index definition. 

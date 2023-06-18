@@ -54,6 +54,7 @@ def test_sync_docstrings()->None:
     exempts = [
         "Stage", # Base class, not a real stage
         "Search", # Implementation a bit particular. Has multiple constructors
+        "SearchMeta"
     ]
     # Retrieving the members of the pipeline class
     # to access them dynamically
