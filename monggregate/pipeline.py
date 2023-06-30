@@ -908,6 +908,17 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             )
         return self
     
+    # TODO : Eventually, add support to merge multiple collections at once with union_with with below prototype
+    # def union_with(
+    #         self,
+    #         *,
+    #         collection:str|None=None,
+    #         pipeline:list[dict]|None=None,
+    #         collections:list[str]|None=None,
+    #         pipelines:list[list[dict]]|None=None,
+    #         collection_pipeline_pairs:list[tuple[str, list[dict]]]|None=None,       
+    # )
+    
     def union_with(self, collection:str, pipeline:list[dict]|None=None)->"Pipeline":
         """
         Adds a union_with stage to the current pipeline.
