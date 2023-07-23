@@ -44,8 +44,8 @@ Behavior
 
 """
 
-from pydantic import Field
 from typing import Any
+from monggregate.base import Field
 from monggregate.operators.array.array import ArrayOperator
 
 class MinN(ArrayOperator):

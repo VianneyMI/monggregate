@@ -10,7 +10,7 @@ from typing import Any, Literal
 
 # 3rd Party imports
 # ---------------------------
-from pydantic import validator
+from monggregate.base import validator
 
 # Local imports
 # ----------------------------

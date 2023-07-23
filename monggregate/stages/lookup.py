@@ -245,7 +245,7 @@ For more information, see [$lookup Optimization](https://www.mongodb.com/docs/ma
 
 """
 
-from pydantic import Field, validator
+from monggregate.base import Field, validator
 from monggregate.stages.stage import Stage
 from monggregate.utils import StrEnum
 

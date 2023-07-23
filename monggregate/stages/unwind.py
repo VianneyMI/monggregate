@@ -66,7 +66,7 @@ preserveNullAndEmptyArrays option.
 
 """
 
-from pydantic import Field, validator
+from monggregate.base import Field, validator
 from monggregate.stages.stage import Stage
 from monggregate.utils import validate_field_path
 

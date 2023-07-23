@@ -170,7 +170,7 @@ $merge              The $unionWith pipeline cannot include the $merge stage.
 """
 
 from typing import Any
-from pydantic import Field, validator
+from monggregate.base import Field, validator
 from monggregate.base import BaseModel
 from monggregate.stages.stage import Stage
 

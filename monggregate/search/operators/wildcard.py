@@ -65,7 +65,7 @@ EXAMPLE : To create a wildcard expression which searches for any string containi
 
 """
 
-from pydantic import Field
+from monggregate.base import Field
 from monggregate.search.operators.operator import SearchOperator
 
 class Wilcard(SearchOperator):

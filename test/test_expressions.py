@@ -3,8 +3,15 @@
 
 
 import pytest
-from pydantic import BaseModel, Field, ValidationError
-from pydantic.errors import StrRegexError
+import pydantic
+from monggregate.base import PydanticBaseModel, Field
+if pydantic.__version__.startswith("1"):
+    from pydantic import ValidationError
+    from pydantic.errors import StrRegexError
+else:
+    from pydantic.v1 import ValidationError
+    from pydantic.v1.errors import StrRegexError
+    
 from monggregate.stages.count import FieldName
 
 
@@ -15,7 +22,7 @@ def test_constraints_in_hybrid_types()->None:
     Ensures that constraints are taken into account for Union types, only for the relevant type of the Union.
     """
 
-    class Test(BaseModel):
+    class Test(PydanticBaseModel):
         """Test class with hybrid type"""
 
         x : int | dict = Field(gt=1)

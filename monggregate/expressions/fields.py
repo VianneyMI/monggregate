@@ -6,7 +6,11 @@ import re
 
 # 3rd Party imports
 # -------------------------------------------
-from pydantic import ConstrainedStr
+import pydantic
+if pydantic.__version__.startswith("1"):
+    from pydantic import ConstrainedStr
+else:
+    from pydantic.v1.types import ConstrainedStr
 
 # Types definition
 # -------------------------------------------

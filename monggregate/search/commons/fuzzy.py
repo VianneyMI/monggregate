@@ -1,7 +1,6 @@
 """Module defining an interface to define the fuzzy search parameters."""
 
-from pydantic import Field
-from monggregate.base import BaseModel
+from monggregate.base import BaseModel, Field
 
 class FuzzyOptions(BaseModel):
     """Class defining the fuzzy search parameters."""

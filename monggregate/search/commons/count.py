@@ -5,8 +5,8 @@ https://www.mongodb.com/docs/atlas/atlas-search/counting/#std-label-count-ref
 """
 
 from typing import Literal
-from pydantic import Field
-from monggregate.base import BaseModel
+
+from monggregate.base import BaseModel, Field
 
 class CountOptions(BaseModel):
     """Class defining the count parameters."""

@@ -48,7 +48,7 @@ See the following for more information on each:
 
 """
 
-from pydantic import Field
+from monggregate.base import Field
 from monggregate.stages.stage import Stage
 
 class Limit(Stage):

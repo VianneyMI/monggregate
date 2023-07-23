@@ -49,8 +49,8 @@ $sort.
 
 """
 
-from typing import Any
-from pydantic import Field, validator
+
+from monggregate.base import Field, validator
 
 from monggregate.stages.stage import Stage
 from monggregate.expressions.content import Content, Const, Consts

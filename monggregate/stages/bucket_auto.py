@@ -81,7 +81,7 @@ The values of the series are multiplied by a power of 10 when the groupBy values
 """
 
 from typing import Any
-from pydantic import Field, validator
+from monggregate.base import Field, validator
 from monggregate.stages.stage import Stage
 from monggregate.expressions.content import Content
 from monggregate.expressions.fields import FieldName

@@ -49,7 +49,7 @@ If you are using the:
 
 """
 
-from pydantic import Field
+from monggregate.base import Field
 from monggregate.stages.stage import Stage
 
 class Sample(Stage):

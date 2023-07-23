@@ -95,7 +95,7 @@ the returned sort order will always be the same across multiple executions of th
 """
 
 from typing import Literal
-from pydantic import validator
+from monggregate.base import validator
 from monggregate.stages.stage import Stage
 from monggregate.utils import to_unique_list
 

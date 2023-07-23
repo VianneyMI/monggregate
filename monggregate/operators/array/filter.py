@@ -42,8 +42,8 @@ $filter has the following syntax:
           $filter returns all matching array elements.
 """
 
-from pydantic import validator, Field
 from typing import Any
+from monggregate.base import Field
 from monggregate.operators.array.array import ArrayOperator
 
 class Filter(ArrayOperator):

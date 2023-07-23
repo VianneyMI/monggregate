@@ -84,7 +84,7 @@ You can't use the moreLikeThis operator inside the embeddedDocument operator to 
 
 """
 
-from pydantic import validator
+from monggregate.base import validator
 from monggregate.search.operators.operator import SearchOperator
 
 
