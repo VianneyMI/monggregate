@@ -68,7 +68,7 @@ score           object                  Modify the score assigned to matching   
 
 
 from datetime import datetime
-from pydantic import validator
+from monggregate.base import validator
 from monggregate.search.operators.operator import SearchOperator
 
 class Range(SearchOperator, smart_union=True):
@@ -90,10 +90,10 @@ class Range(SearchOperator, smart_union=True):
     """
 
     path : str | list[str]
-    gt : int | float | datetime | None
-    lt : int | float | datetime | None
-    gte : int | float | datetime | None
-    lte : int | float | datetime | None
+    gt : int | float | datetime | None = None
+    lt : int | float | datetime | None = None
+    gte : int | float | datetime | None = None
+    lte : int | float | datetime | None = None
     score : dict|None
 
     @validator("gte", pre=True, always=True)

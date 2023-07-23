@@ -66,7 +66,7 @@ preserveNullAndEmptyArrays option.
 
 """
 
-from pydantic import Field, validator
+from monggregate.base import Field, validator
 from monggregate.stages.stage import Stage
 from monggregate.utils import validate_field_path
 
@@ -87,7 +87,7 @@ class Unwind(Stage):
     # Attributes
     # ----------------------
     path_to_array : str = Field(..., alias = "path")
-    include_array_index : str | None #The name of a new field to hold the array index of the element.
+    include_array_index : str | None = None #The name of a new field to hold the array index of the element.
                                         # The name cannot start with a dollar sign $
     always: bool = Field(False, alias="preserve_null_and_empty_arrays")
 

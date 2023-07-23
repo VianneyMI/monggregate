@@ -7,7 +7,12 @@ from typing import Any
 
 # 3rd Party imports
 # ---------------------------
-from pydantic import BaseModel as PydanticBaseModel, BaseConfig
+import pydantic
+if pydantic.__version__.startswith("1"):
+    from pydantic import BaseModel as PydanticBaseModel, BaseConfig, ValidationError, Field, validator
+else:
+    from pydantic.v1 import BaseModel as PydanticBaseModel, BaseConfig, ValidationError, Field, validator
+    
 from humps import camelize
 
 class BaseModel(PydanticBaseModel, ABC):

@@ -47,7 +47,7 @@ $group + $sort sequence:
 
 """
 
-from pydantic import validator
+from monggregate.base import validator
 from monggregate.stages.stage import Stage
 from monggregate.utils import validate_field_path
 

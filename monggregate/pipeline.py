@@ -95,8 +95,8 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     """
 
     stages : list[Stage] = []
-    _db : Database | None # necessary to execute the pipeline
-    collection : str | None
+    _db : Database | None = None# necessary to execute the pipeline
+    collection : str | None =None
     
 
     @property

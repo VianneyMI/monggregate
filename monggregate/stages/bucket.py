@@ -49,8 +49,8 @@ $sort.
 
 """
 
-from typing import Any
-from pydantic import Field, validator
+
+from monggregate.base import Field, validator
 
 from monggregate.stages.stage import Stage
 from monggregate.expressions.content import Content, Const, Consts
@@ -100,8 +100,8 @@ class Bucket(Stage):
 
     by : Content = Field(...,alias="group_by")
     boundaries : Consts
-    default : Const | None
-    output : dict[FieldName, AccumulatorExpression] | None
+    default : Const | None = None
+    output : dict[FieldName, AccumulatorExpression] | None = None
 
     # Validators
     # ------------------------------

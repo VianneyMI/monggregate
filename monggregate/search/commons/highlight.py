@@ -5,8 +5,8 @@ https://www.mongodb.com/docs/atlas/atlas-search/highlighting/#syntax
 """
 
 from typing import Literal
-from pydantic import Field
-from monggregate.base import BaseModel
+
+from monggregate.base import BaseModel, Field
 
 class HighlightOptions(BaseModel):
     """Class defining the highlighting parameters."""

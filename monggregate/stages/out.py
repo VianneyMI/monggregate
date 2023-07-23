@@ -112,7 +112,7 @@ Restrictions
 
 """
 
-from pydantic import Field
+from monggregate.base import Field
 from monggregate.stages.stage import Stage
 
 class Out(Stage):

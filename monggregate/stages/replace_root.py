@@ -65,7 +65,7 @@ Or, you can use $ifNullexpression to specify some other document to be root; for
 
 """
 
-from pydantic import Field, validator
+from monggregate.base import Field, validator
 from monggregate.stages.stage import Stage
 from monggregate.utils import validate_field_path
 

@@ -59,7 +59,7 @@ such as autocomplete, text, or span, to specify query criteria.
 """
 from datetime import datetime
 from typing import Literal
-from pydantic import Field
+from monggregate.base import Field
 from monggregate.search.operators.operator import SearchOperator, Clause
 from monggregate.search.operators.clause import (
     Autocomplete,

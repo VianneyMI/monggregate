@@ -10,7 +10,7 @@ from typing import Any, Literal
 
 # 3rd Party imports
 # ---------------------------
-from pydantic import validator
+from monggregate.base import validator
 
 # Local imports
 # ----------------------------
@@ -67,11 +67,11 @@ class Expression(BaseModel):
     Expressions can be nested.
     """
 
-    constant : int | float | str | bool | None
-    field : FieldPath | None
-    variable : Variable | None
+    constant : int | float | str | bool | None = None
+    field : FieldPath | None = None
+    variable : Variable | None = None
 
-    content : Content | None
+    content : Content | None = None
 
     @validator("variable", pre=True, always=True)
     @classmethod

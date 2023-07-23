@@ -81,9 +81,9 @@ $sortArray to use a particular sorting algorithm.
 
 """
 
-from typing import Literal
-from pydantic import Field
-from typing import Any
+from typing import Any, Literal
+
+from monggregate.base import Field
 from monggregate.operators.array.array import ArrayOperator
 
 class SortArray(ArrayOperator):

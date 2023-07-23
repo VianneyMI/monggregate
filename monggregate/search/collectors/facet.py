@@ -168,9 +168,7 @@ The following limitations apply:
 from datetime import datetime
 from typing import Literal
 
-from pydantic import validator
-
-from monggregate.base import BaseModel
+from monggregate.base import BaseModel, validator
 from monggregate.expressions.fields import FieldName
 from monggregate.search.collectors.collector import SearchCollector
 from monggregate.search.operators import(

@@ -74,7 +74,8 @@ try:
     from typing import Self
 except ImportError:
     from typing_extensions import Self
-from pydantic import Field, validator
+    
+from monggregate.base import Field, validator
 from monggregate.stages.stage import Stage
 from monggregate.search.collectors import Facet, Facets
 from monggregate.search.operators import(
