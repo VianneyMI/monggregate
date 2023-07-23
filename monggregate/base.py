@@ -9,9 +9,9 @@ from typing import Any
 # ---------------------------
 import pydantic
 if pydantic.__version__.startswith("1"):
-    from pydantic import BaseModel as PydanticBaseModel, BaseConfig, ValidationError, Field, validator
+    from pydantic import BaseModel as PydanticBaseModel, BaseConfig, ValidationError, Field, validator, root_validator
 else:
-    from pydantic.v1 import BaseModel as PydanticBaseModel, BaseConfig, ValidationError, Field, validator
+    from pydantic.v1 import BaseModel as PydanticBaseModel, BaseConfig, ValidationError, Field, validator, root_validator
     
 from humps import camelize
 

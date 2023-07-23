@@ -59,7 +59,7 @@ such as autocomplete, text, or span, to specify query criteria.
 """
 from datetime import datetime
 from typing import Literal
-from monggregate.base import Field
+from monggregate.base import root_validator
 from monggregate.search.operators.operator import SearchOperator, Clause
 from monggregate.search.operators.clause import (
     Autocomplete,
@@ -101,10 +101,22 @@ class Compound(SearchOperator):
 
 
     must : list[Clause] = []
-    must_not : list[Clause] = Field([], alias="mustNot")
+    must_not : list[Clause] = []
     should : list[Clause] = []
     filter : list[Clause] = []
     minimum_should_clause : int = 1
+
+    @root_validator(pre=True)
+    def validate_init(cls, values:dict):
+        """Validates the initialization of the class."""
+
+        print("Validating compound operator initialization...")
+        print(values)
+
+        if not values.get("must") and not values.get("must_not") and not values.get("should") and not values.get("filter"):
+            raise ValueError("At least one clause must be specified.")
+
+        return values
 
     @property
     def statement(self) -> dict:
@@ -188,8 +200,6 @@ class Compound(SearchOperator):
         self._register_clause(type, equals_statement)
 
         return self
-
-
 
     def exists(self, type:ClauseType, path:str)->"Compound":
         """Adds an exists clause to the current compound instance."""
