@@ -89,7 +89,7 @@ class Wilcard(SearchOperator):
     query : str | list[str]
     path : str | list[str]
     allow_analyzed_field : bool = Field(False, alias="allowAnalyzedField")
-    score : dict | None
+    score : dict | None = None
 
     @property
     def statement(self) -> dict:

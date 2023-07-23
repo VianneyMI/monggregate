@@ -1,7 +1,7 @@
 """Module gathering the tests of the search operators"""
 
 import pytest
-from pydantic import ValidationError
+from monggregate.base import ValidationError
 from monggregate.search.operators import(
     Autocomplete,
     Equals,

@@ -139,8 +139,8 @@ class BucketAuto(Stage):
     # ----------------------------------------------------------------------------
     by : Content = Field(...,alias="group_by") # probably should restrict type to field_paths an operator expressions
     buckets : int = Field(..., gt=0)
-    output : dict[FieldName, AccumulatorExpression] | None # Accumulator Expressions #TODO : Define type and use it here
-    granularity : GranularityEnum | None
+    output : dict[FieldName, AccumulatorExpression] | None = None# Accumulator Expressions #TODO : Define type and use it here
+    granularity : GranularityEnum | None = None
 
 
     # Validators

@@ -71,7 +71,7 @@ class Filter(ArrayOperator):
     expression : Any =  Field(alias="input")
     query : Any = Field(alias="cond")
     let : str | None = Field("this", alias="as")
-    limit : int | None = Field(ge=1) # NOTE : limit can actually be an expression but constraints are  invalid with any type
+    limit : int | None = Field(None, ge=1) # NOTE : limit can actually be an expression but constraints are  invalid with any type
 
     @property
     def statement(self) -> dict:

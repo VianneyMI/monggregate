@@ -144,9 +144,9 @@ class Project(Stage):
 
     """
 
-    include : list[str] | dict | bool | None
-    exclude : list[str] | dict | bool | None
-    fields : list[str] | None
+    include : list[str] | dict | bool | None = None
+    exclude : list[str] | dict | bool | None = None
+    fields : list[str] | None = None
     projection : dict = {}
 
     @validator("include", "exclude", pre=True, always=True)

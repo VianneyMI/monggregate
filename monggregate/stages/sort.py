@@ -129,9 +129,9 @@ class Sort(Stage):
 
     """
 
-    descending : list[str] | dict | bool | None
-    ascending  : list[str] | dict | bool | None
-    by : list[str] | None
+    descending : list[str] | dict | bool | None = None
+    ascending  : list[str] | dict | bool | None = None
+    by : list[str] | None = None
     query : dict[str, Literal[1, -1]] = {}
 
     # NOTE : The below are validators are very close to what is used for project => CONSIDER factorizing <VM, 27/10/2022>

@@ -6,7 +6,7 @@ Checks that at least each stage can be instantiated properly.
 """
 
 import pytest
-from pydantic import ValidationError
+from monggregate.base import ValidationError
 
 from monggregate import Pipeline
 from monggregate.stages import( # pylint: disable=import-error
