@@ -95,7 +95,7 @@ the returned sort order will always be the same across multiple executions of th
 """
 
 from typing import Literal
-from monggregate.base import validator
+from monggregate.base import pyd
 from monggregate.stages.stage import Stage
 from monggregate.utils import to_unique_list
 
@@ -134,15 +134,15 @@ class Sort(Stage):
     by : list[str] | None = None
     query : dict[str, Literal[1, -1]] = {}
 
-    # NOTE : The below are validators are very close to what is used for project => CONSIDER factorizing <VM, 27/10/2022>
-    @validator("ascending", "descending", pre=True, always=True)
+    # NOTE : The below are pyd.validators are very close to what is used for project => CONSIDER factorizing <VM, 27/10/2022>
+    @pyd.validator("ascending", "descending", pre=True, always=True)
     @classmethod
     def parse_ascending_descending(cls, value:SortArgs|dict|bool|None)->list[str]|dict|bool|None:
         """Parses ascending and descending"""
 
         return to_unique_list(value)
 
-    @validator("ascending")
+    @pyd.validator("ascending")
     @classmethod
     def validates_booleans(cls, ascending:list[str]|dict|bool|None, values:dict)->list[str]|bool|None:
         """Validates combination of ascending and descending"""
@@ -165,7 +165,7 @@ class Sort(Stage):
             ascending = not descending
 
         # and reciprocally, if ascending is provided as a bool, we symetrically compute descending.
-        # (WARNING: removing this branch breaks the validator on a functional stand point)
+        # (WARNING: removing this branch breaks the pyd.validator on a functional stand point)
         elif descending is None and isinstance(ascending, bool):
             descending = not ascending
 
@@ -187,7 +187,7 @@ class Sort(Stage):
         return ascending
 
 
-    @validator("by", pre=True)
+    @pyd.validator("by", pre=True)
     @classmethod
     def validates_by(cls, value:SortArgs|None, values:dict)->list[str]|None:
         """Validates by"""
@@ -201,7 +201,7 @@ class Sort(Stage):
         return to_unique_list(value)
 
 
-    @validator("query", pre=True, always=True)
+    @pyd.validator("query", pre=True, always=True)
     @classmethod
     def generates_query(cls, query:dict, values:dict)->dict:
         """Generates query if not provided"""

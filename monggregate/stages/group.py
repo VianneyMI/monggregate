@@ -64,7 +64,7 @@ For more information, see $group Optimization.
 
 """
 from typing import Any
-from monggregate.base import Field, validator
+from monggregate.base import pyd
 from monggregate.stages.stage import Stage
 from monggregate.expressions.content import Content
 from monggregate.utils import validate_field_path
@@ -81,7 +81,7 @@ class Group(Stage):
 
     """
 
-    by : Content | None = Field(None, alias = "_id") # | or any constant value, in this case
+    by : Content | None = pyd.Field(None, alias = "_id") # | or any constant value, in this case
                                                 # the stage returns a single document that aggregates values across all of the input documents
     #sum
     #avg
@@ -91,9 +91,9 @@ class Group(Stage):
 
     # Validators
     # ------------------------------------------
-    _validate_by = validator("by", pre=True, always=True, allow_reuse=True)(validate_field_path) # re-used validator
+    _validate_by = pyd.validator("by", pre=True, always=True, allow_reuse=True)(validate_field_path) # re-used pyd.validator
 
-    @validator("query", always=True)
+    @pyd.validator("query", always=True)
     @classmethod
     def validate_query(cls, query:dict, values:dict[str,Any]) -> dict:
         """Validates the query argument"""

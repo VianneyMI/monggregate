@@ -19,7 +19,7 @@ $count is available in these stages:
     * $bucket
     * $bucketAuto
     * $group
-    * $setWindowFields (Available starting in MongoDB 5.0)
+    * $setWindowpyd.Fields (Available starting in MongoDB 5.0)
 
 NOTE : Disambiguation
 This page describes the

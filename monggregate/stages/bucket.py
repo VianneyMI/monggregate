@@ -50,7 +50,7 @@ $sort.
 """
 
 
-from monggregate.base import Field, validator
+from monggregate.base import pyd
 
 from monggregate.stages.stage import Stage
 from monggregate.expressions.content import Content, Const, Consts
@@ -98,14 +98,14 @@ class Bucket(Stage):
 
     """
 
-    by : Content = Field(...,alias="group_by")
+    by : Content = pyd.Field(...,alias="group_by")
     boundaries : Consts
     default : Const | None = None
     output : dict[FieldName, AccumulatorExpression] | None = None
 
     # Validators
     # ------------------------------
-    _validate_by = validator("by", pre=True, always=True, allow_reuse=True)(validate_field_path) # re-used validators
+    _validate_by = pyd.validator("by", pre=True, always=True, allow_reuse=True)(validate_field_path) # re-used pyd.validators
 
     @property
     def statement(self) -> dict:

@@ -3,7 +3,7 @@
 from typing import Any, Literal
 from warnings import warn
 from pymongo.database import Database
-from monggregate.base import BaseModel, BaseConfig
+from monggregate.base import BaseModel
 from monggregate.stages import (
     Stage,
     BucketAuto,
@@ -105,10 +105,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         return [stage.statement for stage in self.stages]
 
-    class Config(BaseConfig):
-        """Configuration Class for Pipeline"""
-        arbitrary_types_allowed = True
-        underscore_attrs_are_private = True
+
 
 
     # ------------------------------------------------

@@ -43,7 +43,7 @@ $filter has the following syntax:
 """
 
 from typing import Any
-from monggregate.base import Field
+from monggregate.base import pyd
 from monggregate.operators.array.array import ArrayOperator
 
 class Filter(ArrayOperator):
@@ -68,10 +68,10 @@ class Filter(ArrayOperator):
 
     """
 
-    expression : Any =  Field(alias="input")
-    query : Any = Field(alias="cond")
-    let : str | None = Field("this", alias="as")
-    limit : int | None = Field(None, ge=1) # NOTE : limit can actually be an expression but constraints are  invalid with any type
+    expression : Any =  pyd.Field(alias="input")
+    query : Any = pyd.Field(alias="cond")
+    let : str | None = pyd.Field("this", alias="as")
+    limit : int | None = pyd.Field(None, ge=1) # NOTE : limit can actually be an expression but constraints are  invalid with any type
 
     @property
     def statement(self) -> dict:

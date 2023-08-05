@@ -84,7 +84,7 @@ You can't use the moreLikeThis operator inside the embeddedDocument operator to 
 
 """
 
-from monggregate.base import validator
+from monggregate.base import pyd
 from monggregate.search.operators.operator import SearchOperator
 
 
@@ -104,7 +104,7 @@ class MoreLikeThis(SearchOperator):
 
     like : dict | list[dict]
 
-    @validator("like", pre=True, always=True)
+    @pyd.validator("like", pre=True, always=True)
     def validate_like(cls, v):
         if isinstance(v, list):
             if len(v)==0:

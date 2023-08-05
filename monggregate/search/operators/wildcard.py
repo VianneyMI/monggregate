@@ -39,7 +39,7 @@ wildcard has the following syntax:
 # Behavior
 # ------------------------------------------
 wildcard is a term-level operator, meaning that the query field is not analyzed. 
-It is possible to use the wildcard operator to perform searches on a field analyzed during indexing by setting the allowAnalyzedField option to true, 
+It is possible to use the wildcard operator to perform searches on a field analyzed during indexing by setting the allowAnalyzedpyd.Field option to true, 
 but results will reflect that the query text is not analyzed.
 
 EXAMPLE : Suppose that a field foo bar baz is indexed with the standard analyzer. Atlas Search analyzes and indexes the field as foo, bar and baz. 
@@ -65,7 +65,7 @@ EXAMPLE : To create a wildcard expression which searches for any string containi
 
 """
 
-from monggregate.base import Field
+from monggregate.base import pyd
 from monggregate.search.operators.operator import SearchOperator
 
 class Wilcard(SearchOperator):
@@ -88,7 +88,7 @@ class Wilcard(SearchOperator):
 
     query : str | list[str]
     path : str | list[str]
-    allow_analyzed_field : bool = Field(False, alias="allowAnalyzedField")
+    allow_analyzed_field : bool = pyd.Field(False, alias="allowAnalyzedField")
     score : dict | None = None
 
     @property
