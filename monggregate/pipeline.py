@@ -246,9 +246,9 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
                                     The default value can be of a different type than the entries in boundaries
             output : dict | None, A document that specifies the fields to include in the output documents in addition to
                                 the _id field. To specify the field to include you must use accumulator expressions
-                                    >>> {"outputpyd.Field1" : {"accumulator":"expression1}}
+                                    >>> {"outputField1" : {"accumulator":"expression1}}
                                         ....
-                                        {"outputpyd.Field2" : {"accumulator":"expression2}}
+                                        {"outputField2" : {"accumulator":"expression2}}
                                 If you do not specify an output document, the operation returns a count field containing
                                 the number of documents in each bucket.
 

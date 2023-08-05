@@ -88,7 +88,7 @@ class Wilcard(SearchOperator):
 
     query : str | list[str]
     path : str | list[str]
-    allow_analyzed_field : bool = pyd.Field(False, alias="allowAnalyzedpyd.Field")
+    allow_analyzed_field : bool = pyd.Field(False, alias="allowAnalyzedField")
     score : dict | None = None
 
     @property

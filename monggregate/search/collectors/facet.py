@@ -342,7 +342,7 @@ class Facet(SearchCollector):
     facets : Facets = []
 
     # FIXME : The below validator will be usable only when the automatic conversion to statement is deprecated <VM, 20/05/2023>
-    @validator("facets")
+    @pyd.validator("facets")
     def validate_facets(cls, facets:Facets)->Facets:
         """
         Validates facets.

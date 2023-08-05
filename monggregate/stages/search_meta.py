@@ -42,7 +42,7 @@ index                       string     Required        Name of the Atlas Search 
                                                        You can provide a document that contains the operator-specific options as the value for this field. 
                                                        Either this or <collector-name> is required.
 returnStoredSource          boolean    Optional        Flag that specifies whether to perform a full document lookup on the backend database or return only stored source fields directly from Atlas Search. 
-                                                       If omitted, defaults to false. To learn more, see Return Stored Source pyd.Fields.
+                                                       If omitted, defaults to false. To learn more, see Return Stored Source Fields.
 
 # Behavior
 # ----------------------------------

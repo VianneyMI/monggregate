@@ -7,12 +7,11 @@ from typing import Any
 
 # 3rd Party imports
 # ---------------------------
-import pydantic as pyd
-if pyd.__version__.startswith("2"):
+try:
     import pydantic.v1 as pyd
-#     from pydantic import BaseModel as PydanticBaseModel, BaseConfig, pyd.ValidationError, pyd.Field, pyd.validator
-# else:
-#from pydantic import BaseModel as PydanticBaseModel, BaseConfig, pyd.ValidationError, pyd.Field, pyd.validator
+except ModuleNotFoundError:
+    import pydantic as pyd
+
     
 from humps.main import camelize
 

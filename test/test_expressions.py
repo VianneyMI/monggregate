@@ -27,7 +27,7 @@ def test_constraints_in_hybrid_types()->None:
         assert Test(x=0)
 
 def test_field_name()->None:
-    """Tests the pyd.FieldName regex"""
+    """Tests the FieldName regex"""
 
     assert FieldName.validate("good_name")
 

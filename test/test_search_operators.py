@@ -188,7 +188,7 @@ class TestSearchOperators:
             "regex": {
                 "path": "title",
                 "query": "^test$",
-                "allowAnalyzedpyd.Field": False,
+                "allowAnalyzedField": False,
                 "score": None
             }
         }
@@ -230,7 +230,7 @@ class TestSearchOperators:
         # ---------------
         assert wilcard_op.statement == {
             "wildcard": {
-                "allowAnalyzedpyd.Field": False,
+                "allowAnalyzedField": False,
                 "path": "title",
                 "query": "test",
             }

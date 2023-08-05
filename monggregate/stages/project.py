@@ -222,7 +222,7 @@ class Project(Stage):
         # --------------------------------------
         if not projection:
 
-            # Case #1 : pyd.Fields is provided
+            # Case #1 : fields is provided
             # ------------------------------
             if fields:
                 # validates_fields ensures that include and exclude are either None or booleans when fields is provided
@@ -230,7 +230,7 @@ class Project(Stage):
                 # valdiates_booleans ensures that include or exclude are not both, booleans at the same time
                 _to_projection(projection, fields,  include or exclude)
 
-            # Case #2 : pyd.Fields is not provided
+            # Case #2 : fields is not provided
             # -------------------------------
             else:
                 if include is not None:

@@ -577,8 +577,8 @@ class TestStagesFunctional(TestStages):
         )[0].statement == {
                 "$lookup" :{
                 "from" : "other_collection",
-                "localpyd.Field" : "_id",
-                "foreignpyd.Field" : "foreign_key",
+                "localField" : "_id",
+                "foreignField" : "foreign_key",
                 "as" : "matches"
             }
         }

@@ -375,8 +375,8 @@ class Lookup(Stage):
             statement = {
                 "$lookup":{
                     "from":self.right,
-                    "localpyd.Field":self.left_on,
-                    "foreignpyd.Field":self.right_on,
+                    "localField":self.left_on,
+                    "foreignField":self.right_on,
                     "as":self.name
                 }
             }
@@ -393,8 +393,8 @@ class Lookup(Stage):
             statement = {
                 "$lookup":{
                     "from":self.right,
-                    "localpyd.Field":self.right_on,
-                    "foreignpyd.Field":self.right_on,
+                    "localField":self.right_on,
+                    "foreignField":self.right_on,
                     "let":self.let,
                     "pipeline":self.pipeline,
                     "as":self.name

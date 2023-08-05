@@ -46,7 +46,7 @@ class StageEnum(StrEnum):
     SEARCH = "$search"
     SEARCH_META = "$searchMeta"
     SET = "$set"
-    SET_WINDOW_FIELDS = "$setWindowpyd.Fields"
+    SET_WINDOW_FIELDS = "$setWindowFields"
     SKIP = "$skip"
     SORT = "$sort"
     SORT_BY_COUNT = "$sortByCount"
