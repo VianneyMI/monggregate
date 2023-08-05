@@ -36,7 +36,7 @@ The $sortArray expression orders the input array according to the sortBy specifi
 
 The $sortArray syntax and semantics are the same as the behavior in a $push operation modified by $sort
 
-Sort by Document Fields
+Sort by Document pyd.Fields
 
 If the array elements are documents, you can sort by a document field.
 Specify the field name and a sort direction, ascending (1), or descending (-1 ).
@@ -83,7 +83,7 @@ $sortArray to use a particular sorting algorithm.
 
 from typing import Any, Literal
 
-from monggregate.base import Field
+from monggregate.base import pyd
 from monggregate.operators.array.array import ArrayOperator
 
 class SortArray(ArrayOperator):
@@ -96,8 +96,8 @@ class SortArray(ArrayOperator):
         - by, dict[str, Literal[1, -1]] :  document indicating a sort order
     """
 
-    expression : Any = Field(alias="input")
-    by : dict[str, Literal[1, -1]] = Field(1, alias="sort_by")
+    expression : Any = pyd.Field(alias="input")
+    by : dict[str, Literal[1, -1]] = pyd.Field(1, alias="sort_by")
 
     @property
     def statement(self) -> dict:

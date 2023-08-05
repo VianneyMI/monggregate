@@ -47,7 +47,7 @@ $group + $sort sequence:
 
 """
 
-from monggregate.base import validator
+from monggregate.base import pyd
 from monggregate.stages.stage import Stage
 from monggregate.utils import validate_field_path
 
@@ -66,7 +66,7 @@ class SortByCount(Stage):
 
     # Validators
     # ------------------------
-    _validates_path_to_array = validator("by", allow_reuse=True, pre=True, always=True)(validate_field_path)
+    _validates_path_to_array = pyd.validator("by", allow_reuse=True, pre=True, always=True)(validate_field_path)
 
 
     @property

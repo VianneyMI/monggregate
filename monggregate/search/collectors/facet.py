@@ -168,7 +168,7 @@ The following limitations apply:
 from datetime import datetime
 from typing import Literal
 
-from monggregate.base import BaseModel, validator
+from monggregate.base import BaseModel, pyd
 from monggregate.expressions.fields import FieldName
 from monggregate.search.collectors.collector import SearchCollector
 from monggregate.search.operators import(
@@ -237,7 +237,7 @@ class FacetDefinition(BaseModel):
     name : FacetName = ""
     
 
-    @validator('name', pre=True, always=True)
+    @pyd.validator('name', pre=True, always=True)
     def set_name(cls, name: str, values:dict[str,str]) -> FacetName:
         """Sets the name from the field path"""
 

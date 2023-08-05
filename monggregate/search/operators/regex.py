@@ -87,7 +87,7 @@ class Regex(SearchOperator):
                 "regex":{
                     "query": self.query,
                     "path": self.path,
-                    "allowAnalyzedField": self.allow_analyzed_field,
+                    "allowAnalyzedpyd.Field": self.allow_analyzed_field,
                     "score": self.score
                 }
             })

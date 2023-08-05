@@ -6,14 +6,14 @@ https://www.mongodb.com/docs/atlas/atlas-search/highlighting/#syntax
 
 from typing import Literal
 
-from monggregate.base import BaseModel, Field
+from monggregate.base import BaseModel, pyd
 
 class HighlightOptions(BaseModel):
     """Class defining the highlighting parameters."""
 
     path : str
-    max_chars_to_examine : int = Field(500000, alias="maxCharsToExamine")
-    max_num_passages : int = Field(5, alias="maxNumPassages")
+    max_chars_to_examine : int = pyd.Field(500000, alias="maxCharsToExamine")
+    max_num_passages : int = pyd.Field(5, alias="maxNumPassages")
 
 class HighlightText(BaseModel):
     """Highlighted text."""

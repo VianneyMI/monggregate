@@ -48,7 +48,7 @@ See the following for more information on each:
 
 """
 
-from monggregate.base import Field
+from monggregate.base import pyd
 from monggregate.stages.stage import Stage
 
 class Limit(Stage):
@@ -63,7 +63,7 @@ class Limit(Stage):
 
     """
 
-    value : int = Field(gt=0)
+    value : int = pyd.Field(gt=0)
 
     @property
     def statement(self)->dict:

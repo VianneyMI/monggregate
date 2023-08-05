@@ -3,7 +3,7 @@
 from typing import Any, Literal
 from warnings import warn
 from pymongo.database import Database
-from monggregate.base import BaseModel, BaseConfig
+from monggregate.base import BaseModel
 from monggregate.stages import (
     Stage,
     BucketAuto,
@@ -105,10 +105,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         return [stage.statement for stage in self.stages]
 
-    class Config(BaseConfig):
-        """Configuration Class for Pipeline"""
-        arbitrary_types_allowed = True
-        underscore_attrs_are_private = True
+
 
 
     # ------------------------------------------------
@@ -249,9 +246,9 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
                                     The default value can be of a different type than the entries in boundaries
             output : dict | None, A document that specifies the fields to include in the output documents in addition to
                                 the _id field. To specify the field to include you must use accumulator expressions
-                                    >>> {"outputField1" : {"accumulator":"expression1}}
+                                    >>> {"outputpyd.Field1" : {"accumulator":"expression1}}
                                         ....
-                                        {"outputField2" : {"accumulator":"expression2}}
+                                        {"outputpyd.Field2" : {"accumulator":"expression2}}
                                 If you do not specify an output document, the operation returns a count field containing
                                 the number of documents in each bucket.
 
@@ -966,3 +963,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         )
 
         return self
+
+if __name__ == "__main__":
+
+    pipeline = Pipeline()

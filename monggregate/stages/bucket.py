@@ -50,7 +50,7 @@ $sort.
 """
 
 
-from monggregate.base import Field, validator
+from monggregate.base import pyd
 
 from monggregate.stages.stage import Stage
 from monggregate.expressions.content import Content, Const, Consts
@@ -87,9 +87,9 @@ class Bucket(Stage):
                                  The default value can be of a different type than the entries in boundaries
         output : dict | None, A document that specifies the fields to include in the output documents in addition to
                               the _id field. To specify the field to include you must use accumulator expressions
-                                 >>> {"outputField1" : {"accumulator":"expression1}}
+                                 >>> {"outputpyd.Field1" : {"accumulator":"expression1}}
                                       ....
-                                     {"outputField2" : {"accumulator":"expression2}}
+                                     {"outputpyd.Field2" : {"accumulator":"expression2}}
                               If you do not specify an output document, the operation returns a count field containing
                               the number of documents in each bucket.
 
@@ -98,14 +98,14 @@ class Bucket(Stage):
 
     """
 
-    by : Content = Field(...,alias="group_by")
+    by : Content = pyd.Field(...,alias="group_by")
     boundaries : Consts
     default : Const | None = None
     output : dict[FieldName, AccumulatorExpression] | None = None
 
     # Validators
     # ------------------------------
-    _validate_by = validator("by", pre=True, always=True, allow_reuse=True)(validate_field_path) # re-used validators
+    _validate_by = pyd.validator("by", pre=True, always=True, allow_reuse=True)(validate_field_path) # re-used pyd.validators
 
     @property
     def statement(self) -> dict:

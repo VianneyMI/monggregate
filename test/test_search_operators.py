@@ -1,7 +1,7 @@
 """Module gathering the tests of the search operators"""
 
 import pytest
-from monggregate.base import ValidationError
+from monggregate.base import pyd
 from monggregate.search.operators import(
     Autocomplete,
     Equals,
@@ -81,7 +81,7 @@ class TestSearchOperators:
             }
         }
 
-        with pytest.raises(ValidationError):
+        with pytest.raises(pyd.ValidationError):
             Equals(
                 path = "test",
                 value = {}
@@ -129,12 +129,12 @@ class TestSearchOperators:
             }
         }
 
-        with pytest.raises(ValidationError):
+        with pytest.raises(pyd.ValidationError):
             MoreLikeThis(
                 like = None
             )
 
-        with pytest.raises(ValidationError):
+        with pytest.raises(pyd.ValidationError):
             MoreLikeThis(
                 like = []
             )
@@ -163,7 +163,7 @@ class TestSearchOperators:
             }
         }
 
-        with pytest.raises(ValidationError):
+        with pytest.raises(pyd.ValidationError):
             Range(
                 path = "price",
                 gte = 10,
@@ -188,7 +188,7 @@ class TestSearchOperators:
             "regex": {
                 "path": "title",
                 "query": "^test$",
-                "allowAnalyzedField": False,
+                "allowAnalyzedpyd.Field": False,
                 "score": None
             }
         }
@@ -230,7 +230,7 @@ class TestSearchOperators:
         # ---------------
         assert wilcard_op.statement == {
             "wildcard": {
-                "allowAnalyzedField": False,
+                "allowAnalyzedpyd.Field": False,
                 "path": "title",
                 "query": "test",
             }

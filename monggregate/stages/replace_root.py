@@ -65,7 +65,7 @@ Or, you can use $ifNullexpression to specify some other document to be root; for
 
 """
 
-from monggregate.base import Field, validator
+from monggregate.base import pyd
 from monggregate.stages.stage import Stage
 from monggregate.utils import validate_field_path
 
@@ -84,12 +84,12 @@ class ReplaceRoot(Stage):
 
     # Attributes
     # --------------------------
-    path_to_new_root : str|None = Field(None, alias="path")
+    path_to_new_root : str|None = pyd.Field(None, alias="path")
     document : dict|None 
 
     # Validators
     # ---------------------------
-    _validates_path_to_new_root = validator("path_to_new_root", allow_reuse=True, pre=True, always=True)(validate_field_path)
+    _validates_path_to_new_root = pyd.validator("path_to_new_root", allow_reuse=True, pre=True, always=True)(validate_field_path)
 
     @property
     def statement(self)->dict:

@@ -7,15 +7,18 @@ from typing import Any
 
 # 3rd Party imports
 # ---------------------------
-import pydantic
-if pydantic.__version__.startswith("1"):
-    from pydantic import BaseModel as PydanticBaseModel, BaseConfig, ValidationError, Field, validator
-else:
-    from pydantic.v1 import BaseModel as PydanticBaseModel, BaseConfig, ValidationError, Field, validator
+import pydantic as pyd
+if pyd.__version__.startswith("2"):
+    import pydantic.v1 as pyd
+#     from pydantic import BaseModel as PydanticBaseModel, BaseConfig, pyd.ValidationError, pyd.Field, pyd.validator
+# else:
+#from pydantic import BaseModel as PydanticBaseModel, BaseConfig, pyd.ValidationError, pyd.Field, pyd.validator
     
-from humps import camelize
+from humps.main import camelize
 
-class BaseModel(PydanticBaseModel, ABC):
+
+
+class BaseModel(pyd.BaseModel, ABC):
     """Mongreggate base class"""
 
     @classmethod
@@ -37,7 +40,7 @@ class BaseModel(PydanticBaseModel, ABC):
 
         return self.resolve(self.statement)
 
-    class Config(BaseConfig):
+    class Config(pyd.BaseConfig):
         """Base configuration for classes inheriting from this"""
 
         allow_population_by_field_name = True

@@ -245,7 +245,7 @@ For more information, see [$lookup Optimization](https://www.mongodb.com/docs/ma
 
 """
 
-from monggregate.base import Field, validator
+from monggregate.base import pyd
 from monggregate.stages.stage import Stage
 from monggregate.utils import StrEnum
 
@@ -291,11 +291,11 @@ class Lookup(Stage):
 
     """
 
-    right : str | None = Field(None, alias = "from")
+    right : str | None = pyd.Field(None, alias = "from")
     on : str | None #  shortcut for when left_on is the same than right_on
-    left_on : str | None = Field(None,alias = "local_field")
-    right_on : str | None = Field(None, alias = "foreign_field")
-    name : str = Field(...,alias = "as") # | None
+    left_on : str | None = pyd.Field(None,alias = "local_field")
+    right_on : str | None = pyd.Field(None, alias = "foreign_field")
+    name : str = pyd.Field(...,alias = "as") # | None
 
     # Subquery fields
     # ---------------------
@@ -303,10 +303,10 @@ class Lookup(Stage):
                       # nested in
     pipeline : list[dict] | None
 
-    type_ : LookupTypeEnum = Field("simple", exclude=True)
+    type_ : LookupTypeEnum = pyd.Field("simple", exclude=True)
         # internal variable to know the type of join (simple, correlated, uncorrelated)
 
-    @validator("left_on", "right_on", pre=True, always=True)
+    @pyd.validator("left_on", "right_on", pre=True, always=True)
     @classmethod
     def on_alias(cls, value:str, values:dict[str, str])->str:
         """Automatically fills left_on and right_on attributes when on is provided"""
@@ -318,7 +318,7 @@ class Lookup(Stage):
         return value
 
 
-    @validator("type_", pre=True, always=True)
+    @pyd.validator("type_", pre=True, always=True)
     @classmethod
     def set_type(cls, value:str, values:dict)->str:
         """Set types dynamically"""
@@ -375,8 +375,8 @@ class Lookup(Stage):
             statement = {
                 "$lookup":{
                     "from":self.right,
-                    "localField":self.left_on,
-                    "foreignField":self.right_on,
+                    "localpyd.Field":self.left_on,
+                    "foreignpyd.Field":self.right_on,
                     "as":self.name
                 }
             }
@@ -393,8 +393,8 @@ class Lookup(Stage):
             statement = {
                 "$lookup":{
                     "from":self.right,
-                    "localField":self.right_on,
-                    "foreignField":self.right_on,
+                    "localpyd.Field":self.right_on,
+                    "foreignpyd.Field":self.right_on,
                     "let":self.let,
                     "pipeline":self.pipeline,
                     "as":self.name

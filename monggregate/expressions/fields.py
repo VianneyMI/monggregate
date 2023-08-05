@@ -6,20 +6,17 @@ import re
 
 # 3rd Party imports
 # -------------------------------------------
-import pydantic
-if pydantic.__version__.startswith("1"):
-    from pydantic import ConstrainedStr
-else:
-    from pydantic.v1.types import ConstrainedStr
+from monggregate.base import pyd
+
 
 # Types definition
 # -------------------------------------------
-class FieldName(ConstrainedStr):
+class FieldName(pyd.ConstrainedStr):
     """Regex describing syntax for field names"""
 
     regex = re.compile(r"^[^\$][^\.]+$")
 
-class FieldPath(ConstrainedStr):
+class FieldPath(pyd.ConstrainedStr):
     """Regex describing syntax of a field path"""
 
     regex = re.compile(r"^\$")
