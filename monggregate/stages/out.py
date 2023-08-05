@@ -112,7 +112,7 @@ Restrictions
 
 """
 
-from monggregate.base import Field
+from monggregate.base import pyd
 from monggregate.stages.stage import Stage
 
 class Out(Stage):
@@ -127,7 +127,7 @@ class Out(Stage):
     """
 
     db : str|None
-    collection : str = Field(...,alias="coll")
+    collection : str = pyd.Field(...,alias="coll")
 
     @property
     def statement(self)->dict:

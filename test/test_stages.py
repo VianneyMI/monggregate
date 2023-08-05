@@ -6,7 +6,7 @@ Checks that at least each stage can be instantiated properly.
 """
 
 import pytest
-from monggregate.base import ValidationError
+from monggregate.base import pyd
 
 from monggregate import Pipeline
 from monggregate.stages import( # pylint: disable=import-error
@@ -235,10 +235,10 @@ class TestStages:
         assert project
         state["project"] = project
 
-        with pytest.raises(ValidationError):
+        with pytest.raises(pyd.ValidationError):
             Project()
 
-        with pytest.raises(ValidationError):
+        with pytest.raises(pyd.ValidationError):
             Project(projection={})
 
         # Testing aliases
@@ -329,7 +329,7 @@ class TestStages:
         search = Search.from_operator(operator_name="more_like_this", like={})
         assert search
 
-        with pytest.raises(ValidationError):
+        with pytest.raises(pyd.ValidationError):
             Search()
 
 
@@ -397,10 +397,10 @@ class TestStages:
 
         # Testing mandatory attributes
         # -----------------------------
-        with pytest.raises(ValidationError):
+        with pytest.raises(pyd.ValidationError):
             sort = Sort(query={"field1":1, "fieldN":0})
 
-        with pytest.raises(ValidationError):
+        with pytest.raises(pyd.ValidationError):
             sort = Sort(query={})
 
         sort = Sort(query={"field1":1, "fieldN":-1})

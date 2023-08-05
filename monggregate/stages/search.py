@@ -47,7 +47,7 @@ index                       string     Required        Name of the Atlas Search 
                                                        You can provide a document that contains the operator-specific options as the value for this field. 
                                                        Either this or <collector-name> is required.
 returnStoredSource          boolean    Optional        Flag that specifies whether to perform a full document lookup on the backend database or return only stored source fields directly from Atlas Search. 
-                                                       If omitted, defaults to false. To learn more, see Return Stored Source Fields.
+                                                       If omitted, defaults to false. To learn more, see Return Stored Source pyd.Fields.
 
 # Behavior
 #---------------------------
@@ -75,7 +75,7 @@ try:
 except ImportError:
     from typing_extensions import Self
     
-from monggregate.base import Field, validator
+from monggregate.base import pyd
 from monggregate.stages.stage import Stage
 from monggregate.search.collectors import Facet, Facets
 from monggregate.search.operators import(
@@ -114,8 +114,8 @@ class SearchBase(Stage):
     index : str = "default"
     count : dict|None
     highlight : dict|None
-    return_stored_source : bool = Field(False, alias="returnStoredSource")
-    score_details : bool = Field(False, alias="scoreDetails")
+    return_stored_source : bool = pyd.Field(False, alias="returnStoredSource")
+    score_details : bool = pyd.Field(False, alias="scoreDetails")
 
     @property
     def statement(self) -> dict[str, dict]:
@@ -179,7 +179,7 @@ class Search(SearchBase):
     operator : AnyOperator|None
     
 
-    @validator("operator", pre=True, always=True)
+    @pyd.validator("operator", pre=True, always=True)
     @classmethod
     def validate_operator(cls, value:dict, values:dict)->dict|None:
         """Ensures that either collector or operator is provided"""

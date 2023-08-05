@@ -59,7 +59,7 @@ such as autocomplete, text, or span, to specify query criteria.
 """
 from datetime import datetime
 from typing import Literal
-from monggregate.base import Field
+from monggregate.base import pyd
 from monggregate.search.operators.operator import SearchOperator, Clause
 from monggregate.search.operators.clause import (
     Autocomplete,
@@ -101,7 +101,7 @@ class Compound(SearchOperator):
 
 
     must : list[Clause] = []
-    must_not : list[Clause] = Field([], alias="mustNot")
+    must_not : list[Clause] = pyd.Field([], alias="mustNot")
     should : list[Clause] = []
     filter : list[Clause] = []
     minimum_should_clause : int = 1

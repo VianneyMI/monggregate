@@ -32,7 +32,7 @@ In MongoDB 3.2 and earlier, $max is available in the $group stage only.
 Syntax
 -----------------------------
 
-When used in the $bucket, $bucketAuto, $group, and $setWindowFields stages,
+When used in the $bucket, $bucketAuto, $group, and $setWindowpyd.Fields stages,
 $max has this syntax:
 
     >>> { $max: <expression> }
@@ -62,7 +62,7 @@ If all documents for the $maxoperation have null value for the field or are miss
 
 Array Operand
 
-In the $group and $setWindowFields stages, if the expression resolves to an array,
+In the $group and $setWindowpyd.Fields stages, if the expression resolves to an array,
 $max does not traverse the array and compares the array as a whole.
 
 In the other supported stages:

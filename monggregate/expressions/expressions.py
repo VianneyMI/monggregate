@@ -10,11 +10,10 @@ from typing import Any, Literal
 
 # 3rd Party imports
 # ---------------------------
-from monggregate.base import validator
+from monggregate.base import BaseModel, pyd
 
 # Local imports
 # ----------------------------
-from monggregate.base import BaseModel
 from monggregate.expressions.fields import FieldPath, Variable
 from monggregate.expressions.content import Content
 from monggregate.operators.accumulators import(
@@ -73,7 +72,7 @@ class Expression(BaseModel):
 
     content : Content | None = None
 
-    @validator("variable", pre=True, always=True)
+    @pyd.validator("variable", pre=True, always=True)
     @classmethod
     def validate_variable(cls, variable:str|None) -> Variable | None:
         """Validates variable"""
@@ -84,7 +83,7 @@ class Expression(BaseModel):
 
         return variable
 
-    @validator("field", pre=True, always=True)
+    @pyd.validator("field", pre=True, always=True)
     @classmethod
     def validate_field(cls, path:str|None)-> FieldPath | None:
         """Validates field"""
@@ -94,7 +93,7 @@ class Expression(BaseModel):
 
         return path
 
-    @validator("content", pre=True, always=True)
+    @pyd.validator("content", pre=True, always=True)
     @classmethod
     def set_content(cls, content:Any, values:dict)->Content:
         """Sets content by parsing values and validates it"""

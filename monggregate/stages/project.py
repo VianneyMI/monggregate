@@ -125,7 +125,7 @@ $projectstage. See Array Indexes are Unsupported.
 # NOTE : Would be nice and useful to have something keywords arguments based to generate the projection <VM, 16/09/2022>
 # (on top[on the side] of the below)
 
-from monggregate.base import validator
+from monggregate.base import pyd
 from monggregate.stages.stage import Stage
 from monggregate.utils import to_unique_list
 
@@ -149,14 +149,14 @@ class Project(Stage):
     fields : list[str] | None = None
     projection : dict = {}
 
-    @validator("include", "exclude", pre=True, always=True)
+    @pyd.validator("include", "exclude", pre=True, always=True)
     @classmethod
     def parse_include_exclude(cls, value:ProjectionArgs|dict|bool|None)->list[str]|dict|bool|None:
         """Parses include and exclude arguments"""
 
         return to_unique_list(value)
 
-    @validator("exclude")
+    @pyd.validator("exclude")
     @classmethod
     def validates_booleans(cls, exclude:ProjectionArgs|dict|bool|None, values:dict[str, ProjectionArgs|dict|bool|None]) -> list[str]|bool|None:
         """Validates combination of include and exclude"""
@@ -168,7 +168,7 @@ class Project(Stage):
         return exclude
 
     # TODO : When using fields, consider include = True as default
-    @validator("fields", pre=True)
+    @pyd.validator("fields", pre=True)
     @classmethod
     def validates_fields(cls, value:ProjectionArgs|None, values:dict[str, list[str]|dict|bool|None])-> list[str]|None:
         """Validates fields"""
@@ -183,7 +183,7 @@ class Project(Stage):
         return fields
 
 
-    @validator("projection", pre=True, always=True)
+    @pyd.validator("projection", pre=True, always=True)
     @classmethod
     def generates_projection(cls, projection:dict, values:dict[str, list[str] | dict | bool | None])->dict:
         """Validates and if necessary generates projection"""
@@ -222,7 +222,7 @@ class Project(Stage):
         # --------------------------------------
         if not projection:
 
-            # Case #1 : Fields is provided
+            # Case #1 : fields is provided
             # ------------------------------
             if fields:
                 # validates_fields ensures that include and exclude are either None or booleans when fields is provided
@@ -230,7 +230,7 @@ class Project(Stage):
                 # valdiates_booleans ensures that include or exclude are not both, booleans at the same time
                 _to_projection(projection, fields,  include or exclude)
 
-            # Case #2 : Fields is not provided
+            # Case #2 : fields is not provided
             # -------------------------------
             else:
                 if include is not None:

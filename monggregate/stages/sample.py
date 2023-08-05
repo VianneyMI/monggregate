@@ -49,7 +49,7 @@ If you are using the:
 
 """
 
-from monggregate.base import Field
+from monggregate.base import pyd
 from monggregate.stages.stage import Stage
 
 class Sample(Stage):
@@ -64,7 +64,7 @@ class Sample(Stage):
     """
 
 
-    value : int = Field(10, gt=0)
+    value : int = pyd.Field(10, gt=0)
 
     @property
     def statement(self)->dict:

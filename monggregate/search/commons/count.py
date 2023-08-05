@@ -6,7 +6,7 @@ https://www.mongodb.com/docs/atlas/atlas-search/counting/#std-label-count-ref
 
 from typing import Literal
 
-from monggregate.base import BaseModel, Field
+from monggregate.base import BaseModel, pyd
 
 class CountOptions(BaseModel):
     """Class defining the count parameters."""
@@ -22,5 +22,5 @@ class CountOptions(BaseModel):
 class CountResults(BaseModel):
     """Class defining the count results."""
 
-    lower_bound : int|None = Field(None, alias="lowerBound")
+    lower_bound : int|None = pyd.Field(None, alias="lowerBound")
     total : int|None

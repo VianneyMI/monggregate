@@ -45,7 +45,7 @@ Behavior
 """
 
 from typing import Any
-from monggregate.base import Field
+from monggregate.base import pyd
 from monggregate.operators.array.array import ArrayOperator
 
 class MinN(ArrayOperator):
@@ -60,8 +60,8 @@ class MinN(ArrayOperator):
 
     """
 
-    expression : Any = Field(alias="input")
-    limit : Any = Field(1, alias="n")
+    expression : Any = pyd.Field(alias="input")
+    limit : Any = pyd.Field(1, alias="n")
 
     @property
     def statement(self) -> dict:
