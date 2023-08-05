@@ -4,6 +4,7 @@ import pytest
 from monggregate.base import pyd
 from monggregate.search.operators import(
     Autocomplete,
+    Compound,
     Equals,
     Exists,
     MoreLikeThis,
@@ -22,7 +23,7 @@ class TestSearchOperators:
     """This class only aims at reusing the markers"""
 
     def test_autocomplete(self)->None:
-        """Test the autocomplete operator"""
+        """Tests the autocomplete operator"""
 
         # generate test
         # --------------
@@ -56,6 +57,11 @@ class TestSearchOperators:
                 "tokenOrder": "any"
             }
         }
+
+    # def test_compound(self)->None:
+    #     """Tests the compound operator"""
+        
+    #     autocomplete = Autocomplete()
 
     def test_equals(self)->None:
         """Tests the equals operator"""

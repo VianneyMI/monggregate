@@ -106,18 +106,6 @@ class Compound(SearchOperator):
     filter : list[Clause] = []
     minimum_should_clause : int = 1
 
-    @pyd.root_validator(pre=True)
-    def validate_init(cls, values:dict):
-        """Validates the initialization of the class."""
-
-        print("Validating compound operator initialization...")
-        print(values)
-
-        if not values.get("must") and not values.get("must_not") and not values.get("should") and not values.get("filter"):
-            raise ValueError("At least one clause must be specified.")
-
-        return values
-
     @property
     def statement(self) -> dict:
 
