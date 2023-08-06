@@ -223,7 +223,7 @@ class Search(SearchBase):
         """Returns appropriate constructor from operator name"""
 
         _constructors_map = {
-            "autcomplete":cls.autocomplete,
+            "autocomplete":cls.autocomplete,
             "compound":cls.compound,
             "equals":cls.equals,
             "exists":cls.exists,
