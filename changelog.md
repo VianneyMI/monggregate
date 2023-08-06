@@ -1,5 +1,16 @@
 # Release Notes
 
+## 0.14.1
+
+### Fixes
+
+* Fixed autocompletion
+
+### Refactoring
+
+* Import pydantic into base.py and using abse.py to access pydantic features
+
+
 ## 0.14.0
 
 ### Upgrades
