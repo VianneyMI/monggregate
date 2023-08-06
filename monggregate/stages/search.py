@@ -232,7 +232,7 @@ class Search(SearchBase):
             "range":cls.range,
             "regex":cls.regex,
             "text":cls.text,
-            "wilcard":cls.wildcard
+            "wildcard":cls.wildcard
         }
 
         return _constructors_map[operator_name]
@@ -488,6 +488,8 @@ class Search(SearchBase):
         """
 
         base_params = SearchBase(**kwargs).dict()
+        cls.__reduce_kwargs(kwargs)
+
         text_statement = Text(
             query=query,
             path=path,
@@ -496,7 +498,7 @@ class Search(SearchBase):
             synonyms=synonyms
         )
 
-        return Search(**base_params, operator=text_statement)
+        return cls(**base_params, operator=text_statement)
 
     @classmethod
     def wildcard(
@@ -517,6 +519,8 @@ class Search(SearchBase):
         """
 
         base_params = SearchBase(**kwargs).dict()
+        cls.__reduce_kwargs(kwargs)
+        
         wilcard_statement = Wilcard(
             query=query,
             path=path,

@@ -8,7 +8,7 @@
 
 ### Refactoring
 
-* Import pydantic into base.py and using abse.py to access pydantic features
+* Import pydantic into base.py and using base.py to access pydantic features
 
 
 ## 0.14.0
