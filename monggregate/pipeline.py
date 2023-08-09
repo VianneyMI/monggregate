@@ -964,6 +964,8 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         return self
 
-if __name__ == "__main__":
+if __name__ =="__main__":
 
     pipeline = Pipeline()
+    pipeline.search(operator_name="text", query="test", path=["details", "id_epd", "id_serial", "name"] )
+    

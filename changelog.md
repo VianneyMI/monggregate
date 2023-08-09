@@ -1,5 +1,14 @@
 # Release Notes
 
+## 0.15.0
+
+### Fixes
+
+* Fixed bug in `Search.from_operator()` classmethod due to recent change in operator type in `Search` class
+* Fixed misspelled operators in constructors map in `Search` class
+* Fixed missing aliases and missing kwargs reduction in some `Search` operators
+
+
 ## 0.14.1
 
 ### Fixes
@@ -8,7 +17,7 @@
 
 ### Refactoring
 
-* Import pydantic into base.py and using abse.py to access pydantic features
+* Import pydantic into base.py and using base.py to access pydantic features
 
 
 ## 0.14.0

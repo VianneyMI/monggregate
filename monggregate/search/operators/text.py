@@ -32,6 +32,7 @@ text has the following syntax:
 """
 
 from monggregate.search.operators.operator import SearchOperator
+from monggregate.search.commons.fuzzy import FuzzyOptions
 
 class Text(SearchOperator):
     """
@@ -66,7 +67,7 @@ class Text(SearchOperator):
 
     query : str|list[str]
     path : str | list[str]
-    fuzzy : dict | None = None
+    fuzzy : FuzzyOptions | None = None
     score : dict | None = None
     synonyms : str | None = None
 
@@ -74,6 +75,6 @@ class Text(SearchOperator):
     def statement(self) -> dict:
         
         return self.resolve({
-            "text" : self.dict(exclude_none=True)
+            "text" : self.dict(exclude_none=True, by_alias=True)
         })
             

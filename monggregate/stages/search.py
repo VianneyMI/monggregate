@@ -223,7 +223,7 @@ class Search(SearchBase):
         """Returns appropriate constructor from operator name"""
 
         _constructors_map = {
-            "autcomplete":cls.autocomplete,
+            "autocomplete":cls.autocomplete,
             "compound":cls.compound,
             "equals":cls.equals,
             "exists":cls.exists,
@@ -232,7 +232,7 @@ class Search(SearchBase):
             "range":cls.range,
             "regex":cls.regex,
             "text":cls.text,
-            "wilcard":cls.wildcard
+            "wildcard":cls.wildcard
         }
 
         return _constructors_map[operator_name]
@@ -289,7 +289,7 @@ class Search(SearchBase):
             fuzzy=fuzzy,
             score=score,
             **kwargs
-        ).statement
+        )
 
         return cls(**base_params, operator=autocomplete_statement)
     
@@ -316,7 +316,7 @@ class Search(SearchBase):
             filter=filter,
             minimum_should_clause=minimum_should_clause,
             **kwargs
-        ).statement
+        )
 
         return cls(**base_params, operator=compound_statement)
 
@@ -344,7 +344,7 @@ class Search(SearchBase):
             path=path,
             value=value,
             score=score
-        ).statement
+        )
 
         return cls(**base_params, operator=equals_statement)
 
@@ -362,7 +362,7 @@ class Search(SearchBase):
         """
 
         base_params = SearchBase(**kwargs).dict()
-        exists_statement = Exists(path=path).statement
+        exists_statement = Exists(path=path)
 
         return cls(**base_params, operator=exists_statement)
     
@@ -398,7 +398,7 @@ class Search(SearchBase):
         """
         
         base_params = SearchBase(**kwargs).dict()
-        more_like_this_stasement = MoreLikeThis(like=like).statement
+        more_like_this_stasement = MoreLikeThis(like=like)
 
         return cls(**base_params, operator=more_like_this_stasement)
 
@@ -433,7 +433,7 @@ class Search(SearchBase):
             lt=lt,
             lte=lte,
             score=score
-        ).statement
+        )
 
         return cls(**base_params, operator=range_statement)
 
@@ -461,7 +461,7 @@ class Search(SearchBase):
             path=path,
             allow_analyzed_field=allow_analyzed_field,
             score=score
-        ).statement
+        )
 
         return cls(**base_params, operator=regex_statement)
 
@@ -488,15 +488,17 @@ class Search(SearchBase):
         """
 
         base_params = SearchBase(**kwargs).dict()
+        cls.__reduce_kwargs(kwargs)
+
         text_statement = Text(
             query=query,
             path=path,
             score=score,
             fuzzy=fuzzy,
             synonyms=synonyms
-        ).statement
+        )
 
-        return Search(**base_params, operator=text_statement)
+        return cls(**base_params, operator=text_statement)
 
     @classmethod
     def wildcard(
@@ -517,12 +519,14 @@ class Search(SearchBase):
         """
 
         base_params = SearchBase(**kwargs).dict()
+        cls.__reduce_kwargs(kwargs)
+        
         wilcard_statement = Wilcard(
             query=query,
             path=path,
             allow_analyzed_field=allow_analyzed_field,
             score=score
-        ).statement
+        )
 
         return cls(**base_params, operator=wilcard_statement)
     

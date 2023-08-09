@@ -45,7 +45,7 @@ class BaseModel(pyd.BaseModel, ABC):
         allow_population_by_field_name = True
         underscore_attrs_are_private = True
         smart_union = True
-        alias_generator = camelize
+        #alias_generator = camelize
 
 
 def isbasemodel(instance:Any)->bool:

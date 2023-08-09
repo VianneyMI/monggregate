@@ -189,8 +189,6 @@ class Compound(SearchOperator):
 
         return self
 
-
-
     def exists(self, type:ClauseType, path:str)->"Compound":
         """Adds an exists clause to the current compound instance."""
 
