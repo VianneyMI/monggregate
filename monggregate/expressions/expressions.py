@@ -4,6 +4,8 @@
 # https://stackoverflow.com/questions/53638973/recursive-type-annotations
 # https://stackoverflow.com/questions/53845024/defining-a-recursive-type-hint-in-python
 
+# TO HELP REFACTOR: https://www.practical-mongodb-aggregations.com/guides/expressions.html
+
 # Standard Library imports
 #----------------------------
 from typing import Any, Literal
