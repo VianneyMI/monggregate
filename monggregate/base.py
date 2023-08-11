@@ -47,7 +47,7 @@ class BaseModel(pyd.BaseModel, ABC):
         smart_union = True
         #alias_generator = camelize
 
-
+# TODO : Use TypeGuard here to improve type checking <VM, 11/08/2023>
 def isbasemodel(instance:Any)->bool:
     """Returns true if instance is an instance of BaseModel"""
 

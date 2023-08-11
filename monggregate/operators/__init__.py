@@ -47,3 +47,5 @@ from monggregate.operators.objects import(
     MergeObjects, merge_objects,
     ObjectToArray, object_to_array
 )
+
+from monggregate.operators.type_ import type_
