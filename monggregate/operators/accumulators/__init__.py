@@ -8,3 +8,19 @@ from monggregate.operators.accumulators.min import Min, min
 from monggregate.operators.accumulators.max import Max, max
 from monggregate.operators.accumulators.push import Push, push
 from monggregate.operators.accumulators.sum import Sum, sum
+
+# TODO  :
+# * $accumulator
+# * $addToSet
+# * $bottom
+# * $bottomN
+# * $firstN
+# * $lastN
+# * $maxN
+# * $mergeObjects
+# * $stdDedPop
+# * $stdDevSamp
+# * $top
+# * $topN
+#
+#
