@@ -50,12 +50,12 @@ class Compare(Comparator):
 
 Cmp = Compare
 
-def compare(left:Any, right:Any)->dict:
+def compare(left:Any, right:Any)->Compare:
     """Returns a $cmp stament"""
 
     return Compare(
         left=left,
         right=right
-    ).statement
+    )
 
 cmp = compare

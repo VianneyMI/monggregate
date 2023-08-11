@@ -95,9 +95,9 @@ class Average(Accumulator):
     
 Avg = Average
 
-def average(expression:Any)->dict:
+def average(expression:Any)->Average:
     """Creates a push statement"""
 
-    return Average(expression=expression).statement
+    return Average(expression=expression)
 
 avg = average

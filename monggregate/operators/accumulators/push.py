@@ -52,7 +52,7 @@ class Push(Accumulator):
             "$push" : self.expression
         })
 
-def push(expression:Any)->dict:
+def push(expression:Any)->Push:
     """Creates a push statement"""
 
-    return Push(expression=expression).statement
+    return Push(expression=expression)

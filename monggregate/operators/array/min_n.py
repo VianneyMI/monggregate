@@ -72,10 +72,10 @@ class MinN(ArrayOperator):
             }
         })
 
-def min_n(expression:Any, limit:Any=1)->dict:
+def min_n(expression:Any, limit:Any=1)->MinN:
     """Returns a $minN statement"""
 
     return MinN(
         expression = expression,
         limit = limit
-    ).statement
+    )

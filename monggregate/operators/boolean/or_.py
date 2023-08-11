@@ -48,9 +48,9 @@ class Or(BooleanOperator):
             "$or" : self.expressions
         })
 
-def or_(*args:Any)->dict:
+def or_(*args:Any)->Or:
     """Returns an $or statement"""
 
     return Or(
         expressions=list(args)
-    ).statement
+    )

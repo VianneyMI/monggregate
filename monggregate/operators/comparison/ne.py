@@ -48,12 +48,12 @@ class NotEqual(Comparator):
 
 Ne = NotEqual
 
-def not_equal(left:Any, right:Any)->dict:
+def not_equal(left:Any, right:Any)->NotEqual:
     """Returns a $ne statement"""
 
     return NotEqual(
         left=left,
         right=right
-    ).statement
+    )
 
 ne = not_equal

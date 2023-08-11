@@ -108,12 +108,12 @@ class Sum(Accumulator):
             "$sum" : self.expression
         })
 
-def sum(*args:Content)->dict: # pylint: disable=redefined-builtin
+def sum(*args:Content)->Sum:
     """Creates a $sum statement"""
 
     if len(args)>1:
-        output = Sum(expression=list(args)).statement
+        output = Sum(expression=list(args))
     else:
-        output = Sum(expression=args[0]).statement
+        output = Sum(expression=args[0])
 
     return output

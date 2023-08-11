@@ -72,7 +72,7 @@ class ArrayToObject(ArrayOperator):
             "$arrayToObject" : self.expression
         })
 
-def array_to_object(expression:Any)->dict:
+def array_to_object(expression:Any)->ArrayToObject:
     """Returns an $arrayToObject statement"""
 
-    return ArrayToObject(expression=expression).statement
+    return ArrayToObject(expression=expression)

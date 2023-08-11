@@ -72,10 +72,10 @@ class And(BooleanOperator):
             "$and" : self.expressions
         })
 
-def and_(*args:Any)->dict:
+def and_(*args:Any)->And:
     """Returns an $and statement"""
 
     return And(
         expressions=list(args)
-    ).statement
+    )
 

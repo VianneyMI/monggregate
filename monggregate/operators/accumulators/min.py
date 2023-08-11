@@ -99,7 +99,7 @@ class Min(Accumulator):
             "$min" : self.expression
         })
 
-def min(expression:Any)->dict:
+def min(expression:Any)->Min:
     """Creates a $min statement"""
 
-    return Min(expression=expression).statement
+    return Min(expression=expression)
