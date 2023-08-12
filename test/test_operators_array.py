@@ -37,7 +37,7 @@ class TestArrayOperators:
 
         # Functional test
         # -----------------
-        assert array_to_object_op.statement == array_to_object("$dimensions") == {
+        assert array_to_object_op.statement == array_to_object("$dimensions").statement == {
             "$arrayToObject" :"$dimensions"
         }
 
@@ -62,7 +62,7 @@ class TestArrayOperators:
             [1, 2, 3, 4],
             "num",
             greather_than("$$num", 2)
-            ) == {
+            ).statement == {
             "$filter" : {
                 "input" : [1, 2, 3, 4],
                 "as" : "num",
@@ -87,7 +87,7 @@ class TestArrayOperators:
 
         # Functional test
         # ---------------------
-        assert first_op.statement  == first([1, 2, 3, 4]) == {
+        assert first_op.statement  == first([1, 2, 3, 4]).statement == {
             "$first" : [1, 2, 3, 4]
         }
 
@@ -105,7 +105,7 @@ class TestArrayOperators:
 
         # Functional test
         # -----------------------
-        assert in_op.statement == in_(1, [1, 2, 3, 4]) == {
+        assert in_op.statement == in_(1, [1, 2, 3, 4]).statement == {
             "$in" : [1, [1, 2, 3, 4]]
         }
 
@@ -120,7 +120,7 @@ class TestArrayOperators:
 
         # Functional test
         # --------------------
-        assert is_array_op.statement == is_array([1, 2, 3, 4]) == {
+        assert is_array_op.statement == is_array([1, 2, 3, 4]).statement == {
             "$isArray" : [1, 2, 3, 4]
         }
 
@@ -138,7 +138,7 @@ class TestArrayOperators:
 
         # Functional test
         # ---------------------
-        assert last_op.statement  == last([1, 2, 3, 4]) == {
+        assert last_op.statement  == last([1, 2, 3, 4]).statement == {
             "$last" : [1, 2, 3, 4]
         }
 
@@ -157,7 +157,7 @@ class TestArrayOperators:
 
         # Functional test
         # --------------------
-        assert max_n_op.statement == max_n([1, 2, 3, 4], 1) == {
+        assert max_n_op.statement == max_n([1, 2, 3, 4], 1).statement == {
             "$maxN" : {
                 "n" : 1,
                 "input" : [1, 2, 3, 4]
@@ -178,7 +178,7 @@ class TestArrayOperators:
 
         # Functional test
         # --------------------
-        assert min_n_op.statement == min_n([1, 2, 3, 4], 1) == {
+        assert min_n_op.statement == min_n([1, 2, 3, 4], 1).statement == {
             "$minN" : {
                 "n" : 1,
                 "input" : [1, 2, 3, 4]
@@ -198,7 +198,7 @@ class TestArrayOperators:
 
         # Functional test
         # ---------------------
-        assert size_op.statement == size([1, 2, 3, 4]) == {
+        assert size_op.statement == size([1, 2, 3, 4]).statement == {
             "$size" : [1, 2, 3, 4]
         }
 
@@ -217,7 +217,7 @@ class TestArrayOperators:
 
         # Functional test
         # ----------------
-        assert sort_array_op.statement == sort_array("$team", {"name":1}) == {
+        assert sort_array_op.statement == sort_array("$team", {"name":1}).statement == {
             "$sortArray" : {
                 "input" : "$team",
                 "sortBy" : {
