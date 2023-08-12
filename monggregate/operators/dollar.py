@@ -19,6 +19,22 @@ from monggregate.operators import(
 class Dollar:
     """Base class for all $ functions"""
 
+    # Any below should be replaced by a Union of
+    # all operators or by Typevar bounded by Operator
+    def __getattr__(self, name)->str|Any:
+        """Overloads the __getattr__ method. 
+        Return the name of the attribute with a $ prepended to it
+        (when it's not a method or an attribute of the classe)
+        
+        """
+
+        if name not in Dollar.__dict__:
+            output = f"${name}"
+        else:
+            output = Dollar.__dict__[name]
+
+        return output
+
     # Operators
     # ------------------------------
 
