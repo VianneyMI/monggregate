@@ -1,7 +1,7 @@
 """App Package"""
 
 from monggregate.pipeline import Pipeline
-from monggregate.expressions.expressions import Expression
+from monggregate.dollar import S
 
 __version__ = "0.15.0"
 __author__ = "Vianney Mixtur"

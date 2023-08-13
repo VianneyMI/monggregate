@@ -1,6 +1,6 @@
 """Module to test dollar singleton class"""
 
-from monggregate.operators.dollar import S
+from monggregate.dollar import S
 from pydantic import BaseModel
 
 class AccessAll(BaseModel):
