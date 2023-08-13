@@ -1,7 +1,7 @@
 """Module describing the content/statement of an expression"""
 
 from typing import Any
-from monggregate.expressions.fields import FieldPath, Variable
+from monggregate.fields import FieldPath, Variable
 #from monggregate.operators.operator import Operator
 
 # TODO  : Distinguish between expressions evaluations (evaluated expressions) and lazy expressions (expressions that are not evaluated)

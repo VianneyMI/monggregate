@@ -54,7 +54,7 @@ from monggregate.base import pyd
 
 from monggregate.stages.stage import Stage
 from monggregate.expressions.content import Content, Const, Consts
-from monggregate.expressions.fields import FieldName
+from monggregate.fields import FieldName
 from monggregate.operators.accumulators.accumulator import AccumulatorExpression
 from monggregate.utils import validate_field_path
 

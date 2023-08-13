@@ -84,7 +84,7 @@ from typing import Any
 from monggregate.base import pyd
 from monggregate.stages.stage import Stage
 from monggregate.expressions.content import Content
-from monggregate.expressions.fields import FieldName
+from monggregate.fields import FieldName
 from monggregate.operators.accumulators.accumulator import AccumulatorExpression
 from monggregate.utils import StrEnum, validate_field_path
 
