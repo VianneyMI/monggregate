@@ -13,8 +13,34 @@ from monggregate.operators import(
     type_  
 )
 
+from monggregate.utils import StrEnum
+
+class AggregationVariableEnum(StrEnum):
+    """Enumeration of available aggregation variables"""
+
+    NOW = "$$NOW" # Returns the current datetime value,
+                # which is same across all members of the deployment and remains constant throughout the aggregation pipeline.
+                # (Available in 4.2+)
+    CLUSTER_TIME = "$$CLUSTER_TIME" # Returns the current timestamp value, which is same across all members of the deployment and remains constant throughout the aggregation pipeline.
+                                    # For replica sets and sharded clusters only. (Available in 4.2+)
+    ROOT = "$$ROOT" # References the root document, i.e. the top-level document.
+    CURRENT = "$$CURRENT" # References the start of the field path, which by default is ROOT but can be changed.
+    REMOVE = "$$REMOVE" # Allows for the conditional exclusion of fields. (Available in 3.6+)
+    DESCEND = "$$DESCEND" # One of the allowed results of a $redact expression.
+    PRUNE = "$$PRUNE" # One of the allowed results of a $redact expression.
+    KEEP = "$$KEEP" # One of the allowed results of a $redact expression.NOW = "$$NOW" # Returns the current datetime value,
+                # which is same across all members of the deployment and remains constant throughout the aggregation pipeline.
+                # (Available in 4.2+)
 # NOTE : If dollar is to be made to really store all of MongoDB functions i.e stages, operators and whathever they come up with
 # it might de interesting to create a DollarBase class, a DollarStage class and a DollarOperator class and to use inheritance <VM, 10/08/2023>
+CLUSTER_TIME = AggregationVariableEnum.CLUSTER_TIME.value
+NOW = AggregationVariableEnum.NOW.value
+ROOT = AggregationVariableEnum.ROOT.value
+CURRENT = AggregationVariableEnum.CURRENT.value
+REMOVE = AggregationVariableEnum.REMOVE.value
+DESCEND = AggregationVariableEnum.DESCEND.value
+PRUNE = AggregationVariableEnum.PRUNE.value
+KEEP = AggregationVariableEnum.KEEP.value
 
 class Dollar:
     """Base class for all $ functions"""
@@ -227,6 +253,9 @@ class Dollar:
 
         return type_.type_(expression)
     
+class DollarDollar:
+    """xxx"""
+
 
 # TODO : Make below instance a singleton <VM, 11/08/2023>
 S = Dollar()
