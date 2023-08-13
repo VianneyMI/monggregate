@@ -1,8 +1,7 @@
 """WIP"""
 
 from typing import Any, Literal
-
-from monggregate.base import BaseModel
+from typing_extensions import Self
 
 from monggregate.operators import(
     accumulators,
@@ -43,14 +42,41 @@ KEEP = AggregationVariableEnum.KEEP.value
 
 # NOTE : If dollar is to be made to really store all of MongoDB functions i.e stages, operators and whathever they come up with
 # it might de interesting to create a DollarBase class, a DollarStage class and a DollarOperator class and to use inheritance <VM, 10/08/2023>
-class Dollar:
-    """Base class for all $ functions"""
+class Singleton:
+    """Singleton metaclass"""
+
+    _instance = None
+    def __new__(cls, *args, **kwargs):
+        if not isinstance(cls._instance, cls):
+            cls._instance = object.__new__(cls, *args, **kwargs)
+        return cls._instance
+
+  
+class Dollar(Singleton):
+    """
+    MongoDB dollar sign ($) abstraction in python.
+
+    This class is a singleton class meant to be used as a namespace for all MongoDB operators. Might include stages in the future.
+    Can also be used to reference a field name in a document.
+
+    Examples:
+    ------------------------------
+
+        >>> Dollar.avg("$price")()
+        {"$avg": "$price"}
+
+        >>> Dollar.name
+        "$name"
+    
+    """
 
     # Any below should be replaced by a Union of
     # all operators or by Typevar bounded by Operator
     def __getattr__(self, name)->str|Any:
-        """Overloads the __getattr__ method. 
-        Return the name of the attribute with a $ prepended to it
+        """
+        Overloads the __getattr__ method.
+
+        Returns the name of the attribute with a $ prepended to it
         (when it's not a method or an attribute of the classe)
         
         """
@@ -62,11 +88,9 @@ class Dollar:
 
         return output
 
-    # Operators
-    # ------------------------------
 
-        # Accumulators
-        # --------------------------
+    # Accumulators
+    # --------------------------
     @classmethod
     def avg(cls, expression:Any)->accumulators.Avg:
         """Returns the $avg operator"""
@@ -115,8 +139,8 @@ class Dollar:
         
         return accumulators.sum(expression)
     
-        # Array
-        # --------------------------
+    # Array
+    # --------------------------
     @classmethod
     def array_to_object(cls, expression:Any)->array.ArrayToObject:
         """Returns the $arrayToObject operator"""
@@ -168,8 +192,8 @@ class Dollar:
 
         return array.sort_array(expression, sort_spec)
 
-        # Comparison
-        # --------------------------
+    # Comparison
+    # --------------------------
     @classmethod
     def cmp(cls, left:Any, right:Any)->comparison.Cmp:
         """Returns the $cmp operator"""
@@ -212,8 +236,8 @@ class Dollar:
 
         return comparison.ne(left, right)
     
-        # Objects
-        # --------------------------
+    # Objects
+    # --------------------------
     @classmethod
     def merge_objects(cls, *args:Any)->objects.MergeObjects:
         """Returns the $mergeObjects operator"""
@@ -226,8 +250,8 @@ class Dollar:
 
         return objects.object_to_array(expression)
 
-        # Boolean
-        # --------------------------
+    # Boolean
+    # --------------------------
     @classmethod
     def and_(cls, *args:Any)->boolean.And:
         """Returns the $and operator"""
@@ -246,16 +270,30 @@ class Dollar:
 
         return boolean.not_(expression)
     
-        # Type
-        # --------------------------
+    # Type
+    # --------------------------
     @classmethod
     def type_(cls, expression:Any)->type_.Type_:
         """Returns the $type operator"""
 
         return type_.type_(expression)
     
-class DollarDollar:
-    """xxx"""
+class DollarDollar(Singleton):
+    """
+    MongoDB double dollar sign ($$) abstraction in python.
+
+    This class is a singleton class meant to be used as a namespace for all MongoDB aggregation variables.
+    Can also be used to refrence a user-defined variable.
+
+    Examples:
+    ------------------------------
+        >>> DollarDollar.NOW
+        "$$NOW"
+
+        >>> DollarDollar.product_name
+        "$$product_name"
+
+    """
 
     CLUSTER_TIME = AggregationVariableEnum.CLUSTER_TIME.value
     NOW = AggregationVariableEnum.NOW.value
@@ -281,6 +319,6 @@ class DollarDollar:
         return output
 
 
-# TODO : Make below instances singletons <VM, 13/08/2023>
+
 S = Dollar()
 SS = DollarDollar()

@@ -1,35 +1,24 @@
 """Module to test dollar singleton class"""
 
-from monggregate.dollar import S
-from pydantic import BaseModel
-
-class AccessAll(BaseModel):
-    x:int = 1
-
-    def merge_objects(self, *args, **kwargs):
-
-        
-        kwargs.update({"args":args})
-        return kwargs
-
-    def __getattr__(self, name):
-
-        if name not in AccessAll.__dict__:
-            output = f"${name}"
-        else:
-            output = AccessAll.__dict__[name]
-        
-        return output
-    
-def test_access_all()->None:
+from monggregate.dollar import Dollar, DollarDollar, S, SS
+from monggregate.operators import And
+  
+def test_dollar_getattr()->None:
     """Tests the access all class"""
 
-    assert AccessAll().name == "$name"
-    assert AccessAll().age == "$age"
-    assert AccessAll().address == "$address"
-    assert AccessAll().x == 1
-    assert AccessAll().merge_objects(1,2) == {"args":(1,2)}
+    assert S.name == "$name"
+    assert S.age == "$age"
+    assert S.address == "$address"
+  
+    assert S.and_(True, True) == And(expressions=[True, True])
 
+def test_singletons()->None:
+    """Tests that Dollar and DollarDollar are singletons"""
+
+    assert Dollar() is Dollar()
+    assert DollarDollar() is DollarDollar()
+    assert S is Dollar()
+    assert SS is DollarDollar()
 
 def test_simple_expressions()->None:
     """Tests some simple expressions"""
@@ -56,6 +45,7 @@ def test_simple_expressions()->None:
 
 
 if __name__ == "__main__":
-    test_access_all()
+    test_singletons()
+    test_dollar_getattr()
     test_simple_expressions()
     print("Everything passed")
