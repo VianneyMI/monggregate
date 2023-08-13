@@ -31,8 +31,7 @@ class AggregationVariableEnum(StrEnum):
     KEEP = "$$KEEP" # One of the allowed results of a $redact expression.NOW = "$$NOW" # Returns the current datetime value,
                 # which is same across all members of the deployment and remains constant throughout the aggregation pipeline.
                 # (Available in 4.2+)
-# NOTE : If dollar is to be made to really store all of MongoDB functions i.e stages, operators and whathever they come up with
-# it might de interesting to create a DollarBase class, a DollarStage class and a DollarOperator class and to use inheritance <VM, 10/08/2023>
+
 CLUSTER_TIME = AggregationVariableEnum.CLUSTER_TIME.value
 NOW = AggregationVariableEnum.NOW.value
 ROOT = AggregationVariableEnum.ROOT.value
@@ -42,6 +41,8 @@ DESCEND = AggregationVariableEnum.DESCEND.value
 PRUNE = AggregationVariableEnum.PRUNE.value
 KEEP = AggregationVariableEnum.KEEP.value
 
+# NOTE : If dollar is to be made to really store all of MongoDB functions i.e stages, operators and whathever they come up with
+# it might de interesting to create a DollarBase class, a DollarStage class and a DollarOperator class and to use inheritance <VM, 10/08/2023>
 class Dollar:
     """Base class for all $ functions"""
 
@@ -54,10 +55,10 @@ class Dollar:
         
         """
 
-        if name not in Dollar.__dict__:
+        if name not in self.__class__.__dict__:
             output = f"${name}"
         else:
-            output = Dollar.__dict__[name]
+            output = self.__class__.__dict__[name]
 
         return output
 
@@ -256,6 +257,30 @@ class Dollar:
 class DollarDollar:
     """xxx"""
 
+    CLUSTER_TIME = AggregationVariableEnum.CLUSTER_TIME.value
+    NOW = AggregationVariableEnum.NOW.value
+    ROOT = AggregationVariableEnum.ROOT.value
+    CURRENT = AggregationVariableEnum.CURRENT.value
+    REMOVE = AggregationVariableEnum.REMOVE.value
+    DESCEND = AggregationVariableEnum.DESCEND.value
+    PRUNE = AggregationVariableEnum.PRUNE.value
+    KEEP = AggregationVariableEnum.KEEP.value
 
-# TODO : Make below instance a singleton <VM, 11/08/2023>
+    def __getattr__(self, name)->str|Any:
+        """Overloads the __getattr__ method. 
+        Return the name of the attribute with a $ prepended to it
+        (when it's not a method or an attribute of the classe)
+        
+        """
+
+        if name not in self.__class__.__dict__:
+            output = f"$${name}"
+        else:
+            output = self.__class__.__dict__[name]
+
+        return output
+
+
+# TODO : Make below instances singletons <VM, 13/08/2023>
 S = Dollar()
+SS = DollarDollar()
