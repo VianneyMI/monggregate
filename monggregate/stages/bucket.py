@@ -49,11 +49,11 @@ $sort.
 
 """
 
+from typing import Any
 
 from monggregate.base import pyd
 
 from monggregate.stages.stage import Stage
-from monggregate.expressions.content import Content, Const, Consts
 from monggregate.fields import FieldName
 from monggregate.operators.accumulators.accumulator import AccumulatorExpression
 from monggregate.utils import validate_field_path
@@ -98,9 +98,9 @@ class Bucket(Stage):
 
     """
 
-    by : Content = pyd.Field(...,alias="group_by")
-    boundaries : Consts
-    default : Const | None = None
+    by : Any = pyd.Field(...,alias="group_by")
+    boundaries : list
+    default : Any = None
     output : dict[FieldName, AccumulatorExpression] | None = None
 
     # Validators

@@ -3,7 +3,7 @@
 # Standard Library imports
 #----------------------------
 from abc import ABC, abstractmethod
-from typing import Any
+from typing import Any, TypeGuard
 
 # 3rd Party imports
 # ---------------------------
@@ -45,10 +45,10 @@ class BaseModel(pyd.BaseModel, ABC):
         allow_population_by_field_name = True
         underscore_attrs_are_private = True
         smart_union = True
-        #alias_generator = camelize
+        alias_generator = camelize
 
-# TODO : Use TypeGuard here to improve type checking <VM, 11/08/2023>
-def isbasemodel(instance:Any)->bool:
+
+def isbasemodel(instance:Any)->TypeGuard[BaseModel]:
     """Returns true if instance is an instance of BaseModel"""
 
     return isinstance(instance, BaseModel)

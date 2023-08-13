@@ -85,8 +85,8 @@ In the other supported stages:
 
 """
 
+from typing import Any
 from monggregate.operators.accumulators.accumulator import Accumulator
-from monggregate.expressions.content import Content
 
 class Sum(Accumulator):
     """
@@ -98,7 +98,7 @@ class Sum(Accumulator):
         - operand, Expression : Any valid expression
     """
 
-    expression : Content | list[Content]
+    expression : Any
 
 
     @property
@@ -108,7 +108,7 @@ class Sum(Accumulator):
             "$sum" : self.expression
         })
 
-def sum(*args:Content)->Sum:
+def sum(*args:Any)->Sum:
     """Creates a $sum statement"""
 
     if len(args)>1:

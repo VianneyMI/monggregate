@@ -17,7 +17,6 @@ from monggregate.base import BaseModel, pyd
 # Local imports
 # ----------------------------
 from monggregate.fields import FieldPath, Variable
-from monggregate.expressions.content import Content
 from monggregate.operators.accumulators import(
     Avg,
     Count,
