@@ -1,5 +1,33 @@
 """
-Module defining an interface to $cond operator
+Module defining an interface to the $cond operator
+
+Online MongoDB documentation:
+--------------------------------------------------------------------------------------------------------------------
+Last Updated (in this package) : 14/08/2023
+Source : https://docs.mongodb.com/manual/reference/operator/aggregation/cond/#mongodb-expression-exp.-cond
+
+Definition
+-------------------
+$cond
+Evaluates a boolean expression to return one of the two specified return expressions.
+
+The $cond expression has one of two syntaxes:
+
+    >>> { $cond: { if: <boolean-expression>, then: <true-case>, else: <false-case> } }
+
+    or
+
+    >>> { $cond: [ <boolean-expression>, <true-case>, <false-case> ] }
+
+
+$cond requires all three arguments (if-then-else) for either syntax.
+
+If the <boolean-expression> evaluates to true, then 
+$cond evaluates and returns the value of the <true-case> expression. 
+Otherwise, $cond evaluates and returns the value of the <false-case> expression.
+
+The arguments can be any valid expression. 
+For more information on expressions, see Expressions.
 
 """
 
@@ -9,7 +37,20 @@ from monggregate.operators.conditional.conditional import ConditionalOperator
 
 class Cond(ConditionalOperator):
     """
-    xxx
+    Creates a $cond expression
+
+    Attributes
+    -------------------
+        - if_, Any : the boolean expression to evaluate
+        - then_, Any : the expression to evaluate if if_ is true
+        - else_, Any : the expression to evaluate if if_ is false
+
+        - expression, Any : the boolean expression to evaluate (alias for if_)
+        - true_, Any : the expression to evaluate if expression is true (alias for then_)
+        - false_, Any : the expression to evaluate if expression is false (alias for else_)
+
+    if_, then_ and else_ have precedence over expression, true_ and false_
+    Thus only the first syntax will be used whatever combination of arguments is provided (as long as it is valid)
             
     
     """

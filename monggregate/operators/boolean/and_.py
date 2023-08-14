@@ -1,5 +1,5 @@
 """
-Module defining an interface to $and operator
+Module defining an interface to the $and operator
 
 Online MongoDB documentation:
 --------------------------------------------------------------------------------------------------------------------
