@@ -19,7 +19,7 @@ class Substract(ArithmeticOperator):
     @property
     def statement(self) -> dict:
         return self.resolve({
-            "$add" : self.expressions
+            "$substract" : self.expressions
         })
     
 def substract(*args:Any)->Substract:

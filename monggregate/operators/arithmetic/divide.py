@@ -19,7 +19,7 @@ class Divide(ArithmeticOperator):
     @property
     def statement(self) -> dict:
         return self.resolve({
-            "$add" : self.expressions
+            "$divide" : self.expressions
         })
     
 def divide(*args:Any)->Divide:

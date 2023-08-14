@@ -19,7 +19,7 @@ class Pow(ArithmeticOperator):
     @property
     def statement(self) -> dict:
         return self.resolve({
-            "$add" : self.expressions
+            "$pow" : self.expressions
         })
     
 def pow(*args:Any)->Pow:

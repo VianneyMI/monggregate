@@ -19,7 +19,7 @@ class Multiply(ArithmeticOperator):
     @property
     def statement(self) -> dict:
         return self.resolve({
-            "$add" : self.expressions
+            "$multiply" : self.expressions
         })
     
 def multiply(*args:Any)->Multiply:
