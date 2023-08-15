@@ -57,7 +57,7 @@ $avg returns null since the average of zero values is undefined.
 
 Array Operand
 
-In the $group stage, if the expression resolves to an array, $avgtreats the operand as a non-numerical value.
+In the $group stage, if the expression resolves to an array, $avg treats the operand as a non-numerical value.
 
 In the other supported stages:
 
