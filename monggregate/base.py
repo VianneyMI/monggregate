@@ -1,4 +1,8 @@
-"""Module defining the base class of the package"""
+"""
+Module defining the base classes of the package.
+
+All the classes of the package inherit from one of the classes defined in this module.
+"""
 
 # Standard Library imports
 #----------------------------
@@ -15,7 +19,14 @@ except ModuleNotFoundError:
     
 from humps.main import camelize
 
+class Singleton:
+    """Singleton metaclass"""
 
+    _instance = None
+    def __new__(cls, *args, **kwargs):
+        if not isinstance(cls._instance, cls):
+            cls._instance = object.__new__(cls, *args, **kwargs)
+        return cls._instance
 
 class BaseModel(pyd.BaseModel, ABC):
     """Mongreggate base class"""

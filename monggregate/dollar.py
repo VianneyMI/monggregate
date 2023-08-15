@@ -1,8 +1,19 @@
-"""WIP"""
+"""
+Module defining the Dollar and DollarDollar classes.
 
+Those classes aim to abstract the MongoDB dollar sign ($) and double dollar sign ($$) in python.
+It is recommended to import S and SS from this module. With thoses two objects you will get a
+reference to all MongoDB operators and aggregation variables with in-code documentation, typing, validation and autocompletion.
+
+"""
+
+# Standard Library imports
+#----------------------------
 from typing import Any, Literal
-from typing_extensions import Self
 
+# Local imports
+#----------------------------
+from monggregate.base import Singleton
 from monggregate.operators import(
     accumulators,
     array,
@@ -41,17 +52,7 @@ PRUNE = AggregationVariableEnum.PRUNE.value
 KEEP = AggregationVariableEnum.KEEP.value
 
 # NOTE : If dollar is to be made to really store all of MongoDB functions i.e stages, operators and whathever they come up with
-# it might de interesting to create a DollarBase class, a DollarStage class and a DollarOperator class and to use inheritance <VM, 10/08/2023>
-class Singleton:
-    """Singleton metaclass"""
-
-    _instance = None
-    def __new__(cls, *args, **kwargs):
-        if not isinstance(cls._instance, cls):
-            cls._instance = object.__new__(cls, *args, **kwargs)
-        return cls._instance
-
-  
+# it might de interesting to create a DollarBase class, a DollarStage class and a DollarOperator class and to use inheritance <VM, 10/08/2023> 
 class Dollar(Singleton):
     """
     MongoDB dollar sign ($) abstraction in python.
