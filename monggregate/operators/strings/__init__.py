@@ -1,8 +1,9 @@
-"""xxxx"""
+"""String Operators subpackage"""
 
-# $concat
-# $dateFromString
-# $dateToString
+from monggregate.operators.strings.concat import Concat, concat
+from monggregate.operators.strings.date_from_string import DateFromString, date_from_string
+from monggregate.operators.strings.date_to_string import DateToString, date_to_string
+
 # $indexOfBytes
 # $indexOfCP
 # $ltrim

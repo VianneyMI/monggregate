@@ -1,1 +1,1 @@
-"""xxx"""
+"""Type operators subpackage"""

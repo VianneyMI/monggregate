@@ -6,24 +6,29 @@ Module defining an interface to $millisecond operator
 from typing import Any
 from monggregate.operators.date.date import DateOperator
 
-class MilliSecond(DateOperator):
+class Millisecond(DateOperator):
     """
-    xxx
+    Creates a $millisecond expression
+
+    Attributes
+    -------------------
+        - expression, Any : the expression that must resolve to a date
+        - timezone, Any | None : the timezone to use for the date
             
     
     """
 
 
     expression : Any
-    timezeone : Any | None
+    timezone : Any | None
 
     @property
     def statement(self) -> dict:
 
-        if self.timezeone:
+        if self.timezone:
             inner = {
                 "date" : self.expression,
-                "timezone" : self.timezeone
+                "timezone" : self.timezone
             }
         else:
             inner = self.expression
@@ -32,10 +37,10 @@ class MilliSecond(DateOperator):
             "$millisecond" : inner
         })
     
-def millisecond(expression:Any, timezone:Any)->MilliSecond:
+def millisecond(expression:Any, timezone:Any)->Millisecond:
     """Returns an $millisecond statement"""
 
-    return MilliSecond(
+    return Millisecond(
         expression=expression,
         timezone=timezone
     )

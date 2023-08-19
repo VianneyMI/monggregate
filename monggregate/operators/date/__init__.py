@@ -1,4 +1,6 @@
-"""xxx"""
+"""Date operators subpackage"""
+
+from monggregate.operators.date.millisecond import Millisecond, millisecond
 
 # TODO:
 # $dateAdd
@@ -16,7 +18,7 @@
 # $isoDayOfWeek
 # $isoWeek
 # $isoWeekYear
-# $millisecond
+
 # $minute
 # $month
 # $second

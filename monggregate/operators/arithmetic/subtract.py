@@ -39,7 +39,7 @@ Starting in MongoDB 5.0, the result will have the same type as the input except 
 from typing import Any
 from monggregate.operators.arithmetic.arithmetic import ArithmeticOperator
 
-class Substract(ArithmeticOperator):
+class Subtract(ArithmeticOperator):
     """
     Creates a $substract expression
 
@@ -61,10 +61,10 @@ class Substract(ArithmeticOperator):
             "$substract" : [self.left, self.right]
         })
     
-def substract(left:Any, right:Any)->Substract:
+def subtract(left:Any, right:Any)->Subtract:
     """Returns an $substract statement"""
 
-    return Substract(
+    return Subtract(
         left=left,
         right=right
     )

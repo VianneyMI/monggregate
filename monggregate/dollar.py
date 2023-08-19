@@ -16,10 +16,14 @@ from typing import Any, Literal
 from monggregate.base import Singleton
 from monggregate.operators import(
     accumulators,
+    arithmetic,
     array,
-    comparison,
-    objects,
     boolean,
+    comparison,
+    conditional,
+    date,
+    objects,
+    strings,
     type_  
 )
 
@@ -140,6 +144,80 @@ class Dollar(Singleton):
         
         return accumulators.sum(expression)
     
+    # Arithmetic
+    # --------------------------
+    @classmethod
+    def add(cls, *args:Any)->arithmetic.Add:
+        """Returns the $add operator"""
+
+        return arithmetic.add(*args)
+    
+    # @classmethod
+    # def ceil(cls, expression:Any)->arithmetic.Ceil:
+    #     """Returns the $ceil operator"""
+
+    #     return arithmetic.ceil(expression)
+    
+    @classmethod
+    def divide(cls, *args:Any)->arithmetic.Divide:
+        """Returns the $divide operator"""
+
+        return arithmetic.divide(*args)
+    
+    # @classmethod
+    # def exp(cls, expression:Any)->arithmetic.Exp:
+    #     """Returns the $exp operator"""
+
+    #     return arithmetic.exp(expression)
+    
+    # @classmethod
+    # def floor(cls, expression:Any)->arithmetic.Floor:
+    #     """Returns the $floor operator"""
+
+    #     return arithmetic.floor(expression)
+    
+
+    # @classmethod
+    # def ln(cls, expression:Any)->arithmetic.Ln:
+    #     """Returns the $ln operator"""
+
+    #     return arithmetic.ln(expression)
+    
+
+    # @classmethod
+    # def log(cls, *args:Any)->arithmetic.Log:
+    #     """Returns the $log operator"""
+
+    #     return arithmetic.log(*args)
+    
+
+    # @classmethod
+    # def log10(cls, expression:Any)->arithmetic.Log10:
+    #     """Returns the $log10 operator"""
+
+    #     return arithmetic.log10(expression)
+    
+
+    # @classmethod
+    # def mod(cls, *args:Any)->arithmetic.Mod:
+    #     """Returns the $mod operator"""
+
+    #     return arithmetic.mod(*args)
+    
+
+    @classmethod
+    def multiply(cls, *args:Any)->arithmetic.Multiply:
+        """Returns the $multiply operator"""
+
+        return arithmetic.multiply(*args)
+    
+
+    @classmethod
+    def pow(cls, *args:Any)->arithmetic.Pow:
+        """Returns the $pow operator"""
+
+        return arithmetic.pow(*args)
+    
     # Array
     # --------------------------
     @classmethod
@@ -236,6 +314,70 @@ class Dollar(Singleton):
         """Returns the $ne operator"""
 
         return comparison.ne(left, right)
+    
+    # Conditional
+    # --------------------------
+    @classmethod
+    def cond(cls, if_:Any, then:Any, else_:Any)->conditional.Cond:
+        """Returns the $cond operator"""
+
+        return conditional.cond(if_, then, else_)
+    
+    @classmethod
+    def if_null(cls, expression:Any, replacement:Any)->conditional.IfNull:
+        """Returns the $ifNull operator"""
+
+        return conditional.if_null(expression, replacement)
+    
+    @classmethod
+    def switch(cls, branches:dict[Any, Any], default:Any)->conditional.Switch:
+        """Returns the $switch operator"""
+
+        return conditional.switch(branches, default)
+    
+    # Date
+    # --------------------------
+    @classmethod
+    def millisecond(cls, expression:Any, timezone:Any)->date.Millisecond:
+        """Returns the $millisecond operator"""
+
+        return date.millisecond(expression, timezone)
+   
+    
+    # String
+    # --------------------------
+    @classmethod
+    def concat(cls, *args:Any)->strings.Concat:
+        """Returns the $concat operator"""
+
+        return strings.concat(*args)
+    
+    @classmethod
+    def date_from_string(
+        cls, 
+        date_string:Any, 
+        format:Any=None,
+        timezone:Any=None,
+        on_error:Any=None,
+        on_null:Any=None
+        )->strings.DateFromString:
+        """Returns the $dateFromString operator"""
+
+        return strings.date_from_string(date_string, format, timezone, on_error, on_null)
+    
+
+    @classmethod
+    def date_to_string(
+        cls, 
+        expression:Any, 
+        format:Any=None, 
+        timezone:Any=None,
+        on_null:Any=None
+        )->strings.DateToString:
+        """Returns the $dateToString operator"""
+
+        return strings.date_to_string(expression, format, timezone, on_null)
+    
     
     # Objects
     # --------------------------

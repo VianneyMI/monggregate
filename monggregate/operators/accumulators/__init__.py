@@ -22,5 +22,3 @@ from monggregate.operators.accumulators.sum import Sum, sum
 # * $stdDevSamp
 # * $top
 # * $topN
-#
-#
