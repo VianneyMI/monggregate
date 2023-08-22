@@ -9,6 +9,7 @@
 # Standard Library imports
 #----------------------------
 from typing import Any, Literal
+from typing_extensions import Self
 
 # 3rd Party imports
 # ---------------------------
@@ -17,41 +18,18 @@ from monggregate.base import BaseModel, pyd
 # Local imports
 # ----------------------------
 from monggregate.fields import FieldPath, Variable
-from monggregate.operators.accumulators import(
-    Avg,
-    Count,
-    First,
-    Last,
-    Max,
-    Min,
-    Push,
-    Sum
+from monggregate.operators import(
+    accumulators,
+    arithmetic,
+    array,
+    boolean,
+    comparison,
+    conditional,
+    date,
+    objects,
+    strings,  
+    type_,
 )
-from monggregate.operators.array import(
-    ArrayToObject,
-    Filter,
-    #First,
-    In,
-    IsArray,
-    #Last,
-    MaxN,
-    MinN,
-    SortArray
-)
-from monggregate.operators.comparison import(
-    Cmp,
-    Eq,
-    Gt,
-    Gte,
-    Lt,
-    Lte,
-    Ne
-)
-from monggregate.operators.objects import(
-    MergeObjects,
-    ObjectToArray
-)
-from monggregate.operators.boolean import And, Or, Not
 #Expressions can include field paths, literals, system variables, expression objects, and expression operators. Expressions can be nested.
 #ExpressionObjects {field1: Expression}
 #OperatorExpression {operator:[arg, .. argN]} or {operator:arg}
@@ -77,35 +55,35 @@ class Expression(BaseModel):
     # Expression Internal Methods
     #----------------------------------------------------
     @classmethod
-    def constant(cls, value:int | float | str | bool | None)->"Expression":
+    def constant(cls, value:int | float | str | bool | None)->Self:
         """Creates a constant expression."""
 
         return cls(content=value)
     
     @classmethod
-    def field(cls, name:str)->"Expression":
+    def field(cls, name:str)->Self:
         """Creates a field expression."""
 
         if not name.startswith("$"):
             name = f"${name}"
 
-        return cls(content=FieldPath(name=name))
+        return cls(content=FieldPath(name))
     
 
     @classmethod
-    def variable(cls, name:str)->"Expression":
+    def variable(cls, name:str)->Self:
         """Creates a variable expression."""
 
         while not variable.startswith("$$"):
             variable = "$" + variable
 
-        return cls(content=Variable(name=name))
+        return cls(content=Variable(name))
     
 
     #---------------------------------------------------
     # Logical Operators
     #---------------------------------------------------
-    def __and__(self, other:"Expression")->"Expression":
+    def __and__(self, other:Self)->Self:
         """
         Creates an And operator expression.
 
@@ -113,10 +91,10 @@ class Expression(BaseModel):
         """
 
        
-        self.content = And(expressions=[self, other]).statement
-        return self
+        return self.__class__(content=boolean.And(expressions=[self, other]))
+        
 
-    def __or__(self, other:"Expression")->"Expression":
+    def __or__(self, other:Self)->Self:
         """
         Creates an Or operator expression.
 
@@ -124,10 +102,10 @@ class Expression(BaseModel):
         """
 
        
-        self.content = Or(expressions=[self, other]).statement
-        return self
+        return self.__class__(content=boolean.Or(expressions=[self, other]))
+       
 
-    def __invert__(self)->"Expression":
+    def __invert__(self)->Self:
         """
         Creates an Not operator expression.
 
@@ -135,13 +113,13 @@ class Expression(BaseModel):
         """
 
        
-        self.content = Not(expression=self)
-        return self
+        return  self.__class__(content=boolean.Not(expression=self))
+
 
     #---------------------------------------------------
     # Comparison Operators
     #---------------------------------------------------
-    def __eq__(self, other:"Expression")->"Expression":
+    def __eq__(self, other:Self)->Self:
         """
         Creates a $eq expression.
 
@@ -149,10 +127,10 @@ class Expression(BaseModel):
         """
 
        
-        self.content = Eq(left=self, right=other)
-        return self
+        return self.__class__(content=comparison.Eq(left=self, right=other))
+        
 
-    def __lt__(self, other:"Expression")->"Expression":
+    def __lt__(self, other:Self)->Self:
         """
         Creates a $lt expression.
 
@@ -160,10 +138,10 @@ class Expression(BaseModel):
         """
 
        
-        self.content = Lt(left=self, right=other)
-        return self
+        return  self.__class__(content=comparison.Lt(left=self, right=other))
+      
 
-    def __le__(self, other:"Expression")->"Expression":
+    def __le__(self, other:Self)->Self:
         """
         Creates a $le expression.
 
@@ -171,10 +149,10 @@ class Expression(BaseModel):
         """
 
        
-        self.content = Lte(left=self, right=other)
-        return self
+        return  self.__class__(content=comparison.Lte(left=self, right=other))
+        
 
-    def __gt__(self, other:"Expression")->"Expression":
+    def __gt__(self, other:Self)->Self:
         """
         Creates a $gt expression.
 
@@ -182,10 +160,10 @@ class Expression(BaseModel):
         """
 
        
-        self.content = Gt(left=self, right=other)
-        return self
+        return self.__class__(content=comparison.Gt(left=self, right=other))
+        
 
-    def __ge__(self, other:"Expression")->"Expression":
+    def __ge__(self, other:Self)->Self:
         """
         Creates a $gte expression.
 
@@ -193,10 +171,10 @@ class Expression(BaseModel):
         """
 
        
-        self.content = Gte(left=self, right=other)
-        return self
+        return self.__class__(content=comparison.Gte(left=self, right=other))
+        
 
-    def __ne__(self, other:"Expression")->"Expression":
+    def __ne__(self, other:Self)->Self:
         """
         Creates a $lt expression.
 
@@ -204,156 +182,156 @@ class Expression(BaseModel):
         """
 
        
-        self.content = Ne(left=self, right=other)
-        return self
+        return  self.__class__(content=comparison.Ne(left=self, right=other))
+        
 
-    def compare(self, other:"Expression")->"Expression":
+    def compare(self, other:Self)->Self:
         """Creates a $cmp expression."""
 
        
-        self.content = Cmp(left=self, right=other)
-        return self
+        return  self.__class__(content=comparison.Cmp(left=self, right=other))
+        
 
     #---------------------------------------------------
     # Accumulators (Aggregation) Operators
     #---------------------------------------------------
-    def average(self)->"Expression":
+    def average(self)->Self:
         """Creates an $avg expression"""
 
        
-        self.content = Avg(expression=self)
-        return self
+        return self.__class__(content=accumulators.Avg(expression=self))
+        
 
-    def count(self)->"Expression":
+    def count(self)->Self:
         """Creates a $count expression"""
 
        
-        self.content = Count()
-        return self
+        return self.__class__(content=accumulators.Count())
+        
 
-    def first(self)->"Expression":
+    def first(self)->Self:
         """Creates a $first expression"""
 
        
-        self.content = First(expression=self)
-        return self
+        return  self.__class__(content=accumulators.First(expression=self))
+        
 
-    def last(self)->"Expression":
+    def last(self)->Self:
         """Creates a $last expression"""
 
        
-        self.content = Last(expression=self)
-        return self
+        return self.__class__(content=accumulators.Last(expression=self))
+        
 
-    def max(self)->"Expression":
+    def max(self)->Self:
         """Creates a $max expression"""
 
        
-        self.content = Max(expression=self)
-        return self
+        return self.__class__(content=accumulators.Max(expression=self))
+        
 
-    def min(self)->"Expression":
+    def min(self)->Self:
         """Creates a $min expression"""
 
        
-        self.content = Min(expression=self)
-        return self
+        return self.__class__(content=accumulators.Min(expression=self))
+        
 
-    def push(self)->"Expression":
+    def push(self)->Self:
         """Creates a $push expression"""
 
        
-        self.content = Push(expression=self)
-        return self
+        return  self.__class__(content=accumulators.Push(expression=self))
+        
 
-    def sum(self)->"Expression":
+    def sum(self)->Self:
         """Creates a $sum expression"""
 
-        self.content = Sum(expression=self)
-        return self
+        return  self.__class__(content=accumulators.Sum(expression=self))
+        
 
     #---------------------------------------------------
     # Array Operators
     #---------------------------------------------------
-    def array_to_object(self)->"Expression":
+    def array_to_object(self)->Self:
         """Creates a $arrayToObject expression"""
 
        
-        self.content = ArrayToObject(expression=self)
-        return self
-
-    def in_(self, right:"Expression")->"Expression":
+        return self.__class__(content=array.ArrayToObject(expression=self))
+        
+    
+    def in_(self, right:Self)->Self:
         """Creates a $in operator"""
 
        
-        self.content = In(left=self, right=right)
-        return self
+        return  self.__class__(content=array.In(left=self, right=right))
+        
 
-    def __contains__(self, right:"Expression")->"Expression":
+    def __contains__(self, right:Self)->Self:
         """Creates a $in expression"""
 
-        return self.in_(right=right)
+        return self.__class__(content=array.In(left=self, right=right))
 
-    def filter(self, query:"Expression", let:str|None=None, limit:int|None=None)->"Expression":
+    def filter(self, query:Self, let:str|None=None, limit:int|None=None)->Self:
         """"Creates a $filter expression"""
 
        
-        self.content = Filter(
+        return  self.__class__(content=array.Filter(
             expression=self,
             query=query,
             let=let,
             limit=limit
-        )
-        return self
+        ))
+        
 
-    def is_array(self)->"Expression":
+    def is_array(self)->Self:
         """Creates a $isArray expression"""
 
        
-        self.content = IsArray(expression=self)
-        return self
+        return self.__class__(content=array.IsArray(expression=self))
+        
 
-    def max_n(self, limit:int=1)->"Expression":
+    def max_n(self, limit:int=1)->Self:
         """Creates a $maxN expression"""
 
        
-        self.content = MaxN(expression=self, limit=limit)
-        return self
+        return self.__class__(content=array.MaxN(expression=self, limit=limit))
+        
 
-    def min_n(self, limit:int=1)->"Expression":
+    def min_n(self, limit:int=1)->Self:
         """Creates a $maxN expression"""
 
        
-        self.content = MinN(expression=self, limit=limit)
-        return self
+        return self.__class__(content=array.MinN(expression=self, limit=limit))
+        
 
-    def sort_array(self, by:dict[str, Literal[1, -1]])->"Expression":
+    def sort_array(self, by:dict[str, Literal[1, -1]])->Self:
         """Creates a $sortArray expression"""
 
        
-        self.content = SortArray(expression=self, by=by)
-        return self
+        return self.__class__(content=array.SortArray(expression=self, by=by))
+        
 
     #---------------------------------------------------
     # Objects Operators
     #---------------------------------------------------
-    def merge_objects(self, )->"Expression":
+    def merge_objects(self)->Self:
         """Creates a $mergeObjects operator"""
 
        
-        self.content = MergeObjects(expression=self)
-        return self
+        return self.__class__(content=objects.MergeObjects(expression=self))
+        
 
-    def object_to_array(self, )->"Expression":
+    def object_to_array(self)->Self:
         """Creates a $objectToArray operator"""
 
        
-        self.content = ObjectToArray(expression=self)
-        return self
+        return self.__class__(content=objects.ObjectToArray(expression=self))
+        
 
 if __name__ == "__main__":
-    result = Expression(field="left") & Expression(field="right")
-    print(result)
+    result = Expression.field("left") & Expression.field("right")
+    print(result())
 
 # Examples of expression:
 
