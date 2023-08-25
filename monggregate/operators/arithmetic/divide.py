@@ -48,7 +48,7 @@ class Divide(ArithmeticOperator):
         })
     
 def divide(numerator:Any, denominator:Any)->Divide:
-    """Returns a $divide statement"""
+    """Returns a $divide operator"""
 
     return Divide(
         numerator=numerator,

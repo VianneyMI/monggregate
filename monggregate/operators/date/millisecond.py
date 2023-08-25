@@ -38,7 +38,7 @@ class Millisecond(DateOperator):
         })
     
 def millisecond(expression:Any, timezone:Any)->Millisecond:
-    """Returns an $millisecond statement"""
+    """Returns an $millisecond operator"""
 
     return Millisecond(
         expression=expression,

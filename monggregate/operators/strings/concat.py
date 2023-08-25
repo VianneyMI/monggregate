@@ -45,7 +45,7 @@ class Concat(StringOperator):
         })
     
 def concat(*args:Any)->Concat:
-    """Returns an $concat statement"""
+    """Returns an $concat operator"""
 
     return Concat(
         expressions=list(args)

@@ -29,23 +29,44 @@ from monggregate.operators import(
 
 from monggregate.utils import StrEnum
 
+# Enums
+#-------------------------------------------
 class AggregationVariableEnum(StrEnum):
-    """Enumeration of available aggregation variables"""
+    """
+    Enumeration of available aggregation variables.
 
-    NOW = "$$NOW" # Returns the current datetime value,
-                # which is same across all members of the deployment and remains constant throughout the aggregation pipeline.
-                # (Available in 4.2+)
-    CLUSTER_TIME = "$$CLUSTER_TIME" # Returns the current timestamp value, which is same across all members of the deployment and remains constant throughout the aggregation pipeline.
-                                    # For replica sets and sharded clusters only. (Available in 4.2+)
-    ROOT = "$$ROOT" # References the root document, i.e. the top-level document.
-    CURRENT = "$$CURRENT" # References the start of the field path, which by default is ROOT but can be changed.
-    REMOVE = "$$REMOVE" # Allows for the conditional exclusion of fields. (Available in 3.6+)
-    DESCEND = "$$DESCEND" # One of the allowed results of a $redact expression.
-    PRUNE = "$$PRUNE" # One of the allowed results of a $redact expression.
-    KEEP = "$$KEEP" # One of the allowed results of a $redact expression.NOW = "$$NOW" # Returns the current datetime value,
-                # which is same across all members of the deployment and remains constant throughout the aggregation pipeline.
-                # (Available in 4.2+)
+    Members:
+    ------------------------------
+        - NOW = "$$NOW" : Returns the current datetime value, which is same across all members of the deployment
+                          (Available in 4.2+)
+        - CLUSTER_TIME = "$$CLUSTER_TIME" : Returns the current timestamp value, 
+                                          which is same across all members of the deployment 
+                                          and remains constant throughout the aggregation pipeline.
+                                          (Available in 4.2+)
+        - ROOT = "$$ROOT" : References the root document, i.e. the top-level document.
+        - CURRENT = "$$CURRENT" : References the start of the field path, which by default is ROOT but can be changed.
+        - REMOVE = "$$REMOVE" : Allows for the conditional exclusion of fields. (Available in 3.6+)
+        - DESCEND = "$$DESCEND" : One of the allowed results of a $redact expression.
+        - PRUNE = "$$PRUNE" : One of the allowed results of a $redact expression.
+        - KEEP = "$$KEEP" : One of the allowed results of a $redact expression.NOW = "$$NOW" : Returns the current datetime value,
+                            which is same across all members of the deployment and remains constant throughout the aggregation pipeline.
+                            (Available in 4.2+)
+            
+    
+    
+    """
 
+    NOW = "$$NOW" 
+    CLUSTER_TIME = "$$CLUSTER_TIME" 
+    ROOT = "$$ROOT"
+    CURRENT = "$$CURRENT" 
+    REMOVE = "$$REMOVE" 
+    DESCEND = "$$DESCEND" 
+    PRUNE = "$$PRUNE" 
+    KEEP = "$$KEEP" 
+
+# Constants
+#-------------------------------------------
 CLUSTER_TIME = AggregationVariableEnum.CLUSTER_TIME.value
 NOW = AggregationVariableEnum.NOW.value
 ROOT = AggregationVariableEnum.ROOT.value
@@ -54,6 +75,10 @@ REMOVE = AggregationVariableEnum.REMOVE.value
 DESCEND = AggregationVariableEnum.DESCEND.value
 PRUNE = AggregationVariableEnum.PRUNE.value
 KEEP = AggregationVariableEnum.KEEP.value
+
+
+# Classes
+#-------------------------------------------
 
 # NOTE : If dollar is to be made to really store all of MongoDB functions i.e stages, operators and whathever they come up with
 # it might de interesting to create a DollarBase class, a DollarStage class and a DollarOperator class and to use inheritance <VM, 10/08/2023> 
@@ -93,9 +118,9 @@ class Dollar(Singleton):
 
         return output
 
-
+    #--------------------------------
     # Accumulators
-    # --------------------------
+    # -------------------------------
     @classmethod
     def avg(cls, expression:Any)->accumulators.Avg:
         """Returns the $avg operator"""
@@ -144,8 +169,9 @@ class Dollar(Singleton):
         
         return accumulators.sum(expression)
     
+    #--------------------------------
     # Arithmetic
-    # --------------------------
+    # -------------------------------
     @classmethod
     def add(cls, *args:Any)->arithmetic.Add:
         """Returns the $add operator"""
@@ -218,8 +244,9 @@ class Dollar(Singleton):
 
         return arithmetic.pow(*args)
     
+    #--------------------------------
     # Array
-    # --------------------------
+    # -------------------------------
     @classmethod
     def array_to_object(cls, expression:Any)->array.ArrayToObject:
         """Returns the $arrayToObject operator"""
@@ -271,8 +298,9 @@ class Dollar(Singleton):
 
         return array.sort_array(expression, sort_spec)
 
+    #--------------------------------
     # Comparison
-    # --------------------------
+    # -------------------------------
     @classmethod
     def cmp(cls, left:Any, right:Any)->comparison.Cmp:
         """Returns the $cmp operator"""
@@ -315,8 +343,9 @@ class Dollar(Singleton):
 
         return comparison.ne(left, right)
     
+    #--------------------------------
     # Conditional
-    # --------------------------
+    # -------------------------------
     @classmethod
     def cond(cls, if_:Any, then:Any, else_:Any)->conditional.Cond:
         """Returns the $cond operator"""
@@ -335,8 +364,9 @@ class Dollar(Singleton):
 
         return conditional.switch(branches, default)
     
+    #--------------------------------
     # Date
-    # --------------------------
+    # -------------------------------
     @classmethod
     def millisecond(cls, expression:Any, timezone:Any)->date.Millisecond:
         """Returns the $millisecond operator"""
@@ -344,8 +374,9 @@ class Dollar(Singleton):
         return date.millisecond(expression, timezone)
    
     
+    #--------------------------------
     # String
-    # --------------------------
+    # -------------------------------
     @classmethod
     def concat(cls, *args:Any)->strings.Concat:
         """Returns the $concat operator"""
@@ -378,9 +409,9 @@ class Dollar(Singleton):
 
         return strings.date_to_string(expression, format, timezone, on_null)
     
-    
+    #--------------------------------
     # Objects
-    # --------------------------
+    # -------------------------------
     @classmethod
     def merge_objects(cls, *args:Any)->objects.MergeObjects:
         """Returns the $mergeObjects operator"""
@@ -393,8 +424,9 @@ class Dollar(Singleton):
 
         return objects.object_to_array(expression)
 
+    #--------------------------------
     # Boolean
-    # --------------------------
+    # -------------------------------
     @classmethod
     def and_(cls, *args:Any)->boolean.And:
         """Returns the $and operator"""
@@ -413,14 +445,16 @@ class Dollar(Singleton):
 
         return boolean.not_(expression)
     
+    #--------------------------------
     # Type
-    # --------------------------
+    # -------------------------------
     @classmethod
     def type_(cls, expression:Any)->type_.Type_:
         """Returns the $type operator"""
 
         return type_.type_(expression)
-    
+
+
 class DollarDollar(Singleton):
     """
     MongoDB double dollar sign ($$) abstraction in python.

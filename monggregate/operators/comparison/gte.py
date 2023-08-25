@@ -46,7 +46,7 @@ class GreatherThanOrEqual(Comparator):
 Gte = GreatherThanOrEqual
 
 def grether_than_or_equal(left:Any, right:Any)->GreatherThanOrEqual:
-    """Returns a $gte statement"""
+    """Returns a $gte operator"""
 
     return GreatherThanOrEqual(
         left=left,

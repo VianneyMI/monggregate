@@ -49,6 +49,6 @@ class ObjectToArray(ArrayOperator):
         })
 
 def object_to_array(expression:Any)->ObjectToArray:
-    """Returns a *objectToArray statement"""
+    """Returns a $objectToArray operator"""
 
     return ObjectToArray(expression=expression)

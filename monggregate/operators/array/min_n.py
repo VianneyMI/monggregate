@@ -73,7 +73,7 @@ class MinN(ArrayOperator):
         })
 
 def min_n(expression:Any, limit:Any=1)->MinN:
-    """Returns a $minN statement"""
+    """Returns a $minN operator"""
 
     return MinN(
         expression = expression,

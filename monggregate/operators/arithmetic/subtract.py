@@ -62,7 +62,7 @@ class Subtract(ArithmeticOperator):
         })
     
 def subtract(left:Any, right:Any)->Subtract:
-    """Returns an $substract statement"""
+    """Returns a $substract operator"""
 
     return Subtract(
         left=left,

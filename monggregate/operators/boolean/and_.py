@@ -73,7 +73,7 @@ class And(BooleanOperator):
         })
 
 def and_(*args:Any)->And:
-    """Returns an $and statement"""
+    """Returns a $and operator"""
 
     return And(
         expressions=list(args)

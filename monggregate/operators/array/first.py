@@ -117,7 +117,7 @@ class First(ArrayOnlyOperator):
         })
 
 def first(array:Any)->First:
-    """Returns a $first statement"""
+    """Returns a $first operator"""
 
     return First(
         expression = array

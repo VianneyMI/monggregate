@@ -85,7 +85,7 @@ class Filter(ArrayOperator):
         })
 
 def filter(expression:Any, let:str, query:Any, limit:int|None=None)->Filter: 
-    """Returns a $filter statement"""
+    """Returns a $filter operator"""
 
     return Filter(
         expression = expression,

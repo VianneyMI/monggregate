@@ -95,7 +95,7 @@ class Average(Accumulator):
 Avg = Average
 
 def average(expression:Any)->Average:
-    """Creates a push statement"""
+    """Returns a $avg operator"""
 
     return Average(expression=expression)
 

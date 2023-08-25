@@ -49,7 +49,7 @@ class Or(BooleanOperator):
         })
 
 def or_(*args:Any)->Or:
-    """Returns an $or statement"""
+    """Returns a $or operator"""
 
     return Or(
         expressions=list(args)

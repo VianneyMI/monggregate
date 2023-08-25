@@ -45,7 +45,7 @@ class Multiply(ArithmeticOperator):
         })
     
 def multiply(*args:Any)->Multiply:
-    """Returns an $multiply statement"""
+    """Returns a $multiply operator"""
 
     return Multiply(
         expressions=list(args)

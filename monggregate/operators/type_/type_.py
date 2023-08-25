@@ -110,7 +110,7 @@ class Type_(BaseModel):
     
 
 def type_(expression:Any)->Type_:
-    """xxxx"""
+    """Returns a $type operator"""
 
     return Type_(
         expression=expression

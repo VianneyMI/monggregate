@@ -100,6 +100,6 @@ class Min(Accumulator):
         })
 
 def min(expression:Any)->Min:
-    """Creates a $min statement"""
+    """Returns a $min operator"""
 
     return Min(expression=expression)

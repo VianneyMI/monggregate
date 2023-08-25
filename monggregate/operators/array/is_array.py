@@ -45,7 +45,7 @@ class IsArray(ArrayOnlyOperator):
         })
 
 def is_array(array:Any)->IsArray:
-    """Returns a $isArray statement"""
+    """Returns a $isArray operator"""
 
     return IsArray(
         expression = array

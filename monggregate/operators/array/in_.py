@@ -55,7 +55,7 @@ class In(ArrayOperator):
         })
 
 def in_(left:Any, right:Any)->In:
-    """Returns a $maxN statement"""
+    """Returns a $maxN operator"""
 
     return In(
         left = left,

@@ -64,6 +64,6 @@ class MergeObjects(ArrayOperator):
         })
 
 def merge_objects(expression:Any)->MergeObjects:
-    """Returns a merge_objects statement"""
+    """Returns a $mergeObjects operator"""
 
     return MergeObjects(expression=expression)

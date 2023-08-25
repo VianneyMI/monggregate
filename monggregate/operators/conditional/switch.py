@@ -86,7 +86,7 @@ class Switch(ConditionalOperator):
         })
     
 def switch(branches:list[Any], default:Any)->Switch:
-    """Returns an $switch statement"""
+    """Returns an $switch operator"""
 
     return Switch(
         branches=branches,

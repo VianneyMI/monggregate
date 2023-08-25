@@ -111,7 +111,7 @@ def date_to_string(
         timezone:Any=None,
         on_null:Any=None
 )->DateToString:
-    """Returns an $dateToString statement"""
+    """Returns an $dateToString operator"""
 
     return DateToString(
         date=date,

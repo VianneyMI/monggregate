@@ -65,7 +65,7 @@ class Pow(ArithmeticOperator):
         })
     
 def pow(number:Any, exponent:Any)->Pow:
-    """Returns an $pow statement"""
+    """Returns a $pow operator"""
 
     return Pow(
         number=number,

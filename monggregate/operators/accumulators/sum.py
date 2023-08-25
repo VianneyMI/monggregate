@@ -109,7 +109,7 @@ class Sum(Accumulator):
         })
 
 def sum(*args:Any)->Sum:
-    """Creates a $sum statement"""
+    """Returns a $sum operator"""
 
     if len(args)>1:
         output = Sum(expression=list(args))

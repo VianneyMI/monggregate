@@ -45,7 +45,7 @@ class LowerThan(Comparator):
 Lt = LowerThan
 
 def lower_than(left:Any, right:Any)->LowerThan:
-    """Returns a $lt statement"""
+    """Returns a $lt operator"""
 
     return LowerThan(
         left=left,

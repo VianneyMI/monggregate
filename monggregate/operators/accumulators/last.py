@@ -76,6 +76,6 @@ class Last(Accumulator):
         })
 
 def last(expression:Any)->Last:
-    """Creates a push statement"""
+    """Returns a $last operator"""
 
     return Last(expression=expression)

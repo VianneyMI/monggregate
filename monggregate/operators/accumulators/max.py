@@ -100,6 +100,6 @@ class Max(Accumulator):
         })
 
 def max(expression:Any)->Max:
-    """Creates a push statement"""
+    """Returns a $last operator"""
 
     return Max(expression=expression)

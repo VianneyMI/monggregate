@@ -48,7 +48,7 @@ class Not(BooleanOperator):
         })
 
 def not_(expression:Any)->Not:
-    """Returns an $not statement"""
+    """Returns a $not operator"""
 
     return Not(
         expression=expression

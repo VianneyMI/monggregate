@@ -69,7 +69,7 @@ class IfNull(ConditionalOperator):
         })
     
 def if_null(expression:Any, output:Any)->IfNull:
-    """Returns an $if_null statement"""
+    """Returns an $if_null operator"""
 
     return IfNull(
         expression=expression,

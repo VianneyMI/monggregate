@@ -114,7 +114,7 @@ def date_from_string(
         on_error:Any=None,
         on_null:Any=None
 )->DateFromString:
-    """Returns an $dateFromString statement"""
+    """Returns an $dateFromString operator"""
 
     return DateFromString(
         date_string=date_string,

@@ -53,6 +53,6 @@ class Push(Accumulator):
         })
 
 def push(expression:Any)->Push:
-    """Creates a push statement"""
+    """Returns a $push operator"""
 
     return Push(expression=expression)

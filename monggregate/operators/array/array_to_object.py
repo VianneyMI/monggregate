@@ -73,6 +73,6 @@ class ArrayToObject(ArrayOperator):
         })
 
 def array_to_object(expression:Any)->ArrayToObject:
-    """Returns an $arrayToObject statement"""
+    """Returns a $arrayToObject operator"""
 
     return ArrayToObject(expression=expression)

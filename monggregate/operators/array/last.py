@@ -121,7 +121,7 @@ class Last(ArrayOnlyOperator):
         })
 
 def last(array:Any)->Last:
-    """Returns a $last statement"""
+    """Returns a $last operator"""
 
     return Last(
         expression = array

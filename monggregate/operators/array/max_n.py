@@ -73,7 +73,7 @@ class MaxN(ArrayOperator):
         })
 
 def max_n(expression:Any, limit:Any=1)->MaxN:
-    """Returns a $maxN statement"""
+    """Returns a $maxN operator"""
 
     return MaxN(
         expression = expression,

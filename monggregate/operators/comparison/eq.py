@@ -50,7 +50,7 @@ class Equal(Comparator):
 Eq = Equal
 
 def equal(left:Any, right:Any)->Equal:
-    """Creates an $eq statement"""
+    """Creates an $eq operator"""
 
     return Equal(
         left=left,

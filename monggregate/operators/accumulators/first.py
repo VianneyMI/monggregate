@@ -82,6 +82,6 @@ class First(Accumulator):
         })
 
 def first(expression:Any)->First:
-    """Creates a push statement"""
+    """Returns a $first operator"""
 
     return First(expression=expression)

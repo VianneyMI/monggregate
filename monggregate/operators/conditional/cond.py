@@ -126,7 +126,7 @@ class Cond(ConditionalOperator):
         })
     
 def cond(*args:Any, **kwargs:Any)->Cond:
-    """Returns an $cond statement"""
+    """Returns an $cond operator"""
 
     if_ = args[0] if args else (kwargs.get("if_") or kwargs.get("expression"))
     then_ = args[1] if len(args) > 1 else (kwargs.get("then_") or kwargs.get("true_"))

@@ -47,7 +47,7 @@ class Size(ArrayOnlyOperator):
         })
 
 def size(array:Any)->Size:
-    """Returns a $size statement"""
+    """Returns a $size operator"""
 
     return Size(
         expression = array

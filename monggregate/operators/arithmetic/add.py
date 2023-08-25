@@ -47,7 +47,7 @@ class Add(ArithmeticOperator):
         })
     
 def add(*args:Any)->Add:
-    """Returns an $add statement"""
+    """Returns a $add operator"""
 
     return Add(
         expressions=list(args)

@@ -63,7 +63,7 @@ class Count(Accumulator):
         })
 
 def count()->Count:
-    """Creates a $count statement"""
+    """Returns a $count operator"""
 
     return Count()
 

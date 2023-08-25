@@ -46,7 +46,7 @@ class LowerThanOrEqual(Comparator):
 Lte = LowerThanOrEqual
 
 def lower_than_or_equal(left:Any, right:Any)->LowerThanOrEqual:
-    """Returns a $lt statement"""
+    """Returns a $lt operator"""
 
     return LowerThanOrEqual(
         left=left,

@@ -48,7 +48,7 @@ class GreatherThan(Comparator):
 Gt = GreatherThan
 
 def greather_than(left:Any, right:Any)->GreatherThan:
-    """Returns a $gt statement"""
+    """Returns a $gt operator"""
 
     return GreatherThan(
         left = left,
