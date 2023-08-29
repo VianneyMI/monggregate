@@ -84,12 +84,12 @@ class Filter(ArrayOperator):
             }
         })
 
-def filter(expression:Any, let:str, query:Any, limit:int|None=None)->dict: # pylint: disable=redefined-builtin
-    """Returns a $filter statement"""
+def filter(expression:Any, let:str, query:Any, limit:int|None=None)->Filter: 
+    """Returns a $filter operator"""
 
     return Filter(
         expression = expression,
         query = query,
         let = let,
         limit = limit
-    ).statement
+    )

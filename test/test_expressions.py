@@ -1,11 +1,10 @@
-
 """Module to test expressions"""
 
 
 import pytest
 import pydantic
 from monggregate.base import pyd
-from monggregate.expressions.fields import FieldName
+from monggregate.fields import FieldName
 
 
 

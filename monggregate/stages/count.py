@@ -35,7 +35,7 @@ where myCount would be the output field that contains the count. You can specify
 """
 
 from monggregate.stages.stage import Stage
-from monggregate.expressions.fields import FieldName
+from monggregate.fields import FieldName
 
 
 class Count(Stage):

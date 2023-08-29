@@ -45,12 +45,12 @@ class LowerThanOrEqual(Comparator):
 
 Lte = LowerThanOrEqual
 
-def lower_than_or_equal(left:Any, right:Any)->dict:
-    """Returns a $lt statement"""
+def lower_than_or_equal(left:Any, right:Any)->LowerThanOrEqual:
+    """Returns a $lt operator"""
 
     return LowerThanOrEqual(
         left=left,
         right=right
-    ).statement
+    )
 
 lte = lower_than_or_equal

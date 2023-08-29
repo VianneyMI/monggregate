@@ -48,7 +48,7 @@ class ObjectToArray(ArrayOperator):
             "$objectToArray" : self.expression
         })
 
-def object_to_array(expression:Any)->dict:
-    """Returns a *objectToArray statement"""
+def object_to_array(expression:Any)->ObjectToArray:
+    """Returns a $objectToArray operator"""
 
-    return ObjectToArray(expression=expression).statement
+    return ObjectToArray(expression=expression)

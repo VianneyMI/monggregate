@@ -1,5 +1,5 @@
 """
-Module defining an interface to $and operator
+Module defining an interface to the $and operator
 
 Online MongoDB documentation:
 --------------------------------------------------------------------------------------------------------------------
@@ -72,10 +72,10 @@ class And(BooleanOperator):
             "$and" : self.expressions
         })
 
-def and_(*args:Any)->dict:
-    """Returns an $and statement"""
+def and_(*args:Any)->And:
+    """Returns a $and operator"""
 
     return And(
         expressions=list(args)
-    ).statement
+    )
 

@@ -49,12 +49,12 @@ class Equal(Comparator):
 
 Eq = Equal
 
-def equal(left:Any, right:Any)->dict:
-    """Creates an $eq statement"""
+def equal(left:Any, right:Any)->Equal:
+    """Creates an $eq operator"""
 
     return Equal(
         left=left,
         right=right
-    ).statement
+    )
 
 eq = equal

@@ -54,10 +54,10 @@ class In(ArrayOperator):
             "$in":[self.left, self.right]
         })
 
-def in_(left:Any, right:Any)->dict:
-    """Returns a $maxN statement"""
+def in_(left:Any, right:Any)->In:
+    """Returns a $maxN operator"""
 
     return In(
         left = left,
         right = right
-    ).statement
+    )

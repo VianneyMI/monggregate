@@ -31,7 +31,7 @@ from monggregate.stages import (
 from monggregate.stages.search import OperatorLiteral
 from monggregate.search.operators.compound import Compound
 from monggregate.operators import MergeObjects
-from monggregate.expressions.aggregation_variables import ROOT
+from monggregate.dollar import ROOT
 from monggregate.utils import StrEnum
 
 

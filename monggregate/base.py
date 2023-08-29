@@ -1,9 +1,13 @@
-"""Module defining the base class of the package"""
+"""
+Module defining the base classes of the package.
+
+All the classes of the package inherit from one of the classes defined in this module.
+"""
 
 # Standard Library imports
 #----------------------------
 from abc import ABC, abstractmethod
-from typing import Any
+from typing import Any, TypeGuard
 
 # 3rd Party imports
 # ---------------------------
@@ -15,7 +19,14 @@ except ModuleNotFoundError:
     
 from humps.main import camelize
 
+class Singleton:
+    """Singleton metaclass"""
 
+    _instance = None
+    def __new__(cls, *args, **kwargs):
+        if not isinstance(cls._instance, cls):
+            cls._instance = object.__new__(cls, *args, **kwargs)
+        return cls._instance
 
 class BaseModel(pyd.BaseModel, ABC):
     """Mongreggate base class"""
@@ -45,10 +56,10 @@ class BaseModel(pyd.BaseModel, ABC):
         allow_population_by_field_name = True
         underscore_attrs_are_private = True
         smart_union = True
-        #alias_generator = camelize
+        alias_generator = camelize
 
 
-def isbasemodel(instance:Any)->bool:
+def isbasemodel(instance:Any)->TypeGuard[BaseModel]:
     """Returns true if instance is an instance of BaseModel"""
 
     return isinstance(instance, BaseModel)

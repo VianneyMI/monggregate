@@ -116,9 +116,9 @@ class First(ArrayOnlyOperator):
             "$first":self.expression
         })
 
-def first(array:Any)->dict:
-    """Returns a $first statement"""
+def first(array:Any)->First:
+    """Returns a $first operator"""
 
     return First(
         expression = array
-    ).statement
+    )

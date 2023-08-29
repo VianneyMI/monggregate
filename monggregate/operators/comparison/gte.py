@@ -45,12 +45,12 @@ class GreatherThanOrEqual(Comparator):
 
 Gte = GreatherThanOrEqual
 
-def grether_than_or_equal(left:Any, right:Any)->dict:
-    """Returns a $gte statement"""
+def grether_than_or_equal(left:Any, right:Any)->GreatherThanOrEqual:
+    """Returns a $gte operator"""
 
     return GreatherThanOrEqual(
         left=left,
         right=right
-    ).statement
+    )
 
 gte = grether_than_or_equal

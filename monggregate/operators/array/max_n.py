@@ -72,10 +72,10 @@ class MaxN(ArrayOperator):
             }
         })
 
-def max_n(expression:Any, limit:Any=1)->dict:
-    """Returns a $maxN statement"""
+def max_n(expression:Any, limit:Any=1)->MaxN:
+    """Returns a $maxN operator"""
 
     return MaxN(
         expression = expression,
         limit = limit
-    ).statement
+    )

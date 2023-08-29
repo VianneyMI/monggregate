@@ -85,8 +85,8 @@ In the other supported stages:
 
 """
 
+from typing import Any
 from monggregate.operators.accumulators.accumulator import Accumulator
-from monggregate.expressions.content import Content
 
 class Sum(Accumulator):
     """
@@ -98,7 +98,7 @@ class Sum(Accumulator):
         - operand, Expression : Any valid expression
     """
 
-    expression : Content | list[Content]
+    expression : Any
 
 
     @property
@@ -108,12 +108,12 @@ class Sum(Accumulator):
             "$sum" : self.expression
         })
 
-def sum(*args:Content)->dict: # pylint: disable=redefined-builtin
-    """Creates a $sum statement"""
+def sum(*args:Any)->Sum:
+    """Returns a $sum operator"""
 
     if len(args)>1:
-        output = Sum(expression=list(args)).statement
+        output = Sum(expression=list(args))
     else:
-        output = Sum(expression=args[0]).statement
+        output = Sum(expression=args[0])
 
     return output

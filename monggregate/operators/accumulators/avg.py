@@ -57,7 +57,7 @@ $avg returns null since the average of zero values is undefined.
 
 Array Operand
 
-In the $group stage, if the expression resolves to an array, $avgtreats the operand as a non-numerical value.
+In the $group stage, if the expression resolves to an array, $avg treats the operand as a non-numerical value.
 
 In the other supported stages:
 
@@ -72,7 +72,6 @@ In the other supported stages:
 
 from typing import Any
 from monggregate.operators.accumulators.accumulator import Accumulator
-from monggregate.expressions.content import Content
 
 class Average(Accumulator):
     """
@@ -84,7 +83,7 @@ class Average(Accumulator):
 
     """
 
-    expression : Content
+    expression : Any
 
     @property
     def statement(self) -> dict:
@@ -95,9 +94,9 @@ class Average(Accumulator):
     
 Avg = Average
 
-def average(expression:Any)->dict:
-    """Creates a push statement"""
+def average(expression:Any)->Average:
+    """Returns a $avg operator"""
 
-    return Average(expression=expression).statement
+    return Average(expression=expression)
 
 avg = average

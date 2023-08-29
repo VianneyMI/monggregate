@@ -63,7 +63,7 @@ class MergeObjects(ArrayOperator):
             "$mergeObjects" : self.expression
         })
 
-def merge_objects(expression:Any)->dict:
-    """Returns a merge_objects statement"""
+def merge_objects(expression:Any)->MergeObjects:
+    """Returns a $mergeObjects operator"""
 
-    return MergeObjects(expression=expression).statement
+    return MergeObjects(expression=expression)

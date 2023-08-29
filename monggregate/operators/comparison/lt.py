@@ -44,12 +44,12 @@ class LowerThan(Comparator):
 
 Lt = LowerThan
 
-def lower_than(left:Any, right:Any)->dict:
-    """Returns a $lt statement"""
+def lower_than(left:Any, right:Any)->LowerThan:
+    """Returns a $lt operator"""
 
     return LowerThan(
         left=left,
         right=right
-    ).statement
+    )
 
 lt = lower_than
