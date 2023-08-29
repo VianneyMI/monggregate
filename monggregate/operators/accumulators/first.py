@@ -81,7 +81,7 @@ class First(Accumulator):
             "$first" : self.expression
         })
 
-def first(expression:Any)->dict:
-    """Creates a push statement"""
+def first(expression:Any)->First:
+    """Returns a $first operator"""
 
-    return First(expression=expression).statement
+    return First(expression=expression)

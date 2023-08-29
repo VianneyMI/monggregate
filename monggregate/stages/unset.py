@@ -48,7 +48,7 @@ or
 """
 
 from monggregate.stages.stage import Stage
-from monggregate.expressions.fields import FieldName
+from monggregate.fields import FieldName
 
 class Unset(Stage):
     """

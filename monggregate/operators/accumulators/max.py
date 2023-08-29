@@ -99,7 +99,7 @@ class Max(Accumulator):
             "$max" : self.expression
         })
 
-def max(expression:Any)->dict: # pylint: disable=redefined-builtin
-    """Creates a push statement"""
+def max(expression:Any)->Max:
+    """Returns a $last operator"""
 
-    return Max(expression=expression).statement
+    return Max(expression=expression)

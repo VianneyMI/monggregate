@@ -75,7 +75,7 @@ class Last(Accumulator):
             "$last" : self.expression
         })
 
-def last(expression:Any)->dict:
-    """Creates a push statement"""
+def last(expression:Any)->Last:
+    """Returns a $last operator"""
 
-    return Last(expression=expression).statement
+    return Last(expression=expression)

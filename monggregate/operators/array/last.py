@@ -120,9 +120,9 @@ class Last(ArrayOnlyOperator):
             "$last":self.expression
         })
 
-def last(array:Any)->dict:
-    """Returns a $last statement"""
+def last(array:Any)->Last:
+    """Returns a $last operator"""
 
     return Last(
         expression = array
-    ).statement
+    )

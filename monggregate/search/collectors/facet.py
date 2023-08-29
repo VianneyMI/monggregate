@@ -169,7 +169,7 @@ from datetime import datetime
 from typing import Literal
 
 from monggregate.base import BaseModel, pyd
-from monggregate.expressions.fields import FieldName
+from monggregate.fields import FieldName
 from monggregate.search.collectors.collector import SearchCollector
 from monggregate.search.operators import(
     Autocomplete,

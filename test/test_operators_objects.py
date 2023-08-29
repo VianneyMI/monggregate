@@ -26,7 +26,7 @@ class TestObjectsOperators:
 
         # Functinal test
         # ---------------
-        assert merge_objects_op.statement == merge_objects("$quantity") == {
+        assert merge_objects_op.statement == merge_objects("$quantity").statement == {
             "$mergeObjects" : "$quantity"
         }
 
@@ -43,6 +43,6 @@ class TestObjectsOperators:
 
         # Functinal test
         # ---------------
-        assert object_to_array_op.statement == object_to_array("$dimensions") == {
+        assert object_to_array_op.statement == object_to_array("$dimensions").statement == {
             "$objectToArray" : "$dimensions"
         }

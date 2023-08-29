@@ -44,9 +44,9 @@ class IsArray(ArrayOnlyOperator):
             "$isArray":self.expression
         })
 
-def is_array(array:Any)->dict:
-    """Returns a $isArray statement"""
+def is_array(array:Any)->IsArray:
+    """Returns a $isArray operator"""
 
     return IsArray(
         expression = array
-    ).statement
+    )

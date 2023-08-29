@@ -10,3 +10,17 @@ from monggregate.operators.array.max_n import MaxN, max_n
 from monggregate.operators.array.min_n import MinN, min_n
 from monggregate.operators.array.size import Size, size
 from monggregate.operators.array.sort_array import SortArray, sort_array
+
+# TODO:
+# * $arrayElemAt
+# * $concatArrays
+# * $indexOfArray
+# * $map
+# * $maxN
+# * $minN
+# * $objectToArray
+# * $range
+# * $reduce
+# * $reverseArray
+# * $slice
+# * $zip

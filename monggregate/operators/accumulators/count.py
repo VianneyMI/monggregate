@@ -62,8 +62,8 @@ class Count(Accumulator):
             "$count" : {}
         })
 
-def count()->dict:
-    """Creates a $count statement"""
+def count()->Count:
+    """Returns a $count operator"""
 
-    return Count().statement
+    return Count()
 

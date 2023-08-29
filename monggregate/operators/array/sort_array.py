@@ -108,10 +108,10 @@ class SortArray(ArrayOperator):
             }
         })
 
-def sort_array(expression:Any, sort_by:dict[str, Literal[1, -1]])->dict:
-    """Returns a $first statement"""
+def sort_array(expression:Any, sort_by:dict[str, Literal[1, -1]])->SortArray:
+    """Returns a $first operator"""
 
     return SortArray(
         expression = expression,
         sort_by = sort_by
-    ).statement
+    )

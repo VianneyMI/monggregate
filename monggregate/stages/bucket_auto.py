@@ -83,8 +83,7 @@ The values of the series are multiplied by a power of 10 when the groupBy values
 from typing import Any
 from monggregate.base import pyd
 from monggregate.stages.stage import Stage
-from monggregate.expressions.content import Content
-from monggregate.expressions.fields import FieldName
+from monggregate.fields import FieldName
 from monggregate.operators.accumulators.accumulator import AccumulatorExpression
 from monggregate.utils import StrEnum, validate_field_path
 
@@ -137,7 +136,7 @@ class BucketAuto(Stage):
 
     # Attributes
     # ----------------------------------------------------------------------------
-    by : Content = pyd.Field(...,alias="group_by") # probably should restrict type to field_paths an operator expressions
+    by : Any = pyd.Field(...,alias="group_by") # probably should restrict type to field_paths an operator expressions
     buckets : int = pyd.Field(..., gt=0)
     output : dict[FieldName, AccumulatorExpression] | None = None# Accumulator Expressions #TODO : Define type and use it here
     granularity : GranularityEnum | None = None
