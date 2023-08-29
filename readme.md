@@ -18,32 +18,24 @@ This package requires python > 3.10, pydantic > 1.8.0
 
 ## Installation
 
-### PIP
-
 The repo is now available on PyPI:
 
 ```shell
 pip install monggregate
 ```
 
-### Manually
-
-1. Download the repo from https://github.com/VianneyMI/mongreggate
-2. Copy the repo to your project
-3. Navigate to the folder containing the downloaded repo
-4. Install the repo locally by executing the following command: ` python -m pip install -e .`
 
 ## Usage
 
 The below examples reference the MongoDB sample_mflix database
 
-### ... through the pipeline interface
+### Basic Pipeline usage
 
 ```python
 
 from dotenv import load_dotenv
 import pymongo
-from monggregate.pipeline import Pipeline
+from monggregate import Pipeline, S
 
 # Load config from a .env file:
 load_dotenv(verbose=True)
@@ -58,6 +50,7 @@ db = client["sample_mflix"]
 # Creating the pipeline
 pipeline = Pipeline()
 
+# The below pipeline will return the most recent movie with the title "A Star is Born"
 pipeline.match(
     title="A Star is Born"
 ).sort(
@@ -67,18 +60,21 @@ pipeline.match(
 )
 
 # Executing the pipeline
-db["movies"].aggregate(pipeline.export())
+results = db["movies"].aggregate(pipeline.export())
+
+print(results)
 
 ```
 
 
-### ... through the stage classes
+### More advanced usage, with MongoDB operators
+
 
 ```python
 
 from dotenv import load_dotenv
 import pymongo
-from monggregate.stages import Match, Limit Sort
+from monggregate import Pipeline, S
 
 # Load config from a .env file:
 load_dotenv(verbose=True)
@@ -90,34 +86,49 @@ client = pymongo.MongoClient(MONGODB_URI)
 # Get a reference to the "sample_mflix" database:
 db = client["sample_mflix"]
 
-# Get a reference to the "movies" collection:
-movie_collection = db["movies"]
 
 # Creating the pipeline
-filter_on_title = Match(
+pipeline = Pipeline()
+pipeline.match(
+    year=S.type_("number") # Filtering out documents where the year field is not a number
+).group(
+    by="year",
     query = {
-        "title" : "A Star is Born"
+        "movie_count":S.sum(1), # Aggregating the movies per year
+        "movie_titles":S.push("$title")
     }
-)
-sorting_per_year = Sort(
-    query = {
-        "year":1
-    }
-)
+).sort(
+    by="_id",
+    descending=True
+).limit(10)
 
-limiting_to_most_recent = Limit(
-    value=1
-)
+# Executing the pipeline
+results = db["movies"].aggregate(pipeline.export())
 
-pipeline = [filter_on_title, sorting_per_year, limiting_to_most_recent]
-pipeline = [stage.statment for stage in pipeline]
-
-# Lauching the pipeline
-
-results = move_collection.aggregate(pipeline)
+print(results)
 
 ```
 
+### Advanced usage with Expressions
+
+```python
+
+from monggregate import Pipeline, S, Expression
+
+pipeline = Pipeline()
+pipeline.lookup(
+    right="comments",
+    right_on="_id",
+    left_on="movie_id",
+    name="comments
+).add_fields(
+    comment_count=Expression.field("related_comments").size()
+).match(
+    comment_count=S.gte(2)
+)
+
+
+```
 
 ## Motivation
 
@@ -135,7 +146,8 @@ Basically, the package mirrors every* stage and operator available on MongoDB.
 
 ## Roadmap
 
-As of now, the package covers 50% of the available stages and 20% of the available operators.
+As of now, the package covers around 40% of the available stages and 25% of the available operators.
+I would argue, that the most important stages and operators are probably covered but this is subjective.
 The goal is to quickly reach 100% of both stages and operators.
 The source code integrates most of the online MongoDB documentation. If the online documentation evolves, it will need to be updated here as well.
 The current documentation is not consistent throughout the package it will need to be standardized later on.
