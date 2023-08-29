@@ -292,6 +292,13 @@ class Expression(BaseModel):
 
        
         return self.__class__(content=array.MinN(expression=self, limit=limit))
+    
+
+    def size(self)->Self:
+        """Creates a $size expression"""
+
+       
+        return self.__class__(content=array.Size(expression=self))
         
 
     def sort_array(self, by:dict[str, Literal[1, -1]])->Self:
@@ -491,3 +498,8 @@ class Expression(BaseModel):
        
         return self.__class__(content=type_.Type_(expression=self))
         
+
+if __name__ == "__main__":
+    #result = Expression.field("left") & Expression.field("right")
+    result = Expression.field("related_comments").size()
+    print(result())
