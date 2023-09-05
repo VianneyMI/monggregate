@@ -30,7 +30,7 @@ jobs:
         pip install .
         pip install -r requirements.txt
     - name: Test with pytest
-      with:
+      env:
           MONGODB_PASSWORD: ${{secrets.MONGODB_PASSWORD}}
       run: |
         pytest
