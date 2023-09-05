@@ -32,14 +32,16 @@ The below examples reference the MongoDB sample_mflix database
 ### Basic Pipeline usage
 
 ```python
+import os
 
-from dotenv import load_dotenv
+from dotenv import load_dotenv 
 import pymongo
 from monggregate import Pipeline, S
 
-# Load config from a .env file:
+# Creating connexion string securely
 load_dotenv(verbose=True)
-MONGODB_URI = os.environ["MONGODB_URI"]
+PWD = os.environ["MONGODB_PASSWORD"]
+MONGODB_URI = f"mongodb+srv://dev:{PWD}@myserver.xciie.mongodb.net/?retryWrites=true&w=majority"
 
 # Connect to your MongoDB cluster:
 client = pymongo.MongoClient(MONGODB_URI)
@@ -52,33 +54,38 @@ pipeline = Pipeline()
 
 # The below pipeline will return the most recent movie with the title "A Star is Born"
 pipeline.match(
-    title="A Star is Born"
+    title="A Star Is Born"
 ).sort(
-    value="year"
+    by="year"
 ).limit(
     value=1
 )
 
 # Executing the pipeline
-results = db["movies"].aggregate(pipeline.export())
+curosr = db["movies"].aggregate(pipeline.export())
 
-print(results)
-
+results = list(curosr)
+assert results
 ```
 
 
-### More advanced usage, with MongoDB operators
+
+### Advanced usage, with MongoDB operators
 
 
 ```python
+import os
 
-from dotenv import load_dotenv
+from dotenv import load_dotenv 
 import pymongo
 from monggregate import Pipeline, S
 
-# Load config from a .env file:
+
+# Creating connexion string securely
 load_dotenv(verbose=True)
-MONGODB_URI = os.environ["MONGODB_URI"]
+PWD = os.environ["MONGODB_PASSWORD"]
+MONGODB_URI = f"mongodb+srv://dev:{PWD}@myserver.xciie.mongodb.net/?retryWrites=true&w=majority"
+
 
 # Connect to your MongoDB cluster:
 client = pymongo.MongoClient(MONGODB_URI)
@@ -103,29 +110,60 @@ pipeline.match(
 ).limit(10)
 
 # Executing the pipeline
-results = db["movies"].aggregate(pipeline.export())
+cursor = db["movies"].aggregate(pipeline.export())
 
-print(results)
+# Printing the results
+results = list(cursor)
+#print(results)
+assert results
 
 ```
 
-### Advanced usage with Expressions
+### Even more advanced usage with Expressions
 
 ```python
+import os
 
+from dotenv import load_dotenv 
+import pymongo
 from monggregate import Pipeline, S, Expression
 
+# Creating connexion string securely
+load_dotenv(verbose=True)
+PWD = os.environ["MONGODB_PASSWORD"]
+MONGODB_URI = f"mongodb+srv://dev:{PWD}@myserver.xciie.mongodb.net/?retryWrites=true&w=majority"
+
+
+# Connect to your MongoDB cluster:
+client = pymongo.MongoClient(MONGODB_URI)
+
+# Get a reference to the "sample_mflix" database:
+db = client["sample_mflix"]
+
+# Using expressions
+comments_count = Expression.field("comments").size()
+
+
+# Creating the pipeline
 pipeline = Pipeline()
 pipeline.lookup(
     right="comments",
-    right_on="_id",
-    left_on="movie_id",
-    name="comments
+    right_on="movie_id",
+    left_on="_id",
+    name="comments"
 ).add_fields(
-    comment_count=Expression.field("related_comments").size()
+    comments_count=comments_count
 ).match(
-    comment_count=S.gte(2)
-)
+    query={"$expr":comments_count>2}
+).limit(1)
+
+# Executing the pipeline
+cursor = db["movies"].aggregate(pipeline.export())
+
+# Printing the results
+results = list(cursor)
+#print(results)
+assert results, results
 
 
 ```

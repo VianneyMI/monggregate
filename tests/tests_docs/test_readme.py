@@ -12,7 +12,7 @@ def test_basic_pipeline_usage():
     import pymongo
     from monggregate import Pipeline, S
 
-
+    # Creating connexion string securely
     load_dotenv(verbose=True)
     PWD = os.environ["MONGODB_PASSWORD"]
     MONGODB_URI = f"mongodb+srv://dev:{PWD}@myserver.xciie.mongodb.net/?retryWrites=true&w=majority"
@@ -53,7 +53,7 @@ def test_advanced_usage():
     import pymongo
     from monggregate import Pipeline, S
 
-
+    # Creating connexion string securely
     load_dotenv(verbose=True)
     PWD = os.environ["MONGODB_PASSWORD"]
     MONGODB_URI = f"mongodb+srv://dev:{PWD}@myserver.xciie.mongodb.net/?retryWrites=true&w=majority"
@@ -102,6 +102,7 @@ def test_even_more_advanced_usage():
     import pymongo
     from monggregate import Pipeline, S, Expression
 
+    # Creating connexion string securely
     load_dotenv(verbose=True)
     PWD = os.environ["MONGODB_PASSWORD"]
     MONGODB_URI = f"mongodb+srv://dev:{PWD}@myserver.xciie.mongodb.net/?retryWrites=true&w=majority"
