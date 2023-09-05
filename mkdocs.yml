@@ -1,7 +1,16 @@
-site_name: MkLorum
+site_name: Monggregate Documentation
 site_url: https://example.com/
 nav:
   - Home: readme.md
-  - Releases: changelog.md
-
+  - Changelog: changelog.md
+theme: material
+Material Options for syntax highlighting
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
 
