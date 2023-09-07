@@ -615,7 +615,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             )
         return self
 
-    def replace_root(self, path:str|None=None, *,document:dict|None=None)->"Pipeline":
+    def replace_root(self, path:str|None=None, *, document:dict|None=None)->"Pipeline":
         """
         Adds a replace_root stage to the current pipeline.
 
@@ -630,7 +630,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         """
 
         self.stages.append(
-                ReplaceRoot(path=path)
+                ReplaceRoot(path=path, document=document)
             )
         return self
 
@@ -648,7 +648,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         """
 
         self.stages.append(
-                ReplaceRoot(path=path)
+                ReplaceRoot(path=path, document=document)
             )
         return self
 
