@@ -2,7 +2,9 @@
 
 from typing import Any, Literal
 from warnings import warn
-from pymongo.database import Database
+
+import _run
+
 from monggregate.base import BaseModel
 from monggregate.stages import (
     Stage,
@@ -94,9 +96,13 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
     """
 
-    stages : list[Stage] = []
-    _db : Database | None = None# necessary to execute the pipeline
+    # instance of pymongo or motor database to allow pipeline to directly runnable
+    _db : _run.Database | _run.AsyncIOMotorDatabase | _run.MotorDatabase | None = None
+    # name of the collection to run the pipeline on
     collection : str | None =None
+    # list of stages that compose the pipeline
+    stages : list[Stage] = []
+   
     
 
     @property
@@ -111,26 +117,55 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     # ------------------------------------------------
     # Pipeline Internal Methods
     #-------------------------------------------------
-    def __call__(self)->list[dict]:
-        """Makes a pipeline instance callable and executes the entire pipeline when called"""
-   
-        return self.run()
+    if _run.MOTOR:
+        async def __call__(self)->list[dict[str, Any]]:
+            """Makes a pipeline instance callable and executes the entire pipeline when called"""
+    
+            return self.run()
+
+        
+        async def run(self)->list[dict[str, Any]]:
+            """Executes the entire pipeline"""
+
+            if self._db is None:
+                raise ValueError("db is not defined. Please indicate which database to run the pipeline on")
+
+            if not self.collection:
+                raise ValueError("collection is not defined. Please indicate which collection to run the pipeline on")
+
+            # TODO : Allow to yield results as they come in <VM, 08/09/2023>
+            cursor = self._db[self.collection].aggregate(pipeline=self.export())
+            array = await cursor.to_list(length=None)
+
+            return array
+        
+    elif _run.PYMONGO:
+        def __call__(self)->list[dict[str, Any]]:
+            """Makes a pipeline instance callable and executes the entire pipeline when called"""
+    
+            return self.run()
+
+        
+        def run(self)->list[dict[str, Any]]:
+            """Executes the entire pipeline"""
+
+            if self._db is None:
+                raise ValueError("_db is not defined. Please indicate which database to run the pipeline on")
+
+            if not self.collection:
+                raise ValueError("collection is not defined. Please indicate which collection to run the pipeline on")
+
+            stages = self.export()
+            array = list(self._db[self.collection].aggregate(pipeline=stages))
+            return array
+    else:
+        def __call__(self)->None:
+            self.run()
+        
+        def run(self)->None:
+            raise NotImplementedError("No database driver found. Please install pymongo or motor")
 
     
-    def run(self)->list[dict]:
-        """Executes the entire pipeline"""
-
-        if self._db is None:
-            raise ValueError("db is not defined. Please indicate which database to run the pipeline on")
-
-        if not self.collection:
-            raise ValueError("collection is not defined. Please indicate which collection to run the pipeline on")
-
-        stages = self.export()
-        array = list(self._db[self.collection].aggregate(pipeline=stages))
-        return array
-
-
     def export(self)->list[dict]:
         """
         Exports current pipeline to pymongo format.
@@ -968,4 +1003,5 @@ if __name__ =="__main__":
 
     pipeline = Pipeline()
     pipeline.search(operator_name="text", query="test", path=["details", "id_epd", "id_serial", "name"] )
+    pipeline.run()
     
