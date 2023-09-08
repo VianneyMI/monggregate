@@ -21,6 +21,7 @@ def test_basic_pipeline_usage():
     PWD = os.environ["MONGODB_PASSWORD"]
     print("PWD: ", PWD)
     MONGODB_URI = f"mongodb+srv://dev:{PWD}@myserver.xciie.mongodb.net/?retryWrites=true&w=majority"
+    print("MONGODB_URI: ", MONGODB_URI)
 
     # Connect to your MongoDB cluster:
     client = pymongo.MongoClient(MONGODB_URI, tlsCAFile=ca)
