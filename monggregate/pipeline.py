@@ -3,7 +3,7 @@
 from typing import Any, Literal
 from warnings import warn
 
-import _run
+from monggregate import _run
 
 from monggregate.base import BaseModel
 from monggregate.stages import (
