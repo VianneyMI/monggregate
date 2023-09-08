@@ -1,5 +1,9 @@
 """Module to tests the code snippet in the readme file."""
 
+import certifi
+
+ca = certifi.where()
+
 def test_basic_pipeline_usage():
     """Tests basic pipeline usage example.
     
@@ -19,7 +23,7 @@ def test_basic_pipeline_usage():
     MONGODB_URI = f"mongodb+srv://dev:{PWD}@myserver.xciie.mongodb.net/?retryWrites=true&w=majority"
 
     # Connect to your MongoDB cluster:
-    client = pymongo.MongoClient(MONGODB_URI)
+    client = pymongo.MongoClient(MONGODB_URI, tlsCAFile=ca)
 
     # Get a reference to the "sample_mflix" database:
     db = client["sample_mflix"]
