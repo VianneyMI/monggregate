@@ -1,0 +1,3 @@
+# This file gathers typing dependencies
+# (stubs and other typing metatada libraries)
+# Those are here mainly to help development tools

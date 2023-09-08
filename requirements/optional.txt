@@ -1,0 +1,6 @@
+# This file gathers monggregate optional dependencies
+# i.e packages that are required when using monggregate
+# in specific ways
+
+pymongo >= 3.0.0
+motor >= 3.0.0

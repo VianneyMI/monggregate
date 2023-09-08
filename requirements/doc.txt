@@ -1,0 +1,7 @@
+# This file gathers documentation dependencies
+# Packages used to build monggregate documentation
+
+bumpver==2022.1120 # Used to maintain version number across files
+mkdocs==1.5.2
+mkdocs-material==9.2.7
+twine==4.0.2 # Used to upload to PyPI

@@ -1,0 +1,7 @@
+# This file gathers monggregate core dependencies
+# i.e packages that are required for monggregate to work
+# Those dependencies are necessary for the users
+
+pydantic >= 1.8.0
+pyhumps >= 3.0.2
+typing_extensions >= 4.0.1

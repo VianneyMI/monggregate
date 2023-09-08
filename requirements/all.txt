@@ -1,0 +1,6 @@
+-r core.txt
+-r doc.txt
+-r linting.txt
+-r optional.txt
+-r testing.txt
+-r typing.txt
