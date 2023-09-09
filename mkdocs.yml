@@ -1,10 +1,10 @@
 site_name: Monggregate Documentation
 site_url: https://example.com/
 nav:
-  - Home: readme.md
+  - Home: index.md
   - Changelog: changelog.md
 theme: material
-Material Options for syntax highlighting
+# Material Options for syntax highlighting
 markdown_extensions:
   - pymdownx.highlight:
       anchor_linenums: true
