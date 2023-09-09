@@ -6,7 +6,7 @@ NOTE : Every update on below tests need to be reflected in the readme file.
 
 import pytest
 
-#@pytest.skip("Need to authorize the IP address of the machine running the tests.")
+@pytest.mark.skip("Need to authorize the IP address of the machine running the tests.")
 @pytest.mark.e2e
 def test_basic_pipeline_usage():
     """Tests basic pipeline usage example.
@@ -51,7 +51,7 @@ def test_basic_pipeline_usage():
     results = list(curosr)
     assert results
 
-#@pytest.skip("Need to authorize the IP address of the machine running the tests.")
+@pytest.mark.skip("Need to authorize the IP address of the machine running the tests.")
 @pytest.mark.e2e
 def test_advanced_usage():
     """Tests more advanced pipeline usage example.
@@ -101,7 +101,7 @@ def test_advanced_usage():
     #print(results)
     assert results
 
-#@pytest.skip("Need to authorize the IP address of the machine running the tests.")
+@pytest.mark.skip("Need to authorize the IP address of the machine running the tests.")
 @pytest.mark.e2e
 def test_even_more_advanced_usage():
     """Tests even more advanced pipeline usage example.
@@ -142,15 +142,16 @@ def test_even_more_advanced_usage():
     ).add_fields(
         comments_count=comments_count
     ).match(
-        query={"$expr":comments_count>2}
+        expression=comments_count>2
     ).limit(1)
+
 
     # Executing the pipeline
     cursor = db["movies"].aggregate(pipeline.export())
 
     # Printing the results
     results = list(cursor)
-    #print(results)
+    print(results)
     assert results, results
 
 if __name__ == "__main__":

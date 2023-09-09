@@ -582,22 +582,23 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         self.stages.insert(-3, filter_no_match)
 
-    def match(self, query:dict={}, **kwargs:Any)->"Pipeline":
+    def match(self, query:dict={}, expression:Any=None, **kwargs:Any)->"Pipeline":
         """
         Adds a match stage to the current pipeline.
 
         Arguments:
         -------------------
 
-            - statement, dict : the statement generated during instantiation after parsing the other arguments
-            - query, dict : the query use to filter the documents
-
+            - query, dict : a simple MQL query use to filter the documents.
+            - expression, Expression : an aggregation expression used to filter the documents
+    
+        NOTE : Use query if you're using a MQL query and expression if you're using aggregation expressions.
 
         """
 
         query = query | kwargs
         self.stages.append(
-                Match(query=query)
+                Match(query=query, expression=expression)
             )
         return self
 

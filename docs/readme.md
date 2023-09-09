@@ -154,7 +154,7 @@ pipeline.lookup(
 ).add_fields(
     comments_count=comments_count
 ).match(
-    query={"$expr":comments_count>2}
+    expression=comments_count>2
 ).limit(1)
 
 # Executing the pipeline
