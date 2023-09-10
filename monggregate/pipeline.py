@@ -947,6 +947,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         Arguments:
         ---------------------------------
+        
             - collection / coll, str : The collection or view whose pipeline results you wish to include in the result set
             - pipeline, list[dict] | Pipeline | None : An aggregation pipeline to apply to the specified coll.
 
