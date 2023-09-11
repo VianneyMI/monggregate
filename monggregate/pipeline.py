@@ -3,6 +3,8 @@
 from typing import Any, Literal
 from warnings import warn
 
+from typing_extensions import Self
+
 from monggregate import _run
 
 from monggregate.base import BaseModel
@@ -190,7 +192,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     # --------------------------------------------------
     # Pipeline List Methods
     #---------------------------------------------------
-    def __add__(self, other:"Pipeline")->"Pipeline":
+    def __add__(self, other:Self)->Self:
         """Concatenates two pipelines together"""
         if not isinstance(other, Pipeline):
             raise TypeError(f"unsupported operand type(s) for +: 'Pipeline' and '{type(other)}'")
@@ -236,7 +238,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     #---------------------------------------------------
     # The below methods wrap the constructors of the classes of the same name
 
-    def add_fields(self, document:dict={}, **kwargs:Any)->"Pipeline":
+    def add_fields(self, document:dict={}, **kwargs:Any)->Self:
         """
         Adds an add_fields stage to the current pipeline.
 
@@ -253,7 +255,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         )
         return self
 
-    def bucket(self, *, by:Any, boundaries:list, default:Any=None, output:dict|None=None)->"Pipeline":
+    def bucket(self, *, by:Any, boundaries:list, default:Any=None, output:dict|None=None)->Self:
         """
         Adds a bucket stage to the current pipeline.
 
@@ -303,7 +305,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         )
         return self
 
-    def bucket_auto(self, *, by:Any, buckets:int, output:dict=None, granularity:GranularityEnum|None=None)->"Pipeline":
+    def bucket_auto(self, *, by:Any, buckets:int, output:dict=None, granularity:GranularityEnum|None=None)->Self:
         """
         Adds a bucket_auto stage to the current pipeline
 
@@ -342,7 +344,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         return self
 
 
-    def count(self, name:str)->"Pipeline":
+    def count(self, name:str)->Self:
         """
         Adds a count stage to the current pipeline
 
@@ -361,7 +363,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             )
         return self
 
-    def explode(self, path:str, *,  include_array_index:str|None=None, always:bool=False)->"Pipeline":
+    def explode(self, path:str, *,  include_array_index:str|None=None, always:bool=False)->Self:
         """
         Adds a unwind stage to the current pipeline.
 
@@ -384,7 +386,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             )
         return self
 
-    def group(self, *,  by:Any|None=None, query:dict={})->"Pipeline":
+    def group(self, *,  by:Any|None=None, query:dict={})->Self:
         """
         Adds a group stage to the current pipeline.
 
@@ -403,7 +405,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             )
         return self
 
-    def limit(self, value:int)->"Pipeline":
+    def limit(self, value:int)->Self:
         """
         Adds a limit stage to the current pipeline.
 
@@ -425,7 +427,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         right:str|None=None,
         on:str|None=None,
         left_on:str|None=None,
-        right_on:str=None)->"Pipeline":
+        right_on:str=None)->Self:
         """
         Adds a lookup stage to the current pipeline.
 
@@ -479,7 +481,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             on:str|None=None,
             left_on:str|None=None,
             right_on:str|None=None  
-            )->"Pipeline":
+            )->Self:
         """
         Adds a combination of stages, that together reproduce SQL joins.
         This is a virtual and unofficial stage. It is not documented on MongoDB aggregation pipeline reference page.
@@ -582,7 +584,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         self.stages.insert(-3, filter_no_match)
 
-    def match(self, query:dict={}, expression:Any=None, **kwargs:Any)->"Pipeline":
+    def match(self, query:dict={}, expression:Any=None, **kwargs:Any)->Self:
         """
         Adds a match stage to the current pipeline.
 
@@ -602,7 +604,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             )
         return self
 
-    def out(self, collection:str, *, db:str|None=None)->"Pipeline":
+    def out(self, collection:str, *, db:str|None=None)->Self:
         """
         Adds an out stage to the current pipeline.
 
@@ -626,7 +628,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         exclude : str|set[str]|list[str]|dict|bool|None = None,
         fields : str|set[str]|list[str]|None = None,
         projection : dict = {},
-        **kwargs:Any)->"Pipeline":
+        **kwargs:Any)->Self:
         """
         Adds a project stage to the current pipeline.
 
@@ -651,7 +653,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             )
         return self
 
-    def replace_root(self, path:str|None=None, *,document:dict|None=None)->"Pipeline":
+    def replace_root(self, path:str|None=None, *,document:dict|None=None)->Self:
         """
         Adds a replace_root stage to the current pipeline.
 
@@ -670,7 +672,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             )
         return self
 
-    def replace_with(self, path:str|None=None, *,document:dict|None=None)->"Pipeline":
+    def replace_with(self, path:str|None=None, *,document:dict|None=None)->Self:
         """
         Adds a replace_with stage to the current pipeline.
 
@@ -688,7 +690,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             )
         return self
 
-    def sample(self, value:int)->"Pipeline":
+    def sample(self, value:int)->Self:
         """
         Adds a sample stage to the current pipeline.
 
@@ -717,7 +719,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             return_stored_source:bool=False,
             score_details:bool=False,
             **kwargs:Any
-    )->"Pipeline":
+    )->Self:
         """
         Adds a search stage to the current pipeline
         NOTE : if used, search has to be the first stage of the pipeline
@@ -792,7 +794,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             return_stored_source:bool=False,
             score_details:bool=False,
             **kwargs:Any
-    )->"Pipeline":
+    )->Self:
         """
         Adds a searchMeta stage to the current pipeline
         NOTE : if used, search has to be the first stage of the pipeline
@@ -845,7 +847,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         return self
 
-    def set(self, document:dict={}, **kwargs:Any)->"Pipeline":
+    def set(self, document:dict={}, **kwargs:Any)->Self:
         """
         Adds a set stage to the current pipeline.
 
@@ -862,7 +864,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             )
         return self
 
-    def skip(self, value:int)->"Pipeline":
+    def skip(self, value:int)->Self:
         """
         Adds a skip stage to the current pipeline.
 
@@ -883,7 +885,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         ascending : str|list[str]|dict|bool|None = None,
         by : list[str]|None = None,
         query : dict[str, Literal[1, -1]] = {},
-        **kwargs:Any)->"Pipeline":
+        **kwargs:Any)->Self:
         """
         Adds a sort stage to the current pipeline.
 
@@ -923,7 +925,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             )
         return self
 
-    def sort_by_count(self, by:str)->"Pipeline":
+    def sort_by_count(self, by:str)->Self:
         """
         Adds a sort_by_count stage to the current pipeline.
 
@@ -941,7 +943,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             )
         return self
     
-    def union_with(self, collection:str, pipeline:list[dict]|None=None)->"Pipeline":
+    def union_with(self, collection:str, pipeline:list[dict]|None=None)->Self:
         """
         Adds a union_with stage to the current pipeline.
 
@@ -959,7 +961,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         return self
 
-    def unwind(self, path:str, include_array_index:str|None=None, always:bool=False)->"Pipeline":
+    def unwind(self, path:str, include_array_index:str|None=None, always:bool=False)->Self:
         """
         Adds a unwind stage to the current pipeline.
 
@@ -983,7 +985,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         return self
     
 
-    def unset(self, field:str=None, fields:list[str]|None=None)->"Pipeline":
+    def unset(self, field:str=None, fields:list[str]|None=None)->Self:
         """
         Adds an unset stage to the current pipeline.
         
