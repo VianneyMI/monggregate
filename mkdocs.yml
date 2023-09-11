@@ -9,6 +9,7 @@ nav:
 plugins:
   - mkdocstrings
 
+
 # Using the Material theme for styling
 theme: material
   # Material Options for syntax highlighting
