@@ -115,6 +115,7 @@ class TestStages:
         assert count
         state["count"] = count
 
+
     def test_group(self, state:State)->None:
         """Tests the group stage"""
 
@@ -140,6 +141,52 @@ class TestStages:
                 "output":{"$sum":"income"}
             }
         )
+
+        # Test by as list
+        # ------------------------
+        assert Group(
+            by=["name", "age"],
+            query = {
+                "output":{"$sum":"income"}
+            }
+        )
+
+        # Test by as set
+        # ------------------------
+        assert Group(
+            by=set(["name", "age"]),
+            query = {
+                "output":{"$sum":"income"}
+            }
+        )
+
+        # Test by as constant
+        # ------------------------
+        assert Group(
+            by=1,
+            query = {
+                "output":{"$sum":"income"}
+            }
+        )
+
+        # Test by as dict
+        # ------------------------
+        assert Group(
+            by={"name":"$name"},
+            query = {
+                "output":{"$sum":"income"}
+            }
+        )
+
+        # Test by as None
+        # ------------------------
+        assert Group(
+            by=None,
+            query = {
+                "output":{"$sum":"income"}
+            }
+        )
+        
 
 
     def test_limit(self, state:State)->None:
