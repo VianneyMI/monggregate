@@ -78,6 +78,7 @@ def validate_field_paths(paths:list[str]|set[str])->list[str]:
     if isinstance(paths, list):
         paths = [validate_field_path(path) for path in paths]
     elif isinstance(paths, set):
-        paths = {validate_field_path(path) for path in paths}
+        paths = [validate_field_path(path) for path in paths]
+        paths.sort()
 
     return paths
