@@ -355,7 +355,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         Arguments:
         ------------------------
-            - by / _id (offcial MongoDB name represented by a pydantic alias), str | list[str] | set[str] : field or group of fields to group on
+            - by,  str | list[str] | set[str] | dict | None : field or group of fields to group by
             - query, dict | None : Computed aggregated values (per group)
 
         """
