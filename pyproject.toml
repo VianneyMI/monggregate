@@ -27,6 +27,9 @@ dependencies = [
 ]
 requires-python = ">=3.10"
 
+[tool.setuptools]
+packages = ["monggregate"]
+
 [project.optional-dependencies]
 mongo = ["pymongo >= 3.0.0"]
 dev = ["bumpver", "pytest", "mypy", "pylint"]
