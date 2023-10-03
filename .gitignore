@@ -1,6 +1,7 @@
 venv
 .env
 notes.md
+**/*~
 **/notebook.ipynb
 **/report.html
 .mypy_cache
@@ -12,3 +13,4 @@ monggregate.egg-info
 UNKNOWN.egg-info
 dist
 test.py
+tutorials/
