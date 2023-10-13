@@ -13,3 +13,4 @@ UNKNOWN.egg-info
 dist
 test.py
 site/
+.pypirc
