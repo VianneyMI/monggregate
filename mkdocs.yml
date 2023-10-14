@@ -1,13 +1,17 @@
 site_name: Monggregate Documentation
-site_url: https://example.com/
+site_url: https://vianneymi.github.io/monggregate/
 nav:
   - Home: index.md
-  - API Reference: api.md
+  #- API Reference: api.md
   - Changelog: changelog.md
+  - Intro:
+    - MongoDB Umbrella: intro/mongodb-umbrella.md
+    - MongoDB Aggregation Framework: intro/mongodb-aggregation-framework.md
 
-# Using mkdocstrings to generate documentation from docstrings (API Reference)
-plugins:
-  - mkdocstrings
+
+# # Using mkdocstrings to generate documentation from docstrings (API Reference)
+# plugins:
+#   - mkdocstrings
 
 
 # Using the Material theme for styling
