@@ -6,6 +6,8 @@ nav:
     - MongoDB Umbrella: intro/mongodb-umbrella.md
     - MongoDB Aggregation Framework: intro/mongodb-aggregation-framework.md
     - Why use Monggregate ?: intro/why-use-monggregate.md
+  - Tutorial:
+    - Getting Started: tutorial/getting-started.md
   #- API Reference: api.md
   - Changelog: changelog.md
 
