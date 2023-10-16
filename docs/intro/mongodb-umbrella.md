@@ -11,7 +11,7 @@ MQL stands for MongoDB Query Language. It is the language used to query MongoDB 
 MQL allows to [perform CRUD operations](https://www.mongodb.com/docs/manual/crud/), that is inserting (**C**reate), querying (**R**ead), updating (**U**pdate) and deleting (**D**elete) documents in a collection.
 
 In the context of an application or web service, MQL would typically be used through a driver or an Object Document Mapper (ODM).
-The official MongoDB driver for Python is [PyMongo](https://pymongo.readthedocs.io/en/stable/). It is a low-level driver that allows you to interact with MongoDB databases. And one two of the most popular ODM are [MongoEngine](https://mongoengine-odm.readthedocs.io/) and [Beanie](https://beanie-odm.dev/).
+The official MongoDB driver for Python is [PyMongo](https://pymongo.readthedocs.io/en/stable/). It is a low-level driver that allows you to interact with MongoDB databases. And two of the most popular ODM are [MongoEngine](https://mongoengine-odm.readthedocs.io/) and [Beanie](https://beanie-odm.dev/).
 
 MQL is not the main topic of monggregate nor this documentation.
 
