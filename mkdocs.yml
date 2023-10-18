@@ -8,6 +8,7 @@ nav:
     - Why use Monggregate ?: intro/why-use-monggregate.md
   - Tutorial:
     - Getting Started: tutorial/getting-started.md
+    - Pipelines: tutorial/pipeline.md
   #- API Reference: api.md
   - Changelog: changelog.md
 
