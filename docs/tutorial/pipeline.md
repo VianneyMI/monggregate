@@ -120,4 +120,68 @@ results = pipeline()
 print(results)
 ```
 
-### **Pros and cons of each method**
+### **How to choose ?**
+
+It is up to you to choose the method that suits you the best.<br> 
+The author recommends the first method as monggregate is a relatively new package and the second method is still experimental.
+
+## **An alternative to build pipelines**
+
+Another way to build your pipeline is to access the stages classes directly. All the stages are accessible in the `monggregate.stages` namespace.
+As such, you could write the above example like this:
+
+```python
+
+import pymongo
+from monggregate import Pipeline, stages
+
+
+# Setup your pymongo connexion
+MONGODB_URI = f"insert_your_own_uri"
+client = pymongo.MongoClient(MONGODB_URI)
+db = client["sample_mflix"]
+
+# Prepare your stages
+match_stage = stages.Match(query={"title": "A Star Is Born"})
+sort_stage = stages.Sort(by="year")
+limit_stage = stages.Limit(value=1)
+stages = [match_stage, sort_stage, limit_stage]
+
+# Create your pipeline ready to be executed
+pipeline = Pipeline(stages=stages)
+
+# Execute your pipeline
+curosr = db["movies"].aggregate(pipeline.export())
+
+results = list(curosr)
+print(results)
+
+```
+Once again, it is a question of preferences.<br>
+This approach might be more readable for some people, but it is also more verbose.<br>
+
+Howevere, there are still a couple of other advantages with this approach:
+
+* You can reuse the stages in multiple pipelines
+* You can easily reorder the stages
+
+The second point is particularly relevant given the utilies function in the `Pipeline` class.
+
+## **Pipeline utilities**
+
+The `Pipeline` class has a few utilities methods to help you build your pipeline.
+
+Indeed it implements the python list methods, so you do not have to access the stages attribute to perform list operations.
+
+In the examples above, `len(pipeline)` would return 3.
+
+You could also for example append a stage to the pipeline like this:
+
+```python
+pipeline.append(stages.Project(title=1, year=1))
+```
+
+You also have access to the `append`, `extend`, `insert`, `pop`, `remove`, `reverse`, `sort` methods. <TODO: implement pop remove and reverse>
+
+
+
