@@ -7,7 +7,7 @@ Therefore, the  `Pipeline` class is also a central class in the package<include 
 <include link to api reference later on>
 The `Pipeline` class includes a method for each stage of the aggregation framework.<br>
 Each stage of the aggregation framework also has its own class in the package.
-And each `Stage` class has a mirror method in the `Pipeline`.
+And each `Stage` class has a mirror method in the `Pipeline`. For more information, see the [stages page](stages.md).
 
 For example, the `Match` stage has a `match` method in the `Pipeline` class and calling `pipeline.match()` like in the code snippet below.
 

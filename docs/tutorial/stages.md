@@ -103,3 +103,9 @@ pipeline.lookup(
 )
 ```
 The arguments names (`by` and `value` respectively) for the `sort` and `limit` are ommited.
+
+## **Operators**
+
+You might have noticed in the grouping example how we tell monggregate to perform operations on the groups.
+In the example, we used the `$sum` and `$push` operators.
+For more information about operators, check the [next page](operators.md).
