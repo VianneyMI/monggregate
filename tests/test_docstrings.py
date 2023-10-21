@@ -103,3 +103,7 @@ def extract_content(text:str)->str:
         content = content.replace(to_be_removed, "")
 
     return content
+
+if __name__ == "__main__":
+    test_sync_docstrings()
+    print("OK")

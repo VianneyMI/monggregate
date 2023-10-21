@@ -182,6 +182,3 @@ pipeline.append(stages.Project(title=1, year=1))
 ```
 
 You also have access to the `append`, `extend`, `insert`, `pop`, `remove`, `reverse`, `sort` methods. <TODO: implement pop remove and reverse>
-
-
-

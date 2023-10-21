@@ -9,6 +9,9 @@ nav:
   - Tutorial:
     - Getting Started: tutorial/getting-started.md
     - Pipelines: tutorial/pipeline.md
+    - Stages: tutorial/stages.md
+    - Operators: tutorial/operators.md
+  - Contributing: contributing.md
   #- API Reference: api.md
   - Changelog: changelog.md
 
