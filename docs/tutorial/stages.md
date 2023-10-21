@@ -43,7 +43,7 @@ The following table lists the stages that are currently available in monggregate
 * $unset
 * $unwind
 
-## Usage ##
+## **Usage**
 
 Monggregate aims at providing a simple and intuitive interface to the MongoDB aggregation framework.<br>
 Even though, it tries as much as possible to stick by the MongoDB aggregation framework syntax, it also tries to provide alternative ways, reproducing the syntax of other tools that new Mongo users might be more familiar with such as SQL and Pandas.
@@ -108,4 +108,10 @@ The arguments names (`by` and `value` respectively) for the `sort` and `limit` a
 
 You might have noticed in the grouping example how we tell monggregate to perform operations on the groups.
 In the example, we used the `$sum` and `$push` operators.
+
 For more information about operators, check the [next page](operators.md).
+
+## **Come back later**
+
+At this stage of the tutorial, you should already have enough to play around with the aggregation framework and start building your own pipelines.
+If you read everything straight, you might want to check out the [operators page](operators.md) later on.
