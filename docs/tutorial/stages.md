@@ -19,29 +19,29 @@ You can see the full list of stages provided by MongoDB [here](https://www.mongo
 
 The following table lists the stages that are currently available in monggregate:
 
-* $addFields
-* $bucket
-* $bucketAuto
-* $count
-* $group
-* $limit
-* $lookup
-* $match
-* $merge
-* $out
-* $project
-* $replaceRoot
-* $replaceWith
-* $sample
-* $search
-* $searchMeta
-* $set
-* $skip
-* $sort
-* $sortByCount
-* $unionWith
-* $unset
-* $unwind
+* `$addFields`
+* `$bucket`
+* `$bucketAuto`
+* `$count`
+* `$group`
+* `$limit`
+* `$lookup`
+* `$match`
+* `$merge`
+* `$out`
+* `$project`
+* `$replaceRoot`
+* `$replaceWith`
+* `$sample`
+* `$search`
+* `$searchMeta`
+* `$set`
+* `$skip`
+* `$sort`
+* `$sortByCount`
+* `$unionWith`
+* `$unset`
+* `$unwind`
 
 ## **Usage**
 

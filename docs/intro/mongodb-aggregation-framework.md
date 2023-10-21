@@ -8,25 +8,25 @@ Even if the name focuses on the aggregation part of the framework, it can actual
 
     This the actual aggregation part in aggregation framework.
     
-    The aggregation framework allows you to categorize data, group documents, calculate aggregate values like totals, averages, counts, and more, with stages like $group, $count, $bucket, $bucketAuto, $facet, $sortBycount.
+    The aggregation framework allows you to categorize data, group documents, calculate aggregate values like totals, averages, counts, and more, with stages like `$group`, `$count`, `$bucket`, `$bucketAuto`, `$facet`, `$sortBycount`.
     
 2. **Data Transformation and Enrichment:**
     
     This is one of the lesser know use case of the framework.
 
     It can be used to apply complex transformations to your data, and enrich existing documents with additional information.
-    The main "functions" to do so are $addFields, $densify, $fill, $replaceWith, $merge, $out.
+    The main "functions" to do so are `$addFields`, `$densify`, `$fill`, `$replaceWith`, `$merge`, `$out`.
 
-    You can see an examples of this in <insert link to related How-to guides> TODO
+    You can see examples of this in [Create or update a collection](../how-to/commons/create-or-update-a-collection.md)
 
 3. **Join-like Operations:**
 
     Another important feature is the ability to perform join-like operations on your data.
     
     The frameworks exposes several functions to combine data from multiple collections. You can combine collections horizontally or vertically
-    respectively with the $lookup and $unionWith stages.
+    respectively with the `$lookup` and $unionWith stages.
 
-    See <insert link to related How-to guides> TODO, for some examples.
+    See [Merge collections](../how-to/commons/join-operations.md) for some examples.
 
 4. **Time Series Analysis:**
 
@@ -34,15 +34,15 @@ Even if the name focuses on the aggregation part of the framework, it can actual
 
     Among those operators, a couple of them are specifically designed to work with time series data. You can use them to group documents by time intervals, and to perform calculations on those groups.
 
-    Such operators include $dateAdd, $dateDiff, $millisecond, $toDate, $dateFromString, $dateFromParts and much more.
+    Such operators include `$dateAdd`, `$dateDiff`, `$millisecond`, `$toDate`, `$dateFromString`, `$dateFromParts` and much more.
 
-    See <insert link to related How-to guides or to API Reference or to another conceptual page> TODO, for an example.
+    <See insert link to related How-to guides or to API Reference or to another conceptual page TODO, for an example.> 
 
 5. **Geospatial Analysis:**
 
     Similarly, the framework has capabilities to perform geospatial analysis on your data. 
 
-    In particular, you can compute distances between points, and find documents within a certain distance of a given point with the $geoNear stage.
+    In particular, you can compute distances between points, and find documents within a certain distance of a given point with the `$geoNear` stage.
 
 6. **Textual Search and Analysis:**
 
@@ -52,9 +52,9 @@ Even if the name focuses on the aggregation part of the framework, it can actual
     The aggregation framework leverages MongoDB Atlas full-text search capabilities. Textual search, unlike string matching, which looks for exact matches of a query term, involves finding documents that contain the query term or a related term.
 
     The entry points for this feature are the $search and $searchMeta stages.
-    However, the reason I said this part could be viewed as a framework on his own previously is that $search and $searchMeta come with their own set operators. Such operators include $autocomplete, $facet, $text, $compound and much more.
+    However, the reason I said this part could be viewed as a framework on his own previously is that `$search` and `$searchMeta` come with their own set operators. Such operators include `$autocomplete`, `$facet`, `$text`, `$compound` and much more.
 
-    See <insert link to dedicated Textual Search section> TODO, for more information
+    <See insert link to dedicated Textual Search section TODO, for more information>
 
 ## **Concepts**
 

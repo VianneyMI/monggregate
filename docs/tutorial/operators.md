@@ -20,10 +20,10 @@ Those compatibility rules are detailed in the documentation of each operator as 
 <should I remove the code syntaxing for mergeObjects ? or add it for the below stage -- Need to be consistent across the doc>
 For example the `$mergeObjects` operator documentation clearly states that it can only be used in the following stages:
 
-* $bucket
-* $bucketAuto
-* $group
-* $replaceRoot
+* `$bucket`
+* `$bucketAuto`
+* `$group`
+* `$replaceRoot`
 
 
 ## **Usage**
@@ -55,72 +55,72 @@ Currently, monggregate supports the following operators:
 
 * **accumulators**
 
-    * $avg
-    * $count
-    * $first
-    * $last
-    * $max
-    * $min
-    * $push
-    * $sum
+    * `$avg`
+    * `$count`
+    * `$first`
+    * `$last`
+    * `$max`
+    * `$min`
+    * `$push`
+    * `$sum`
 
 * **arithmetic**
 
-    * $add
-    * $divide
-    * $multiply
-    * $pow
-    * $subtract
+    * `$add`
+    * `$divide`
+    * `$multiply`
+    * `$pow`
+    * `$subtract`
 
 * **array**
 
-    * $arrayToObject
-    * $filter
-    * $first
-    * $in
-    * $isArray
-    * $last
-    * $max_n
-    * $min_n
-    * $size
-    * $sortArray
+    * `$arrayToObject`
+    * `$filter`
+    * `$first`
+    * `$in`
+    * `$isArray`
+    * `$last`
+    * `$max_n`
+    * `$min_n`
+    * `$size`
+    * `$sortArray`
 
 * **boolean**
 
-    * $and
-    * $not
-    * $or
+    * `$and`
+    * `$not`
+    * `$or`
 
 * **comparison**
 
-    * $cmp
-    * $eq
-    * $gt
-    * $gte
-    * $lt
-    * $lte
-    * $ne
+    * `$cmp`
+    * `$eq`
+    * `$gt`
+    * `$gte`
+    * `$lt`
+    * `$lte`
+    * `$ne`
     
 * **conditional**
 
-    * $cond
-    * $ifNull
-    * $switch
+    * `$cond`
+    * `$ifNull`
+    * `$switch`
 
 * **date**
 
-    * $millisecond
+    * `$millisecond`
 
 * **object**
 
-    * $mergeObjects
-    * $objectToArray
+    * `$mergeObjects`
+    * `$objectToArray`
 
 * **strings**
 
-    * $concat
-    * $dateFromString
-    * $dateToString
+    * `$concat`
+    * `$dateFromString`
+    * `$dateToString`
 
 * **search**
 
