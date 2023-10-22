@@ -11,8 +11,9 @@ nav:
     - Pipelines: tutorial/pipeline.md
     - Stages: tutorial/stages.md
     - Operators: tutorial/operators.md
+    - Search: tutorial/search.md
   - How-To:
-    - Get Data: how-to/setup.md
+    #- Get Data: how-to/setup.md
     - Common Pipelines Use Cases: 
       - Home: how-to/commons/home.md
       - Select a nested document: how-to/commons/select-a-nested-document.md

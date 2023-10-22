@@ -1,1 +1,1 @@
-"I want that when we click on Common Pipelines Use Cases we get there directly"
+The next pages, will show you some of the common use cases I faced and that led me to use the aggregation framework.
