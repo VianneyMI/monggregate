@@ -45,10 +45,10 @@ The following table lists the stages that are currently available in monggregate
 
 ## **Usage**
 
-Monggregate aims at providing a simple and intuitive interface to the MongoDB aggregation framework.<br>
+`monggregate` aims at providing a simple and intuitive interface to the MongoDB aggregation framework.<br>
 Even though, it tries as much as possible to stick by the MongoDB aggregation framework syntax, it also tries to provide alternative ways, reproducing the syntax of other tools that new Mongo users might be more familiar with such as SQL and Pandas.
 
-For example, in the "$group" stage, the MongoDB aggregation framework expects the grouping field(s) to be provided in `_id` key. However, monggregate allows you to provide the grouping field(s) in the `by` key instead.
+For example, in the ``$group` stage, the MongoDB aggregation framework expects the grouping field(s) to be provided in the `_id` key. However, `monggregate` allows you to provide the grouping field(s) in the `by` key instead.
 
 ```python
 pipeline = Pipeline()
@@ -62,7 +62,7 @@ pipeline.group(
 )
 ```
 
-Similarly, monggregate pipeline `lookup` method and `Lookup` class provide aliases for the orignal MongoDB arguments:
+Similarly, `monggregate` pipeline `lookup` method and `Lookup` class provide aliases for the orignal MongoDB arguments:
 
 | MongoDB Original Name | Monggregate Original Name | Monggregate Convenient Alias |
 |-----------------------|---------------------------|------------------------------|
@@ -80,9 +80,10 @@ You can therefore use any combination of arguments names from the two rightmost 
 pipeline = Pipeline()
 pipeline.lookup(
     right = "comments", # collection to join
-    left_on = "_id", 
-    right_on = "movie_id",
-    name = "related_comments" # name of the field that will contain the matching documents
+    left_on = "_id",  # primary key
+    right_on = "movie_id", # foreign key
+    # name of the field that will contain the matching documents
+    name = "related_comments" 
 )
 ```
 
@@ -92,17 +93,17 @@ We can for example complete the previous example as follows:
 ```python
 pipeline = Pipeline()
 pipeline.lookup(
-    right = "comments", # collection to join
+    right = "comments", 
     left_on = "_id", 
     right_on = "movie_id",
-    name = "related_comments" # name of the field that will contain the matching documents
+    name = "related_comments" 
 ).sort(
     "movie_count"
 ).limit(
     10
 )
 ```
-The arguments names (`by` and `value` respectively) for the `sort` and `limit` are ommited.
+The arguments names (`by` and `value` respectively) for the `sort` and `limit` stages are ommited.
 
 ## **Operators**
 

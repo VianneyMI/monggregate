@@ -33,7 +33,9 @@ Because of the above considerations, the usage of operators is a bit different t
 You cannot access the operators through the stages, the same way you can access the stages through the pipeline (eventhough it's on our development roadmap).
 
 Therefore, you need to import the operators from the `monggregate.operators` namespace.
-Or you can use the `S` shortcut to access the operators.
+Or you can use the `S` shortcut to access the operators.<br>
+`S` is an object that includes all the operators as functions, like the `Pipeline` class includes all the stages as methods.
+<insert link to documentation>
 
 Thus, the grouping example would become:
 
@@ -44,7 +46,7 @@ pipeline.group(
     by="year",
     query={
         "movie_count": S.sum(1),
-        "movie_titles": S.push(S.field(title)) # implement field
+        "movie_titles": S.push(S.field("title"))
     }
 )
 

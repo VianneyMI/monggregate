@@ -1,19 +1,19 @@
-In this page, we will present the various reasons one may want to use monggregate.
+In this page, we will present the various reasons one may want to use `monggregate`.
 
 ## **What monggregate is ?**
 
-As a disclaimer, I'll start by saying what monggregate is not.
+As a disclaimer, I'll start by saying what `monggregate` is not.
 
-Monggregate **IS NOT** a MongoDB driver **NOR** an Object Document Mapper (ODM).
+`monggregate` **IS NOT** a MongoDB driver **NOR** an Object Document Mapper (ODM).
 
-Monggregate can be seen as a NoSQL **query builder** for MongoDB.
+`monggregate` can be seen as a NoSQL **query builder** for MongoDB.
 
 If you are not familiar with the concept of query builder, I suggest you watch [this video](https://www.youtube.com/watch?v=x1fCJ7sUXCM) from Arjan Codes where he explains the difference between using raw SQL, query builders and ORMs.
 Even if the examples use SQL, there are still relevant in a NoSQL context.
 
 ## **Why use monggregate ?**
 
-With that said, when or why would one want to use monggregate ?
+With that said, when or why would one want to use `monggregate` ?
 As written in the [previous page](mongodb-aggregation-framework.md), the aggregation framework can be used for data analytics, data transformation and much more.
 
 However, it is not convenient to use with the available tools overall and in python in particular (even if MongoDB as recently [2023] tried to overcome this by releasing several helpers such as the stage wizard and a chat assistant to help building queries).
@@ -25,7 +25,7 @@ The main critiques that we can have about the aggregation framework either about
 * There is no python API to use it
 * It is undocumented in pymongo
 
-Monggregate tries to solve these issues by providing a python API to use the aggregation framework.
+`monggregate` tries to solve these issues by providing a python API to use the aggregation framework.
 
 The API improves the readability of the pipelines and make the queries less verbose.
 
@@ -33,6 +33,13 @@ It also integrates most of the official MongoDB documentation available directly
 
 Cherry on the cake, your IDE will help you in the process because you now have autocompletion showing you the available stages and operators, their parameters, types, descriptions and restrictions.
 
+## **Who should use it ?**
+
+The package is probably more useful for data and sofware engineers that are not familiar with the aggregation framework and/or that are not familiar with MongoDB in general.
+
+However, developers that are already familiar with the aggregation framework and/or MongoDB may also find it useful as it can help them to build pipelines faster and with less errors.<br>
+It can also improve the readability of the pipelines built.
+
 ## **How to use it ?**
 
-In the following section, we will see how to use monggregate to build aggregation pipelines.
+In the [following pages](../tutorial/getting-started.md), we will see how to use `monggregate` to build aggregation pipelines.

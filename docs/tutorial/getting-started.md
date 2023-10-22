@@ -1,13 +1,13 @@
 ## **Installing monggregate**
 
-Monggregate is available on PyPI:
+`monggregate` is available on PyPI:
 
 ```shell
 pip install monggregate
 ```
 ## **Requirements**
 
-It requires python > 3.10 and has a few required dependencies such as pydantic, pyhumps and typing-extensions.
+It requires python > 3.10 and has a few required dependencies such as `pydantic`, `pyhumps` and `typing-extensions`.
 
 If it as a good query builder it helps you build the query, in order to execute them you will need a MongoDB driver.
 

@@ -13,7 +13,7 @@ We want to select all the reviews of a given reviewer.
 
 ## **How ?**
 
-This can be achieved by combining three operators:
+This can be achieved by combining three stages:
 
 * `$unwind` to deconstruct the `reviews` array
 * `$replaceRoot` to promote the `reviews` field to the root of the document
@@ -23,9 +23,12 @@ Thus the following pipeline will return all the reviews of the reviewer with the
 
 ```python
 
+# /!\    /!\    /!\
 # Imports
 # and boilerplate code
-# to get the db object are not included
+# to get the db object 
+# are not included
+# /!\    /!\    /!\
 
 # The reviewer_id whose reviews we want to retrieve
 reviewer_id = "2961855"

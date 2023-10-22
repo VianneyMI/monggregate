@@ -1,4 +1,4 @@
-The MongoDB Aggregation Framework is an essential tool for any developer working with MongoDB. It allows you to perform complex queries on your data, and to do so efficiently. It is also a great way to learn more about your data, and to get a better understanding of how your data is structured.
+The MongoDB Aggregation Framework is an essential tool for any developer working with MongoDB. It offers advanced querying capabilities that are not available in MQL.
 
 ## **Usage**
 
@@ -6,9 +6,9 @@ Even if the name focuses on the aggregation part of the framework, it can actual
 
 1. **Data Summarization and Reporting:**
 
-    This the actual aggregation part in aggregation framework.
+    This the actual aggregation in "aggregation framework".
     
-    The aggregation framework allows you to categorize data, group documents, calculate aggregate values like totals, averages, counts, and more, with stages like `$group`, `$count`, `$bucket`, `$bucketAuto`, `$facet`, `$sortBycount`.
+    The aggregation framework allows you to categorize data, group documents, calculate aggregated values like totals, averages, counts, and more, with stages like `$group`, `$count`, `$bucket`, `$bucketAuto`, `$facet`, `$sortBycount`.
     
 2. **Data Transformation and Enrichment:**
     
@@ -17,7 +17,7 @@ Even if the name focuses on the aggregation part of the framework, it can actual
     It can be used to apply complex transformations to your data, and enrich existing documents with additional information.
     The main "functions" to do so are `$addFields`, `$densify`, `$fill`, `$replaceWith`, `$merge`, `$out`.
 
-    You can see examples of this in [Create or update a collection](../how-to/commons/create-or-update-a-collection.md)
+    You can see examples of this in [Create or update a collection](../how-to/commons/create-or-update-a-collection.md).
 
 3. **Join-like Operations:**
 
@@ -46,12 +46,12 @@ Even if the name focuses on the aggregation part of the framework, it can actual
 
 6. **Textual Search and Analysis:**
 
-    Finally, one of the most interesting feature of the framework (and also one of the less expected) is the textual search.
+    Finally, one of the most interesting feature of the framework (and also one of the less expected from the name) is textual search.
 
-    This part could be viewed as a framework on his own but was for some reason was integrated to the aggregation framework.
+    This part could be viewed as a framework on his own but, for some reason, was integrated to the aggregation framework.
     The aggregation framework leverages MongoDB Atlas full-text search capabilities. Textual search, unlike string matching, which looks for exact matches of a query term, involves finding documents that contain the query term or a related term.
 
-    The entry points for this feature are the $search and $searchMeta stages.
+    The entry points for this feature are the `$search` and `$searchMeta` stages.
     However, the reason I said this part could be viewed as a framework on his own previously is that `$search` and `$searchMeta` come with their own set operators. Such operators include `$autocomplete`, `$facet`, `$text`, `$compound` and much more.
 
     <See insert link to dedicated Textual Search section TODO, for more information>
@@ -69,13 +69,14 @@ Stages are the building blocks of an aggregation pipeline. Each stage represents
 
 ### **Pipeline**
 
-A pipeline is a set of stages that are executed in sequence. The output of a stage is the input of the next stage. The output of the last stage is the output of the pipeline.
+A pipeline is a set of stages that are executed in sequence. The output of a stage is the input of the next stage. 
+The output of the last stage is the output of the pipeline.
+The input of the first stage in a pipeline are the entire set of documents of the collection targeted by the pipeline.
 
 ### **Operator**
 
 Operators are the tools used within each stage to perform specific operations on the data. They allow for a wide range of computations, transformations, and evaluations. Examples of operators include arithmetic operators, logical operators, array operators, and more.
 
-Operator expressions are similar to functions that take arguments
 
 ### **Expression**
 
@@ -90,4 +91,4 @@ The reason why it is hard to define an expression is because the concepts of exp
 
 NOTE: In fact, operators produce expressions.
 
-An expression is a more general term that refers to a combination of values, variables, and operators that, when evaluated, results in a single value. An expression can include one or more operators to perform computations or transformations.
+An expression is a more general term that refers to a combination of values, variables, and operators that, when evaluated, results in a single value or object. An expression can include one or more operators to perform computations or transformations.

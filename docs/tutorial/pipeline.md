@@ -43,10 +43,10 @@ pipeline.match(
 
 So far, we have built our pipeline object. But what do we do with it?
 
-monggregate offers a **bilateral** integration with your tool of choice to execute the pipeline.
+`monggregate` offers a **bilateral** integration with the tool of your choice to execute the pipeline.
 
-Bilateral because you can either integrate your pipeline to your tool or your tool to your pipeline.
-In the following examples, I'll use `pymongo` as at the end of the day `motor`, `beanie` and `mongoengine` all use pymongo under the hood.
+Bilateral because you can either integrate your pipeline to your tool or your tool to into the pipeline.
+In the following examples, I'll use `pymongo` as at the end of the day `motor`, `beanie` and `mongoengine` all use `pymongo` under the hood.
 
 ### **Passing your pipeline to your tool**
 
@@ -113,7 +113,7 @@ results = pipeline.run()
 print(results)
 ```
 
-It also has a `__call__` method, so you could  replace the two last lines with:
+It also has a `__call__` method, so you could  replace the last wto lines with:
 
 ```python
 results = pipeline()
@@ -123,7 +123,8 @@ print(results)
 ### **How to choose ?**
 
 It is up to you to choose the method that suits you the best.<br> 
-The author recommends the first method as monggregate is a relatively new package and the second method is still experimental.
+I personnaly use the first method for now.
+There are plans to replace the `_db` attribute by a `uri` attribute and make the database connexion happen under the hood, but it is not implemented yet. When it is the second method will become more appealing.
 
 ## **An alternative to build pipelines**
 
@@ -173,7 +174,7 @@ The `Pipeline` class has a few utilities methods to help you build your pipeline
 
 Indeed it implements the python list methods, so you do not have to access the stages attribute to perform list operations.
 
-In the examples above, `len(pipeline)` would return 3.
+In the examples above, `len(pipeline)` would return `3`.
 
 You could also for example append a stage to the pipeline like this:
 
@@ -181,4 +182,4 @@ You could also for example append a stage to the pipeline like this:
 pipeline.append(stages.Project(title=1, year=1))
 ```
 
-You also have access to the `append`, `extend`, `insert`, `pop`, `remove`, `reverse`, `sort` methods. <TODO: implement pop remove and reverse>
+You also have access to the `append`, `extend`, `insert`, `pop`, `remove`, `reverse`, `sort` methods directly on the `pipeline` object. <TODO: implement pop remove and reverse>
