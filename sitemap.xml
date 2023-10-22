@@ -1,18 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://example.com/</loc>
-         <lastmod>2023-10-14</lastmod>
+         <loc>https://vianneymi.github.io/monggregate/</loc>
+         <lastmod>2023-10-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://example.com/api/</loc>
-         <lastmod>2023-10-14</lastmod>
+         <loc>https://vianneymi.github.io/monggregate/api/</loc>
+         <lastmod>2023-10-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://example.com/changelog/</loc>
-         <lastmod>2023-10-14</lastmod>
+         <loc>https://vianneymi.github.io/monggregate/changelog/</loc>
+         <lastmod>2023-10-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://vianneymi.github.io/monggregate/contributing/</loc>
+         <lastmod>2023-10-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://vianneymi.github.io/monggregate/how-to/autocompletion/</loc>
+         <lastmod>2023-10-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://vianneymi.github.io/monggregate/how-to/setup/</loc>
+         <lastmod>2023-10-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://vianneymi.github.io/monggregate/how-to/commons/combine-collections/</loc>
+         <lastmod>2023-10-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://vianneymi.github.io/monggregate/how-to/commons/create-or-update-a-collection/</loc>
+         <lastmod>2023-10-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://vianneymi.github.io/monggregate/how-to/commons/home/</loc>
+         <lastmod>2023-10-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://vianneymi.github.io/monggregate/how-to/commons/select-a-nested-document/</loc>
+         <lastmod>2023-10-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://vianneymi.github.io/monggregate/intro/mongodb-aggregation-framework/</loc>
+         <lastmod>2023-10-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://vianneymi.github.io/monggregate/intro/mongodb-umbrella/</loc>
+         <lastmod>2023-10-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://vianneymi.github.io/monggregate/intro/why-use-monggregate/</loc>
+         <lastmod>2023-10-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://vianneymi.github.io/monggregate/tutorial/getting-started/</loc>
+         <lastmod>2023-10-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://vianneymi.github.io/monggregate/tutorial/operators/</loc>
+         <lastmod>2023-10-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://vianneymi.github.io/monggregate/tutorial/pipeline/</loc>
+         <lastmod>2023-10-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://vianneymi.github.io/monggregate/tutorial/search/</loc>
+         <lastmod>2023-10-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://vianneymi.github.io/monggregate/tutorial/stages/</loc>
+         <lastmod>2023-10-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>

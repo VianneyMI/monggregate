@@ -8,21 +8,25 @@
       
       
       
-        <link rel="canonical" href="https://vianneymi.github.io/monggregate/api/">
+        <link rel="canonical" href="https://vianneymi.github.io/monggregate/intro/mongodb-aggregation-framework/">
       
       
+        <link rel="prev" href="../mongodb-umbrella/">
       
       
-      <link rel="icon" href="../assets/images/favicon.png">
+        <link rel="next" href="../why-use-monggregate/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.7">
     
     
       
-        <title>Api - Monggregate Documentation</title>
+        <title>MongoDB Aggregation Framework - Monggregate Documentation</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.046329b4.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.046329b4.min.css">
       
       
 
@@ -41,7 +45,7 @@
       
     
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -62,6 +66,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#usage" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -74,7 +83,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="Monggregate Documentation" class="md-header__button md-logo" aria-label="Monggregate Documentation" data-md-component="logo">
+    <a href="../.." title="Monggregate Documentation" class="md-header__button md-logo" aria-label="Monggregate Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -94,7 +103,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Api
+              MongoDB Aggregation Framework
             
           </span>
         </div>
@@ -166,7 +175,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="Monggregate Documentation" class="md-nav__button md-logo" aria-label="Monggregate Documentation" data-md-component="logo">
+    <a href="../.." title="Monggregate Documentation" class="md-nav__button md-logo" aria-label="Monggregate Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -183,7 +192,7 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -200,17 +209,19 @@
       
   
   
+    
+  
   
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
             
@@ -223,7 +234,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Intro
@@ -236,7 +247,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../intro/mongodb-umbrella/" class="md-nav__link">
+      <a href="../mongodb-umbrella/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -254,9 +265,27 @@
                 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../intro/mongodb-aggregation-framework/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    MongoDB Aggregation Framework
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -265,6 +294,72 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    Usage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concepts" class="md-nav__link">
+    Concepts
+  </a>
+  
+    <nav class="md-nav" aria-label="Concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stage" class="md-nav__link">
+    Stage
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pipeline" class="md-nav__link">
+    Pipeline
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operator" class="md-nav__link">
+    Operator
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expression" class="md-nav__link">
+    Expression
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -276,7 +371,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../intro/why-use-monggregate/" class="md-nav__link">
+      <a href="../why-use-monggregate/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -337,7 +432,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tutorial/getting-started/" class="md-nav__link">
+      <a href="../../tutorial/getting-started/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -357,7 +452,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tutorial/pipeline/" class="md-nav__link">
+      <a href="../../tutorial/pipeline/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -377,7 +472,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tutorial/stages/" class="md-nav__link">
+      <a href="../../tutorial/stages/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -397,7 +492,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tutorial/operators/" class="md-nav__link">
+      <a href="../../tutorial/operators/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -417,7 +512,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tutorial/search/" class="md-nav__link">
+      <a href="../../tutorial/search/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -512,7 +607,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../how-to/commons/home/" class="md-nav__link">
+      <a href="../../how-to/commons/home/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -532,7 +627,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../how-to/commons/select-a-nested-document/" class="md-nav__link">
+      <a href="../../how-to/commons/select-a-nested-document/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -552,7 +647,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../how-to/commons/create-or-update-a-collection/" class="md-nav__link">
+      <a href="../../how-to/commons/create-or-update-a-collection/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -572,7 +667,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../how-to/commons/combine-collections/" class="md-nav__link">
+      <a href="../../how-to/commons/combine-collections/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -607,7 +702,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contributing/" class="md-nav__link">
+      <a href="../../contributing/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -626,7 +721,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../changelog/" class="md-nav__link">
+      <a href="../../changelog/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -657,6 +752,62 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    Usage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concepts" class="md-nav__link">
+    Concepts
+  </a>
+  
+    <nav class="md-nav" aria-label="Concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stage" class="md-nav__link">
+    Stage
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pipeline" class="md-nav__link">
+    Pipeline
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operator" class="md-nav__link">
+    Operator
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expression" class="md-nav__link">
+    Expression
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -670,11 +821,75 @@
                   
 
 
-  <h1>Api</h1>
+  <h1>MongoDB Aggregation Framework</h1>
 
-<p>:::monggregate.pipeline
-   options:
-     annotations_path: source</p>
+<p>The MongoDB Aggregation Framework is an essential tool for any developer working with MongoDB. It offers advanced querying capabilities that are not available in MQL.</p>
+<h2 id="usage"><strong>Usage</strong></h2>
+<p>Even if the name focuses on the aggregation part of the framework, it can actually be used for the following purposes:</p>
+<ol>
+<li>
+<p><strong>Data Summarization and Reporting:</strong></p>
+<p>This the actual aggregation in "aggregation framework".</p>
+<p>The aggregation framework allows you to categorize data, group documents, calculate aggregated values like totals, averages, counts, and more, with stages like <code>$group</code>, <code>$count</code>, <code>$bucket</code>, <code>$bucketAuto</code>, <code>$facet</code>, <code>$sortBycount</code>.</p>
+</li>
+<li>
+<p><strong>Data Transformation and Enrichment:</strong></p>
+<p>This is one of the lesser know use case of the framework.</p>
+<p>It can be used to apply complex transformations to your data, and enrich existing documents with additional information.
+The main "functions" to do so are <code>$addFields</code>, <code>$densify</code>, <code>$fill</code>, <code>$replaceWith</code>, <code>$merge</code>, <code>$out</code>.</p>
+<p>You can see examples of this in <a href="../../how-to/commons/create-or-update-a-collection/">Create or update a collection</a>.</p>
+</li>
+<li>
+<p><strong>Join-like Operations:</strong></p>
+<p>Another important feature is the ability to perform join-like operations on your data.</p>
+<p>The frameworks exposes several functions to combine data from multiple collections. You can combine collections horizontally or vertically
+respectively with the <code>$lookup</code> and $unionWith stages.</p>
+<p>See <a href="../../how-to/commons/combine-collections/">Merge collections</a> for some examples.</p>
+</li>
+<li>
+<p><strong>Time Series Analysis:</strong></p>
+<p>The framework also defines several operators that can be used to enhance some of the stages mentioned above.</p>
+<p>Among those operators, a couple of them are specifically designed to work with time series data. You can use them to group documents by time intervals, and to perform calculations on those groups.</p>
+<p>Such operators include <code>$dateAdd</code>, <code>$dateDiff</code>, <code>$millisecond</code>, <code>$toDate</code>, <code>$dateFromString</code>, <code>$dateFromParts</code> and much more.</p>
+<p><See insert link to related How-to guides or to API Reference or to another conceptual page TODO, for an example.> </p>
+</li>
+<li>
+<p><strong>Geospatial Analysis:</strong></p>
+<p>Similarly, the framework has capabilities to perform geospatial analysis on your data. </p>
+<p>In particular, you can compute distances between points, and find documents within a certain distance of a given point with the <code>$geoNear</code> stage.</p>
+</li>
+<li>
+<p><strong>Textual Search and Analysis:</strong></p>
+<p>Finally, one of the most interesting feature of the framework (and also one of the less expected from the name) is textual search.</p>
+<p>This part could be viewed as a framework on his own but, for some reason, was integrated to the aggregation framework.
+The aggregation framework leverages MongoDB Atlas full-text search capabilities. Textual search, unlike string matching, which looks for exact matches of a query term, involves finding documents that contain the query term or a related term.</p>
+<p>The entry points for this feature are the <code>$search</code> and <code>$searchMeta</code> stages.
+However, the reason I said this part could be viewed as a framework on his own previously is that <code>$search</code> and <code>$searchMeta</code> come with their own set operators. Such operators include <code>$autocomplete</code>, <code>$facet</code>, <code>$text</code>, <code>$compound</code> and much more.</p>
+<p><See insert link to dedicated Textual Search section TODO, for more information></p>
+</li>
+</ol>
+<h2 id="concepts"><strong>Concepts</strong></h2>
+<p>The previous section make references to several key concepts that are important to understand in order to use the aggregation framework.
+This section will introduce those concepts and explain them in more details.</p>
+<h3 id="stage"><strong>Stage</strong></h3>
+<p>A stage is an operation on your data. It can be a querying operation, an aggregation, a transformation, a join, a textual search, a sorting operation, etc. You can view it as a function.</p>
+<p>Stages are the building blocks of an aggregation pipeline. Each stage represents a specific data processing operation that is applied to a set of documents. These stages are arranged in a sequence to achieve the desired transformation of the data.</p>
+<h3 id="pipeline"><strong>Pipeline</strong></h3>
+<p>A pipeline is a set of stages that are executed in sequence. The output of a stage is the input of the next stage. 
+The output of the last stage is the output of the pipeline.
+The input of the first stage in a pipeline are the entire set of documents of the collection targeted by the pipeline.</p>
+<h3 id="operator"><strong>Operator</strong></h3>
+<p>Operators are the tools used within each stage to perform specific operations on the data. They allow for a wide range of computations, transformations, and evaluations. Examples of operators include arithmetic operators, logical operators, array operators, and more.</p>
+<h3 id="expression"><strong>Expression</strong></h3>
+<p>Probably the most difficult concept to grasp is the concept of expression. It is also the most important one.</p>
+<p>Expressions are a bit hard to define. They are actually not even properly defined in the official MongoDB documentation.
+Here how they are referred to in their documentation:</p>
+<blockquote>
+<p>Expressions can include field paths, literals, system variables, expression objects, and expression operators. Expressions can be nested.</p>
+</blockquote>
+<p>The reason why it is hard to define an expression is because the concepts of expression and operator are closely related (but still distinct).</p>
+<p>NOTE: In fact, operators produce expressions.</p>
+<p>An expression is a more general term that refers to a combination of values, variables, and operators that, when evaluated, results in a single value or object. An expression can include one or more operators to perform computations or transformations.</p>
 
 
 
@@ -712,10 +927,10 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.dff1b7c8.min.js"></script>
+      <script src="../../assets/javascripts/bundle.dff1b7c8.min.js"></script>
       
     
   </body>

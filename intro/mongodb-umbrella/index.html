@@ -8,21 +8,25 @@
       
       
       
-        <link rel="canonical" href="https://vianneymi.github.io/monggregate/api/">
+        <link rel="canonical" href="https://vianneymi.github.io/monggregate/intro/mongodb-umbrella/">
       
       
+        <link rel="prev" href="../..">
       
       
-      <link rel="icon" href="../assets/images/favicon.png">
+        <link rel="next" href="../mongodb-aggregation-framework/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.7">
     
     
       
-        <title>Api - Monggregate Documentation</title>
+        <title>MongoDB Umbrella - Monggregate Documentation</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.046329b4.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.046329b4.min.css">
       
       
 
@@ -41,7 +45,7 @@
       
     
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -62,6 +66,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#mql" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -74,7 +83,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="Monggregate Documentation" class="md-header__button md-logo" aria-label="Monggregate Documentation" data-md-component="logo">
+    <a href="../.." title="Monggregate Documentation" class="md-header__button md-logo" aria-label="Monggregate Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -94,7 +103,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Api
+              MongoDB Umbrella
             
           </span>
         </div>
@@ -166,7 +175,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="Monggregate Documentation" class="md-nav__button md-logo" aria-label="Monggregate Documentation" data-md-component="logo">
+    <a href="../.." title="Monggregate Documentation" class="md-nav__button md-logo" aria-label="Monggregate Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -183,7 +192,7 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -200,17 +209,19 @@
       
   
   
+    
+  
   
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
             
@@ -223,7 +234,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Intro
@@ -234,9 +245,27 @@
                 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../intro/mongodb-umbrella/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    MongoDB Umbrella
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -245,6 +274,52 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#mql" class="md-nav__link">
+    MQL
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aggregation-framework" class="md-nav__link">
+    Aggregation Framework
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#atlas-search" class="md-nav__link">
+    Atlas Search
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-stuffs" class="md-nav__link">
+    Other stuffs
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -256,7 +331,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../intro/mongodb-aggregation-framework/" class="md-nav__link">
+      <a href="../mongodb-aggregation-framework/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -276,7 +351,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../intro/why-use-monggregate/" class="md-nav__link">
+      <a href="../why-use-monggregate/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -337,7 +412,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tutorial/getting-started/" class="md-nav__link">
+      <a href="../../tutorial/getting-started/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -357,7 +432,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tutorial/pipeline/" class="md-nav__link">
+      <a href="../../tutorial/pipeline/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -377,7 +452,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tutorial/stages/" class="md-nav__link">
+      <a href="../../tutorial/stages/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -397,7 +472,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tutorial/operators/" class="md-nav__link">
+      <a href="../../tutorial/operators/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -417,7 +492,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tutorial/search/" class="md-nav__link">
+      <a href="../../tutorial/search/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -512,7 +587,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../how-to/commons/home/" class="md-nav__link">
+      <a href="../../how-to/commons/home/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -532,7 +607,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../how-to/commons/select-a-nested-document/" class="md-nav__link">
+      <a href="../../how-to/commons/select-a-nested-document/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -552,7 +627,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../how-to/commons/create-or-update-a-collection/" class="md-nav__link">
+      <a href="../../how-to/commons/create-or-update-a-collection/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -572,7 +647,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../how-to/commons/combine-collections/" class="md-nav__link">
+      <a href="../../how-to/commons/combine-collections/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -607,7 +682,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contributing/" class="md-nav__link">
+      <a href="../../contributing/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -626,7 +701,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../changelog/" class="md-nav__link">
+      <a href="../../changelog/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -657,6 +732,42 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#mql" class="md-nav__link">
+    MQL
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aggregation-framework" class="md-nav__link">
+    Aggregation Framework
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#atlas-search" class="md-nav__link">
+    Atlas Search
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-stuffs" class="md-nav__link">
+    Other stuffs
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -670,11 +781,35 @@
                   
 
 
-  <h1>Api</h1>
+  <h1>MongoDB Umbrella</h1>
 
-<p>:::monggregate.pipeline
-   options:
-     annotations_path: source</p>
+<p>MongoDB has developed one of the most complete database management system of the market.</p>
+<p>Altough it is mainly known for being a document-oriented NoSQL database with optional schemas. It has evolved and expanded to offer a wide range of features and services around data management. </p>
+<p>However here we will focus on the database itself and in particular its query languages.</p>
+<h2 id="mql"><strong>MQL</strong></h2>
+<p><strong>MQL</strong> stands for <strong>M</strong>ongoDB <strong>Q</strong>uery <strong>L</strong>anguage. It is the language used to query MongoDB databases. It is a JSON-based query language that allows you to query documents in a collection.</p>
+<p><strong>MQL</strong> allows to <a href="https://www.mongodb.com/docs/manual/crud/">perform CRUD operations</a>, that is inserting (<strong>C</strong>reate), querying (<strong>R</strong>ead), updating (<strong>U</strong>pdate) and deleting (<strong>D</strong>elete) documents in a collection.</p>
+<p>In the context of an application or web service, <strong>MQL</strong> would typically be used through a driver or an Object Document Mapper (ODM).<br>
+The official MongoDB driver for Python is <a href="https://pymongo.readthedocs.io/en/stable/">PyMongo</a>. It is a low-level driver that allows you to interact with MongoDB databases. And two of the most popular ODM are <a href="https://mongoengine-odm.readthedocs.io/">MongoEngine</a> and <a href="https://beanie-odm.dev/">Beanie</a>.</p>
+<p><strong>MQL</strong> is not the main topic of monggregate nor this documentation, which is about the aggregation framework.</p>
+<h2 id="aggregation-framework"><strong>Aggregation Framework</strong></h2>
+<p><a href="https://www.practical-mongodb-aggregations.com/intro/history.html">Quickly after the release of MongoDB, the MongoDB team realized that the query language was not sufficient to perform complex queries</a>.</p>
+<p>In particular, there was a gap to do analytics on the data like it is easily done in SQL. </p>
+<p>Hence the release of <a href="https://docs.mongodb.com/manual/aggregation/">Aggregation Framework</a> later on. </p>
+<p>As I stated in <a href="https://medium.com/dev-genius/mongo-db-aggregations-pipelines-made-easy-with-monggregate-680b322167d2">my article</a></p>
+<blockquote>
+<p>Aggregation pipelines are the tool that allow MongoDB databases to really rival their SQL counterparts.</p>
+</blockquote>
+<p>The pymongo driver nor the ODMs mentioned above offer a way to easily use the aggregation framework. They only let you do your aggregation queries as raw strings.</p>
+<p>This is where <code>monggregate</code> comes in.
+<code>monggregate</code> exposes an OOP interface to the aggregation framework that make it easier to build pipelines.</p>
+<p>In the <a href="../mongodb-aggregation-framework/">following page</a>, we will do a deep-dive on the aggregation framework.</p>
+<h2 id="atlas-search"><strong>Atlas Search</strong></h2>
+<p><a href="https://www.mongodb.com/docs/atlas/atlas-search/atlas-search-overview/">Atlas Search </a> is a full-text search service that is fully integrated with MongoDB Atlas. It allows you to perform text search on your data and is based on <a href="https://lucene.apache.org/">Apache Lucene</a>.</p>
+<p>As Atlas Search is a part of the aggregation framework, <code>monggregate</code> also offers a way to use it.</p>
+<h2 id="other-stuffs"><strong>Other stuffs</strong></h2>
+<p>MongoDB also offers capabilities for <strong>time series</strong> collections, semantic and <strong>vector search</strong> and probably much more that may or may not be integrated in monggregate in the future.</p>
+<p>But, as of today, these features are not in the scope of <code>monggregate</code>.</p>
 
 
 
@@ -712,10 +847,10 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.dff1b7c8.min.js"></script>
+      <script src="../../assets/javascripts/bundle.dff1b7c8.min.js"></script>
       
     
   </body>
