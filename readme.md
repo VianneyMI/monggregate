@@ -1,4 +1,4 @@
-## Overview
+## **Overview**
 
 Monggregate is a library that aims at simplifying usage of MongoDB aggregation pipelines in python.
 It is based on MongoDB official python driver, pymongo and on [pydantic](https://pydantic-docs.helpmanual.io/).
@@ -12,11 +12,11 @@ It is based on MongoDB official python driver, pymongo and on [pydantic](https:/
 - enables autocompletion on the various MongoDB features.
 - offers a pandas-style way to chain operations on data.
 
-## Requirements
+## **Requirements**
 
 This package requires python > 3.10, pydantic > 1.8.0
 
-## Installation
+## **Installation**
 
 The repo is now available on PyPI:
 
@@ -25,7 +25,7 @@ pip install monggregate
 ```
 
 
-## Usage
+## **Usage**
 
 The below examples reference the MongoDB sample_mflix database
 
@@ -168,35 +168,8 @@ assert results, results
 
 ```
 
-## Motivation
 
-The main driver for building this package was how unconvenient it was for me to build aggregation pipelines using pymongo or any other tool.
+## **Going further**
 
-With pymongo, which is the official MongoDB driver for python, there is no direct support for aggregation pipelines.
-
-pymongo exposes an `aggregate` method but the pipeline inside is just a list of complex dictionaries that quickly become quite long, nested and overwhelming.
-
-At the end, it is barely readable for the one who built the pipeline. Let alone other developers.
-Besides, during the development process, it is often necessary to refer to the online documentation multiple times. Thus, the package aims at integrating the online documentation through in the docstrings of the various classes and modules of the package.
-Basically, the package mirrors every* stage and operator available on MongoDB.
-
-*Actually, it only covers a subset of the stages and operators available. Please come help me to increase the coverage. 
-
-## Roadmap
-
-As of now, the package covers around 40% of the available stages and 25% of the available operators.
-I would argue, that the most important stages and operators are probably covered but this is subjective.
-The goal is to quickly reach 100% of both stages and operators.
-The source code integrates most of the online MongoDB documentation. If the online documentation evolves, it will need to be updated here as well.
-The current documentation is not consistent throughout the package it will need to be standardized later on.
-Some minor refactoring tasks are required also.
-
-There are already a couple issue, that I noted myself for the next tasks that are going to be tackled.
-
-Feel free to open an issue, if you found a bug or to propose enhancements.
-Feel free to do a PR, to propose new interfaces for stages that have not been dealt with yet.
-
-## Going further
-
-* Check out this GitHub [repo](https://github.com/VianneyMI/doc_monggregate) for more examples.
+* Check out the [documentation](https://vianneymi.github.io/monggregate/) for more examples.
 * Check out this [tutorial](https://medium.com/@vianney.mixtur_39698/mongo-db-aggregations-pipelines-made-easy-with-monggregate-680b322167d2) on Medium. (It's not under the paywall)

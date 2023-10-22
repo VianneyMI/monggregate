@@ -165,8 +165,5 @@ cursor = db["movies"].aggregate(pipeline.export())
 # Printing the results
 results = list(cursor)
 #print(results)
-assert results, results
-
-
 ```
 
