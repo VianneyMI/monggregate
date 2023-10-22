@@ -92,7 +92,7 @@ You should now have two distinct collections: `reviews` and `listings`.
 
 Separating the reviews can be convenient to be able to retrieve a particular review document.
 Now you can do so, by querying the `reviews` collection with MQL.
-On the contrary, if you want to query a given listing with its reviews, you will have to perform a [join operation](join-operations.md) using the aggregation framework.
+On the contrary, if you want to query a given listing with its reviews, you will have to perform a [join operation](combine-collections.md) using the aggregation framework.
 
 ## **Generalization**
 

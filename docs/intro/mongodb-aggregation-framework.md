@@ -26,7 +26,7 @@ Even if the name focuses on the aggregation part of the framework, it can actual
     The frameworks exposes several functions to combine data from multiple collections. You can combine collections horizontally or vertically
     respectively with the `$lookup` and $unionWith stages.
 
-    See [Merge collections](../how-to/commons/join-operations.md) for some examples.
+    See [Merge collections](../how-to/commons/combine-collections.md) for some examples.
 
 4. **Time Series Analysis:**
 
