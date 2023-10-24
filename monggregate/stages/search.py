@@ -138,15 +138,20 @@ class SearchBase(Stage):
 
 class Search(SearchBase):
     """"
-    Creates a $search statement in an aggregation pipeline
+    Creates a search statement in an aggregation pipeline
 
-    Descrtiption
-    -----------------------
-    The $search stage performs a full-text search on the specified field or fields 
+    Extended definition:
+    --------------------
+    The search stage performs a full-text search on the specified field or fields 
     which must be covered by an Atlas Search index.
 
+    Online MongoDB documentation:
+    -----------------------------
+    Last Updated (in this package) : 25/04/2023
+    Source : https://www.mongodb.com/docs/atlas/atlas-search/query-syntax/#mongodb-pipeline-pipe.-search
+
     Attributes:
-    -----------------------
+    -----------
         - index, str : name of the Atlas Search index to use. Defaults to default.
 
         - count, dict|None : Document that specifies the count options for retrieving a count

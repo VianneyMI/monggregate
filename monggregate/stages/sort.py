@@ -105,8 +105,17 @@ class Sort(Stage):
     """
     Creates a sort statement for an aggregation pipeline sort stage.
 
+    Extended definition:
+    --------------------
+    Sorts all input documents and returns them to the pipeline in sorted order.
+
+    Online MongoDB documentation:
+    -----------------------------
+    Last Updated (in this package) : 21/09/2022
+    Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/sort/#mongodb-pipeline-pipe.-sort
+
     Attributes:
-    -----------------------
+    -----------
         - statement, dict : the statement generated after instantiation
         - query, dict : fields-sort order mapping. 1 for ascending order, -1 for descending order. Defaults to {}
                         if not provided, the query will be built from ascending and descending parameters.

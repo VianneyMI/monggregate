@@ -55,11 +55,25 @@ class SortByCount(Stage):
     """
     Creates a sort_by_count statement for an aggregation pipeline sort_by_count stage
 
+    Extended definition:
+    --------------------
+    Groups incoming documents based on the value of a specified expression, then computes the count of documents in each distinct group.
+
+    Each output document contains two fields: an _id field containing the distinct grouping value,
+    and a count field containing the number of documents belonging to that grouping or category.
+
+    The documents are sorted by count in descending order.
+
+    Online MongoDB documentation:
+    -----------------------------
+
+    Last Updated (in this package) : 21/09/2022
+    Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/sortByCount/#mongodb-pipeline-pipe.-sortByCount
+
     Attributes:
-    -------------------------
+    -----------
         - _statement, dict : the statement generated during the validation process
         - by, str : the key to group, sort and count on
-
     """
 
     by : str # TODO : Allow more types <VM, 17/09/2022>

@@ -54,28 +54,38 @@ class Unset(Stage):
     """
     Creates an $unset statement for an aggregation pipeline unset stage.
 
-    Attributes:
+    Extended definition:
     --------------------
+    New in version 4.2
+
+    Removes/excludes fields from documents.
+
+    Online MongoDB documentation:
+    -----------------------------
+    Last Updated in this package : 24/04/2023
+    Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/unset/#definition
+
+    Attributes:
+    -----------
 
         - field, str|None: field to be removed
         - fields, list[str]|None, list of fields to be removed
     
     """
 
-    field : FieldName|None
-    fields : list[FieldName]|None
+    field: FieldName | None
+    fields: list[FieldName] | None
 
     @property
     def statement(self) -> dict:
-        
+
         if self.field:
             _statement = {
-                "$unset":self.field
+                "$unset": self.field
             }
         else:
             _statement = {
-                "$unset":self.fields
+                "$unset": self.fields
             }
 
         return self.resolve(_statement)
-    

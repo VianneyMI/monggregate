@@ -221,6 +221,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     def bucket(self, *, by:Any, boundaries:list, default:Any=None, output:dict|None=None)->"Pipeline":
         """
         Adds a bucket stage to the current pipeline.
+        This stage aggregates documents into buckets specified by the boundaries argument.
 
         Arguments:
         ---------------------------------
@@ -270,7 +271,9 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
     def bucket_auto(self, *, by:Any, buckets:int, output:dict=None, granularity:GranularityEnum|None=None)->"Pipeline":
         """
-        Adds a bucket_auto stage to the current pipeline
+        Adds a bucket_auto stage to the current pipeline.
+        This stage aggregates documents into buckets automatically computed to statisfy the number of buckets desired
+        and provided as an input.
 
         Arguments:
         ---------------------------------
@@ -309,7 +312,8 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
     def count(self, name:str)->"Pipeline":
         """
-        Adds a count stage to the current pipeline
+        Adds a count stage to the current pipeline.
+        Passes a document to the next stage that contains a count of the number of documents input to the stage.
 
         Arguments
         -------------------------------
@@ -352,7 +356,9 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     def group(self, *,  by:Any|None=None, query:dict={})->"Pipeline":
         """
         Adds a group stage to the current pipeline.
-
+        The group stage separates documents into groups according to a "group key". The output is one document for each unique group key.
+        The output documents can also contain additional fields that are set using accumulator expressions.
+        
         Arguments:
         ------------------------
             - by,  str | list[str] | set[str] | dict | None : field or group of fields to group by
@@ -371,6 +377,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     def limit(self, value:int)->"Pipeline":
         """
         Adds a limit stage to the current pipeline.
+        Limits the number of documents passed to the next stage in the pipeline.
 
         Arguments:
         ---------------------------------
@@ -393,7 +400,10 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         right_on:str=None)->"Pipeline":
         """
         Adds a lookup stage to the current pipeline.
-
+        Performs a left outer join to a collection in the same database to filter in documents from the "joined" collection for processing. The
+        lookup stage adds a new array field to each input document. The new array field contains the matching documents from the "joined" collection. The
+        lookup stage passes these reshaped documents to the next stage.
+        
         Arguments:
         ----------------------------
             - right / from (official MongoDB name), str : foreign collection
@@ -550,6 +560,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     def match(self, query:dict={}, **kwargs:Any)->"Pipeline":
         """
         Adds a match stage to the current pipeline.
+        Filters the documents to pass only the documents that match the specified condition(s) to the next pipeline stage.
 
         Arguments:
         -------------------
@@ -569,6 +580,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     def out(self, collection:str, *, db:str|None=None)->"Pipeline":
         """
         Adds an out stage to the current pipeline.
+        Takes the documents returned by the aggregation pipeline and writes them to a specified collection. Starting in MongoDB 4.4, you can specify the output database.
 
         Arguments:
         ---------------------------
@@ -593,6 +605,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         **kwargs:Any)->"Pipeline":
         """
         Adds a project stage to the current pipeline.
+        Passes along the documents with the requested fields to the next stage in the pipeline. The specified fields can be existing fields from the input documents or newly computed fields.
 
         Arguments:
         ---------------------------
@@ -618,7 +631,10 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     def replace_root(self, path:str|None=None, *, document:dict|None=None)->"Pipeline":
         """
         Adds a replace_root stage to the current pipeline.
-
+        Replaces the input document with the specified document.
+        The operation replaces all existing fields in the input document, including the _id field.
+        You can promote an existing embedded document to the top level, or create a new document for promotion
+        
         Arguments:
         -------------------------------------
 
@@ -655,6 +671,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     def sample(self, value:int)->"Pipeline":
         """
         Adds a sample stage to the current pipeline.
+        Randomly selects the specified number of documents from the input documents.
 
         Arguments:
         -----------------------
@@ -683,7 +700,9 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             **kwargs:Any
     )->"Pipeline":
         """
-        Adds a search stage to the current pipeline
+        Adds a search stage to the current pipeline.
+        The search stage performs a full-text search on the specified field or fields which must be covered by an Atlas Search index.
+
         NOTE : if used, search has to be the first stage of the pipeline
 
         Arguments:
@@ -758,7 +777,9 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             **kwargs:Any
     )->"Pipeline":
         """
-        Adds a searchMeta stage to the current pipeline
+        Adds a searchMeta stage to the current pipeline.
+        The searchMeta stage returns different types of metadata result documents.
+        
         NOTE : if used, search has to be the first stage of the pipeline
 
         Arguments:
@@ -812,6 +833,9 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     def set(self, document:dict={}, **kwargs:Any)->"Pipeline":
         """
         Adds a set stage to the current pipeline.
+        Adds new fields to documents. $set outputs documents that conain all existing fields from the inputs documents
+        and newly added fields.
+        Both stages are equivalent to a $project stage that explicitly specifies all existing fields in the inputs documents and adds the new fields.
 
         Arguments:
         ---------------------------------
@@ -829,6 +853,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     def skip(self, value:int)->"Pipeline":
         """
         Adds a skip stage to the current pipeline.
+        Skips over the specified number of documents that pass into the stage and passes the remaining documents to the next stage in the pipeline.
 
         Arguments:
         -----------------------
@@ -850,7 +875,8 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         **kwargs:Any)->"Pipeline":
         """
         Adds a sort stage to the current pipeline.
-
+        Sorts all input documents and returns them to the pipeline in sorted order.
+        
         Arguments:
         -----------------------
             - statement, dict : the statement generated after instantiation
@@ -890,7 +916,12 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     def sort_by_count(self, by:str)->"Pipeline":
         """
         Adds a sort_by_count stage to the current pipeline.
+        Groups incoming documents based on the value of a specified expression, then computes the count of documents in each distinct group.
 
+        Each output document contains two fields: an _id field containing the distinct grouping value,
+        and a count field containing the number of documents belonging to that grouping or category.
+
+        The documents are sorted by count in descending order.
 
         Arguments:
         -------------------------
@@ -908,7 +939,9 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     def union_with(self, collection:str, pipeline:list[dict]|None=None)->"Pipeline":
         """
         Adds a union_with stage to the current pipeline.
+        Performs a union of two collections. unionWith combines pipeline results from two collections into a single result set. The stage outputs the combined result set (including duplicates) to the next stage.
 
+    The order in which the combined result set documents are output is unspecified.
         Arguments:
         ---------------------------------
             - collection / coll, str : The collection or view whose pipeline results you wish to include in the result set
@@ -949,6 +982,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     def unset(self, field:str=None, fields:list[str]|None=None)->"Pipeline":
         """
         Adds an unset stage to the current pipeline.
+        Removes/excludes fields from documents.
         
         Arguments:
         -------------------------------

@@ -37,26 +37,30 @@ where myCount would be the output field that contains the count. You can specify
 from monggregate.stages.stage import Stage
 from monggregate.fields import FieldName
 
-
 class Count(Stage):
     """
-    Creates a count statement for an aggregation pipeline count stage
+    Creates a count statement for an aggregation pipeline count stage.
+
+    Extended definition:
+    ---------------------
+    Passes a document to the next stage that contains a count of the number of documents input to the stage.
+
+    Online MongoDB documentation:
+    ----------------------------
+    Last Updated (in this package) : 18/09/2022
+    Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/count/#mongodb-pipeline-pipe.-count
 
     Attributes:
     -------------------------------
-
-        - name, str : name of the output field which the count as its value.
-                      Must be a non-empty string,
-                      NOTE : Must not start with $ and must not contain the
-                             . character and must not be empty
+    - name, str : name of the output field which the count as its value.
+                  Must be a non-empty string, must not start with $, and must not contain the . character.
 
     """
 
-    name : FieldName
+    name: FieldName
 
     @property
-    def statement(self)-> dict:
-
-        return  self.resolve({
-            "$count" : self.name
+    def statement(self) -> dict:
+        return self.resolve({
+            "$count": self.name
         })

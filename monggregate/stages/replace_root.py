@@ -72,9 +72,20 @@ from monggregate.utils import validate_field_path
 class ReplaceRoot(Stage):
     """
     Creates a replace root statement for an aggregation pipeline replace root stage.
+    
+    Extended definition:
+    --------------------
+    Replaces the input document with the specified document.
+    The operation replaces all existing fields in the input document, including the _id field.
+    You can promote an existing embedded document to the top level, or create a new document for promotion
+    
+    Online MongoDB documentation:
+    -----------------------------
+    Last Updated (in this package) : 20/09/2022
+    Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/replaceRoot/#mongodb-pipeline-pipe.-replaceRoot
 
     Attributes:
-    ---------------------------
+    -----------
 
         - statement, dict : the statement generated during instantiation after parsing the other arguments
         - path_to_new_root, str|None : the path to the embedded document to be promoted

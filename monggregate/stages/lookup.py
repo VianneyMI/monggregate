@@ -260,8 +260,25 @@ class Lookup(Stage):
     """
     Creates a lookup statement for an aggregation pipeline lookup stage.
 
+    `Changed in version 5.1`
+
+    Extended definition:
+    --------------------
+
+    Performs a left outer join to a collection in the same database to filter in documents from the "joined" collection for processing. The lookup stage adds a new array field to each input document. The new array field contains the matching documents from the "joined" collection. The
+    lookup stage passes these reshaped documents to the next stage.
+
+    Starting in MongoDB 5.1, $lookup works across sharded collections.
+
+    To combine elements from two different collections, use the $unionWith pipeline stage.
+
+    Online MongoDB documentation:
+    -----------------------------
+    Last Updated (in this package) : 23/09/2022
+    Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/lookup/#mongodb-pipeline-pipe.-lookup
+
     Attributes:
-    ----------------------------
+    -----------
         - right / from (official MongoDB name), str : foreign collection
         - left_on / local_field (official MongoDB name)), str | None : field of the current collection to join on
         - right_on / foreign_field (official MongoDB name), str | None : field of the foreign collection to join on

@@ -68,12 +68,21 @@ class Skip(Stage):
     """
     Creates a skip statement for an aggregation pipeline skip stage.
 
+    Extended definition:
+    --------------------
+    Skips over the specified number of documents that pass into the stage and passes the remaining documents to the next stage in the pipeline.
+
+    Online MongoDB documentation:
+    -----------------------------
+    Last Updated (in this package) : 21/09/2022
+    Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/skip/#mongodb-pipeline-pipe.-skip
+
     Attributes:
-    -----------------------
+    -----------
         - statement, dict : the statement generated after instantiation
         - value, int : positive integer representing the number of documents to be skipped.
-
     """
+
 
     value : int # Add gt 0 constraint ? check behavior with 0
 

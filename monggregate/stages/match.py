@@ -53,8 +53,18 @@ class Match(Stage):
     """
     Creates a match statement for an aggregation pipeline match stage.
 
+    Extended definition:
+    --------------------
+    Filters the documents to pass only the documents that match the specified condition(s) to the next pipeline stage.
+
+    Online MongoDB documentation:
+    -----------------------------
+
+    Last Updated (in this package) : 16/09/2022
+    Source :  https://www.mongodb.com/docs/manual/reference/operator/aggregation/match/#mongodb-pipeline-pipe.-match
+
     Attributes:
-    -------------------
+    -----------
 
         - statement, dict : the statement generated during instantiation after parsing the other arguments
         - query, dict : the query use to filter the documents

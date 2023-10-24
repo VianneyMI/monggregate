@@ -5,7 +5,10 @@ Online MongoDB documentation:
 --------------------------------------------------------------------------------------------------------------------
 
 Last Updated (in this package) : 18/09/2022
-Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/group/#mongodb-pipeline-pipe.-group
+Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/limit
+
+# Definition
+---------------------------------
 
 Limits the number of documents passed to the next stage in the pipeline.
 
@@ -55,14 +58,22 @@ class Limit(Stage):
     """
     Creates a $limit statement for an aggregation pipeline $limit stage.
 
+    Extended definition:
+    ---------------------
+    Limits the number of documents passed to the next stage in the pipeline.
+
+    Online MongoDB documentation:
+    ------------------------------
+    Last Updated (in this package) : 18/09/2022
+    Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/group/#mongodb-pipeline-pipe.-group
+
     Attributes:
-    ---------------------------------
+    -----------
         - value, int : the actual limit to apply.
                        limits the number of documents returned by the stage to
                        the provided value.
-
     """
-
+    
     value : int = pyd.Field(gt=0)
 
     @property
