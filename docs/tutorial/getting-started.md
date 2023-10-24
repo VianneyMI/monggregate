@@ -39,6 +39,6 @@ your IDE will show you the available stages.
 
 You should see something like this.
 
-TODO : insert image
+![autocompletion](../img/demo_autocompletion.png)
 
 In the [next page](pipeline.md), we will see in more details how to use the `Pipeline` class.

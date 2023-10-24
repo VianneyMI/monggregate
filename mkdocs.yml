@@ -13,7 +13,7 @@ nav:
     - Operators: tutorial/operators.md
     - Search: tutorial/search.md
   - How-To:
-    #- Get Data: how-to/setup.md
+    - Get Data: how-to/setup.md
     - Common Pipelines Use Cases: 
       - Home: how-to/commons/home.md
       - Select a nested document: how-to/commons/select-a-nested-document.md
@@ -29,7 +29,10 @@ nav:
 
 
 # Using the Material theme for styling
-theme: material
+theme: 
+  name: material
+  logo: img/logo.png
+  favicon: img/logo.png
   # Material Options for syntax highlighting
 markdown_extensions:
   - pymdownx.highlight:
