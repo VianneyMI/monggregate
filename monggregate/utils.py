@@ -66,7 +66,19 @@ def to_unique_list(keys:T)->list[str]|T:
 def validate_field_path(path:str|None)->str|None:
     """Validates field path"""
 
-    if path and not path.startswith("$"):
+    if isinstance(path, str) and not path.startswith("$"):
         path =  "$" + path
 
     return path
+
+
+def validate_field_paths(paths:list[str]|set[str])->list[str]:
+    """Validates field paths"""
+
+    if isinstance(paths, list):
+        paths = [validate_field_path(path) for path in paths]
+    elif isinstance(paths, set):
+        paths = [validate_field_path(path) for path in paths]
+        paths.sort()
+
+    return paths

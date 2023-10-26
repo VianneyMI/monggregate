@@ -1,7 +1,19 @@
 # Release Notes
 
-## 0.16.0
+## 0.16.2
 
+### Fixes
+
+* Allow to use iterable and dicts to group by in Group class and pipeline group function
+
+## 0.16.1
+
+### Fixes
+
+* Fixed replace_root by passing document argument to ReplaceRoot class
+
+
+## 0.16.0
 
 ### New Features
 

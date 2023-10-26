@@ -66,7 +66,7 @@ For more information, see $group Optimization.
 from typing import Any
 from monggregate.base import pyd
 from monggregate.stages.stage import Stage
-from monggregate.utils import validate_field_path
+from monggregate.utils import validate_field_path, validate_field_paths
 
 class Group(Stage):
     """
@@ -74,7 +74,7 @@ class Group(Stage):
 
     Attributes:
     ------------------------
-        - by / _id (offcial MongoDB name represented by a pydantic alias), str | list[str] | set[str] : field or group of fields to group on
+        - by,  str | list[str] | set[str] | dict | None : field or group of fields to group by
         - query, dict | None : Computed aggregated values (per group)
 
 
@@ -91,6 +91,7 @@ class Group(Stage):
     # Validators
     # ------------------------------------------
     _validate_by = pyd.validator("by", pre=True, always=True, allow_reuse=True)(validate_field_path) # re-used pyd.validator
+    _validate_iterable_by = pyd.validator("by", pre=True, always=True, allow_reuse=True)(validate_field_paths) # re-used pyd.validator
 
     @pyd.validator("query", always=True)
     @classmethod
