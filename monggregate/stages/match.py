@@ -47,7 +47,12 @@ Restrictions
 
 """
 
+from typing import Any
+
+from monggregate.base import pyd
 from monggregate.stages.stage import Stage
+from monggregate.operators.operator import Operator
+from monggregate.expressions import Expression
 
 class Match(Stage):
     """
@@ -56,14 +61,35 @@ class Match(Stage):
     Attributes:
     -------------------
 
-        - statement, dict : the statement generated during instantiation after parsing the other arguments
-        - query, dict : the query use to filter the documents
-
+        - query, dict : a simple MQL query use to filter the documents.
+        - expression, Expression : an aggregation expression used to filter the documents
+    
+    NOTE : Use query if you're using a MQL query and expression if you're using aggregation expressions.
+    
     """
 
-    query : dict ={} #| None
+    query : dict = {} #| None
+    expression : Any | None = None
+
+    @pyd.validator("expression", pre=True, always=True)
+    def validate_expression(cls, expression)-> Any:
+        
+        c1 = isinstance(expression, dict) # expression is "expressed/resolved" already
+        c2 = isinstance(expression, Expression) # expression is an expression object
+        c3 = isinstance(expression, Operator) # expression is an operator object
+
+        if expression and not (c1 or c2 or c3):
+            raise ValueError("The expression argument must be a valid expression, operator or a dict.")
+        
+        return expression
 
     @property
     def statement(self) -> dict:
 
-        return self.resolve({"$match":self.query})
+        if self.expression:
+            _statement = self.resolve({"$match":{"$expr":self.expression}})
+            
+        else:
+            _statement =  self.resolve({"$match":self.query})
+
+        return _statement
