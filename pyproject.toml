@@ -10,7 +10,6 @@ version = "0.16.2"
 description = "MongoDB aggregation pipelines made easy. Joins, grouping, counting and much more..."
 readme = "README.md"
 authors = [{ name = "Vianney Mixtur", email = "vianney.mixtur@outlook.fr" }]
-documentation = "https://vianneymi.github.io/monggregate/"
 license = { file = "LICENSE" }
 classifiers = [
     "License :: OSI Approved :: MIT License",
@@ -37,6 +36,7 @@ dev = ["bumpver", "pytest", "mypy", "pylint"]
 
 [project.urls]
 Homepage = "https://github.com/VianneyMI/monggregate"
+documentation = "https://vianneymi.github.io/monggregate/"
 
 [tool.bumpver]
 current_version = "0.16.2"
