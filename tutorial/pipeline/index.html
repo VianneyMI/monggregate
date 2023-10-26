@@ -992,12 +992,12 @@ This approach might be more readable for some people, but it is also more verbos
 <p>The second point is particularly relevant given the utilies function in the <code>Pipeline</code> class.</p>
 <h2 id="pipeline-utilities"><strong>Pipeline utilities</strong></h2>
 <p>The <code>Pipeline</code> class has a few utilities methods to help you build your pipeline.</p>
-<p>Indeed it implements the python list methods, so you do not have to access the stages attribute to perform list operations.</p>
+<p>Indeed it implements most of the python list methods, so you do not have to access the stages attribute to perform list operations.</p>
 <p>In the examples above, <code>len(pipeline)</code> would return <code>3</code>.</p>
 <p>You could also for example append a stage to the pipeline like this:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stages</span><span class="o">.</span><span class="n">Project</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
 </span></code></pre></div>
-<p>You also have access to the <code>append</code>, <code>extend</code>, <code>insert</code>, <code>pop</code>, <code>remove</code>, <code>reverse</code>, <code>sort</code> methods directly on the <code>pipeline</code> object. <TODO: implement pop remove and reverse></p>
+<p>You also have access to the <code>append</code>, <code>extend</code>, <code>insert</code>,  methods directly on the <code>pipeline</code> object. <TODO: implement pop remove and reverse></p>
 
 
 
