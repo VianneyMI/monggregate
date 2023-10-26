@@ -35,9 +35,9 @@ Cherry on the cake, your IDE will help you in the process because you now have a
 
 ## **Who should use it ?**
 
-The package is probably more useful for data and sofware engineers that are not familiar with the aggregation framework and/or that are not familiar with MongoDB in general.
+The package is probably more useful for data and sofware engineers that are not familiar with the aggregation framework or that are not familiar with MongoDB in general.
 
-However, developers that are already familiar with the aggregation framework and/or MongoDB may also find it useful as it can help them to build pipelines faster and with less errors.<br>
+However, developers that are already familiar with the aggregation framework or MongoDB may also find it useful as it can help them to build pipelines faster and with less errors.<br>
 It can also improve the readability of the pipelines built.
 
 ## **How to use it ?**

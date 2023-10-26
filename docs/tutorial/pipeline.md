@@ -172,7 +172,7 @@ The second point is particularly relevant given the utilies function in the `Pip
 
 The `Pipeline` class has a few utilities methods to help you build your pipeline.
 
-Indeed it implements the python list methods, so you do not have to access the stages attribute to perform list operations.
+Indeed it implements most of the python list methods, so you do not have to access the stages attribute to perform list operations.
 
 In the examples above, `len(pipeline)` would return `3`.
 
@@ -182,4 +182,4 @@ You could also for example append a stage to the pipeline like this:
 pipeline.append(stages.Project(title=1, year=1))
 ```
 
-You also have access to the `append`, `extend`, `insert`, `pop`, `remove`, `reverse`, `sort` methods directly on the `pipeline` object. <TODO: implement pop remove and reverse>
+You also have access to the `append`, `extend`, `insert`,  methods directly on the `pipeline` object. <TODO: implement pop remove and reverse>
