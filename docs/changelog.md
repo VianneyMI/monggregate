@@ -1,5 +1,11 @@
 # Release Notes
 
+## 0.17.0
+
+### Docs
+
+* First version of the documentation :champagne: !
+
 ## 0.16.2
 
 ### Fixes

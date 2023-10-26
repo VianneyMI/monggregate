@@ -39,8 +39,10 @@ import pymongo
 from monggregate import Pipeline, S
 
 # Creating connexion string securely
+# You need to create a .env file with your password
 load_dotenv(verbose=True)
-PWD = os.environ["MONGODB_PASSWORD"]
+PWD = os.environ["MONGODB_PASSWORD"] 
+
 MONGODB_URI = f"mongodb+srv://dev:{PWD}@myserver.xciie.mongodb.net/?retryWrites=true&w=majority"
 
 # Connect to your MongoDB cluster:
@@ -64,8 +66,9 @@ pipeline.match(
 # Executing the pipeline
 curosr = db["movies"].aggregate(pipeline.export())
 
+# Printing the results
 results = list(curosr)
-assert results
+#print(results) # Uncomment to see the results
 ```
 
 
@@ -115,7 +118,6 @@ cursor = db["movies"].aggregate(pipeline.export())
 # Printing the results
 results = list(cursor)
 #print(results)
-assert results
 
 ```
 
@@ -163,12 +165,9 @@ cursor = db["movies"].aggregate(pipeline.export())
 # Printing the results
 results = list(cursor)
 #print(results)
-assert results, results
-
-
 ```
 
 ## **Going further**
 
-* Check out the [documentation](https://vianneymi.github.io/monggregate/) for more examples.
+* Check out the [full documentation](https://vianneymi.github.io/monggregate/) for more examples.
 * Check out this [medium article](https://medium.com/@vianney.mixtur_39698/mongo-db-aggregations-pipelines-made-easy-with-monggregate-680b322167d2).

@@ -167,3 +167,7 @@ results = list(cursor)
 #print(results)
 ```
 
+## **Going further**
+
+* Check out the [full documentation](https://vianneymi.github.io/monggregate/) for more examples.
+* Check out this [medium article](https://medium.com/@vianney.mixtur_39698/mongo-db-aggregations-pipelines-made-easy-with-monggregate-680b322167d2).
