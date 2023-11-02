@@ -105,15 +105,14 @@ class Compound(SearchOperator):
     """
 
 
-    must : list[Clause|Self] = []
-    must_not : list[Clause|Self] = pyd.Field([], alias="mustNot")
-    should : list[Clause|Self] = []
-    filter : list[Clause|Self] = []
-    minimum_should_clause : int = 1
+    must : list["Clause|Compound"] = []
+    must_not : list["Clause|Compound"] = pyd.Field([], alias="mustNot")
+    should : list["Clause|Compound"] = []
+    filter : list["Clause|Compound"] = []
+    minimum_should_match : int = 0
 
     @property
     def statement(self) -> dict:
-
 
         clauses = {}
         if self.must:
@@ -122,6 +121,7 @@ class Compound(SearchOperator):
             clauses["mustNot"] = self.must_not
         if self.should:
             clauses["should"] = self.should
+            clauses["minimumShouldMatch"] = self.minimum_should_match
         if self.filter:
             clauses["filter"] = self.filter
 
@@ -174,7 +174,32 @@ class Compound(SearchOperator):
         self._register_clause(type, autocomplete_statement)
     
         return self
-    
+
+
+    def compound(
+            self, 
+            type:ClauseType, 
+            must:list["Clause|Compound"]=[],
+            must_not:list["Clause|Compound"]=[],
+            should:list["Clause|Compound"]=[],
+            filter:list["Clause|Compound"]=[],
+            minimum_should_match:int=0
+        )->Self:
+        """xxx"""
+
+        _compound = Compound(
+            must=must,
+            must_not=must_not,
+            should=should,
+            filter=filter,
+            minimum_should_match=minimum_should_match
+        )
+
+        self._register_clause(type, _compound.statement)
+
+        return _compound
+
+
 
     def equals(
             self,
@@ -303,3 +328,6 @@ class Compound(SearchOperator):
 
         return self
     
+
+if __name__ == "__main__":
+    print(Compound())

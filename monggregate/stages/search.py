@@ -90,12 +90,14 @@ from monggregate.search.operators import(
     Wildcard,
     AnyOperator
 )
+from monggregate.search.operators.compound import ClauseType
 from monggregate.search.commons import FuzzyOptions
 
 # Enums
 # -----------------------------------------------------
 OperatorLiteral = Literal[
     "autocomplete",
+    "compound",
     "equals",
     "exists",
     "facet",
@@ -177,12 +179,22 @@ class Search(SearchBase):
     
     collector : Facet|None
     operator : AnyOperator|None
-    
 
+
+    @pyd.root_validator(pre=True)
+    @classmethod
+    def init(cls, values:dict)->dict:
+        """Initializes Search with Compound operator."""
+
+        if "collector" not in values and "operator" not in values:
+            values["operator"] = Compound()
+        
+        return values
+    
     @pyd.validator("operator", pre=True, always=True)
     @classmethod
     def validate_operator(cls, value:dict, values:dict)->dict|None:
-        """Ensures that either collector or operator is provided"""
+        """Ensures that either collector or operator is provided."""
 
         collector = values.get("collector")
 
@@ -219,26 +231,6 @@ class Search(SearchBase):
     # Constructors
     #---------------------------------------------------------
     @classmethod
-    def __get_constructors_map__(cls, operator_name:str)->Callable:
-        """Returns appropriate constructor from operator name"""
-
-        _constructors_map = {
-            "autocomplete":cls.autocomplete,
-            "compound":cls.compound,
-            "equals":cls.equals,
-            "exists":cls.exists,
-            "facet":cls.facet,
-            "more_like_this":cls.more_like_this,
-            "range":cls.range,
-            "regex":cls.regex,
-            "text":cls.text,
-            "wildcard":cls.wildcard
-        }
-
-        return _constructors_map[operator_name]
-    
-
-    @classmethod
     def from_operator(
         cls, 
         operator_name:OperatorLiteral,
@@ -262,7 +254,7 @@ class Search(SearchBase):
         return cls.__get_constructors_map__(operator_name)(**kwargs)
 
     @classmethod
-    def autocomplete(
+    def init_autocomplete(
         cls,
         query:str|list[str], 
         path:str, 
@@ -294,14 +286,14 @@ class Search(SearchBase):
         return cls(**base_params, operator=autocomplete_statement)
     
     @classmethod
-    def compound(
+    def init_compound(
         cls,
         minimum_should_clause:int=1,
         *,
-        must : list[dict]=[],
-        must_not : list[dict]=[],
-        should : list[dict]=[],
-        filter : list[dict]=[],
+        must : list[AnyOperator]=[],
+        must_not : list[AnyOperator]=[],
+        should : list[AnyOperator]=[],
+        filter : list[AnyOperator]=[],
         **kwargs:Any
         
     )->Self:
@@ -321,7 +313,7 @@ class Search(SearchBase):
         return cls(**base_params, operator=compound_statement)
 
     @classmethod
-    def equals(
+    def init_equals(
         cls,
         path:str,
         value:str|int|float|bool|datetime,
@@ -349,7 +341,7 @@ class Search(SearchBase):
         return cls(**base_params, operator=equals_statement)
 
     @classmethod
-    def exists(cls, path:str, **kwargs:Any)->Self:
+    def init_exists(cls, path:str, **kwargs:Any)->Self:
         """
         Creates a search stage with an exists operator
 
@@ -367,7 +359,7 @@ class Search(SearchBase):
         return cls(**base_params, operator=exists_statement)
     
     @classmethod
-    def facet(cls, **kwargs:Any)->Self:
+    def init_facet(cls, **kwargs:Any)->Self:
         """
         Creates a search stage with a facet operator
 
@@ -385,7 +377,7 @@ class Search(SearchBase):
         return cls(**base_params, collector=facet_)
     
     @classmethod
-    def more_like_this(cls, like:dict|list[dict], **kwargs:Any)->Self:
+    def init_more_like_this(cls, like:dict|list[dict], **kwargs:Any)->Self:
         """
         Creates a search stage  with a more_like_this operator
 
@@ -403,7 +395,7 @@ class Search(SearchBase):
         return cls(**base_params, operator=more_like_this_stasement)
 
     @classmethod
-    def range(
+    def init_range(
         cls,
         path:str|list[str],
         gt:int|float|datetime|None=None,
@@ -438,7 +430,7 @@ class Search(SearchBase):
         return cls(**base_params, operator=range_statement)
 
     @classmethod
-    def regex(
+    def init_regex(
         cls,
         query:str|list[str],
         path:str|list[str],
@@ -465,10 +457,8 @@ class Search(SearchBase):
 
         return cls(**base_params, operator=regex_statement)
 
-
-
     @classmethod
-    def text(
+    def init_text(
         cls,
         query:str|list[str],
         path:str|list[str],
@@ -501,7 +491,7 @@ class Search(SearchBase):
         return cls(**base_params, operator=text_statement)
 
     @classmethod
-    def wildcard(
+    def init_wildcard(
         cls,
         query:str|list[str],
         path:str|list[str],
@@ -530,6 +520,215 @@ class Search(SearchBase):
 
         return cls(**base_params, operator=wilcard_statement)
     
+    #-----------------------------------------
+    # Compound Search Pipelinenized functions
+    #-----------------------------------------
+    def autocomplete(
+            self, 
+            type:ClauseType, 
+            *,
+            query:str|list[str], 
+            path:str,
+            token_order:str="any",
+            fuzzy:FuzzyOptions|None=None,
+            score:dict|None=None
+            )->Self:
+        """xxx"""
+
+        if isinstance(self.operator, Compound):
+            self.operator.autocomplete(
+                type=type,
+                query=query,
+                path=path,
+                token_order=token_order,
+                fuzzy=fuzzy,
+                score=score
+            )
+        else:
+            raise TypeError(f"Cannot call autocomplete on {self.operator}")
+        
+        return self
+    
+    def equals(self, type:ClauseType, path:str, value:str|int|float|bool|datetime, score:dict|None=None)->Self:
+        """xxx"""
+
+        if isinstance(self.operator, Compound):
+            self.operator.equals(
+                type=type,
+                path=path,
+                value=value,
+                score=score
+            )
+        else:
+            raise TypeError(f"Cannot call equals on {self.operator}")
+        
+        return self
+    
+    def exists(self, type:ClauseType, path:str)->Self:
+        """xxx"""
+
+        if isinstance(self.operator, Compound):
+            self.operator.exists(
+                type=type,
+                path=path
+            )
+        else:
+            raise TypeError(f"Cannot call exists on {self.operator}")
+        
+        return self
+    
+    def range(
+            self,
+            type:ClauseType,
+            *,
+            path:str|list[str],
+            gt:int|float|datetime|None=None,
+            lt:int|float|datetime|None=None,
+            gte:int|float|datetime|None=None,
+            lte:int|float|datetime|None=None,
+            score:dict|None=None
+        )->Self:
+        """xxx"""
+
+        if isinstance(self.operator, Compound):
+            self.operator.range(
+                type=type,
+                path=path,
+                gt=gt,
+                lt=lt,
+                gte=gte,
+                lte=lte,
+                score=score
+            )
+        else:
+            raise TypeError(f"Cannot call range on {self.operator}")
+        
+        return self
+    
+    def regex(
+            self,
+            type:ClauseType,
+            *,
+            query:str|list[str],
+            path:str|list[str],
+            allow_analyzed_field:bool=False,
+            score:dict|None=None
+        )->Self:
+        """xxx"""
+
+        if isinstance(self.operator, Compound):
+            self.operator.regex(
+                type=type,
+                query=query,
+                path=path,
+                allow_analyzed_field=allow_analyzed_field,
+                score=score
+            )
+        else:
+            raise TypeError(f"Cannot call regex on {self.operator}")
+        
+        return self
+    
+    def text(
+            self,
+            type:ClauseType,
+            *,
+            query:str|list[str],
+            path:str|list[str],
+            fuzzy:FuzzyOptions|None=None,
+            score:dict|None=None,
+            synonyms:str|None=None
+        )->Self:
+        """xxx"""
+
+        if isinstance(self.operator, Compound):
+            self.operator.text(
+                type=type,
+                query=query,
+                path=path,
+                fuzzy=fuzzy,
+                score=score,
+                synonyms=synonyms
+            )
+        else:
+            raise TypeError(f"Cannot call text on {self.operator}")
+        
+        return self
+    
+    def wildcard(
+            self,
+            type:ClauseType,
+            *,
+            query:str|list[str],
+            path:str|list[str],
+            allow_analyzed_field:bool=False,
+            score:dict|None=None
+        )->Self:
+        """xxx"""
+
+        if isinstance(self.operator, Compound):
+            self.operator.wildcard(
+                type=type,
+                query=query,
+                path=path,
+                allow_analyzed_field=allow_analyzed_field,
+                score=score
+            )
+        else:
+            raise TypeError(f"Cannot call wildcard on {self.operator}")
+        
+        return self
+
+    #-----------------------------------------
+    # Nested Compound Search
+    #-----------------------------------------
+    def compound(self,
+                 type:ClauseType,
+                 must:list[AnyOperator]=[],
+                 must_not:list[AnyOperator]=[],
+                 should:list[AnyOperator]=[],
+                 filter:list[AnyOperator]=[],
+                 minimum_should_match:int=0,
+                )->Compound:
+        """xxx"""
+
+        if isinstance(self.operator, Compound):
+            _coumpound = self.operator.compound(
+                type=type,
+                must=must,
+                must_not=must_not,
+                should=should,
+                filter=filter,
+                minimum_should_match=minimum_should_match
+            )
+        else:
+            raise TypeError(f"Cannot call compound on {self.operator}")
+        
+        return _coumpound
+
+    #-----------------------------------------
+    # Utility functions
+    #-----------------------------------------
+    @classmethod
+    def __get_constructors_map__(cls, operator_name:str)->Callable:
+        """Returns appropriate constructor from operator name"""
+
+        _constructors_map = {
+            "autocomplete":cls.init_autocomplete,
+            "compound":cls.init_compound,
+            "equals":cls.init_equals,
+            "exists":cls.init_exists,
+            "facet":cls.init_facet,
+            "more_like_this":cls.init_more_like_this,
+            "range":cls.init_range,
+            "regex":cls.init_regex,
+            "text":cls.init_text,
+            "wildcard":cls.init_wildcard
+        }
+
+        return _constructors_map[operator_name]
+    
+    
     @classmethod
     def __reduce_kwargs(cls, kwargs:dict)->None:
         """
@@ -550,8 +749,23 @@ class Search(SearchBase):
         kwargs.pop("return_stored_source", None)
         kwargs.pop("score_details", None)
 
-# TODO : pipelinize Search class
-# Instead of setting the search operator as a classmethods constructors
-# transform them into chainable instance methods using the compound operator to combined the chained operations
 
-#or offer both options by poviding init_<operator-name> and def <operator-name> methods
+
+if __name__ == "__main__":
+    search = Search(index="fruits")
+    search.text(
+    "should", 
+    query="apple", 
+    path="type"
+    ).compound(
+        "should"
+    ).text(
+        "must",
+        query="organic",
+        path="category"
+   ).equals(
+        "must",
+        value=True,
+        path="in_stock"
+    )
+    print(search)
