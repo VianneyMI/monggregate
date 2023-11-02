@@ -129,7 +129,7 @@ class Compound(SearchOperator):
                 "compound":clauses
             })
 
-    def _register_clause(self, type:ClauseType, statement:dict)->None:
+    def _register_clause(self, type:ClauseType, operator:Clause|Self)->None:
         """
         Adds a clause to the current compound instance.
 
@@ -142,13 +142,13 @@ class Compound(SearchOperator):
         """
 
         if type == "must":
-            self.must.append(statement)
+            self.must.append(operator)
         elif type == "mustNot":
-            self.must_not.append(statement)
+            self.must_not.append(operator)
         elif type == "filter":
-            self.filter.append(statement)
+            self.filter.append(operator)
         elif type == "should":
-            self.should.append(statement)
+            self.should.append(operator)
 
 
     def autocomplete(
@@ -163,15 +163,15 @@ class Compound(SearchOperator):
     )->Self:
         """Adds an autocomplete clause to the current compound instance."""
         
-        autocomplete_statement = Autocomplete(
+        _autocomplete = Autocomplete(
             query=query,
             path=path,
             token_order=token_order,
             fuzzy=fuzzy,
             score=score
-        ).statement
+        )
 
-        self._register_clause(type, autocomplete_statement)
+        self._register_clause(type, _autocomplete)
     
         return self
 
@@ -195,7 +195,7 @@ class Compound(SearchOperator):
             minimum_should_match=minimum_should_match
         )
 
-        self._register_clause(type, _compound.statement)
+        self._register_clause(type, _compound)
 
         return _compound
 
@@ -210,13 +210,13 @@ class Compound(SearchOperator):
     )->Self:
         """Adds an equals clause to the current compound instance."""
 
-        equals_statement = Equals(
+        _equals = Equals(
             path=path,
             value=value,
             score=score
         ).statement
 
-        self._register_clause(type, equals_statement)
+        self._register_clause(type, _equals)
 
         return self
 
@@ -224,8 +224,8 @@ class Compound(SearchOperator):
     def exists(self, type:ClauseType, path:str)->Self:
         """Adds an exists clause to the current compound instance."""
 
-        exists_statement = Exists(path=path).statement
-        self._register_clause(type, exists_statement)
+        _exists = Exists(path=path)
+        self._register_clause(type, _exists)
 
         return self
 
@@ -243,7 +243,7 @@ class Compound(SearchOperator):
     )->Self:
         """Adds a range clause to the current compound instance."""
 
-        range_statement = Range(
+        _range = Range(
             path=path,
             gt=gt,
             gte=gte,
@@ -252,7 +252,7 @@ class Compound(SearchOperator):
             score=score
         ).statement
 
-        self._register_clause(type, range_statement)
+        self._register_clause(type, _range)
 
         return self
 
@@ -268,7 +268,7 @@ class Compound(SearchOperator):
     )->Self:
         """Adds a regex clause to the current compound instance."""
 
-        regex_statement = Regex(
+        _regex = Regex(
             query=query,
             path=path,
             allow_analyzed_field=allow_analyzed_field,
@@ -276,7 +276,7 @@ class Compound(SearchOperator):
         ).statement
 
 
-        self._register_clause(type, regex_statement)
+        self._register_clause(type, _regex)
 
         return self
 
@@ -293,7 +293,7 @@ class Compound(SearchOperator):
     )->Self:
         """Adds a text clause to the current compound instance."""
 
-        text_statement = Text(
+        _text = Text(
             query=query,
             path=path,
             score=score,
@@ -301,7 +301,7 @@ class Compound(SearchOperator):
             synonyms=synonyms
         ).statement
 
-        self._register_clause(type, text_statement)
+        self._register_clause(type, _text)
 
         return self
 
@@ -317,14 +317,14 @@ class Compound(SearchOperator):
     )->Self:
         """Adds a wildcard clause to the current compound instance."""
 
-        wildcard_statement = Wildcard(
+        _wildcard = Wildcard(
             query=query,
             path=path,
             allow_analyzed_field=allow_analyzed_field,
             score=score
         ).statement
 
-        self._register_clause(type, wildcard_statement)
+        self._register_clause(type, _wildcard)
 
         return self
     

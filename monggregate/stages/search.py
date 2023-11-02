@@ -179,6 +179,7 @@ class Search(SearchBase):
     
     collector : Facet|None
     operator : AnyOperator|None
+    minimum_should_match : int = 0
 
 
     @pyd.root_validator(pre=True)
@@ -187,7 +188,10 @@ class Search(SearchBase):
         """Initializes Search with Compound operator."""
 
         if "collector" not in values and "operator" not in values:
-            values["operator"] = Compound()
+            minimum_should_match = values.get("minimum_should_match") or values.get("minimumShouldMatch")
+            if minimum_should_match is None:
+                minimum_should_match = 0
+            values["operator"] = Compound(minimum_should_match=minimum_should_match)
         
         return values
     
