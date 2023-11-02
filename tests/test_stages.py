@@ -376,8 +376,9 @@ class TestStages:
         search = Search.from_operator(operator_name="more_like_this", like={})
         assert search
 
-        with pytest.raises(pyd.ValidationError):
-            Search()
+        # NOTE : Commented the below, as it does not raise anymore but instantiate search with a Compound operator.
+        # with pytest.raises(pyd.ValidationError):
+        #     Search()
 
 
     def test_set(self, state:State)->None:
