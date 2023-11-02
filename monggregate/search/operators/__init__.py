@@ -32,6 +32,6 @@ from monggregate.search.operators.more_like_this import MoreLikeThis
 from monggregate.search.operators.range import Range
 from monggregate.search.operators.regex import Regex
 from monggregate.search.operators.text import Text
-from monggregate.search.operators.wildcard import Wilcard
+from monggregate.search.operators.wildcard import Wildcard
 
-AnyOperator = Autocomplete | Compound | Equals | Exists | MoreLikeThis | Range | Regex | Text | Wilcard
+AnyOperator = Autocomplete | Compound | Equals | Exists | MoreLikeThis | Range | Regex | Text | Wildcard

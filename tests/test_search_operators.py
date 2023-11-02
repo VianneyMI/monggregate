@@ -11,7 +11,7 @@ from monggregate.search.operators import(
     Range,
     Regex,
     Text,
-    Wilcard
+    Wildcard
 )
 from monggregate.search.commons.fuzzy import FuzzyOptions
 from monggregate.search.commons.highlight import HighlightOptions
@@ -223,7 +223,7 @@ class TestSearchOperators:
     def test_wilcard(self)->None:
         """Tests the wilcard operator"""
 
-        wilcard_op = Wilcard(
+        wilcard_op = Wildcard(
             path = "title",
             query = "test"
         )

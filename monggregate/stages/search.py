@@ -87,7 +87,7 @@ from monggregate.search.operators import(
     Range,
     Regex,
     Text,
-    Wilcard,
+    Wildcard,
     AnyOperator
 )
 from monggregate.search.commons import FuzzyOptions
@@ -521,7 +521,7 @@ class Search(SearchBase):
         base_params = SearchBase(**kwargs).dict()
         cls.__reduce_kwargs(kwargs)
         
-        wilcard_statement = Wilcard(
+        wilcard_statement = Wildcard(
             query=query,
             path=path,
             allow_analyzed_field=allow_analyzed_field,

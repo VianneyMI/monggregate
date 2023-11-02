@@ -178,7 +178,7 @@ from monggregate.search.operators import(
     Range,
     Regex,
     Text,
-    Wilcard,
+    Wildcard,
     AnyOperator
     
 )
@@ -511,7 +511,7 @@ class Facet(SearchCollector):
     )->"Facet":
         """Adds a wildcard clause to the current facet instance."""
 
-        wildcard = Wilcard(
+        wildcard = Wildcard(
             query=query,
             path=path,
             allow_analyzed_field=allow_analyzed_field,

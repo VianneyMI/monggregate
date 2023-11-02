@@ -57,18 +57,23 @@ such as autocomplete, text, or span, to specify query criteria.
 
 
 """
+
 from datetime import datetime
 from typing import Literal
+
+from typing_extensions import Self
+
 from monggregate.base import pyd
-from monggregate.search.operators.operator import SearchOperator, Clause
+from monggregate.search.operators.operator import SearchOperator
 from monggregate.search.operators.clause import (
+    Clause,
     Autocomplete,
     Equals,
     Exists,
     Range,
     Regex,
     Text,
-    Wilcard
+    Wildcard
     )
 from monggregate.search.commons import FuzzyOptions
 
@@ -100,10 +105,10 @@ class Compound(SearchOperator):
     """
 
 
-    must : list[Clause] = []
-    must_not : list[Clause] = pyd.Field([], alias="mustNot")
-    should : list[Clause] = []
-    filter : list[Clause] = []
+    must : list[Clause|Self] = []
+    must_not : list[Clause|Self] = pyd.Field([], alias="mustNot")
+    should : list[Clause|Self] = []
+    filter : list[Clause|Self] = []
     minimum_should_clause : int = 1
 
     @property
@@ -155,7 +160,7 @@ class Compound(SearchOperator):
             token_order:str="any",
             fuzzy:FuzzyOptions|None=None,
             score:dict|None=None,
-    )->"Compound":
+    )->Self:
         """Adds an autocomplete clause to the current compound instance."""
         
         autocomplete_statement = Autocomplete(
@@ -170,13 +175,14 @@ class Compound(SearchOperator):
     
         return self
     
+
     def equals(
             self,
             type,
             path:str,
             value:str|int|float|bool|datetime,
             score:dict|None=None
-    )->"Compound":
+    )->Self:
         """Adds an equals clause to the current compound instance."""
 
         equals_statement = Equals(
@@ -189,13 +195,15 @@ class Compound(SearchOperator):
 
         return self
 
-    def exists(self, type:ClauseType, path:str)->"Compound":
+
+    def exists(self, type:ClauseType, path:str)->Self:
         """Adds an exists clause to the current compound instance."""
 
         exists_statement = Exists(path=path).statement
         self._register_clause(type, exists_statement)
 
         return self
+
 
     def range(
             self,
@@ -207,7 +215,7 @@ class Compound(SearchOperator):
             gte:int|float|datetime|None=None,
             lte:int|float|datetime|None=None,
             score:dict|None=None
-    )->"Compound":
+    )->Self:
         """Adds a range clause to the current compound instance."""
 
         range_statement = Range(
@@ -223,6 +231,7 @@ class Compound(SearchOperator):
 
         return self
 
+
     def regex(
             self,
             type:ClauseType,
@@ -231,7 +240,7 @@ class Compound(SearchOperator):
             path:str|list[str],
             allow_analyzed_field:bool=False,
             score:dict|None=None
-    )->"Compound":
+    )->Self:
         """Adds a regex clause to the current compound instance."""
 
         regex_statement = Regex(
@@ -246,6 +255,7 @@ class Compound(SearchOperator):
 
         return self
 
+
     def text(
             self,
             type:ClauseType,
@@ -255,7 +265,7 @@ class Compound(SearchOperator):
             fuzzy:FuzzyOptions|None=None,
             score:dict|None=None,
             synonyms:str|None=None
-    )->"Compound":
+    )->Self:
         """Adds a text clause to the current compound instance."""
 
         text_statement = Text(
@@ -270,6 +280,7 @@ class Compound(SearchOperator):
 
         return self
 
+
     def wildcard(
             self,
             type:ClauseType,
@@ -278,10 +289,10 @@ class Compound(SearchOperator):
             path:str|list[str],
             allow_analyzed_field:bool=False,
             score:dict|None=None,
-    )->"Compound":
+    )->Self:
         """Adds a wildcard clause to the current compound instance."""
 
-        wildcard_statement = Wilcard(
+        wildcard_statement = Wildcard(
             query=query,
             path=path,
             allow_analyzed_field=allow_analyzed_field,
