@@ -32,7 +32,7 @@ from monggregate.stages import (
     Unwind,
     Unset
 )
-from monggregate.stages.search import OperatorLiteral
+from monggregate.stages.search.base import OperatorLiteral
 from monggregate.search.operators.compound import Compound
 from monggregate.operators import MergeObjects
 from monggregate.dollar import ROOT

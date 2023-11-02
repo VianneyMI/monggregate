@@ -12,8 +12,7 @@ from monggregate.stages.out import Out
 from monggregate.stages.project import Project
 from monggregate.stages.replace_root import ReplaceRoot
 from monggregate.stages.sample import Sample
-from monggregate.stages.search import Search
-from monggregate.stages.search_meta import SearchMeta
+from monggregate.stages.search import Search, SearchMeta
 from monggregate.stages.set import Set
 from monggregate.stages.skip import Skip
 from monggregate.stages.sort_by_count import SortByCount
