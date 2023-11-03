@@ -1,5 +1,6 @@
 """Stage Sub-package"""
 
+from typing import Union
 from monggregate.stages.stage import Stage
 from monggregate.stages.bucket_auto import BucketAuto, GranularityEnum
 from monggregate.stages.bucket import Bucket
@@ -43,3 +44,26 @@ ReplaceWith = ReplaceRoot
 
     # Custom aliases
 Explode = Unwind # to match pandas equivalent operation
+
+AnyStage = Union[
+    BucketAuto,
+    Bucket,
+    Count,
+    Group,
+    Limit,
+    Lookup,
+    Match,
+    Out,
+    Project,
+    ReplaceRoot,
+    Sample,
+    Search,
+    SearchMeta,
+    Set,
+    Skip,
+    SortByCount,
+    Sort,
+    UnionWith,
+    Unwind,
+    Unset,
+]
