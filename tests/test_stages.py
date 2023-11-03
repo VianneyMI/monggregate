@@ -363,11 +363,10 @@ class TestStages:
 
         search = Search(
             operator={
-                "text":{
                     "query":"test",
                     "path":"description"
                 }
-            }
+
         )
         state["search"] = search
         assert search
@@ -747,19 +746,19 @@ class TestStagesFunctional(TestStages):
 # Debugging:
 #-------------------------
 if __name__ == "__main__":
-    TestStages().test_stage()
-    TestStages().test_bucket_auto({})
-    TestStages().test_bucket({})
-    TestStages().test_count({})
-    TestStages().test_group({})
-    TestStages().test_limit({})
-    TestStages().test_match({})
-    TestStages().test_out({})
-    TestStages().test_project({})
-    TestStages().test_replace_root({})
-    TestStages().test_sample({})
-    TestStages().test_set({})
+    # TestStages().test_stage()
+    # TestStages().test_bucket_auto({})
+    # TestStages().test_bucket({})
+    # TestStages().test_count({})
+    # TestStages().test_group({})
+    # TestStages().test_limit({})
+    # TestStages().test_match({})
+    # TestStages().test_out({})
+    # TestStages().test_project({})
+    # TestStages().test_replace_root({})
+    # TestStages().test_sample({})
+    # TestStages().test_set({})
     TestStages().test_search({})
-    TestStages().test_skip({})
-    TestStages().test_sort_by_count({})
-    TestStages().test_sort({})
+    # TestStages().test_skip({})
+    # TestStages().test_sort_by_count({})
+    # TestStages().test_sort({})

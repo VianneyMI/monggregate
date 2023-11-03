@@ -30,7 +30,7 @@ text has the following syntax:
 
 
 """
-
+from monggregate.base import pyd
 from monggregate.search.operators.operator import SearchOperator
 from monggregate.search.commons.fuzzy import FuzzyOptions
 
@@ -70,6 +70,13 @@ class Text(SearchOperator):
     fuzzy : FuzzyOptions | None = None
     score : dict | None = None
     synonyms : str | None = None
+
+    @pyd.validator("query", "path", pre=True, always=True)
+    def validate_query(cls, value):
+       
+        print(value)
+
+        return value
 
     @property
     def statement(self) -> dict:
