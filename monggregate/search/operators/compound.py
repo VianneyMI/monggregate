@@ -54,22 +54,21 @@ filter      Clauses that must all match for a document to be included in the res
 You can use any of the clauses with any top-level operator, 
 such as autocomplete, text, or span, to specify query criteria.
 
-
-
 """
 
 from datetime import datetime
-from typing import Literal
+from typing import Literal, Callable
 
 from typing_extensions import Self
 
 from monggregate.base import pyd
-from monggregate.search.operators.operator import SearchOperator
+from monggregate.search.operators.operator import SearchOperator, OperatorLiteral
 from monggregate.search.operators.clause import (
     Clause,
     Autocomplete,
     Equals,
     Exists,
+    MoreLikeThis,
     Range,
     Regex,
     Text,
@@ -106,7 +105,7 @@ class Compound(SearchOperator):
 
 
     must : list["Clause|Compound"] = []
-    must_not : list["Clause|Compound"] = pyd.Field([], alias="mustNot")
+    must_not : list["Clause|Compound"]
     should : list["Clause|Compound"] = []
     filter : list["Clause|Compound"] = []
     minimum_should_match : int = 0
@@ -150,7 +149,9 @@ class Compound(SearchOperator):
         elif type == "should":
             self.should.append(operator)
 
-
+    #---------------------------------------------
+    # Operators
+    #---------------------------------------------
     def autocomplete(
             self,
             type:ClauseType,
@@ -200,7 +201,6 @@ class Compound(SearchOperator):
         return _compound
 
 
-
     def equals(
             self,
             type,
@@ -226,6 +226,15 @@ class Compound(SearchOperator):
 
         _exists = Exists(path=path)
         self._register_clause(type, _exists)
+
+        return self
+
+
+    def more_like_this(self, type:ClauseType, like:dict|list[dict])->Self:
+        """Adds a more_like_this clause to the current compound instance."""
+
+        _more_like_this = MoreLikeThis(like=like)
+        self._register_clause(type, _more_like_this)
 
         return self
 
@@ -328,6 +337,120 @@ class Compound(SearchOperator):
 
         return self
     
+    #---------------------------------------------
+    # Clauses
+    #---------------------------------------------
+    def must_(
+            self,
+            operator_name:OperatorLiteral,
+            path:str|list[str]|None=None,
+            query:str|list[str]|None=None,
+            fuzzy:FuzzyOptions|None=None,
+            score:dict|None=None,
+            **kwargs
+    )->Self:
+        """Adds a must clause to the current compound instance."""
+        
+        kwargs.update(
+            {
+                "path":path,
+                "query":query,
+                "fuzzy":fuzzy,
+                "score":score
+            }
+        )
+
+        return self.__get_operators_map__(operator_name)("must", **kwargs)
+
+
+    def must_not_(
+            self,
+            operator_name:OperatorLiteral,
+            path:str|list[str]|None=None,
+            query:str|list[str]|None=None,
+            fuzzy:FuzzyOptions|None=None,
+            score:dict|None=None,
+            **kwargs
+    )->Self:
+        """Adds a must_not clause to the current compound instance."""
+        
+        kwargs.update(
+            {
+                "path":path,
+                "query":query,
+                "fuzzy":fuzzy,
+                "score":score
+            }
+        )
+
+        return self.__get_operators_map__(operator_name)("mustNot", **kwargs)
+
+
+    def should_(
+            self,
+            operator_name:OperatorLiteral,
+            path:str|list[str]|None=None,
+            query:str|list[str]|None=None,
+            fuzzy:FuzzyOptions|None=None,
+            score:dict|None=None,
+            **kwargs
+    )->Self:
+        """Adds a should clause to the current compound instance."""
+        
+        kwargs.update(
+            {
+                "path":path,
+                "query":query,
+                "fuzzy":fuzzy,
+                "score":score
+            }
+        )
+
+        return self.__get_operators_map__(operator_name)("should", **kwargs)
+
+
+    def filter_(
+            self,
+            operator_name:OperatorLiteral,
+            path:str|list[str]|None=None,
+            query:str|list[str]|None=None,
+            fuzzy:FuzzyOptions|None=None,
+            score:dict|None=None,
+            **kwargs
+    )->Self:
+        """Adds a filter clause to the current compound instance."""
+        
+        kwargs.update(
+            {
+                "path":path,
+                "query":query,
+                "fuzzy":fuzzy,
+                "score":score
+            }
+        )
+
+        return self.__get_operators_map__(operator_name)("filter", **kwargs)
+
+    #---------------------------------------------
+    # Utility functions
+    #---------------------------------------------
+    @classmethod
+    def __get_operators_map__(cls, operator_name:OperatorLiteral)->Callable[...,Self]:
+        """Returns the operator class associated with the given operator name."""
+
+        operators_map = {
+            "autocomplete":cls.autocomplete,
+            "compound":cls.compound, #FIXME : This breaks typing
+            "equals":cls.equals,
+            "exists":cls.exists,
+            "range":cls.range,
+            "more_like_this":cls.more_like_this,
+            "regex":cls.regex,
+            "text":cls.text,
+            "wildcard":cls.wildcard
+        }
+
+        return operators_map[operator_name]
 
 if __name__ == "__main__":
     print(Compound())
