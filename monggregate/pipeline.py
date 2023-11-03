@@ -34,6 +34,7 @@ from monggregate.stages import (
 )
 from monggregate.stages.search.base import OperatorLiteral
 from monggregate.search.operators.compound import Compound
+from monggregate.search.commons import CountOptions, HighlightOptions
 from monggregate.operators import MergeObjects
 from monggregate.dollar import ROOT
 from monggregate.utils import StrEnum
@@ -714,8 +715,8 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             *,
             operator_name:OperatorLiteral="text",
             index:str="default",
-            count:dict|None=None,
-            highlight:dict|None=None,
+            count:CountOptions|None=None,
+            highlight:HighlightOptions|None=None,
             return_stored_source:bool=False,
             score_details:bool=False,
             **kwargs:Any
@@ -729,9 +730,9 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             - path, str|list[str]|None : field to search in
             - query, str|list[str]|None : text to search for
             - index, str : name of the index to use for the search. Defaults to defaut
-            - count, dict|None : document that specifies the count options for retrieving
+            - count, CountOptions|None : document that specifies the count options for retrieving
                                  a count of the results
-            - highlight, dict|None : document that specifies the highlight options for 
+            - highlight, HighlightOptions|None : document that specifies the highlight options for 
                                      displaying search terms in their original context
             - return_stored_source, bool : Indicates whether to use the copy of the documents
                                            in the Atlas Search index (with just a subset of the fields)

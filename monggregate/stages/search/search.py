@@ -109,7 +109,7 @@ class Search(SearchBase):
     -----------------------
         - index, str : name of the Atlas Search index to use. Defaults to default.
 
-        - count, dict|None : Document that specifies the count options for retrieving a count
+        - count, CountOptions|None : Document that specifies the count options for retrieving a count
                              of the results. 
 
         - highlight, dict|None : Document that specifies the highlight options for displaying
