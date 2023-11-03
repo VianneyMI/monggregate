@@ -98,8 +98,7 @@ from monggregate.search.commons import FuzzyOptions
 # Classes
 # -----------------------------------------------------
 class Search(SearchBase):
-    """"
-    Creates a $search statement in an aggregation pipeline
+    """"Creates a $search stage to perform a full-text search on the specified field or fields which must be covered by an Atlas Search index.
 
     Descrtiption
     -----------------------

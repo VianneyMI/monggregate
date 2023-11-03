@@ -20,33 +20,42 @@ from monggregate.search.operators import(
     Regex,
     Text,
     Wildcard,
-    AnyOperator
+    AnyOperator,
 )
+from monggregate.search.operators.operator import OperatorLiteral
 from monggregate.search.operators.compound import ClauseType
-from monggregate.search.commons import FuzzyOptions
+from monggregate.search.commons import CountOptions, FuzzyOptions, HighlightOptions
 
-# Enums
+
+# Classes
 # -----------------------------------------------------
-OperatorLiteral = Literal[
-    "autocomplete",
-    "compound",
-    "equals",
-    "exists",
-    "facet",
-    "more_like_this",
-    "range",
-    "regex",
-    "text",
-    "wildcard"
-]
-
-
 class SearchConfig(BaseModel):
-    """Internals"""
+    """Configuration attributes for the $search stage.
+
+    This class is part of monggregate internals.
+    
+    Attributes:
+    -------------------------------
+        - index, str : The name of the index to use. Defaults to the `default` index.
+
+        - count, CountOptions|None : Document that specifies the count options for retrieving a count of the results.
+
+        - highlight, HighlightOptions|None : Document that specifies the highlighting options for displaying search terms in their original context.
+
+        - return_stored_source, bool : Flag that specifies whether to perform a full document lookup 
+                                       on the backend database or return only stored source fields directly from Atlas Search.
+                                       If omitted, defaults to false.
+
+        - score_details, bool : Flag that specifies whether to retrieve a detailed breakdown of
+                                the score for the documents in the results. Defaults to false
+                                To view the details, you must use the $meta expression in the
+                                $project stage.
+    
+    """
 
     index : str = "default"
-    count : dict|None
-    highlight : dict|None
+    count : CountOptions|None
+    highlight : HighlightOptions|None
     return_stored_source : bool = False
     score_details : bool  = False
 
@@ -54,14 +63,43 @@ class SearchConfig(BaseModel):
     def statement():
         """Returns the statement of the stage"""
 
-        raise NotImplementedError("statement method must be implemented in subclasses")
+        raise NotImplementedError("statement property must be implemented in subclasses")
 
 class SearchBase(Stage, SearchConfig):
-    """xxxx"""
+    """$search and $searchMeta stages parent class.
+    
+    This class is part of monggregate internals.
+    
+    Attributes:
+    -------------------------------
+        - index, str : The name of the index to use. Defaults to the `default` index.
+
+        - count, CountOptions|None : Document that specifies the count options for retrieving a count of the results.
+
+        - highlight, HighlightOptions|None : Document that specifies the highlighting options for displaying search terms in their original context.
+
+        - return_stored_source, bool : Flag that specifies whether to perform a full document lookup 
+                                       on the backend database or return only stored source fields directly from Atlas Search.
+                                       If omitted, defaults to false.
+
+        - score_details, bool : Flag that specifies whether to retrieve a detailed breakdown of
+                                the score for the documents in the results. Defaults to false
+                                To view the details, you must use the $meta expression in the
+                                $project stage.
+
+        - operator, SearchOperator|None : Name of the operator to search with. You can provide a document
+                                          that contains the operator-specific options as the value for this field
+                                          Either this or collector is required.
+
+        - collector, Facet|None : Name of the collector to use with the query. You can provide
+                                  a document that contains the collector-specific options as the value
+                                  for this field. Either this or <operator-name> is required.
+    
+    
+    """
 
     collector : Facet|None
     operator : AnyOperator|None
-    minimum_should_match : int = 0 # specific to Compound
 
     @pyd.root_validator(pre=True)
     @classmethod
@@ -69,10 +107,7 @@ class SearchBase(Stage, SearchConfig):
         """Initializes Search with Compound operator."""
 
         if "collector" not in values and "operator" not in values:
-            minimum_should_match = values.get("minimum_should_match") or values.get("minimumShouldMatch")
-            if minimum_should_match is None:
-                minimum_should_match = 0
-            values["operator"] = Compound(minimum_should_match=minimum_should_match)
+            values["operator"] = Compound()
         
         return values
     
@@ -94,10 +129,10 @@ class SearchBase(Stage, SearchConfig):
     def statement():
         """Returns the statement of the stage"""
 
-        raise NotImplementedError("statement method must be implemented in subclasses")
+        raise NotImplementedError("statement property must be implemented in subclasses")
     
 
-     #---------------------------------------------------------
+    #---------------------------------------------------------
     # Constructors
     #---------------------------------------------------------
     @classmethod
@@ -393,6 +428,10 @@ class SearchBase(Stage, SearchConfig):
     #-----------------------------------------
     # Compound Search Pipelinenized functions
     #-----------------------------------------
+
+    #-----------------------------------------
+    #            By Operators
+    #-----------------------------------------
     def autocomplete(
             self, 
             type:ClauseType, 
@@ -403,7 +442,7 @@ class SearchBase(Stage, SearchConfig):
             fuzzy:FuzzyOptions|None=None,
             score:dict|None=None
             )->Self:
-        """xxx"""
+        """Adds an autocomplete clause to the top-level Compound operator."""
 
         if isinstance(self.operator, Compound):
             self.operator.autocomplete(
@@ -419,8 +458,9 @@ class SearchBase(Stage, SearchConfig):
         
         return self
     
+
     def equals(self, type:ClauseType, path:str, value:str|int|float|bool|datetime, score:dict|None=None)->Self:
-        """xxx"""
+        """Adds an equals clause to the top-level Compound operator."""
 
         if isinstance(self.operator, Compound):
             self.operator.equals(
@@ -434,8 +474,9 @@ class SearchBase(Stage, SearchConfig):
         
         return self
     
+
     def exists(self, type:ClauseType, path:str)->Self:
-        """xxx"""
+        """Adds an exists clause to the top-level Compound operator."""
 
         if isinstance(self.operator, Compound):
             self.operator.exists(
@@ -447,6 +488,20 @@ class SearchBase(Stage, SearchConfig):
         
         return self
     
+
+    def more_like_this(self, like:dict|list[dict])->Self:
+        """Adds a more_like_this clause to the top-level Compound operator."""
+
+        if isinstance(self.operator, Compound):
+            self.operator.more_like_this(
+                like=like
+            )
+        else:
+            raise TypeError(f"Cannot call more_like_this on {self.operator}")
+        
+        return self
+
+
     def range(
             self,
             type:ClauseType,
@@ -458,7 +513,7 @@ class SearchBase(Stage, SearchConfig):
             lte:int|float|datetime|None=None,
             score:dict|None=None
         )->Self:
-        """xxx"""
+        """Adds a range clause to the top-level Compound operator."""
 
         if isinstance(self.operator, Compound):
             self.operator.range(
@@ -475,6 +530,7 @@ class SearchBase(Stage, SearchConfig):
         
         return self
     
+
     def regex(
             self,
             type:ClauseType,
@@ -484,7 +540,7 @@ class SearchBase(Stage, SearchConfig):
             allow_analyzed_field:bool=False,
             score:dict|None=None
         )->Self:
-        """xxx"""
+        """Adds a regex clause to the top-level Compound operator."""
 
         if isinstance(self.operator, Compound):
             self.operator.regex(
@@ -499,6 +555,7 @@ class SearchBase(Stage, SearchConfig):
         
         return self
     
+
     def text(
             self,
             type:ClauseType,
@@ -509,7 +566,7 @@ class SearchBase(Stage, SearchConfig):
             score:dict|None=None,
             synonyms:str|None=None
         )->Self:
-        """xxx"""
+        """Adds a text clause to the top-level Compound operator."""
 
         if isinstance(self.operator, Compound):
             self.operator.text(
@@ -525,6 +582,7 @@ class SearchBase(Stage, SearchConfig):
         
         return self
     
+
     def wildcard(
             self,
             type:ClauseType,
@@ -534,7 +592,7 @@ class SearchBase(Stage, SearchConfig):
             allow_analyzed_field:bool=False,
             score:dict|None=None
         )->Self:
-        """xxx"""
+        """Adds a wildcard clause to the top-level Compound operator."""
 
         if isinstance(self.operator, Compound):
             self.operator.wildcard(
@@ -549,8 +607,19 @@ class SearchBase(Stage, SearchConfig):
         
         return self
 
+
+    def set_minimum_should_match(self, minimum_should_match:int)->Self:
+        """Sets minimum_should_match on top-level Compound operator."""
+
+        if isinstance(self.operator, Compound):
+            self.operator.minimum_should_match = minimum_should_match
+        else:
+            raise TypeError(f"Cannot call set_minimum_should_match on {self.operator}")
+        
+        return self
+
     #-----------------------------------------
-    # Nested Compound Search
+    #           Nested Compound Search
     #-----------------------------------------
     def compound(self,
                  type:ClauseType,
@@ -560,7 +629,11 @@ class SearchBase(Stage, SearchConfig):
                  filter:list[AnyOperator]=[],
                  minimum_should_match:int=0,
                 )->Compound:
-        """xxx"""
+        """Adds a Compound clause to the top-level Compound operator.
+        
+        WARNING: Unlike other operators methods, this method returns the newly created compound nested clause
+        # rather than the self instance.
+        """
 
         if isinstance(self.operator, Compound):
             _coumpound = self.operator.compound(
@@ -576,6 +649,108 @@ class SearchBase(Stage, SearchConfig):
         
         return _coumpound
 
+
+    #-----------------------------------------
+    #            By Types
+    #-----------------------------------------
+    def must(
+            self,
+            operator_name:OperatorLiteral,
+            path:str|list[str]|None=None,
+            query:str|list[str]|None=None,
+            fuzzy:FuzzyOptions|None=None,
+            score:dict|None=None,
+            **kwargs
+            )->Self:
+        
+        if isinstance(self.operator, Compound):
+            kwargs.update(
+                {
+                    "path":path,
+                    "query":query,
+                    "fuzzy":fuzzy,
+                    "score":score
+                }
+            )
+        else:
+            raise TypeError(f"Cannot call must on {self.operator}")
+
+        return self.__get_operators_map__(operator_name)("must", **kwargs)
+
+    def should(
+            self,
+            operator_name:OperatorLiteral,
+            path:str|list[str]|None=None,
+            query:str|list[str]|None=None,
+            fuzzy:FuzzyOptions|None=None,
+            score:dict|None=None,
+            **kwargs
+            )->Self:
+        
+        if isinstance(self.operator, Compound):
+            kwargs.update(
+                {
+                    "path":path,
+                    "query":query,
+                    "fuzzy":fuzzy,
+                    "score":score
+                }
+            )
+        else:
+            raise TypeError(f"Cannot call should on {self.operator}")
+
+        return self.__get_operators_map__(operator_name)("should", **kwargs)
+  
+        
+    def must_not(
+            self,
+            operator_name:OperatorLiteral,
+            path:str|list[str]|None=None,
+            query:str|list[str]|None=None,
+            fuzzy:FuzzyOptions|None=None,
+            score:dict|None=None,
+            **kwargs
+            )->Self:
+        
+        if isinstance(self.operator, Compound):
+            kwargs.update(
+                {
+                    "path":path,
+                    "query":query,
+                    "fuzzy":fuzzy,
+                    "score":score
+                }
+            )
+        else:
+            raise TypeError(f"Cannot call must_not on {self.operator}")
+
+        return self.__get_operators_map__(operator_name)("must_not", **kwargs)
+
+         
+    def filter(
+            self,
+            operator_name:OperatorLiteral,
+            path:str|list[str]|None=None,
+            query:str|list[str]|None=None,
+            fuzzy:FuzzyOptions|None=None,
+            score:dict|None=None,
+            **kwargs
+            )->Self:
+        
+        if isinstance(self.operator, Compound):
+            kwargs.update(
+                {
+                    "path":path,
+                    "query":query,
+                    "fuzzy":fuzzy,
+                    "score":score
+                }
+            )
+        else:
+            raise TypeError(f"Cannot call filter on {self.operator}")
+
+        return self.__get_operators_map__(operator_name)("filter", **kwargs)
+   
     #-----------------------------------------
     # Utility functions
     #-----------------------------------------
@@ -597,6 +772,25 @@ class SearchBase(Stage, SearchConfig):
         }
 
         return _constructors_map[operator_name]
+    
+
+    @classmethod
+    def __get_operators_map__(cls, operator_name:OperatorLiteral)->Callable[...,Self]:
+        """Returns the operator class associated with the given operator name."""
+
+        operators_map = {
+            "autocomplete":cls.autocomplete,
+            "compound":cls.compound, #FIXME : This breaks typing
+            "equals":cls.equals,
+            "exists":cls.exists,
+            "range":cls.range,
+            "more_like_this":cls.more_like_this,
+            "regex":cls.regex,
+            "text":cls.text,
+            "wildcard":cls.wildcard
+        }
+
+        return operators_map[operator_name]
     
     
     @classmethod
