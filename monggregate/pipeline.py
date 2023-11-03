@@ -125,7 +125,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         async def __call__(self)->list[dict[str, Any]]:
             """Makes a pipeline instance callable and executes the entire pipeline when called"""
     
-            return self.run()
+            return await self.run()
 
         
         async def run(self)->list[dict[str, Any]]:

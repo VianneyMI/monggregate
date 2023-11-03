@@ -105,7 +105,7 @@ class Compound(SearchOperator):
 
 
     must : list["Clause|Compound"] = []
-    must_not : list["Clause|Compound"]
+    must_not : list["Clause|Compound"] = []
     should : list["Clause|Compound"] = []
     filter : list["Clause|Compound"] = []
     minimum_should_match : int = 0
@@ -434,20 +434,19 @@ class Compound(SearchOperator):
     #---------------------------------------------
     # Utility functions
     #---------------------------------------------
-    @classmethod
-    def __get_operators_map__(cls, operator_name:OperatorLiteral)->Callable[...,Self]:
+    def __get_operators_map__(self, operator_name:OperatorLiteral)->Callable[...,Self]:
         """Returns the operator class associated with the given operator name."""
 
         operators_map = {
-            "autocomplete":cls.autocomplete,
-            "compound":cls.compound, #FIXME : This breaks typing
-            "equals":cls.equals,
-            "exists":cls.exists,
-            "range":cls.range,
-            "more_like_this":cls.more_like_this,
-            "regex":cls.regex,
-            "text":cls.text,
-            "wildcard":cls.wildcard
+            "autocomplete":self.autocomplete,
+            "compound":self.compound, #FIXME : This breaks typing
+            "equals":self.equals,
+            "exists":self.exists,
+            "range":self.range,
+            "more_like_this":self.more_like_this,
+            "regex":self.regex,
+            "text":self.text,
+            "wildcard":self.wildcard
         }
 
         return operators_map[operator_name]

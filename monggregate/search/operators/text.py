@@ -71,13 +71,6 @@ class Text(SearchOperator):
     score : dict | None = None
     synonyms : str | None = None
 
-    @pyd.validator("query", "path", pre=True, always=True)
-    def validate_query(cls, value):
-       
-        print(value)
-
-        return value
-
     @property
     def statement(self) -> dict:
         

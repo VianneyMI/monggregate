@@ -60,7 +60,7 @@ class SearchConfig(BaseModel):
     score_details : bool  = False
 
     @property
-    def statement():
+    def statement(self):
         """Returns the statement of the stage"""
 
         raise NotImplementedError("statement property must be implemented in subclasses")
@@ -126,7 +126,7 @@ class SearchBase(Stage, SearchConfig):
         return value
     
     @property
-    def statement():
+    def statement(self):
         """Returns the statement of the stage"""
 
         raise NotImplementedError("statement property must be implemented in subclasses")
@@ -489,11 +489,12 @@ class SearchBase(Stage, SearchConfig):
         return self
     
 
-    def more_like_this(self, like:dict|list[dict])->Self:
+    def more_like_this(self, type:ClauseType, like:dict|list[dict])->Self:
         """Adds a more_like_this clause to the top-level Compound operator."""
 
         if isinstance(self.operator, Compound):
             self.operator.more_like_this(
+                type,
                 like=like
             )
         else:
@@ -677,6 +678,7 @@ class SearchBase(Stage, SearchConfig):
 
         return self.__get_operators_map__(operator_name)("must", **kwargs)
 
+
     def should(
             self,
             operator_name:OperatorLiteral,
@@ -724,7 +726,7 @@ class SearchBase(Stage, SearchConfig):
         else:
             raise TypeError(f"Cannot call must_not on {self.operator}")
 
-        return self.__get_operators_map__(operator_name)("must_not", **kwargs)
+        return self.__get_operators_map__(operator_name)("mustNot", **kwargs)
 
          
     def filter(
@@ -755,7 +757,7 @@ class SearchBase(Stage, SearchConfig):
     # Utility functions
     #-----------------------------------------
     @classmethod
-    def __get_constructors_map__(cls, operator_name:str)->Callable:
+    def __get_constructors_map__(cls, operator_name:str)->Callable[...,Self]:
         """Returns appropriate constructor from operator name"""
 
         _constructors_map = {
@@ -774,20 +776,20 @@ class SearchBase(Stage, SearchConfig):
         return _constructors_map[operator_name]
     
 
-    @classmethod
-    def __get_operators_map__(cls, operator_name:OperatorLiteral)->Callable[...,Self]:
+    
+    def __get_operators_map__(self, operator_name:OperatorLiteral)->Callable[...,Self]:
         """Returns the operator class associated with the given operator name."""
 
         operators_map = {
-            "autocomplete":cls.autocomplete,
-            "compound":cls.compound, #FIXME : This breaks typing
-            "equals":cls.equals,
-            "exists":cls.exists,
-            "range":cls.range,
-            "more_like_this":cls.more_like_this,
-            "regex":cls.regex,
-            "text":cls.text,
-            "wildcard":cls.wildcard
+            "autocomplete":self.autocomplete,
+            "compound":self.compound, #FIXME : This breaks typing
+            "equals":self.equals,
+            "exists":self.exists,
+            "range":self.range,
+            "more_like_this":self.more_like_this,
+            "regex":self.regex,
+            "text":self.text,
+            "wildcard":self.wildcard
         }
 
         return operators_map[operator_name]
