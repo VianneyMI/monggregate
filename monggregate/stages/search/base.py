@@ -440,7 +440,8 @@ class SearchBase(Stage, SearchConfig):
             path:str,
             token_order:str="any",
             fuzzy:FuzzyOptions|None=None,
-            score:dict|None=None
+            score:dict|None=None,
+            **kwargs:Any
             )->Self:
         """Adds an autocomplete clause to the top-level Compound operator."""
 
@@ -459,7 +460,14 @@ class SearchBase(Stage, SearchConfig):
         return self
     
 
-    def equals(self, type:ClauseType, path:str, value:str|int|float|bool|datetime, score:dict|None=None)->Self:
+    def equals(
+            self, 
+            type:ClauseType, 
+            path:str, 
+            value:str|int|float|bool|datetime, 
+            score:dict|None=None,
+            **kwargs:Any
+            )->Self:
         """Adds an equals clause to the top-level Compound operator."""
 
         if isinstance(self.operator, Compound):
@@ -475,7 +483,12 @@ class SearchBase(Stage, SearchConfig):
         return self
     
 
-    def exists(self, type:ClauseType, path:str)->Self:
+    def exists(
+            self, 
+            type:ClauseType, 
+            path:str,
+            **kwargs:Any
+            )->Self:
         """Adds an exists clause to the top-level Compound operator."""
 
         if isinstance(self.operator, Compound):
@@ -489,7 +502,12 @@ class SearchBase(Stage, SearchConfig):
         return self
     
 
-    def more_like_this(self, type:ClauseType, like:dict|list[dict])->Self:
+    def more_like_this(
+            self, 
+            type:ClauseType, 
+            like:dict|list[dict],
+            **kwargs:Any
+            )->Self:
         """Adds a more_like_this clause to the top-level Compound operator."""
 
         if isinstance(self.operator, Compound):
@@ -512,7 +530,8 @@ class SearchBase(Stage, SearchConfig):
             lt:int|float|datetime|None=None,
             gte:int|float|datetime|None=None,
             lte:int|float|datetime|None=None,
-            score:dict|None=None
+            score:dict|None=None,
+            **kwargs:Any
         )->Self:
         """Adds a range clause to the top-level Compound operator."""
 
@@ -539,7 +558,8 @@ class SearchBase(Stage, SearchConfig):
             query:str|list[str],
             path:str|list[str],
             allow_analyzed_field:bool=False,
-            score:dict|None=None
+            score:dict|None=None,
+            **kwargs:Any
         )->Self:
         """Adds a regex clause to the top-level Compound operator."""
 
@@ -565,7 +585,8 @@ class SearchBase(Stage, SearchConfig):
             path:str|list[str],
             fuzzy:FuzzyOptions|None=None,
             score:dict|None=None,
-            synonyms:str|None=None
+            synonyms:str|None=None,
+            **kwargs:Any
         )->Self:
         """Adds a text clause to the top-level Compound operator."""
 
@@ -591,7 +612,8 @@ class SearchBase(Stage, SearchConfig):
             query:str|list[str],
             path:str|list[str],
             allow_analyzed_field:bool=False,
-            score:dict|None=None
+            score:dict|None=None,
+            **kwargs:Any
         )->Self:
         """Adds a wildcard clause to the top-level Compound operator."""
 
@@ -629,6 +651,7 @@ class SearchBase(Stage, SearchConfig):
                  should:list[AnyOperator]=[],
                  filter:list[AnyOperator]=[],
                  minimum_should_match:int=0,
+                 **kwargs:Any
                 )->Compound:
         """Adds a Compound clause to the top-level Compound operator.
         
