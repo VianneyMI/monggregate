@@ -117,7 +117,8 @@ class SearchMeta(SearchBase):
         
         method:dict[str, dict] = self.collector or self.operator
 
-        config.update(method)
+    
+        config.update(method.statement)
 
         _statement = {
             "$searchMeta":config
