@@ -1094,21 +1094,23 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         return self
 
 if __name__ =="__main__":
-
+    from datetime import datetime
+    from monggregate.search.collectors import StringFacet, NumericFacet
+    
     pipeline = Pipeline()
-    pipeline.search(
-        index="fruits",
-        operator_name="compound",
-        min_should_match=1
-    ).search(
-        type="should",
-        path="type", 
-        query="apple"
-    ).search(
-        type="should",
-        operator_name="compound",
-        must=[
-            Search.init_text("organic", "category").operator,
-            Search.init_equals("in_stock", True).operator
-        ]
-    )
+    pipeline.search_meta(
+    index="movies",
+    collector_name="facet", 
+    operator=Search.Range(
+        path="released", 
+        gte=datetime(year=2000, month=1, day=1), 
+        lte=datetime(year=2015, month=1, day=31)
+        ),
+    facets=[
+        StringFacet(name="directorsFacet", path="directors", num_buckets=7),
+        NumericFacet(name="yearFacet", path="year", boundaries=[2000, 2005, 2010, 2015]),
+    ]
+)
+    search_stage = pipeline[0]
+    statement = search_stage.statement
+    print(statement)
