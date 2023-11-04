@@ -779,17 +779,28 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         # If so, adds the operator to the existing stage using Compound.
         elif len(self) >= 1:
             first_stage = self[0]
+            clause_type = kwargs.pop("type", "should")
+
+            if clause_type == "should":
+                default_minimum_should_match = 1
+            else:
+                default_minimum_should_match = 0
+
+            minimum_should_match = kwargs.pop("minimum_should_match", default_minimum_should_match)
+
             # first_stage operator is Compound, then just adds a clause to the Compound operator.
             if isinstance(first_stage, Search) and isinstance(first_stage.operator, Compound):
-                first_stage.should(operator_name=operator_name, path=path, query=query, **kwargs)
+                first_stage.__get_operators_map__(operator_name=operator_name)(clause_type, path=path, query=query, **kwargs)
+
             # If first stage is Search but its operator is not Compound, 
             # then creates a Compound operator and adds the first stage operator as a clause
             elif isinstance(first_stage, Search) and not isinstance(first_stage.operator, Compound):
-                new_operator = Compound(should=[first_stage.operator], minimum_should_match=1)
-                new_operator.should_(operator_name=operator_name, path=path, query=query, **kwargs)
+                new_operator = Compound(should=[first_stage.operator], minimum_should_match=minimum_should_match)
+                new_operator.__get_operators_map__(operator_name=operator_name)(clause_type, path=path, query=query, **kwargs)
                 first_stage.operator = new_operator  
+
             else:
-               # If the fisrt stage is not a search stage, raises an error
+               # If the fisrt stage is not a search stage, raise an error
                raise TypeError("search stage has to be the first stage of the pipeline")
             
         # The below case is theoretically impossible
@@ -1045,6 +1056,19 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 if __name__ =="__main__":
 
     pipeline = Pipeline()
-    pipeline.search(operator_name="text", query="test", path=["details", "id_epd", "id_serial", "name"] )
-    pipeline.run()
-    
+    pipeline.search(
+        index="fruits",
+        operator_name="compound",
+        min_should_match=1
+    ).search(
+        type="should",
+        path="type", 
+        query="apple"
+    ).search(
+        type="should",
+        operator_name="compound",
+        must=[
+            Search.init_text("organic", "category").operator,
+            Search.init_equals("in_stock", True).operator
+        ]
+    )

@@ -308,7 +308,7 @@ class Compound(SearchOperator):
             score=score,
             fuzzy=fuzzy,
             synonyms=synonyms
-        ).statement
+        )
 
         self._register_clause(type, _text)
 
@@ -331,7 +331,7 @@ class Compound(SearchOperator):
             path=path,
             allow_analyzed_field=allow_analyzed_field,
             score=score
-        ).statement
+        )
 
         self._register_clause(type, _wildcard)
 

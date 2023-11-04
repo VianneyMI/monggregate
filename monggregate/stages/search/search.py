@@ -159,19 +159,4 @@ class Search(SearchBase):
    
 if __name__ == "__main__":
     search = Search(index="fruits")
-    search.text(
-    "should", 
-    query="apple", 
-    path="type"
-    ).compound(
-        "should"
-    ).text(
-        "must",
-        query="organic",
-        path="category"
-   ).equals(
-        "must",
-        value=True,
-        path="in_stock"
-    )
-    print(search)
+    search.__get_operators_map__("autocomplete")()
