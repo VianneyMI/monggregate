@@ -426,6 +426,69 @@ class SearchBase(Stage, SearchConfig):
         return cls(**base_params, operator=wilcard_statement)
     
     #-----------------------------------------
+    # Operators Interface
+    #-----------------------------------------
+    @staticmethod
+    def Autocomplete(**kwargs)->Autocomplete:
+        """Returns an autocomplete operator."""
+
+        return Autocomplete(**kwargs)
+    
+    @staticmethod
+    def Compound(**kwargs)->Compound:
+        """Returns a compound operator."""
+
+        return Compound(**kwargs)
+    
+    @staticmethod
+    def Equals(**kwargs)->Equals:
+        """Returns an equals operator."""
+
+        return Equals(**kwargs)
+    
+    @staticmethod
+    def Exists(**kwargs)->Exists:
+        """Returns an exists operator."""
+
+        return Exists(**kwargs)
+    
+    @staticmethod
+    def Facet(**kwargs)->Facet:
+        """Returns a facet collector."""
+
+        return Facet(**kwargs)
+    
+    @staticmethod
+    def MoreLikeThis(**kwargs)->MoreLikeThis:
+        """Returns a more_like_this operator."""
+
+        return MoreLikeThis(**kwargs)
+    
+    @staticmethod
+    def Range(**kwargs)->Range:
+        """Returns a range operator."""
+
+        return Range(**kwargs)
+    
+    @staticmethod
+    def Regex(**kwargs)->Regex:
+        """Returns a regex operator."""
+
+        return Regex(**kwargs)
+    
+    @staticmethod
+    def Text(**kwargs)->Text:
+        """Returns a text operator."""
+
+        return Text(**kwargs)
+    
+    @staticmethod
+    def Wildcard(**kwargs)->Wildcard:
+        """Returns a wildcard operator."""
+
+        return Wildcard(**kwargs)
+
+    #-----------------------------------------
     # Compound Search Pipelinenized functions
     #-----------------------------------------
 
