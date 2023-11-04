@@ -36,3 +36,14 @@ from monggregate.search.operators.text import Text
 from monggregate.search.operators.wildcard import Wildcard
 
 AnyOperator = Autocomplete | Compound | Equals | Exists | MoreLikeThis | Range | Regex | Text | Wildcard
+OperatorMap = {
+    "autocomplete": Autocomplete,
+    "compound": Compound,
+    "equals": Equals,
+    "exists": Exists,
+    "moreLikeThis": MoreLikeThis,
+    "range": Range,
+    "regex": Regex,
+    "text": Text,
+    "wildcard": Wildcard,
+}

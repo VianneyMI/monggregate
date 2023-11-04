@@ -710,7 +710,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     
         return self
     
-    # TODO : Factorize the below functions <VM, 03/11/2023>
+    # TODO : Factorize the two below functions <VM, 03/11/2023>
     def search(
             self,
             path:str|list[str]|None=None,
@@ -759,13 +759,16 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
                             - synonyms
                             - like, dict|list[dict] (allow looking for similar documents)
         """
+
+        if not collector_name and not operator_name:
+            operator_name = "text"
+
+
+        # TODO : Break the below into smaller functions <VM, 04/11/2023>
         
         # If pipeline is empty, adds a search stage
         if len(self) == 0:
             if not collector_name:
-                if not operator_name:
-                    operator_name = "text"
-
                 search_stage = Search.from_operator(
                     operator_name=operator_name,
                     path=path,
@@ -807,6 +810,8 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
                 default_minimum_should_match = 0
 
             minimum_should_match = kwargs.pop("minimum_should_match", default_minimum_should_match)
+
+            # TODO : Better integrate faceted search here <VM, 04/11/2023>
 
             # first_stage operator is Compound, then just adds a clause to the Compound operator.
             if isinstance(first_stage, Search) and isinstance(first_stage.operator, Compound):
@@ -917,6 +922,9 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         # If pipeline is not empty then the first stage must be Search stage.
         # If so, adds the operator to the existing stage using Compound.
         elif len(self) >= 1:
+
+            # TODO : Better integrate faceted search here <VM, 04/11/2023>
+            
             first_stage = self[0]
             # first_stage operator is Compound, then just adds a clause to the Compound operator.
             if isinstance(first_stage, SearchMeta) and isinstance(first_stage.operator, Compound):
