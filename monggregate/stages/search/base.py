@@ -24,6 +24,7 @@ from monggregate.search.operators import(
     Text,
     Wildcard,
     AnyOperator,
+    OperatorMap
 )
 from monggregate.search.operators.operator import OperatorLiteral
 from monggregate.search.operators.compound import ClauseType
@@ -269,17 +270,22 @@ class SearchBase(Stage, SearchConfig):
     @classmethod
     def init_facet(cls, **kwargs:Any)->Self:
         """
-        Creates a search stage with a facet operator
+        Creates a search stage with a facet collector
 
         Summary:
         --------------------------------
 
         """
         
+        
         base_params = SearchConfig(**kwargs).dict()
         cls.__reduce_kwargs(kwargs)
         
+        operator_name = kwargs.pop("operator_name", None)
         operator = kwargs.pop("operator", None)
+        if operator_name and not operator:
+            operator = OperatorMap[operator_name](**kwargs)
+
         facet_ = Facet(operator=operator, **kwargs)
 
         return cls(**base_params, collector=facet_)
@@ -845,7 +851,95 @@ class SearchBase(Stage, SearchConfig):
     #-----------------------------------------
     #  Faceted Search Pipelinenized functions
     #-----------------------------------------
+    def facet(
+            self,
+            path:str,
+            name:str|None=None,
+            *,
+            type:Literal["string", "number", "date"] = "string",
+            num_buckets:int|None=None,
+            boundaries:list[int|float]|list[datetime]|None=None,
+            default:str|None=None,
+            **kwargs
+            )->Self:
+        
+        if isinstance(self.collector, Facet):
+          self.collector.facet(
+                path=path,
+                name=name,
+                type=type,
+                num_buckets=num_buckets,
+                boundaries=boundaries,
+                default=default
+          )
+        else:
+            raise TypeError(f"Cannot call facet on {self.operator}")
 
+        return self
+    
+    def numeric(
+            self,
+            path:str,
+            name:str|None=None,
+            *,
+            boundaries:list[int|float]|None=None,
+            default:str|None=None,
+            **kwargs
+            )->Self:
+        
+        if isinstance(self.collector, Facet):
+          self.collector.numeric(
+                path=path,
+                name=name,
+                boundaries=boundaries,
+                default=default
+          )
+        else:
+            raise TypeError(f"Cannot call numeric on {self.operator}")
+
+        return self
+    
+    def date(
+            self,
+            path:str,
+            name:str|None=None,
+            *,
+            boundaries:list[datetime]|None=None,
+            default:str|None=None,
+            **kwargs
+            )->Self:
+        
+        if isinstance(self.collector, Facet):
+          self.collector.date(
+                path=path,
+                name=name,
+                boundaries=boundaries,
+                default=default
+          )
+        else:
+            raise TypeError(f"Cannot call date on {self.operator}")
+
+        return self
+    
+    def string(
+            self,
+            path:str,
+            name:str|None=None,
+            *,
+            default:str|None=None,
+            **kwargs
+            )->Self:
+        
+        if isinstance(self.collector, Facet):
+          self.collector.string(
+                path=path,
+                name=name,
+                default=default
+          )
+        else:
+            raise TypeError(f"Cannot call string on {self.operator}")
+
+        return self
     #-----------------------------------------
     # Utility functions
     #-----------------------------------------
