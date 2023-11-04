@@ -20,7 +20,7 @@ OperatorLiteral = Literal[
     "compound",
     "equals",
     "exists",
-    "facet",
+    #"facet",
     "more_like_this",
     "range",
     "regex",

@@ -1,4 +1,7 @@
-"""xxx"""
+"""search base module.
+
+Internal module that contains the base class for search stages.
+"""
 
 from datetime import datetime
 from typing import Any, Callable, Literal
@@ -840,6 +843,10 @@ class SearchBase(Stage, SearchConfig):
         return self.__get_operators_map__(operator_name)("filter", **kwargs)
    
     #-----------------------------------------
+    #  Faceted Search Pipelinenized functions
+    #-----------------------------------------
+
+    #-----------------------------------------
     # Utility functions
     #-----------------------------------------
     @classmethod
@@ -851,7 +858,7 @@ class SearchBase(Stage, SearchConfig):
             "compound":cls.init_compound,
             "equals":cls.init_equals,
             "exists":cls.init_exists,
-            "facet":cls.init_facet,
+            #"facet":cls.init_facet,
             "more_like_this":cls.init_more_like_this,
             "range":cls.init_range,
             "regex":cls.init_regex,

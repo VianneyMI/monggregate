@@ -716,7 +716,8 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             path:str|list[str]|None=None,
             query:str|list[str]|None=None,
             *,
-            operator_name:OperatorLiteral="text",
+            operator_name:OperatorLiteral|None=None,
+            collector_name:Literal["facet"]|None=None,
             index:str="default",
             count:CountOptions|None=None,
             highlight:HighlightOptions|None=None,
@@ -761,8 +762,11 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         
         # If pipeline is empty, adds a search stage
         if len(self) == 0:
-            self.stages.append(
-                Search.from_operator(
+            if not collector_name:
+                if not operator_name:
+                    operator_name = "text"
+
+                search_stage = Search.from_operator(
                     operator_name=operator_name,
                     path=path,
                     query=query,
@@ -773,6 +777,22 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
                     score_details=score_details,
                     **kwargs
                 )
+            else:
+                search_stage = Search.init_facet(
+                    operator_name=operator_name,
+                    path=path,
+                    query=query,
+                    index=index,
+                    count=count,
+                    highlight=highlight,
+                    return_stored_source=return_stored_source,
+                    score_details=score_details,
+                    collector_name=collector_name,
+                    **kwargs
+                )
+
+            self.stages.append(
+                search_stage
             )
         
         # If pipeline is not empty then the first stage must be Search stage.
@@ -815,7 +835,8 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             path:str|list[str]|None=None,
             query:str|list[str]|None=None,
             *,
-            operator_name:OperatorLiteral="text",
+            operator_name:OperatorLiteral|None=None,
+            collector_name:Literal["facet"]|None=None,
             index:str="default",
             count:dict|None=None,
             highlight:dict|None=None,
@@ -860,8 +881,11 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         
          # If pipeline is empty, adds a search stage
         if len(self) == 0:
-            self.stages.append(
-                SearchMeta.from_operator(
+            if not collector_name:
+                if not operator_name:
+                    operator_name = "text"
+
+                search_stage = SearchMeta.from_operator(
                     operator_name=operator_name,
                     path=path,
                     query=query,
@@ -872,6 +896,22 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
                     score_details=score_details,
                     **kwargs
                 )
+            else:
+                search_stage = SearchMeta.init_facet(
+                    operator_name=operator_name,
+                    path=path,
+                    query=query,
+                    index=index,
+                    count=count,
+                    highlight=highlight,
+                    return_stored_source=return_stored_source,
+                    score_details=score_details,
+                    collector_name=collector_name,
+                    **kwargs
+                )
+
+            self.stages.append(
+                search_stage
             )
         
         # If pipeline is not empty then the first stage must be Search stage.
