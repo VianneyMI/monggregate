@@ -115,7 +115,7 @@ class SearchMeta(SearchBase):
                 "scoreDetails":self.score_details
             }
         
-        method:dict[str, dict] = self.collector or self.operator
+        method = self.collector or self.operator
 
     
         config.update(method.statement)
