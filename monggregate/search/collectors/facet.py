@@ -166,7 +166,7 @@ The following limitations apply:
 """
 
 from datetime import datetime
-from typing import Any, Literal
+from typing import Any, Callable, Literal
 from typing_extensions import Self
 
 from monggregate.base import BaseModel, pyd
@@ -183,8 +183,8 @@ from monggregate.search.operators import(
     Text,
     Wildcard,
     AnyOperator
-    
 )
+from monggregate.search.operators.operator import OperatorLiteral
 from monggregate.search.commons import FuzzyOptions
 
 # Strings
@@ -321,7 +321,8 @@ class DateFacet(FacetDefinition):
         
         return self.resolve({self.name : self.dict(by_alias=True, exclude={"name"})})
 
-Facets = list[NumericFacet|DateFacet|StringFacet]
+AnyFacet = StringFacet|NumericFacet|DateFacet
+Facets = list[AnyFacet]
 
 # Collector
 # ----------------------------------------------
@@ -386,6 +387,282 @@ class Facet(SearchCollector):
         
         return self.resolve(_statement)
     
+    #---------------------------------------------------------
+    # Constructors
+    #---------------------------------------------------------
+    @classmethod
+    def from_operator(
+        cls, 
+        operator_name:OperatorLiteral,
+        path:str|list[str]|None=None,
+        query:str|list[str]|None=None,
+        fuzzy:FuzzyOptions|None=None,
+        score:dict|None=None,
+        **kwargs:Any)->Self:
+        """Instantiates a search stage from a search operator"""
+
+        kwargs.update(
+            {
+                "path":path,
+                "query":query,
+                "fuzzy":fuzzy,
+                "score":score
+            }
+        )
+
+        return cls.__get_constructors_map__(operator_name)(**kwargs)
+
+
+    @classmethod
+    def init_autocomplete(
+        cls,
+        query:str|list[str], 
+        path:str, 
+        token_order:str="any",
+        fuzzy:FuzzyOptions|None=None,
+        score:dict|None=None,
+        **kwargs:Any)->Self:
+        """
+        Creates a search stage with an autocomplete operator
+        
+        Summary:
+        -----------------------------
+        This stage searches for a word or phrase that contains a sequence of characters from an incomplete input string.
+
+        """
+
+
+        _autocomplete = Autocomplete(
+            query=query,
+            path=path,
+            token_order=token_order,
+            fuzzy=fuzzy,
+            score=score,
+            **kwargs
+        )
+
+        return cls(operator=_autocomplete)
+    
+
+    @classmethod
+    def init_compound(
+        cls,
+        minimum_should_clause:int=1,
+        *,
+        must : list[AnyOperator]=[],
+        must_not : list[AnyOperator]=[],
+        should : list[AnyOperator]=[],
+        filter : list[AnyOperator]=[],
+        **kwargs:Any
+        
+    )->Self:
+        """xxxx"""
+ 
+
+        _compound = Compound(
+            must=must,
+            must_not=must_not,
+            should=should,
+            filter=filter,
+            minimum_should_clause=minimum_should_clause,
+            **kwargs
+        )
+
+        return cls(operator=_compound)
+
+
+    @classmethod
+    def init_equals(
+        cls,
+        path:str,
+        value:str|int|float|bool|datetime,
+        score:dict|None=None,
+        **kwargs:Any
+        )->Self:
+        """
+        Creates a search stage with an equals operator
+
+        Summary:
+        --------------------------------
+        This checks whether a field matches a value you specify.
+        You may want to use this for filtering purposes post textual search.
+        That is you may want to use it in a compound query or as, the second stage of your search.
+        
+        """
+
+      
+        _equals = Equals(
+            path=path,
+            value=value,
+            score=score
+        )
+
+        return cls(operator=_equals)
+
+
+    @classmethod
+    def init_exists(cls, path:str, **kwargs:Any)->Self:
+        """
+        Creates a search stage with an exists operator
+
+        Summary:
+        --------------------------------
+        This checks whether a field matches a value you specify.
+        You may want to use this for filtering purposes post textual search.
+        That is you may want to use it in a compound query or as, the second stage of your search.
+        
+        """
+
+
+        _exists = Exists(path=path)
+
+        return cls(operator=_exists)
+    
+    
+    @classmethod
+    def init_more_like_this(cls, like:dict|list[dict], **kwargs:Any)->Self:
+        """
+        Creates a search stage  with a more_like_this operator
+
+        Summary:
+        --------------------------------
+        The moreLikeThis operator returns documents similar to input documents. 
+        The moreLikeThis operator allows you to build features for your applications 
+        that display similar or alternative results based on one or more given documents.
+
+        """
+        
+      
+        _more_like_this = MoreLikeThis(like=like)
+
+        return cls(operator=_more_like_this)
+
+
+    @classmethod
+    def init_range(
+        cls,
+        path:str|list[str],
+        gt:int|float|datetime|None=None,
+        lt:int|float|datetime|None=None,
+        gte:int|float|datetime|None=None,
+        lte:int|float|datetime|None=None,
+        score:dict|None=None,
+        **kwargs:Any
+    )->Self:
+        """
+        Creates a search stage with a range operator
+
+        Summary:
+        --------------------------------
+        This checks whether a field value falls into a specific range
+        You may want to use this for filtering purposes post textual search.
+        That is you may want to use it in a compound query or as, the second stage of your search.
+        
+        
+        """
+
+        _range = Range(
+            path=path,
+            gt=gt,
+            gte=gte,
+            lt=lt,
+            lte=lte,
+            score=score
+        )
+
+        return cls(operator=_range)
+
+
+    @classmethod
+    def init_regex(
+        cls,
+        query:str|list[str],
+        path:str|list[str],
+        allow_analyzed_field:bool=False,
+        score:dict|None=None,
+        **kwargs:Any
+    )->Self:
+        """
+        Creates a search stage with a regex operator.
+
+        Summary:
+        ----------------------------
+        regex interprets the query field as a regular expression. regex is a term-level operator, meaning that the query field isn't analyzed (read processed).
+        
+        """
+
+     
+        _regex = Regex(
+            query=query,
+            path=path,
+            allow_analyzed_field=allow_analyzed_field,
+            score=score
+        )
+
+        return cls(operator=_regex)
+
+
+    @classmethod
+    def init_text(
+        cls,
+        query:str|list[str],
+        path:str|list[str],
+        fuzzy:FuzzyOptions|None=None,
+        score:dict|None=None,
+        synonyms:str|None=None,
+        **kwargs:Any
+    )->Self:
+        """
+        Creates a search stage with a text opertor
+
+        Summary:
+        ---------------------------------
+        The text operator performs a full-text search using the analyzer that you specify in the index configuration. 
+        If you omit an analyzer, the text operator uses the default standard analyzer.
+        
+        """
+
+
+        _text = Text(
+            query=query,
+            path=path,
+            score=score,
+            fuzzy=fuzzy,
+            synonyms=synonyms
+        )
+
+        return cls(operator=_text)
+
+
+    @classmethod
+    def init_wildcard(
+        cls,
+        query:str|list[str],
+        path:str|list[str],
+        allow_analyzed_field:bool=False,
+        score:dict|None=None,
+        **kwargs:Any
+    )->Self:
+        """
+        Creates a search stage with a wildcard opertor
+
+        Summary:
+        ---------------------------------
+        The wildcard operator enables queries which use special characters in the search string that can match any character.
+        
+        """
+
+        
+        _wilcard = Wildcard(
+            query=query,
+            path=path,
+            allow_analyzed_field=allow_analyzed_field,
+            score=score
+        )
+
+        return cls(operator=_wilcard)
+
+
     # ----------------------------------------------
     # Operators
     # ----------------------------------------------
@@ -811,3 +1088,112 @@ class Facet(SearchCollector):
         )
         return self
     
+    # ----------------------------------------------
+    # Facet Interface
+    # ----------------------------------------------
+    @staticmethod
+    def NumericFacet(
+        *,
+        path:str,
+        name:FacetName|None=None,
+        boundaries:list[int|float],
+        default:str|None=None
+    )->NumericFacet:
+        """Returns a numeric facet instance."""
+
+        return NumericFacet(
+            name=name,
+            path=path,
+            boundaries=boundaries,
+            default=default
+        )
+    
+    @staticmethod
+    def StringFacet(
+        *,
+        path:str,
+        name:FacetName|None=None,
+        num_buckets:int=10
+    )->StringFacet:
+        """Returns a string facet instance."""
+
+        return StringFacet(
+            name=name,
+            path=path,
+            num_buckets=num_buckets
+        )
+    
+    @staticmethod
+    def DateFacet(
+        *,
+        path:str,
+        name:FacetName|None=None,
+        boundaries:list[datetime],
+        default:str|None=None
+    )->DateFacet:
+        """Returns a date facet instance."""
+
+        return DateFacet(
+            name=name,
+            path=path,
+            boundaries=boundaries,
+            default=default
+    )
+
+    # TODO : Overload this method to make return type more precise.
+    @staticmethod
+    def Facet(
+        *,
+        type:Literal['string', 'number', 'date'],
+        path:str,
+        name:FacetName|None=None,
+        num_buckets:int=10,
+        boundaries:list[int|float]|list[datetime]|None=None,
+        default:str|None=None
+    )->AnyFacet:
+        """Returns a facet instance."""
+
+        if type=="string":
+            facet = Facet.StringFacet(
+                name=name,
+                path=path,
+                num_buckets=num_buckets
+            )
+        elif type=="number":
+            facet = Facet.NumericFacet(
+                name=name,
+                path=path,
+                boundaries=boundaries,
+                default=default
+            )
+        else:
+            facet = Facet.DateFacet(
+                name=name,
+                path=path,
+                boundaries=boundaries,
+                default=default
+            )
+
+        return facet
+
+    # ----------------------------------------------
+    # Utilities
+    # ----------------------------------------------
+    @classmethod
+    def __get_constructors_map__(cls, operator_name:str)->Callable[...,Self]:
+        """Returns appropriate constructor from operator name"""
+
+        _constructors_map = {
+            "autocomplete":cls.init_autocomplete,
+            "compound":cls.init_compound,
+            "equals":cls.init_equals,
+            "exists":cls.init_exists,
+            #"facet":cls.init_facet,
+            "more_like_this":cls.init_more_like_this,
+            "range":cls.init_range,
+            "regex":cls.init_regex,
+            "text":cls.init_text,
+            "wildcard":cls.init_wildcard
+        }
+
+        return _constructors_map[operator_name]
