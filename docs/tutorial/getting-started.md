@@ -1,4 +1,4 @@
-## **Installing monggregate**
+## **Installing Monggregate**
 
 `monggregate` is available on PyPI:
 
@@ -9,17 +9,17 @@ pip install monggregate
 
 It requires python > 3.10 and has a few required dependencies such as `pydantic`, `pyhumps` and `typing-extensions`.
 
-If it as a good query builder it helps you build the query, in order to execute them you will need a MongoDB driver.
+In order to execute the useful query builder in the library, you will need a MongoDB driver.
 
 For more details about the requirements, see the requirements files [in the repo](https://github.com/VianneyMI/monggregate/blob/main/requirements). 
 
-## **First steps**
+## **First Steps**
 
-There are several ways you may use monggregate.
+There are several ways you may use Monggregate.
 
 You can use the stages individually and build your pipeline step by step or you can use the `Pipeline` class to build your pipeline. That's actually the way I recommend you to use it.
 
-In that cases, your first steps will look like this:
+In that case, your first steps will look like this:
 
 ```python
 

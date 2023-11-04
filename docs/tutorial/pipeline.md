@@ -9,7 +9,7 @@ The `Pipeline` class includes a method for each stage of the aggregation framewo
 Each stage of the aggregation framework also has its own class in the package.
 And each `Stage` class has a mirror method in the `Pipeline`. For more information, see the [stages page](stages.md).
 
-For example, the `Match` stage has a `match` method in the `Pipeline` class and calling `pipeline.match()` like in the code snippet below.
+For example, the `Match` stage has a `match` method in the `Pipeline` class that can be typed as `pipeline.match()` like in the code snippet below.
 
 ```python
 from monggregate import Pipeline
@@ -19,7 +19,7 @@ pipeline = Pipeline()
 pipeline.match(title="A Star Is Born")
 ```
 
-will add a `Match` stage instance to the pipeline and return the pipeline instance.
+The last line of code will add a `Match` stage instance to the pipeline and return the pipeline instance.
 
 That way, you can chain the stages together to build your pipeline.
 
@@ -39,16 +39,16 @@ pipeline.match(
 )
 ```	
 
-## **Executing a pipeline**
+## **Executing A Pipeline**
 
 So far, we have built our pipeline object. But what do we do with it?
 
 `monggregate` offers a **bilateral** integration with the tool of your choice to execute the pipeline.
 
 Bilateral because you can either integrate your pipeline to your tool or your tool to into the pipeline.
-In the following examples, I'll use `pymongo` as at the end of the day `motor`, `beanie` and `mongoengine` all use `pymongo` under the hood.
+In the following examples, I'll use `pymongo` because at the end of the day, `motor`, `beanie` and, `mongoengine` all use `pymongo` under the hood.
 
-### **Passing your pipeline to your tool**
+### **Passing Your Pipeline to Your Tool**
 
 The `Pipeline` class has an `export` method that returns a list of dictionaries of raw MongoDB aggregation language, which is the format expected by `pymongo`.
 
@@ -80,9 +80,9 @@ curosr = db["movies"].aggregate(pipeline.export())
 results = list(curosr)
 print(results)
 ```
-### **Passing your tool to your pipeline**
+### **Passing Your Tool to Your Pipeline**
 
-The pipeline class also has `run` method, a `_db` and a `collection` attributes that you can set that make your pipelines callable and runnable by being aware of your database connexion.<br>
+The pipeline class also has `run` method, a `_db` and a `collection` attributes that you can set that make your pipelines callable and runnable by being aware of your database connection.<br>
 Thus, you could write the above example like this:
 
 ```python
@@ -113,20 +113,20 @@ results = pipeline.run()
 print(results)
 ```
 
-It also has a `__call__` method, so you could  replace the last wto lines with:
+It also has a `__call__` method, so you could replace the last two lines with:
 
 ```python
 results = pipeline()
 print(results)
 ```
 
-### **How to choose ?**
+### **How to Choose a Method?**
 
 It is up to you to choose the method that suits you the best.<br> 
 I personnaly use the first method for now.
-There are plans to replace the `_db` attribute by a `uri` attribute and make the database connexion happen under the hood, but it is not implemented yet. When it is the second method will become more appealing.
+There are plans to replace the `_db` attribute by a `uri` attribute and make the database connection happen under the hood, but it is not implemented yet. When it is added into the second method, it will become more appealing.
 
-## **An alternative to build pipelines**
+## **An Alternative to Build Pipelines**
 
 Another way to build your pipeline is to access the stages classes directly. All the stages are accessible in the `monggregate.stages` namespace.
 As such, you could write the above example like this:
@@ -161,14 +161,14 @@ print(results)
 Once again, it is a question of preferences.<br>
 This approach might be more readable for some people, but it is also more verbose.<br>
 
-Howevere, there are still a couple of other advantages with this approach:
+However, there are still a couple of other advantages with this approach:
 
 * You can reuse the stages in multiple pipelines
 * You can easily reorder the stages
 
-The second point is particularly relevant given the utilies function in the `Pipeline` class.
+The second point is particularly relevant given the utilities function in the `Pipeline` class.
 
-## **Pipeline utilities**
+## **Pipeline Utilities**
 
 The `Pipeline` class has a few utilities methods to help you build your pipeline.
 
@@ -176,7 +176,7 @@ Indeed it implements most of the python list methods, so you do not have to acce
 
 In the examples above, `len(pipeline)` would return `3`.
 
-You could also for example append a stage to the pipeline like this:
+You could also, for example, append a stage to the pipeline like this:
 
 ```python
 pipeline.append(stages.Project(title=1, year=1))

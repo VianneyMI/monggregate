@@ -6,11 +6,11 @@ It is based on MongoDB official python driver, pymongo and on [pydantic](https:/
 ### Features
 
 
-- provides an OOP interface to the aggregation pipeline.
-- allows you to focus on your requirements rather than MongoDB syntax
-- integrates all the MongoDB documentation and allows you to quickly refer to it without having to navigate to the website.
-- enables autocompletion on the various MongoDB features.
-- offers a pandas-style way to chain operations on data.
+- Provides an OOP interface to the aggregation pipeline.
+- Allows you to focus on your requirements rather than MongoDB syntax
+- Integrates all the MongoDB documentation and allows you to quickly refer to it without having to navigate to the website.
+- Enables autocompletion on the various MongoDB features.
+- Offers a pandas-style way to chain operations on data.
 
 ## **Requirements**
 
@@ -29,7 +29,7 @@ pip install monggregate
 
 The below examples reference the MongoDB sample_mflix database
 
-### Basic Pipeline usage
+### Basic Pipeline Usage
 
 ```python
 import os
@@ -73,7 +73,7 @@ results = list(curosr)
 
 
 
-### Advanced usage, with MongoDB operators
+### Advanced Usage, With MongoDB Operators
 
 
 ```python
@@ -121,7 +121,7 @@ results = list(cursor)
 
 ```
 
-### Even more advanced usage with Expressions
+### Even More Advanced Usage With Expressions
 
 ```python
 import os
@@ -167,7 +167,7 @@ results = list(cursor)
 #print(results)
 ```
 
-## **Going further**
+## **Going Further**
 
 * Check out the [full documentation](https://vianneymi.github.io/monggregate/) for more examples.
 * Check out this [medium article](https://medium.com/@vianney.mixtur_39698/mongo-db-aggregations-pipelines-made-easy-with-monggregate-680b322167d2).

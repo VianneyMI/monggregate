@@ -2,8 +2,8 @@ Stages are the building blocks of aggregation pipelines.
 
 We saw in the [previous page](pipeline.md) two methods to compose stages to effectively build a pipeline:
 
-* using the pipeline stages methods
-* using the stages classes directly
+* Using the pipeline stages methods
+* Using the stages classes directly
 
 Repeating what was described previously:
 
@@ -15,9 +15,9 @@ It is a work in progress and the list of available stages will grow over time. I
 
 You can see the full list of stages provided by MongoDB [here](https://www.mongodb.com/docs/manual/reference/aggregation-quick-reference/#stages--db.collection.aggregate-).
 
-## **List of available stages in Monggregate**
+## **List of Available Stages In Monggregate**
 
-The following table lists the stages that are currently available in monggregate:
+The following table lists the stages that are currently available in Monggregate:
 
 * `$addFields`
 * `$bucket`
@@ -46,7 +46,7 @@ The following table lists the stages that are currently available in monggregate
 ## **Usage**
 
 `monggregate` aims at providing a simple and intuitive interface to the MongoDB aggregation framework.<br>
-Even though, it tries as much as possible to stick by the MongoDB aggregation framework syntax, it also tries to provide alternative ways, reproducing the syntax of other tools that new Mongo users might be more familiar with such as SQL and Pandas.
+Even though, it tries as much as possible to stick by the MongoDB aggregation framework syntax, it also tries to provide alternative ways to reproduce the syntax of other tools that new Mongo users might be more familiar with such as SQL and Pandas.
 
 For example, in the ``$group` stage, the MongoDB aggregation framework expects the grouping field(s) to be provided in the `_id` key. However, `monggregate` allows you to provide the grouping field(s) in the `by` key instead.
 
@@ -107,12 +107,12 @@ The arguments names (`by` and `value` respectively) for the `sort` and `limit` s
 
 ## **Operators**
 
-You might have noticed in the grouping example how we tell monggregate to perform operations on the groups.
+You might have noticed in the grouping example how we tell Monggregate to perform operations on the groups.
 In the example, we used the `$sum` and `$push` operators.
 
 For more information about operators, check the [next page](operators.md).
 
-## **Come back later**
+## **Come Back Later**
 
 At this stage of the tutorial, you should already have enough to play around with the aggregation framework and start building your own pipelines.
-If you read everything straight, you might want to check out the [operators page](operators.md) later on.
+If you read everything in this documentation, you might want to check out the [operators page](operators.md) later on.
