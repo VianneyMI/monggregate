@@ -166,15 +166,18 @@ The following limitations apply:
 """
 
 from datetime import datetime
-from typing import Literal
+from typing import Any, Literal
+from typing_extensions import Self
 
 from monggregate.base import BaseModel, pyd
 from monggregate.fields import FieldName
 from monggregate.search.collectors.collector import SearchCollector
 from monggregate.search.operators import(
     Autocomplete,
+    Compound,
     Equals,
     Exists,
+    MoreLikeThis,
     Range,
     Regex,
     Text,
@@ -248,7 +251,6 @@ class FacetDefinition(BaseModel):
         return name
         
 
-
 class StringFacet(FacetDefinition):
     """
     String facet definition
@@ -297,6 +299,7 @@ class NumericFacet(FacetDefinition):
         
         return self.resolve({self.name : self.dict(by_alias=True, exclude={"name"})})
 
+
 class DateFacet(FacetDefinition):
     """
     Numeric facet definition
@@ -341,7 +344,7 @@ class Facet(SearchCollector):
     operator : AnyOperator|None
     facets : Facets = []
 
-    # FIXME : The below validator will be usable only when the automatic conversion to statement is deprecated <VM, 20/05/2023>
+
     @pyd.validator("facets")
     def validate_facets(cls, facets:Facets)->Facets:
         """
@@ -349,12 +352,15 @@ class Facet(SearchCollector):
         Ensures the facets names are unique
         """
 
-        names = set()
+        names = []
         for facet in facets:
-            names.add(facet.name)
+            names.append(facet.name)
 
-        if len(facets) > len(names):
-            raise ValueError("Some facets have identical names")
+        if len(facets) > len(set(names)):
+            msg = "Some facets have identical names. Facet names must be unique."
+            msg += "\n"
+            msg += f"Facets names : {names}"
+            raise ValueError(msg)
         
         return facets
 
@@ -380,6 +386,9 @@ class Facet(SearchCollector):
         
         return self.resolve(_statement)
     
+    # ----------------------------------------------
+    # Operators
+    # ----------------------------------------------
     def autocomplete(
             self,
             *,
@@ -388,45 +397,144 @@ class Facet(SearchCollector):
             token_order:str="any",
             fuzzy:FuzzyOptions|None=None,
             score:dict|None=None,
-    )->"Facet":
+            **kwargs:Any
+    )->Self:
         """Adds an autocomplete clause to the current facet instance."""
         
-        autocomplete = Autocomplete(
+        _autocomplete = Autocomplete(
             query=query,
             path=path,
             token_order=token_order,
             fuzzy=fuzzy,
             score=score
         )
-        self.operator = autocomplete
+
+        clause_type = kwargs.get("type", "should")
+        if clause_type == "should":
+            default_minimum_should_match = 1
+        else:
+            default_minimum_should_match = 0
+
+        minimum_should_match = kwargs.pop("minimum_should_match", default_minimum_should_match)
+
+        if not self.operator:
+            self.operator = _autocomplete
+        elif isinstance(self.operator, Compound):
+            self.operator.autocomplete(
+                type=clause_type,
+                minimum_should_match=minimum_should_match, 
+                **_autocomplete.dict())
+        else:
+            new_operator = Compound(
+                should=[self.operator, _autocomplete],
+                minimum_should_match=minimum_should_match
+                )
+            self.operator = new_operator
 
         return self
     
     def equals(
             self,
-            type,
             path:str,
             value:str|int|float|bool|datetime,
-            score:dict|None=None
-    )->"Facet":
+            score:dict|None=None,
+            **kwargs:Any
+    )->Self:
         """Adds an equals clause to the current facet instance."""
 
-        equals = Equals(
+        _equals = Equals(
             path=path,
             value=value,
             score=score
         )
 
-        self.operator = equals
+        clause_type = kwargs.get("type", "should")
+        if clause_type == "should":
+            default_minimum_should_match = 1
+        else:
+            default_minimum_should_match = 0
+
+        minimum_should_match = kwargs.pop("minimum_should_match", default_minimum_should_match)
+
+        if not self.operator:
+            self.operator = _equals
+        elif isinstance(self.operator, Compound):
+            self.operator.equals(
+                type=clause_type,
+                minimum_should_match=minimum_should_match, 
+                **_equals.dict())
+        else:
+            new_operator = Compound(
+                should=[self.operator, _equals],
+                minimum_should_match=minimum_should_match
+                )
+            self.operator = new_operator
+
 
 
         return self
 
-    def exists(self, path:str)->"Facet":
+    def exists(self, path:str, **kwargs:Any)->Self:
         """Adds an exists clause to the current facet instance."""
 
-        exists = Exists(path=path)
-        self.operator = exists
+        _exists = Exists(path=path)
+        
+        clause_type = kwargs.get("type", "should")
+        if clause_type == "should":
+            default_minimum_should_match = 1
+        else:
+            default_minimum_should_match = 0
+
+        minimum_should_match = kwargs.pop("minimum_should_match", default_minimum_should_match)
+
+        if not self.operator:
+            self.operator = _exists
+        elif isinstance(self.operator, Compound):
+            self.operator.exists(
+                type=clause_type,
+                minimum_should_match=minimum_should_match, 
+                **_exists.dict())
+        else:
+            new_operator = Compound(
+                should=[self.operator, _exists],
+                minimum_should_match=minimum_should_match
+                )
+            self.operator = new_operator
+
+
+        return self
+    
+    def more_like_this(
+            self,
+            like:dict|list[dict],
+            **kwargs:Any
+    )->Self:
+        """Adds a more_like_this clause to the current facet instance."""
+
+        _more_like_this = MoreLikeThis(like=like)
+        
+        clause_type = kwargs.get("type", "should")
+        if clause_type == "should":
+            default_minimum_should_match = 1
+        else:
+            default_minimum_should_match = 0
+
+        minimum_should_match = kwargs.pop("minimum_should_match", default_minimum_should_match)
+
+        if not self.operator:
+            self.operator = _more_like_this
+        elif isinstance(self.operator, Compound):
+            self.operator.more_like_this(
+                type=clause_type,
+                minimum_should_match=minimum_should_match, 
+                **_more_like_this.dict())
+        else:
+            new_operator = Compound(
+                should=[self.operator, _more_like_this],
+                minimum_should_match=minimum_should_match
+                )
+            self.operator = new_operator
+
 
         return self
 
@@ -438,11 +546,12 @@ class Facet(SearchCollector):
             lt:int|float|datetime|None=None,
             gte:int|float|datetime|None=None,
             lte:int|float|datetime|None=None,
-            score:dict|None=None
-    )->"Facet":
+            score:dict|None=None,
+            **kwargs:Any
+    )->Self:
         """Adds a range clause to the current facet instance."""
 
-        range_ = Range(
+        _range = Range(
             path=path,
             gt=gt,
             gte=gte,
@@ -451,7 +560,28 @@ class Facet(SearchCollector):
             score=score
         )
 
-        self.operator = range_
+        clause_type = kwargs.get("type", "should")
+        if clause_type == "should":
+            default_minimum_should_match = 1
+        else:
+            default_minimum_should_match = 0
+
+        minimum_should_match = kwargs.pop("minimum_should_match", default_minimum_should_match)
+
+        if not self.operator:
+            self.operator = _range
+        elif isinstance(self.operator, Compound):
+            self.operator.range(
+                type=clause_type,
+                minimum_should_match=minimum_should_match, 
+                **_range.dict())
+        else:
+            new_operator = Compound(
+                should=[self.operator, _range],
+                minimum_should_match=minimum_should_match
+                )
+            self.operator = new_operator
+
 
 
         return self
@@ -462,18 +592,40 @@ class Facet(SearchCollector):
             query:str|list[str],
             path:str|list[str],
             allow_analyzed_field:bool=False,
-            score:dict|None=None
-    )->"Facet":
+            score:dict|None=None,
+            **kwargs:Any
+    )->Self:
         """Adds a regex clause to the current facet instance."""
 
-        regex = Regex(
+        _regex = Regex(
             query=query,
             path=path,
             allow_analyzed_field=allow_analyzed_field,
             score=score
         )
 
-        self.operator = regex
+        clause_type = kwargs.get("type", "should")
+        if clause_type == "should":
+            default_minimum_should_match = 1
+        else:
+            default_minimum_should_match = 0
+
+        minimum_should_match = kwargs.pop("minimum_should_match", default_minimum_should_match)
+
+        if not self.operator:
+            self.operator = _regex
+        elif isinstance(self.operator, Compound):
+            self.operator.regex(
+                type=clause_type,
+                minimum_should_match=minimum_should_match, 
+                **_regex.dict())
+        else:
+            new_operator = Compound(
+                should=[self.operator, _regex],
+                minimum_should_match=minimum_should_match
+                )
+            self.operator = new_operator
+
 
         return self
 
@@ -484,11 +636,12 @@ class Facet(SearchCollector):
             path:str|list[str],
             fuzzy:FuzzyOptions|None=None,
             score:dict|None=None,
-            synonyms:str|None=None
-    )->"Facet":
+            synonyms:str|None=None,
+            **kwargs:Any
+    )->Self:
         """Adds a text clause to the current facet instance."""
 
-        text = Text(
+        _text = Text(
             query=query,
             path=path,
             score=score,
@@ -496,7 +649,28 @@ class Facet(SearchCollector):
             synonyms=synonyms
         )
 
-        self.operator = text
+        clause_type = kwargs.get("type", "should")
+        if clause_type == "should":
+            default_minimum_should_match = 1
+        else:
+            default_minimum_should_match = 0
+
+        minimum_should_match = kwargs.pop("minimum_should_match", default_minimum_should_match)
+
+        if not self.operator:
+            self.operator = _text
+        elif isinstance(self.operator, Compound):
+            self.operator.text(
+                type=clause_type,
+                minimum_should_match=minimum_should_match, 
+                **_text.dict())
+        else:
+            new_operator = Compound(
+                should=[self.operator, _text],
+                minimum_should_match=minimum_should_match
+                )
+            self.operator = new_operator
+
 
 
         return self
@@ -508,21 +682,46 @@ class Facet(SearchCollector):
             path:str|list[str],
             allow_analyzed_field:bool=False,
             score:dict|None=None,
-    )->"Facet":
+            **kwargs:Any
+    )->Self:
         """Adds a wildcard clause to the current facet instance."""
 
-        wildcard = Wildcard(
+        _wildcard = Wildcard(
             query=query,
             path=path,
             allow_analyzed_field=allow_analyzed_field,
             score=score
         )
 
-        self.operator = wildcard
+        clause_type = kwargs.get("type", "should")
+        if clause_type == "should":
+            default_minimum_should_match = 1
+        else:
+            default_minimum_should_match = 0
+
+        minimum_should_match = kwargs.pop("minimum_should_match", default_minimum_should_match)
+
+        if not self.operator:
+            self.operator = _wildcard
+        elif isinstance(self.operator, Compound):
+            self.operator.wildcard(
+                type=clause_type,
+                minimum_should_match=minimum_should_match, 
+                **_wildcard.dict())
+        else:
+            new_operator = Compound(
+                should=[self.operator, _wildcard],
+                minimum_should_match=minimum_should_match
+                )
+            self.operator = new_operator
+
 
         return self
     
-    def add(
+    # ----------------------------------------------
+    # Facets
+    # ----------------------------------------------
+    def facet(
             self,
             path:str,
             name:str|None=None,
@@ -530,7 +729,7 @@ class Facet(SearchCollector):
             num_buckets:int=10,
             boundaries:list[int|float]|list[datetime]|None=None,
             default:str|None=None
-    )->"Facet":
+    )->Self:
         
         if type=="string":
             facet = StringFacet(
@@ -538,8 +737,15 @@ class Facet(SearchCollector):
                 path=path,
                 num_buckets=num_buckets
             )
-        else:
+        elif type=="number":
             facet = NumericFacet(
+                name=name,
+                path=path,
+                boundaries=boundaries,
+                default=default
+            )
+        else:
+            facet = DateFacet(
                 name=name,
                 path=path,
                 boundaries=boundaries,
@@ -549,3 +755,59 @@ class Facet(SearchCollector):
         self.facets.append(facet)
 
         return self
+
+    def numeric(
+            self,
+            path:str,
+            *,
+            boundaries:list[int|float],
+            name:str|None=None,
+            default:str|None=None
+    )->Self:
+        """Adds a numeric facet to the current facet instance."""
+
+        self.facet(
+            type="number",
+            path=path,
+            name=name,
+            boundaries=boundaries,
+            default=default
+        )
+        return self
+    
+    def date(
+            self,
+            path:str,
+            *,
+            boundaries:list[datetime],
+            name:str|None=None,
+            default:str|None=None
+    )->Self:
+        """Adds a date facet to the current facet instance."""
+
+        self.facet(
+            type="date",
+            path=path,
+            name=name,
+            boundaries=boundaries,
+            default=default
+        )
+        return self
+    
+    def string(
+            self,
+            path:str,
+            *,
+            num_buckets:int=10,
+            name:str|None=None
+    )->Self:
+        """Adds a string facet to the current facet instance."""
+
+        self.facet(
+            type="string",
+            path=path,
+            name=name,
+            num_buckets=num_buckets
+        )
+        return self
+    
