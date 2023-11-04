@@ -186,7 +186,7 @@ class Compound(SearchOperator):
             filter:list["Clause|Compound"]=[],
             minimum_should_match:int=0
         )->Self:
-        """xxx"""
+        """Adds a compound clause to the current compound instance."""
 
         _compound = Compound(
             must=must,
@@ -259,7 +259,7 @@ class Compound(SearchOperator):
             lt=lt,
             lte=lte,
             score=score
-        ).statement
+        )
 
         self._register_clause(type, _range)
 
@@ -282,7 +282,7 @@ class Compound(SearchOperator):
             path=path,
             allow_analyzed_field=allow_analyzed_field,
             score=score
-        ).statement
+        )
 
 
         self._register_clause(type, _regex)
