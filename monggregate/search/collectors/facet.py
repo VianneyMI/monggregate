@@ -314,7 +314,7 @@ class DateFacet(FacetDefinition):
 
     type : Literal['date'] = 'date'
     boundaries : list[datetime]
-    default : str
+    default : str|None
 
     @property
     def statement(self) -> dict:
@@ -1003,12 +1003,14 @@ class Facet(SearchCollector):
             path:str,
             name:str|None=None,
             type:Literal['string', 'number', 'date']='string',
-            num_buckets:int=10,
+            num_buckets:int|None=None,
             boundaries:list[int|float]|list[datetime]|None=None,
             default:str|None=None
     )->Self:
         
         if type=="string":
+            if num_buckets is None:
+                num_buckets = 10
             facet = StringFacet(
                 name=name,
                 path=path,
@@ -1021,13 +1023,15 @@ class Facet(SearchCollector):
                 boundaries=boundaries,
                 default=default
             )
-        else:
+        elif type=="date":
             facet = DateFacet(
                 name=name,
                 path=path,
                 boundaries=boundaries,
                 default=default
             )
+        else:
+            raise ValueError(f"Invalid facet type. Valid facet types are 'string', 'number' and 'date'. Got {type} instead.")
 
         self.facets.append(facet)
 
