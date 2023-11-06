@@ -187,6 +187,10 @@ from monggregate.search.operators import(
 from monggregate.search.operators.operator import OperatorLiteral
 from monggregate.search.commons import FuzzyOptions
 
+# Aliases
+# ----------------------------------------------
+FacetType = Literal['string', 'number', 'date']
+
 # Strings
 # ----------------------------------------------
 class FacetName(FieldName):
@@ -1002,7 +1006,7 @@ class Facet(SearchCollector):
             self,
             path:str,
             name:str|None=None,
-            type:Literal['string', 'number', 'date']='string',
+            type:FacetType='string',
             num_buckets:int|None=None,
             boundaries:list[int|float]|list[datetime]|None=None,
             default:str|None=None
