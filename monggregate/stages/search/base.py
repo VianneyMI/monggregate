@@ -111,7 +111,7 @@ class SearchBase(Stage, SearchConfig):
         """Initializes Search with Compound operator."""
 
         if "collector" not in values and "operator" not in values:
-            values["operator"] = Compound()
+            values["collector"] = Facet(operator=Compound())
         
         return values
     
@@ -526,6 +526,15 @@ class SearchBase(Stage, SearchConfig):
                 fuzzy=fuzzy,
                 score=score
             )
+        elif self.collector and isinstance(self.collector.operator, Compound):
+            self.collector.operator.autocomplete(
+                type=type,
+                query=query,
+                path=path,
+                token_order=token_order,
+                fuzzy=fuzzy,
+                score=score
+            )
         else:
             raise TypeError(f"Cannot call autocomplete on {self.operator}")
         
@@ -544,6 +553,13 @@ class SearchBase(Stage, SearchConfig):
 
         if isinstance(self.operator, Compound):
             self.operator.equals(
+                type=type,
+                path=path,
+                value=value,
+                score=score
+            )
+        elif self.collector and isinstance(self.collector.operator, Compound):
+            self.collector.operator.equals(
                 type=type,
                 path=path,
                 value=value,
@@ -568,6 +584,11 @@ class SearchBase(Stage, SearchConfig):
                 type=type,
                 path=path
             )
+        elif self.collector and isinstance(self.collector.operator, Compound):
+            self.collector.operator.exists(
+                type=type,
+                path=path
+            )
         else:
             raise TypeError(f"Cannot call exists on {self.operator}")
         
@@ -584,6 +605,11 @@ class SearchBase(Stage, SearchConfig):
 
         if isinstance(self.operator, Compound):
             self.operator.more_like_this(
+                type,
+                like=like
+            )
+        elif self.collector and isinstance(self.collector.operator, Compound):
+            self.collector.operator.more_like_this(
                 type,
                 like=like
             )
@@ -609,6 +635,16 @@ class SearchBase(Stage, SearchConfig):
 
         if isinstance(self.operator, Compound):
             self.operator.range(
+                type=type,
+                path=path,
+                gt=gt,
+                lt=lt,
+                gte=gte,
+                lte=lte,
+                score=score
+            )
+        elif self.collector and isinstance(self.collector.operator, Compound):
+            self.collector.operator.range(
                 type=type,
                 path=path,
                 gt=gt,
@@ -643,6 +679,14 @@ class SearchBase(Stage, SearchConfig):
                 allow_analyzed_field=allow_analyzed_field,
                 score=score
             )
+        elif self.collector and isinstance(self.collector.operator, Compound):
+            self.collector.operator.regex(
+                type=type,
+                query=query,
+                path=path,
+                allow_analyzed_field=allow_analyzed_field,
+                score=score
+            )
         else:
             raise TypeError(f"Cannot call regex on {self.operator}")
         
@@ -664,6 +708,15 @@ class SearchBase(Stage, SearchConfig):
 
         if isinstance(self.operator, Compound):
             self.operator.text(
+                type=type,
+                query=query,
+                path=path,
+                fuzzy=fuzzy,
+                score=score,
+                synonyms=synonyms
+            )
+        elif self.collector and isinstance(self.collector.operator, Compound):
+            self.collector.operator.text(
                 type=type,
                 query=query,
                 path=path,
@@ -697,6 +750,14 @@ class SearchBase(Stage, SearchConfig):
                 allow_analyzed_field=allow_analyzed_field,
                 score=score
             )
+        elif self.collector and isinstance(self.collector.operator, Compound):
+            self.collector.operator.wildcard(
+                type=type,
+                query=query,
+                path=path,
+                allow_analyzed_field=allow_analyzed_field,
+                score=score
+            )
         else:
             raise TypeError(f"Cannot call wildcard on {self.operator}")
         
@@ -708,6 +769,8 @@ class SearchBase(Stage, SearchConfig):
 
         if isinstance(self.operator, Compound):
             self.operator.minimum_should_match = minimum_should_match
+        elif self.collector and isinstance(self.collector.operator, Compound):
+            self.collector.operator.minimum_should_match = minimum_should_match
         else:
             raise TypeError(f"Cannot call set_minimum_should_match on {self.operator}")
         
