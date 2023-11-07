@@ -791,6 +791,12 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         # If pipeline is not empty then the first stage must be Search stage.
         # If so, adds the operator to the existing stage using Compound.
         elif len(self) >= 1 and isinstance(self.stages[0], Search):
+            kwargs.update({
+                # "collector_name":collector_name,
+                "operator_name":operator_name,
+                "path":path,
+                "query":query,
+            })
             has_facet_arg = self.__has_facet_arg(**kwargs)
             if has_facet_arg:
                 self._append_facet(facet_type, **kwargs)
@@ -810,6 +816,11 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             *,
             operator_name:OperatorLiteral|None=None,
             collector_name:Literal["facet"]|None=None,
+            # Including the below parameters to give them visibility
+            #---------------------------------------------------
+            clause_type:ClauseType|None=None,
+            facet_type:FacetType|None=None,
+            #---------------------------------------------------
             index:str="default",
             count:CountOptions|None=None,
             highlight:HighlightOptions|None=None,
@@ -875,6 +886,12 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         # If pipeline is not empty then the first stage must be Search stage.
         # If so, adds the operator to the existing stage using Compound.
         elif len(self) >= 1 and isinstance(self.stages[0], Search):
+            kwargs.update({
+                # "collector_name":collector_name,
+                "operator_name":operator_name,
+                "path":path,
+                "query":query,
+            })
             has_facet_arg = self.__has_facet_arg(**kwargs)
             if has_facet_arg:
                 self._append_facet(facet_type, **kwargs)
@@ -929,14 +946,21 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
                 **kwargs
             )
 
-            self.stages.append(
-                search_stage
-            )
+        self.stages.append(
+            search_stage
+        )
 
         return None
 
 
-    def _append_clause(self, clause_type:ClauseType|None=None,  **kwargs:Any)->None:
+    def _append_clause(
+            self, 
+            clause_type:ClauseType|None=None,
+            *,
+            operator_name:OperatorLiteral|None=None,
+            path:str|list[str]|None=None,
+            query:str|list[str]|None=None,  
+            **kwargs:Any)->None:
         """Adds a clause to the search stage of the pipeline."""
 
         first_stage = self.stages[0]
@@ -968,6 +992,11 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         elif isinstance(first_stage.operator, Compound):
             # Add clause to existing compound
             first_stage.__get_operators_map__(operator_name=operator_name)(clause_type, path=path, query=query, **kwargs)
+        elif first_stage.operator is not None:
+            # Create a compound operator with the to-be operator as a clause
+            new_operator = Compound(minimum_should_match=minimum_should_match)
+            new_operator.__get_operators_map__(operator_name=operator_name)(clause_type, path=path, query=query, **kwargs)
+            first_stage.operator = new_operator
 
         else:
             # Create an operator

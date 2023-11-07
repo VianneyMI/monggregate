@@ -110,8 +110,20 @@ class SearchBase(Stage, SearchConfig):
     def init(cls, values:dict)->dict:
         """Initializes Search with Compound operator."""
 
-        if "collector" not in values and "operator" not in values:
-            values["collector"] = Facet(operator=Compound())
+        collector = values.get("collector")
+        operator = values.get("operator")
+        collector_name = values.get("collector_name")
+        operator_name = values.get("operator_name")
+
+        if operator_name and not operator:
+            operator = OperatorMap[operator_name](**values)
+        
+        if collector_name and not collector:
+            values.pop("operator", None)
+            collector = Facet(operator=operator, **values)
+
+        if not collector and not operator:
+            values["operator"] = Compound()
         
         return values
     
