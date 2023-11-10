@@ -52,25 +52,19 @@ from monggregate.fields import FieldName
 
 class Unset(Stage):
     """
-    Creates an $unset statement for an aggregation pipeline unset stage.
-
-    Extended definition:
-    --------------------
-    New in version 4.2
-
-    Removes/excludes fields from documents.
-
-    Online MongoDB documentation:
-    -----------------------------
-    Last Updated in this package : 24/04/2023
-    Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/unset/#definition
+    Abstration of MongoDB $unset statement that removes/exludes fields from documents.
 
     Attributes:
     -----------
 
         - field, str|None: field to be removed
         - fields, list[str]|None, list of fields to be removed
+
+    Online MongoDB documentation:
+    -----------------------------
+    Removes/excludes fields from documents.
     
+    Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/unset/#definition
     """
 
     field: FieldName | None

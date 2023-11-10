@@ -103,16 +103,7 @@ SortArgs = str | list[str] | set[str]
 
 class Sort(Stage):
     """
-    Creates a sort statement for an aggregation pipeline sort stage.
-
-    Extended definition:
-    --------------------
-    Sorts all input documents and returns them to the pipeline in sorted order.
-
-    Online MongoDB documentation:
-    -----------------------------
-    Last Updated (in this package) : 21/09/2022
-    Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/sort/#mongodb-pipeline-pipe.-sort
+    Abstration of MongoDB $sort statement that sorts all input documents and returns them to the pipeline in sorted order.
 
     Attributes:
     -----------
@@ -136,6 +127,11 @@ class Sort(Stage):
             "descending_fieldN" : -1
         }
 
+    Online MongoDB documentation:
+    -----------------------------
+    Sorts all input documents and returns them to the pipeline in sorted order.
+    
+    Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/sort/#mongodb-pipeline-pipe.-sort
     """
 
     descending : list[str] | dict | bool | None = None

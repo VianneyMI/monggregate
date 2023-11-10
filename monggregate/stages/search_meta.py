@@ -68,17 +68,8 @@ from monggregate.stages.search import Search
 
 class SearchMeta(Search):
     """
-    Creates a searchMeta statement in an aggregation pipeline
+    Abstration of MongoDB $searchMeta statement that returns different types of metadata result documents.
 
-    Extended definition:
-    --------------------
-    The searchMeta stage returns different types of metadata result documents.
-
-    Online MongoDB documentation:
-    -----------------------------
-    Last Updated (in this package):18/06/2023
-    Source : https://www.mongodb.com/docs/atlas/atlas-search/query-syntax/#definition-1
-    
     Attributes:
     -----------
         - index, str : name of the Atlas Search index to use. Defaults to default.
@@ -106,6 +97,11 @@ class SearchMeta(Search):
                                         a document that contains the collector-specific options as the value
                                         for this field. Either this or <operator-name> is required.
     
+    Online MongoDB documentation:
+    -----------------------------
+    The searchMeta stage returns different types of metadata result documents.
+
+    Source : https://www.mongodb.com/docs/atlas/atlas-search/query-syntax/#definition-1
     """
 
     @property

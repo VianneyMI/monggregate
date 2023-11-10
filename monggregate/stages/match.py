@@ -51,24 +51,24 @@ from monggregate.stages.stage import Stage
 
 class Match(Stage):
     """
-    Creates a match statement for an aggregation pipeline match stage.
-
-    Extended definition:
-    --------------------
-    Filters the documents to pass only the documents that match the specified condition(s) to the next pipeline stage.
-
-    Online MongoDB documentation:
-    -----------------------------
-
-    Last Updated (in this package) : 16/09/2022
-    Source :  https://www.mongodb.com/docs/manual/reference/operator/aggregation/match/#mongodb-pipeline-pipe.-match
+    Abstraction of MongoDB $match statement that filters the documents to pass to the next pipeline stage based on the specified condition(s).
 
     Attributes:
     -----------
 
         - statement, dict : the statement generated during instantiation after parsing the other arguments
         - query, dict : the query use to filter the documents
+    
+    
+    Online MongoDB documentation:
+    -----------------------------
+    Filters the documents to pass only the documents that match the specified condition(s) to the next pipeline stage.
+    
+    $match takes a document that specifies the query conditions. The query syntax is identical to the read operation query syntax; i.e.
+    $match does not accept raw aggregation expressions. Instead, use a $expr query expression to include aggregation expression in
+    $match
 
+    Source :  https://www.mongodb.com/docs/manual/reference/operator/aggregation/match/#mongodb-pipeline-pipe.-match
     """
 
     query : dict ={} #| None

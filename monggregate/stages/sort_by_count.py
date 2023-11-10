@@ -1,5 +1,5 @@
 """
-Module definining an interface to MongoDB $count stage operation in aggrgation pipeline.
+Module definining an interface to MongoDB $sortByCount stage operation in aggrgation pipeline.
 
 Online MongoDB documentation:
 --------------------------------------------------------------------------------------------------------------------
@@ -53,10 +53,16 @@ from monggregate.utils import validate_field_path
 
 class SortByCount(Stage):
     """
-    Creates a sort_by_count statement for an aggregation pipeline sort_by_count stage
+    Abstration of MongoDB $sortByCount statement that groups document based on the value of a specified expression, computes the count of documents in each distinct group and
+    sort them by count in descending order.
 
-    Extended definition:
-    --------------------
+    Attributes:
+    -----------
+        - _statement, dict : the statement generated during the validation process
+        - by, str : the key to group, sort and count on    
+
+    Online MongoDB documentation:
+    -----------------------------
     Groups incoming documents based on the value of a specified expression, then computes the count of documents in each distinct group.
 
     Each output document contains two fields: an _id field containing the distinct grouping value,
@@ -64,16 +70,7 @@ class SortByCount(Stage):
 
     The documents are sorted by count in descending order.
 
-    Online MongoDB documentation:
-    -----------------------------
-
-    Last Updated (in this package) : 21/09/2022
     Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/sortByCount/#mongodb-pipeline-pipe.-sortByCount
-
-    Attributes:
-    -----------
-        - _statement, dict : the statement generated during the validation process
-        - by, str : the key to group, sort and count on
     """
 
     by : str # TODO : Allow more types <VM, 17/09/2022>

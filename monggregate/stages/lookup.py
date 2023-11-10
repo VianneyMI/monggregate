@@ -258,24 +258,7 @@ class LookupTypeEnum(StrEnum):
 
 class Lookup(Stage):
     """
-    Creates a lookup statement for an aggregation pipeline lookup stage.
-
-    `Changed in version 5.1`
-
-    Extended definition:
-    --------------------
-
-    Performs a left outer join to a collection in the same database to filter in documents from the "joined" collection for processing. The lookup stage adds a new array field to each input document. The new array field contains the matching documents from the "joined" collection. The
-    lookup stage passes these reshaped documents to the next stage.
-
-    Starting in MongoDB 5.1, $lookup works across sharded collections.
-
-    To combine elements from two different collections, use the $unionWith pipeline stage.
-
-    Online MongoDB documentation:
-    -----------------------------
-    Last Updated (in this package) : 23/09/2022
-    Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/lookup/#mongodb-pipeline-pipe.-lookup
+    Abstraction for MongoDB $lookup statement that performs a left outer join to a collection in the same database to filter in documents from the "joined" collection for processing.
 
     Attributes:
     -----------
@@ -306,6 +289,17 @@ class Lookup(Stage):
         * Other (non-$match) stages in the pipeline do not require an
           $expr operator to access the variables.
 
+
+    Online MongoDB documentation:
+    -----------------------------
+    Performs a left outer join to a collection in the same database to filter in documents from the "joined" collection for processing. The lookup stage adds a new array field to each input document. The new array field contains the matching documents from the "joined" collection. The
+    lookup stage passes these reshaped documents to the next stage.
+
+    Starting in MongoDB 5.1, $lookup works across sharded collections.
+
+    To combine elements from two different collections, use the $unionWith pipeline stage.
+
+    Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/lookup/#mongodb-pipeline-pipe.-lookup
     """
 
     right : str | None = pyd.Field(None, alias = "from")

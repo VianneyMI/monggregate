@@ -38,22 +38,18 @@ from monggregate.stages.stage import Stage
 
 class Set(Stage):
     """
-    Creates a set statement for a pipeline set aggregation stage
-
-    Extended definition:
-    --------------------
-    Adds new fields to documents. set outputs documents that contain all existing fields from the inputs documents and newly added fields. Both stages are equivalent to a project stage that explicitly specifies all existing fields in the inputs documents and adds the new fields.
-    
-    Online MongoDB documentation:
-    -----------------------------
-    Last Updated (in this package) : 20/09/2022
-    Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/set/#mongodb-pipeline-pipe.-set
+    Abstration of MongoDB $set statement that adds new fields to documents.
 
     Attributes:
     -----------
         - statement, dict :
         - document, dict : new fields to be added
-
+    
+    Online MongoDB documentation:
+    -----------------------------
+    Adds new fields to documents. set outputs documents that contain all existing fields from the inputs documents and newly added fields. Both stages are equivalent to a project stage that explicitly specifies all existing fields in the inputs documents and adds the new fields.
+    
+    Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/set/#mongodb-pipeline-pipe.-set
     """
 
     document : dict = {} #| None

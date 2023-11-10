@@ -54,22 +54,18 @@ from monggregate.stages.stage import Stage
 
 class Sample(Stage):
     """
-    Creates a sample statement for an aggregation pipeline sample stage.
+    Abstraction of MongoDB $sample statement that randomly selects the specified number of documents from the input documents. 
 
-    Extended definition:
-    --------------------
-    Randomly selects the specified number of documents from the input documents.
-    
-    Online MongoDB documentation:
-    -----------------------------
-    Last Updated (in this package) : 20/09/2022
-    Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/sample/#mongodb-pipeline-pipe.-sample
-    
     Attributes:
     -----------
         - statement, dict : the statement generated after instantiation
         - value, int : positive integer representing the number of documents to be randomly picked. Defaults to 10.
-
+    
+    Online MongoDB documentation:
+    -----------------------------
+    Randomly selects the specified number of documents from the input documents.
+    
+    Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/sample/#mongodb-pipeline-pipe.-sample
     """
 
 

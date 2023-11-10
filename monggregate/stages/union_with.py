@@ -177,27 +177,21 @@ from monggregate.stages.stage import Stage
 
 class UnionWith(Stage):
     """
-    Creates a unionWith statement in an aggregation pipeline
+    Abstration of MongoDB $unionWith statement that combines pipeline results from two collections into a single results set.
 
-    Extended definition:
-    --------------------
-    New in version 4.4.
-
-    Performs a union of two collections.
-    unionWith combines pipeline results from two collections into a single result set. The stage outputs the combined result set (including duplicates) to the next stage.
-
-    The order in which the combined result set documents are output is unspecified.
-
-    Online MongoDB documentation:
-    -----------------------------
-    Last Updated (in this package) : 23/04/2023
-    Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/unionWith/#mongodb-pipeline-pipe.-unionWith
-    
     Attributes:
     -----------
         - collection / coll, str : The collection or view whose pipeline results you wish to include in the result set
         - pipeline, list[dict] | Pipeline | None : An aggregation pipeline to apply to the specified coll.
+    
+    Online MongoDB documentation:
+    -----------------------------
+    Performs a union of two collections.
+    unionWith combines pipeline results from two collections into a single result set. The stage outputs the combined result set (including duplicates) to the next stage.
 
+    The order in which the combined result set documents are output is unspecified.
+    
+    Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/unionWith/#mongodb-pipeline-pipe.-unionWith
     """
     
     collection: str = pyd.Field(alias="coll")
