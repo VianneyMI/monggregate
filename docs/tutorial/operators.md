@@ -51,11 +51,11 @@ pipeline.group(
 )
 
 ```
-## **List of available operators in Monggregate**
+## **List of Available Operators In Monggregate**
 
 Currently, monggregate supports the following operators:
 
-* **accumulators**
+* **Accumulators**
 
     * `$avg`
     * `$count`
@@ -66,7 +66,7 @@ Currently, monggregate supports the following operators:
     * `$push`
     * `$sum`
 
-* **arithmetic**
+* **Arithmetic**
 
     * `$add`
     * `$divide`
@@ -74,7 +74,7 @@ Currently, monggregate supports the following operators:
     * `$pow`
     * `$subtract`
 
-* **array**
+* **Array**
 
     * `$arrayToObject`
     * `$filter`
@@ -87,13 +87,13 @@ Currently, monggregate supports the following operators:
     * `$size`
     * `$sortArray`
 
-* **boolean**
+* **Boolean**
 
     * `$and`
     * `$not`
     * `$or`
 
-* **comparison**
+* **Comparison**
 
     * `$cmp`
     * `$eq`
@@ -103,28 +103,28 @@ Currently, monggregate supports the following operators:
     * `$lte`
     * `$ne`
     
-* **conditional**
+* **Conditional**
 
     * `$cond`
     * `$ifNull`
     * `$switch`
 
-* **date**
+* **Date**
 
     * `$millisecond`
 
-* **object**
+* **Object**
 
     * `$mergeObjects`
     * `$objectToArray`
 
-* **strings**
+* **Strings**
 
     * `$concat`
     * `$dateFromString`
     * `$dateToString`
 
-* **search**
+* **Search**
 
     * See [search page](search.md)
 
@@ -152,5 +152,5 @@ In an aggregation pipeline, you are going to use it as follows:
 }
 ```
 
-At the opposite there are aggregation operators that can be used as-is in MQL queries.
+In other cases, there are aggregation operators that can be used as-is in MQL queries.
 <add examples>

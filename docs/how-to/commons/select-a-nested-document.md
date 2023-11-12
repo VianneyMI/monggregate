@@ -4,10 +4,10 @@ This is a common use case that one can face when working with a collection where
 
 We will use the `listingsAndReviews` collection from the `sample_airbnb` database.
 
-This collection represent AirBnB listings. 
+This collection represents AirBnB listings. 
 The `reviews` do not have their own collection, they are embedded in a `reviews` field in the `listingsAndReviews` collection.
 
-## **What do we want to achieve ?**
+## **What Do We Want to Achieve ?**
 
 We want to select all the reviews of a given reviewer.
 

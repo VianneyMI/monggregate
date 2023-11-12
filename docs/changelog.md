@@ -19,6 +19,10 @@
 * Use `CountOptions` rather than raw dicts
 * Created `AnyStage` union type
 
+### Docs
+
+* Spelling and grammar fixes
+
 ## 0.17.0
 
 ### Docs

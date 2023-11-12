@@ -1,16 +1,15 @@
 ## **Overview**
 
-Monggregate is a library that aims at simplifying usage of MongoDB aggregation pipelines in python.
-It is based on MongoDB official python driver, pymongo and on [pydantic](https://pydantic-docs.helpmanual.io/).
+Monggregate is a library that aims at simplifying usage of MongoDB aggregation pipelines in Python.
+It is based on MongoDB official Python driver, pymongo and on [pydantic](https://pydantic-docs.helpmanual.io/).
 
 ### Features
 
-
-- provides an OOP interface to the aggregation pipeline.
-- allows you to focus on your requirements rather than MongoDB syntax
-- integrates all the MongoDB documentation and allows you to quickly refer to it without having to navigate to the website.
-- enables autocompletion on the various MongoDB features.
-- offers a pandas-style way to chain operations on data.
+- Provides an Object Oriented Programming (OOP) interface to the aggregation pipeline.
+- Allows you to focus on your requirements rather than MongoDB syntax.
+- Integrates all the MongoDB documentation and allows you to quickly refer to it without having to navigate to the website.
+- Enables autocompletion on the various MongoDB features.
+- Offers a pandas-style way to chain operations on data.
 
 ## **Requirements**
 
@@ -68,12 +67,12 @@ curosr = db["movies"].aggregate(pipeline.export())
 
 # Printing the results
 results = list(curosr)
-#print(results) # Uncomment to see the results
+print(results)
 ```
 
 
 
-### Advanced usage, with MongoDB operators
+### Advanced Usage, with MongoDB Operators
 
 
 ```python
@@ -117,11 +116,11 @@ cursor = db["movies"].aggregate(pipeline.export())
 
 # Printing the results
 results = list(cursor)
-#print(results)
+print(results)
 
 ```
 
-### Even more advanced usage with Expressions
+### Even More Advanced Usage with Expressions
 
 ```python
 import os
@@ -164,10 +163,10 @@ cursor = db["movies"].aggregate(pipeline.export())
 
 # Printing the results
 results = list(cursor)
-#print(results)
+print(results)
 ```
 
-## **Going further**
+## **Going Further**
 
 * Check out the [full documentation](https://vianneymi.github.io/monggregate/) for more examples.
 * Check out this [medium article](https://medium.com/@vianney.mixtur_39698/mongo-db-aggregations-pipelines-made-easy-with-monggregate-680b322167d2).

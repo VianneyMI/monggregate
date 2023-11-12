@@ -12,10 +12,10 @@ Even if the name focuses on the aggregation part of the framework, it can actual
     
 2. **Data Transformation and Enrichment:**
     
-    This is one of the lesser know use case of the framework.
+    This is one of the lesser known use cases of the framework.
 
     It can be used to apply complex transformations to your data, and enrich existing documents with additional information.
-    The main "functions" to do so are `$addFields`, `$densify`, `$fill`, `$replaceWith`, `$merge`, `$out`.
+    The main "functions" are `$addFields`, `$densify`, `$fill`, `$replaceWith`, `$merge`, `$out`.
 
     You can see examples of this in [Create or update a collection](../how-to/commons/create-or-update-a-collection.md).
 
@@ -24,7 +24,7 @@ Even if the name focuses on the aggregation part of the framework, it can actual
     Another important feature is the ability to perform join-like operations on your data.
     
     The frameworks exposes several functions to combine data from multiple collections. You can combine collections horizontally or vertically
-    respectively with the `$lookup` and $unionWith stages.
+    respectively with the `$lookup` and `$unionWith` stages.
 
     See [Merge collections](../how-to/commons/combine-collections.md) for some examples.
 
@@ -46,7 +46,7 @@ Even if the name focuses on the aggregation part of the framework, it can actual
 
 6. **Textual Search and Analysis:**
 
-    Finally, one of the most interesting feature of the framework (and also one of the less expected from the name) is textual search.
+    Finally, one of the most interesting features of the framework (and also one of the less expected from the name) is textual search.
 
     This part could be viewed as a framework on his own but, for some reason, was integrated to the aggregation framework.
     The aggregation framework leverages MongoDB Atlas full-text search capabilities. Textual search, unlike string matching, which looks for exact matches of a query term, involves finding documents that contain the query term or a related term.
@@ -58,8 +58,8 @@ Even if the name focuses on the aggregation part of the framework, it can actual
 
 ## **Concepts**
 
-The previous section make references to several key concepts that are important to understand in order to use the aggregation framework.
-This section will introduce those concepts and explain them in more details.
+The previous section makes references to several key concepts that are important to understand to use the aggregation framework.
+This section will introduce those concepts and explain them in more detail.
 
 ### **Stage**
 
@@ -71,7 +71,7 @@ Stages are the building blocks of an aggregation pipeline. Each stage represents
 
 A pipeline is a set of stages that are executed in sequence. The output of a stage is the input of the next stage. 
 The output of the last stage is the output of the pipeline.
-The input of the first stage in a pipeline are the entire set of documents of the collection targeted by the pipeline.
+The input of the first stage in a pipeline is the entire set of documents of the collection targeted by the pipeline.
 
 ### **Operator**
 
@@ -80,7 +80,7 @@ Operators are the tools used within each stage to perform specific operations on
 
 ### **Expression**
 
-Probably the most difficult concept to grasp is the concept of expression. It is also the most important one.
+Probably the most difficult concept to grasp is the concept of an expression. It is also the most important one.
 
 Expressions are a bit hard to define. They are actually not even properly defined in the official MongoDB documentation.
 Here how they are referred to in their documentation:

@@ -13,7 +13,7 @@ Name your cluster as pleased and click on "Create Cluster".
 **3.** Once your cluster is created, you will need to **create a database user** and **whitelist your ip**.<br>
 You should be redirected to a security quickstart page guiding you to create a database user and adding your IP address to the IP access whitelist.<br>
 
-**4.** Click on the three dots next to Browse Collections and then on "Load Sample Dataset".<br>
+**4.** Click on the three dots next to "Browse Collections" and then on "Load Sample Dataset".<br>
 This might take a few minutes.
 
 **5.** You are now ready to follow the tutorial. You can find the first page [here](getting-started.md).

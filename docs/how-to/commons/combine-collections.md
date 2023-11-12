@@ -1,7 +1,7 @@
 This guide will show you how to merge two collections.
 Keep in mind that merging collections here means embedding documents from one collection into matching documents from another collection.
 
-In the previous guide, we splitted the `listingsAndReviews` collection into two collections: `listings` and `reviews`.
+In the previous guide, we split the `listingsAndReviews` collection into two collections: `listings` and `reviews`.
 We will use these two collections to show you how to merge collections.
 
 ## **What do we want to achieve ?**
