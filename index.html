@@ -280,20 +280,27 @@
         
           <li class="md-nav__item">
   <a href="#advanced-usage-with-mongodb-operators" class="md-nav__link">
-    Advanced usage, with MongoDB operators
+    Advanced Usage, with MongoDB Operators
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#even-more-advanced-usage-with-expressions" class="md-nav__link">
-    Even more advanced usage with Expressions
+    Even More Advanced Usage with Expressions
   </a>
   
 </li>
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-further" class="md-nav__link">
+    Going Further
+  </a>
   
 </li>
       
@@ -843,20 +850,27 @@
         
           <li class="md-nav__item">
   <a href="#advanced-usage-with-mongodb-operators" class="md-nav__link">
-    Advanced usage, with MongoDB operators
+    Advanced Usage, with MongoDB Operators
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#even-more-advanced-usage-with-expressions" class="md-nav__link">
-    Even more advanced usage with Expressions
+    Even More Advanced Usage with Expressions
   </a>
   
 </li>
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-further" class="md-nav__link">
+    Going Further
+  </a>
   
 </li>
       
@@ -878,15 +892,15 @@
   <h1>Home</h1>
 
 <h2 id="overview"><strong>Overview</strong></h2>
-<p>Monggregate is a library that aims at simplifying usage of MongoDB aggregation pipelines in python.
-It is based on MongoDB official python driver, pymongo and on <a href="https://pydantic-docs.helpmanual.io/">pydantic</a>.</p>
+<p>Monggregate is a library that aims at simplifying usage of MongoDB aggregation pipelines in Python.
+It is based on MongoDB official Python driver, pymongo and on <a href="https://pydantic-docs.helpmanual.io/">pydantic</a>.</p>
 <h3 id="features">Features</h3>
 <ul>
-<li>provides an OOP interface to the aggregation pipeline.</li>
-<li>allows you to focus on your requirements rather than MongoDB syntax</li>
-<li>integrates all the MongoDB documentation and allows you to quickly refer to it without having to navigate to the website.</li>
-<li>enables autocompletion on the various MongoDB features.</li>
-<li>offers a pandas-style way to chain operations on data.</li>
+<li>Provides an Object Oriented Programming (OOP) interface to the aggregation pipeline.</li>
+<li>Allows you to focus on your requirements rather than MongoDB syntax.</li>
+<li>Integrates all the MongoDB documentation and allows you to quickly refer to it without having to navigate to the website.</li>
+<li>Enables autocompletion on the various MongoDB features.</li>
+<li>Offers a pandas-style way to chain operations on data.</li>
 </ul>
 <h2 id="requirements"><strong>Requirements</strong></h2>
 <p>This package requires python &gt; 3.10, pydantic &gt; 1.8.0</p>
@@ -933,9 +947,9 @@ It is based on MongoDB official python driver, pymongo and on <a href="https://p
 </span><span id="__span-1-34"><a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a>
 </span><span id="__span-1-35"><a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="c1"># Printing the results</span>
 </span><span id="__span-1-36"><a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a><span class="n">results</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">curosr</span><span class="p">)</span>
-</span><span id="__span-1-37"><a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="c1">#print(results) # Uncomment to see the results</span>
+</span><span id="__span-1-37"><a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
 </span></code></pre></div>
-<h3 id="advanced-usage-with-mongodb-operators">Advanced usage, with MongoDB operators</h3>
+<h3 id="advanced-usage-with-mongodb-operators">Advanced Usage, with MongoDB Operators</h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span> <span class="nn">os</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span> 
@@ -976,9 +990,9 @@ It is based on MongoDB official python driver, pymongo and on <a href="https://p
 </span><span id="__span-2-38"><a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a>
 </span><span id="__span-2-39"><a id="__codelineno-2-39" name="__codelineno-2-39" href="#__codelineno-2-39"></a><span class="c1"># Printing the results</span>
 </span><span id="__span-2-40"><a id="__codelineno-2-40" name="__codelineno-2-40" href="#__codelineno-2-40"></a><span class="n">results</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cursor</span><span class="p">)</span>
-</span><span id="__span-2-41"><a id="__codelineno-2-41" name="__codelineno-2-41" href="#__codelineno-2-41"></a><span class="c1">#print(results)</span>
+</span><span id="__span-2-41"><a id="__codelineno-2-41" name="__codelineno-2-41" href="#__codelineno-2-41"></a><span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
 </span></code></pre></div>
-<h3 id="even-more-advanced-usage-with-expressions">Even more advanced usage with Expressions</h3>
+<h3 id="even-more-advanced-usage-with-expressions">Even More Advanced Usage with Expressions</h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span> <span class="nn">os</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span> 
@@ -1019,8 +1033,13 @@ It is based on MongoDB official python driver, pymongo and on <a href="https://p
 </span><span id="__span-3-38"><a id="__codelineno-3-38" name="__codelineno-3-38" href="#__codelineno-3-38"></a>
 </span><span id="__span-3-39"><a id="__codelineno-3-39" name="__codelineno-3-39" href="#__codelineno-3-39"></a><span class="c1"># Printing the results</span>
 </span><span id="__span-3-40"><a id="__codelineno-3-40" name="__codelineno-3-40" href="#__codelineno-3-40"></a><span class="n">results</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cursor</span><span class="p">)</span>
-</span><span id="__span-3-41"><a id="__codelineno-3-41" name="__codelineno-3-41" href="#__codelineno-3-41"></a><span class="c1">#print(results)</span>
+</span><span id="__span-3-41"><a id="__codelineno-3-41" name="__codelineno-3-41" href="#__codelineno-3-41"></a><span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
 </span></code></pre></div>
+<h2 id="going-further"><strong>Going Further</strong></h2>
+<ul>
+<li>Check out the <a href="https://vianneymi.github.io/monggregate/">full documentation</a> for more examples.</li>
+<li>Check out this <a href="https://medium.com/@vianney.mixtur_39698/mongo-db-aggregations-pipelines-made-easy-with-monggregate-680b322167d2">medium article</a>.</li>
+</ul>
 
 
 

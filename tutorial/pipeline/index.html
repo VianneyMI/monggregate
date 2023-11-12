@@ -416,29 +416,29 @@
       
         <li class="md-nav__item">
   <a href="#executing-a-pipeline" class="md-nav__link">
-    Executing a pipeline
+    Executing A Pipeline
   </a>
   
-    <nav class="md-nav" aria-label="Executing a pipeline">
+    <nav class="md-nav" aria-label="Executing A Pipeline">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#passing-your-pipeline-to-your-tool" class="md-nav__link">
-    Passing your pipeline to your tool
+    Passing Your Pipeline to Your Tool
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#passing-your-tool-to-your-pipeline" class="md-nav__link">
-    Passing your tool to your pipeline
+    Passing Your Tool to Your Pipeline
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#how-to-choose" class="md-nav__link">
-    How to choose ?
+  <a href="#how-to-choose-a-method" class="md-nav__link">
+    How to Choose a Method?
   </a>
   
 </li>
@@ -450,14 +450,14 @@
       
         <li class="md-nav__item">
   <a href="#an-alternative-to-build-pipelines" class="md-nav__link">
-    An alternative to build pipelines
+    An Alternative to Build Pipelines
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#pipeline-utilities" class="md-nav__link">
-    Pipeline utilities
+    Pipeline Utilities
   </a>
   
 </li>
@@ -792,29 +792,29 @@
       
         <li class="md-nav__item">
   <a href="#executing-a-pipeline" class="md-nav__link">
-    Executing a pipeline
+    Executing A Pipeline
   </a>
   
-    <nav class="md-nav" aria-label="Executing a pipeline">
+    <nav class="md-nav" aria-label="Executing A Pipeline">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#passing-your-pipeline-to-your-tool" class="md-nav__link">
-    Passing your pipeline to your tool
+    Passing Your Pipeline to Your Tool
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#passing-your-tool-to-your-pipeline" class="md-nav__link">
-    Passing your tool to your pipeline
+    Passing Your Tool to Your Pipeline
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#how-to-choose" class="md-nav__link">
-    How to choose ?
+  <a href="#how-to-choose-a-method" class="md-nav__link">
+    How to Choose a Method?
   </a>
   
 </li>
@@ -826,14 +826,14 @@
       
         <li class="md-nav__item">
   <a href="#an-alternative-to-build-pipelines" class="md-nav__link">
-    An alternative to build pipelines
+    An Alternative to Build Pipelines
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#pipeline-utilities" class="md-nav__link">
-    Pipeline utilities
+    Pipeline Utilities
   </a>
   
 </li>
@@ -862,14 +862,14 @@ Therefore, the  <code>Pipeline</code> class is also a central class in the packa
 The <code>Pipeline</code> class includes a method for each stage of the aggregation framework.<br>
 Each stage of the aggregation framework also has its own class in the package.
 And each <code>Stage</code> class has a mirror method in the <code>Pipeline</code>. For more information, see the <a href="../stages/">stages page</a>.</p>
-<p>For example, the <code>Match</code> stage has a <code>match</code> method in the <code>Pipeline</code> class and calling <code>pipeline.match()</code> like in the code snippet below.</p>
+<p>For example, the <code>Match</code> stage has a <code>match</code> method in the <code>Pipeline</code> class that can be typed as <code>pipeline.match()</code> like in the code snippet below.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">monggregate</span> <span class="kn">import</span> <span class="n">Pipeline</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;A Star Is Born&quot;</span><span class="p">)</span>
 </span></code></pre></div>
-<p>will add a <code>Match</code> stage instance to the pipeline and return the pipeline instance.</p>
+<p>The last line of code will add a <code>Match</code> stage instance to the pipeline and return the pipeline instance.</p>
 <p>That way, you can chain the stages together to build your pipeline.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span> <span class="nn">monggregate</span> <span class="kn">import</span> <span class="n">Pipeline</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
@@ -885,12 +885,12 @@ And each <code>Stage</code> class has a mirror method in the <code>Pipeline</cod
 </span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    <span class="n">value</span><span class="o">=</span><span class="mi">1</span>
 </span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="p">)</span>
 </span></code></pre></div>
-<h2 id="executing-a-pipeline"><strong>Executing a pipeline</strong></h2>
+<h2 id="executing-a-pipeline"><strong>Executing A Pipeline</strong></h2>
 <p>So far, we have built our pipeline object. But what do we do with it?</p>
 <p><code>monggregate</code> offers a <strong>bilateral</strong> integration with the tool of your choice to execute the pipeline.</p>
 <p>Bilateral because you can either integrate your pipeline to your tool or your tool to into the pipeline.
-In the following examples, I'll use <code>pymongo</code> as at the end of the day <code>motor</code>, <code>beanie</code> and <code>mongoengine</code> all use <code>pymongo</code> under the hood.</p>
-<h3 id="passing-your-pipeline-to-your-tool"><strong>Passing your pipeline to your tool</strong></h3>
+In the following examples, I'll use <code>pymongo</code> because at the end of the day, <code>motor</code>, <code>beanie</code> and, <code>mongoengine</code> all use <code>pymongo</code> under the hood.</p>
+<h3 id="passing-your-pipeline-to-your-tool"><strong>Passing Your Pipeline to Your Tool</strong></h3>
 <p>The <code>Pipeline</code> class has an <code>export</code> method that returns a list of dictionaries of raw MongoDB aggregation language, which is the format expected by <code>pymongo</code>.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span> <span class="nn">pymongo</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">from</span> <span class="nn">monggregate</span> <span class="kn">import</span> <span class="n">Pipeline</span><span class="p">,</span> <span class="n">S</span>
@@ -918,8 +918,8 @@ In the following examples, I'll use <code>pymongo</code> as at the end of the da
 </span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="n">results</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">curosr</span><span class="p">)</span>
 </span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
 </span></code></pre></div>
-<h3 id="passing-your-tool-to-your-pipeline"><strong>Passing your tool to your pipeline</strong></h3>
-<p>The pipeline class also has <code>run</code> method, a <code>_db</code> and a <code>collection</code> attributes that you can set that make your pipelines callable and runnable by being aware of your database connexion.<br>
+<h3 id="passing-your-tool-to-your-pipeline"><strong>Passing Your Tool to Your Pipeline</strong></h3>
+<p>The pipeline class also has <code>run</code> method, a <code>_db</code> and a <code>collection</code> attributes that you can set that make your pipelines callable and runnable by being aware of your database connection.<br>
 Thus, you could write the above example like this:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span> <span class="nn">pymongo</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">from</span> <span class="nn">monggregate</span> <span class="kn">import</span> <span class="n">Pipeline</span><span class="p">,</span> <span class="n">S</span>
@@ -947,15 +947,15 @@ Thus, you could write the above example like this:</p>
 </span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="n">results</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
 </span></code></pre></div>
-<p>It also has a <code>__call__</code> method, so you could  replace the last wto lines with:</p>
+<p>It also has a <code>__call__</code> method, so you could replace the last two lines with:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">results</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">()</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
 </span></code></pre></div>
-<h3 id="how-to-choose"><strong>How to choose ?</strong></h3>
+<h3 id="how-to-choose-a-method"><strong>How to Choose a Method?</strong></h3>
 <p>It is up to you to choose the method that suits you the best.<br> 
 I personnaly use the first method for now.
-There are plans to replace the <code>_db</code> attribute by a <code>uri</code> attribute and make the database connexion happen under the hood, but it is not implemented yet. When it is the second method will become more appealing.</p>
-<h2 id="an-alternative-to-build-pipelines"><strong>An alternative to build pipelines</strong></h2>
+There are plans to replace the <code>_db</code> attribute by a <code>uri</code> attribute and make the database connection happen under the hood, but it is not implemented yet. When it is added into the second method, it will become more appealing.</p>
+<h2 id="an-alternative-to-build-pipelines"><strong>An Alternative to Build Pipelines</strong></h2>
 <p>Another way to build your pipeline is to access the stages classes directly. All the stages are accessible in the <code>monggregate.stages</code> namespace.
 As such, you could write the above example like this:</p>
 <p><div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">import</span> <span class="nn">pymongo</span>
@@ -984,17 +984,17 @@ As such, you could write the above example like this:</p>
 </span></code></pre></div>
 Once again, it is a question of preferences.<br>
 This approach might be more readable for some people, but it is also more verbose.<br></p>
-<p>Howevere, there are still a couple of other advantages with this approach:</p>
+<p>However, there are still a couple of other advantages with this approach:</p>
 <ul>
 <li>You can reuse the stages in multiple pipelines</li>
 <li>You can easily reorder the stages</li>
 </ul>
-<p>The second point is particularly relevant given the utilies function in the <code>Pipeline</code> class.</p>
-<h2 id="pipeline-utilities"><strong>Pipeline utilities</strong></h2>
+<p>The second point is particularly relevant given the utilities function in the <code>Pipeline</code> class.</p>
+<h2 id="pipeline-utilities"><strong>Pipeline Utilities</strong></h2>
 <p>The <code>Pipeline</code> class has a few utilities methods to help you build your pipeline.</p>
 <p>Indeed it implements most of the python list methods, so you do not have to access the stages attribute to perform list operations.</p>
 <p>In the examples above, <code>len(pipeline)</code> would return <code>3</code>.</p>
-<p>You could also for example append a stage to the pipeline like this:</p>
+<p>You could also, for example, append a stage to the pipeline like this:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stages</span><span class="o">.</span><span class="n">Project</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
 </span></code></pre></div>
 <p>You also have access to the <code>append</code>, <code>extend</code>, <code>insert</code>,  methods directly on the <code>pipeline</code> object. <TODO: implement pop remove and reverse></p>

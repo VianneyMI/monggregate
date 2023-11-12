@@ -389,7 +389,7 @@
       
         <li class="md-nav__item">
   <a href="#installing-monggregate" class="md-nav__link">
-    Installing monggregate
+    Installing Monggregate
   </a>
   
 </li>
@@ -403,7 +403,7 @@
       
         <li class="md-nav__item">
   <a href="#first-steps" class="md-nav__link">
-    First steps
+    First Steps
   </a>
   
 </li>
@@ -751,7 +751,7 @@
       
         <li class="md-nav__item">
   <a href="#installing-monggregate" class="md-nav__link">
-    Installing monggregate
+    Installing Monggregate
   </a>
   
 </li>
@@ -765,7 +765,7 @@
       
         <li class="md-nav__item">
   <a href="#first-steps" class="md-nav__link">
-    First steps
+    First Steps
   </a>
   
 </li>
@@ -787,18 +787,18 @@
 
   <h1>Getting Started</h1>
 
-<h2 id="installing-monggregate"><strong>Installing monggregate</strong></h2>
+<h2 id="installing-monggregate"><strong>Installing Monggregate</strong></h2>
 <p><code>monggregate</code> is available on PyPI:</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>monggregate
 </span></code></pre></div>
 <h2 id="requirements"><strong>Requirements</strong></h2>
 <p>It requires python &gt; 3.10 and has a few required dependencies such as <code>pydantic</code>, <code>pyhumps</code> and <code>typing-extensions</code>.</p>
-<p>If it as a good query builder it helps you build the query, in order to execute them you will need a MongoDB driver.</p>
+<p>In order to execute the useful query builder in the library, you will need a MongoDB driver.</p>
 <p>For more details about the requirements, see the requirements files <a href="https://github.com/VianneyMI/monggregate/blob/main/requirements">in the repo</a>. </p>
-<h2 id="first-steps"><strong>First steps</strong></h2>
-<p>There are several ways you may use monggregate.</p>
+<h2 id="first-steps"><strong>First Steps</strong></h2>
+<p>There are several ways you may use Monggregate.</p>
 <p>You can use the stages individually and build your pipeline step by step or you can use the <code>Pipeline</code> class to build your pipeline. That's actually the way I recommend you to use it.</p>
-<p>In that cases, your first steps will look like this:</p>
+<p>In that case, your first steps will look like this:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span> <span class="nn">monggregate</span> <span class="kn">import</span> <span class="n">Pipeline</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>

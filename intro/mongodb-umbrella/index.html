@@ -308,8 +308,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#other-stuffs" class="md-nav__link">
-    Other stuffs
+  <a href="#mongodb-latest-features" class="md-nav__link">
+    MongoDB Latest Features
   </a>
   
 </li>
@@ -778,8 +778,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#other-stuffs" class="md-nav__link">
-    Other stuffs
+  <a href="#mongodb-latest-features" class="md-nav__link">
+    MongoDB Latest Features
   </a>
   
 </li>
@@ -801,12 +801,12 @@
 
   <h1>MongoDB Umbrella</h1>
 
-<p>MongoDB has developed one of the most complete database management system of the market.</p>
-<p>Altough it is mainly known for being a document-oriented NoSQL database with optional schemas. It has evolved and expanded to offer a wide range of features and services around data management. </p>
-<p>However here we will focus on the database itself and in particular its query languages.</p>
+<p>MongoDB has developed one of the most complete database management systems in the market.</p>
+<p>Although it is mainly known for being a document-oriented NoSQL database with optional schemas. It has evolved and expanded to offer a wide range of features and services around data management. </p>
+<p>However, here we will focus on the database itself and in particular its query languages.</p>
 <h2 id="mql"><strong>MQL</strong></h2>
 <p><strong>MQL</strong> stands for <strong>M</strong>ongoDB <strong>Q</strong>uery <strong>L</strong>anguage. It is the language used to query MongoDB databases. It is a JSON-based query language that allows you to query documents in a collection.</p>
-<p><strong>MQL</strong> allows to <a href="https://www.mongodb.com/docs/manual/crud/">perform CRUD operations</a>, that is inserting (<strong>C</strong>reate), querying (<strong>R</strong>ead), updating (<strong>U</strong>pdate) and deleting (<strong>D</strong>elete) documents in a collection.</p>
+<p><strong>MQL</strong> allows you to <a href="https://www.mongodb.com/docs/manual/crud/">perform CRUD operations</a>, that inserts (<strong>C</strong>reate), queries (<strong>R</strong>ead), updates (<strong>U</strong>pdate) and deletes (<strong>D</strong>elete) documents in a collection.</p>
 <p>In the context of an application or web service, <strong>MQL</strong> would typically be used through a driver or an Object Document Mapper (ODM).<br>
 The official MongoDB driver for Python is <a href="https://pymongo.readthedocs.io/en/stable/">PyMongo</a>. It is a low-level driver that allows you to interact with MongoDB databases. And two of the most popular ODM are <a href="https://mongoengine-odm.readthedocs.io/">MongoEngine</a> and <a href="https://beanie-odm.dev/">Beanie</a>.</p>
 <p><strong>MQL</strong> is not the main topic of monggregate nor this documentation, which is about the aggregation framework.</p>
@@ -820,12 +820,12 @@ The official MongoDB driver for Python is <a href="https://pymongo.readthedocs.i
 </blockquote>
 <p>The pymongo driver nor the ODMs mentioned above offer a way to easily use the aggregation framework. They only let you do your aggregation queries as raw strings.</p>
 <p>This is where <code>monggregate</code> comes in.
-<code>monggregate</code> exposes an OOP interface to the aggregation framework that make it easier to build pipelines.</p>
+<code>monggregate</code> exposes an Object Oriented Programming (OOP) interface to the aggregation framework that make it easier to build pipelines.</p>
 <p>In the <a href="../mongodb-aggregation-framework/">following page</a>, we will do a deep-dive on the aggregation framework.</p>
 <h2 id="atlas-search"><strong>Atlas Search</strong></h2>
 <p><a href="https://www.mongodb.com/docs/atlas/atlas-search/atlas-search-overview/">Atlas Search </a> is a full-text search service that is fully integrated with MongoDB Atlas. It allows you to perform text search on your data and is based on <a href="https://lucene.apache.org/">Apache Lucene</a>.</p>
 <p>As Atlas Search is a part of the aggregation framework, <code>monggregate</code> also offers a way to use it.</p>
-<h2 id="other-stuffs"><strong>Other stuffs</strong></h2>
+<h2 id="mongodb-latest-features"><strong>MongoDB Latest Features</strong></h2>
 <p>MongoDB also offers capabilities for <strong>time series</strong> collections, semantic and <strong>vector search</strong> and probably much more that may or may not be integrated in monggregate in the future.</p>
 <p>But, as of today, these features are not in the scope of <code>monggregate</code>.</p>
 

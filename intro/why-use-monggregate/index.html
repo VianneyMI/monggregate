@@ -67,7 +67,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#what-monggregate-is" class="md-skip">
+        <a href="#what-is-monggregate" class="md-skip">
           Skip to content
         </a>
       
@@ -327,29 +327,29 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-monggregate-is" class="md-nav__link">
-    What monggregate is ?
+  <a href="#what-is-monggregate" class="md-nav__link">
+    What is Monggregate?
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#why-use-monggregate" class="md-nav__link">
-    Why use monggregate ?
+    Why Use Monggregate ?
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#who-should-use-it" class="md-nav__link">
-    Who should use it ?
+    Who Should Use It ?
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#how-to-use-it" class="md-nav__link">
-    How to use it ?
+    How to Use It ?
   </a>
   
 </li>
@@ -757,29 +757,29 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-monggregate-is" class="md-nav__link">
-    What monggregate is ?
+  <a href="#what-is-monggregate" class="md-nav__link">
+    What is Monggregate?
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#why-use-monggregate" class="md-nav__link">
-    Why use monggregate ?
+    Why Use Monggregate ?
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#who-should-use-it" class="md-nav__link">
-    Who should use it ?
+    Who Should Use It ?
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#how-to-use-it" class="md-nav__link">
-    How to use it ?
+    How to Use It ?
   </a>
   
 </li>
@@ -802,32 +802,32 @@
   <h1>Why use Monggregate ?</h1>
 
 <p>In this page, we will present the various reasons one may want to use <code>monggregate</code>.</p>
-<h2 id="what-monggregate-is"><strong>What monggregate is ?</strong></h2>
+<h2 id="what-is-monggregate"><strong>What is Monggregate?</strong></h2>
 <p>As a disclaimer, I'll start by saying what <code>monggregate</code> is not.</p>
 <p><code>monggregate</code> <strong>IS NOT</strong> a MongoDB driver <strong>NOR</strong> an Object Document Mapper (ODM).</p>
 <p><code>monggregate</code> can be seen as a NoSQL <strong>query builder</strong> for MongoDB.</p>
-<p>If you are not familiar with the concept of query builder, I suggest you watch <a href="https://www.youtube.com/watch?v=x1fCJ7sUXCM">this video</a> from Arjan Codes where he explains the difference between using raw SQL, query builders and ORMs.
+<p>If you are not familiar with the concept of query builder, I suggest you watch <a href="https://www.youtube.com/watch?v=x1fCJ7sUXCM">this video</a> from Arjan Codes where he explains the difference between using raw SQL, query builders and Object–relational mappings (ORMs).
 Even if the examples use SQL, there are still relevant in a NoSQL context.</p>
-<h2 id="why-use-monggregate"><strong>Why use monggregate ?</strong></h2>
+<h2 id="why-use-monggregate"><strong>Why Use Monggregate ?</strong></h2>
 <p>With that said, when or why would one want to use <code>monggregate</code> ?
 As written in the <a href="../mongodb-aggregation-framework/">previous page</a>, the aggregation framework can be used for data analytics, data transformation and much more.</p>
-<p>However, it is not convenient to use with the available tools overall and in python in particular (even if MongoDB as recently [2023] tried to overcome this by releasing several helpers such as the stage wizard and a chat assistant to help building queries).</p>
-<p>The main critiques that we can have about the aggregation framework either about the framework itself or about its accesibility in python are the following:</p>
+<p>However, it is not convenient to use with the available tools overall and in Python in particular (even if MongoDB as recently [2023] tried to overcome this by releasing several helpers such as the stage wizard and a chat assistant to help building queries).</p>
+<p>The main critiques that we can have about the aggregation framework either about the framework itself or about its accesibility in Python are the following:</p>
 <ul>
 <li>It has a steep learning curve</li>
 <li>It is quite verbose</li>
-<li>There is no python API to use it</li>
+<li>There is no Python API to use it</li>
 <li>It is undocumented in pymongo</li>
 </ul>
-<p><code>monggregate</code> tries to solve these issues by providing a python API to use the aggregation framework.</p>
+<p><code>monggregate</code> tries to solve these issues by providing a Python API to use the aggregation framework.</p>
 <p>The API improves the readability of the pipelines and make the queries less verbose.</p>
 <p>It also integrates most of the official MongoDB documentation available directly in the code. Therefore, you no longer have to navigate between the documentation and your code. You no longer have to try your pipelines on Compass or Atlas to see if they work. You can do it directly in your application code. You could for example, try out your pipelines in a test suite or in a notebook.</p>
-<p>Cherry on the cake, your IDE will help you in the process because you now have autocompletion showing you the available stages and operators, their parameters, types, descriptions and restrictions.</p>
-<h2 id="who-should-use-it"><strong>Who should use it ?</strong></h2>
+<p>The cherry on the cake is, your Integrated Development Environment (IDE) will help you in the process because you now have autocompletion showing you the available stages and operators, their parameters, types, descriptions and restrictions.</p>
+<h2 id="who-should-use-it"><strong>Who Should Use It ?</strong></h2>
 <p>The package is probably more useful for data and sofware engineers that are not familiar with the aggregation framework or that are not familiar with MongoDB in general.</p>
 <p>However, developers that are already familiar with the aggregation framework or MongoDB may also find it useful as it can help them to build pipelines faster and with less errors.<br>
 It can also improve the readability of the pipelines built.</p>
-<h2 id="how-to-use-it"><strong>How to use it ?</strong></h2>
+<h2 id="how-to-use-it"><strong>How to Use It ?</strong></h2>
 <p>In the <a href="../../tutorial/getting-started/">following pages</a>, we will see how to use <code>monggregate</code> to build aggregation pipelines.</p>
 
 

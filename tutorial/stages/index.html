@@ -429,7 +429,7 @@
       
         <li class="md-nav__item">
   <a href="#list-of-available-stages-in-monggregate" class="md-nav__link">
-    List of available stages in Monggregate
+    List of Available Stages In Monggregate
   </a>
   
 </li>
@@ -450,7 +450,7 @@
       
         <li class="md-nav__item">
   <a href="#come-back-later" class="md-nav__link">
-    Come back later
+    Come Back Later
   </a>
   
 </li>
@@ -758,7 +758,7 @@
       
         <li class="md-nav__item">
   <a href="#list-of-available-stages-in-monggregate" class="md-nav__link">
-    List of available stages in Monggregate
+    List of Available Stages In Monggregate
   </a>
   
 </li>
@@ -779,7 +779,7 @@
       
         <li class="md-nav__item">
   <a href="#come-back-later" class="md-nav__link">
-    Come back later
+    Come Back Later
   </a>
   
 </li>
@@ -804,8 +804,8 @@
 <p>Stages are the building blocks of aggregation pipelines.</p>
 <p>We saw in the <a href="../pipeline/">previous page</a> two methods to compose stages to effectively build a pipeline:</p>
 <ul>
-<li>using the pipeline stages methods</li>
-<li>using the stages classes directly</li>
+<li>Using the pipeline stages methods</li>
+<li>Using the stages classes directly</li>
 </ul>
 <p>Repeating what was described previously:</p>
 <blockquote>
@@ -815,8 +815,8 @@ And each <code>Stage</code> class has a mirror method in the <code>Pipeline</cod
 <p>There is actually an asterik to this. Monggregate does not yet provide an interface to all of the stages provided by MongoDB.
 It is a work in progress and the list of available stages will grow over time. If you want to contribute, please refer to the <a href="../../contributing/">contributing guide</a>.</p>
 <p>You can see the full list of stages provided by MongoDB <a href="https://www.mongodb.com/docs/manual/reference/aggregation-quick-reference/#stages--db.collection.aggregate-">here</a>.</p>
-<h2 id="list-of-available-stages-in-monggregate"><strong>List of available stages in Monggregate</strong></h2>
-<p>The following table lists the stages that are currently available in monggregate:</p>
+<h2 id="list-of-available-stages-in-monggregate"><strong>List of Available Stages In Monggregate</strong></h2>
+<p>The following table lists the stages that are currently available in Monggregate:</p>
 <ul>
 <li><code>$addFields</code></li>
 <li><code>$bucket</code></li>
@@ -844,7 +844,7 @@ It is a work in progress and the list of available stages will grow over time. I
 </ul>
 <h2 id="usage"><strong>Usage</strong></h2>
 <p><code>monggregate</code> aims at providing a simple and intuitive interface to the MongoDB aggregation framework.<br>
-Even though, it tries as much as possible to stick by the MongoDB aggregation framework syntax, it also tries to provide alternative ways, reproducing the syntax of other tools that new Mongo users might be more familiar with such as SQL and Pandas.</p>
+Even though, it tries as much as possible to stick by the MongoDB aggregation framework syntax, it also tries to provide alternative ways to reproduce the syntax of other tools that new Mongo users might be more familiar with such as SQL and Pandas.</p>
 <p>For example, in the <code>`$group</code> stage, the MongoDB aggregation framework expects the grouping field(s) to be provided in the <code>_id</code> key. However, <code>monggregate</code> allows you to provide the grouping field(s) in the <code>by</code> key instead.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
@@ -916,12 +916,12 @@ We can for example complete the previous example as follows:</p>
 </span></code></pre></div>
 The arguments names (<code>by</code> and <code>value</code> respectively) for the <code>sort</code> and <code>limit</code> stages are ommited.</p>
 <h2 id="operators"><strong>Operators</strong></h2>
-<p>You might have noticed in the grouping example how we tell monggregate to perform operations on the groups.
+<p>You might have noticed in the grouping example how we tell Monggregate to perform operations on the groups.
 In the example, we used the <code>$sum</code> and <code>$push</code> operators.</p>
 <p>For more information about operators, check the <a href="../operators/">next page</a>.</p>
-<h2 id="come-back-later"><strong>Come back later</strong></h2>
+<h2 id="come-back-later"><strong>Come Back Later</strong></h2>
 <p>At this stage of the tutorial, you should already have enough to play around with the aggregation framework and start building your own pipelines.
-If you read everything straight, you might want to check out the <a href="../operators/">operators page</a> later on.</p>
+If you read everything in this documentation, you might want to check out the <a href="../operators/">operators page</a> later on.</p>
 
 
 
