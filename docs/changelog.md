@@ -1,5 +1,24 @@
 # Release Notes
 
+## 0.18.0
+
+### Fixes
+
+* Fixed bug preventing to use `Compound` operator with `Search` and `SearchMeta` classes.
+
+### New Features
+
+* Pipelinized `Search` and `SearchMeta` classes. That is complex expressions can be built step by step by chaining operators.
+* Updated `search` method in `¨Pipeline` class to ease the use of the search stages.
+* Clarified and simplified faceted search
+
+### Refactoring
+
+* Use operators rather than statement in `Compound` class
+* Factorized `Search` and `SearchMeta` classes by creating a `SearchBase` class
+* Use `CountOptions` rather than raw dicts
+* Created `AnyStage` union type
+
 ## 0.17.0
 
 ### Docs
