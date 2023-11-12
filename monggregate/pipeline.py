@@ -9,6 +9,7 @@ from monggregate import _run
 
 from monggregate.base import BaseModel
 from monggregate.stages import (
+    AnyStage,
     Stage,
     BucketAuto,
     GranularityEnum,
@@ -24,6 +25,7 @@ from monggregate.stages import (
     Sample,
     Search,
     SearchMeta,
+    SearchStageMap,
     Set,
     Skip,
     SortByCount,
@@ -32,8 +34,11 @@ from monggregate.stages import (
     Unwind,
     Unset
 )
-from monggregate.stages.search import OperatorLiteral
-from monggregate.search.operators.compound import Compound
+from monggregate.stages.search.base import OperatorLiteral
+from monggregate.search.operators import OperatorMap
+from monggregate.search.operators.compound import Compound, ClauseType
+from monggregate.search.collectors.facet import Facet, FacetType
+from monggregate.search.commons import CountOptions, HighlightOptions
 from monggregate.operators import MergeObjects
 from monggregate.dollar import ROOT
 from monggregate.utils import StrEnum
@@ -103,7 +108,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     # name of the collection to run the pipeline on
     collection : str | None =None
     # list of stages that compose the pipeline
-    stages : list[Stage] = []
+    stages : list[AnyStage] = []
    
     
 
@@ -123,7 +128,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         async def __call__(self)->list[dict[str, Any]]:
             """Makes a pipeline instance callable and executes the entire pipeline when called"""
     
-            return self.run()
+            return await self.run()
 
         
         async def run(self)->list[dict[str, Any]]:
@@ -203,12 +208,12 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             stages=self.stages + other.stages
             )
     
-    def __getitem__(self, index:int)->Stage:
+    def __getitem__(self, index:int)->AnyStage:
         """Returns a stage from the pipeline"""
         # https://realpython.com/inherit-python-list/
         return self.stages[index]
 
-    def __setitem__(self, index:int, stage:Stage)->None:
+    def __setitem__(self, index:int, stage:AnyStage)->None:
         """Sets a stage in the pipeline"""
         self.stages[index] = stage
 
@@ -220,15 +225,15 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         """Returns the length of the pipeline"""
         return len(self.stages)
     
-    def append(self, stage:Stage)->None:
+    def append(self, stage:AnyStage)->None:
         """Appends a stage to the pipeline"""
         self.stages.append(stage)
 
-    def insert(self, index:int, stage:Stage)->None:
+    def insert(self, index:int, stage:AnyStage)->None:
         """Inserts a stage in the pipeline"""
         self.stages.insert(index, stage)
 
-    def extend(self, stages:list[Stage])->None:
+    def extend(self, stages:list[AnyStage])->None:
         """Extends the pipeline with a list of stages"""
         self.stages.extend(stages)
 
@@ -705,17 +710,25 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         self.stages.append(
                 Sample(value=value)
             )
+    
         return self
     
+    # TODO : Check that clause_type and facet_type parameters don't break anything <VM, 04/11/2023>
     def search(
             self,
-            path:str|list[str]=None,
-            query:str|list[str]=None,
+            path:str|list[str]|None=None,
+            query:str|list[str]|None=None,
             *,
-            operator_name:OperatorLiteral="text",
+            operator_name:OperatorLiteral|None=None,
+            collector_name:Literal["facet"]|None=None,
+            # Including the below parameters to give them visibility
+            #---------------------------------------------------
+            clause_type:ClauseType|None=None,
+            facet_type:FacetType|None=None,
+            #---------------------------------------------------
             index:str="default",
-            count:dict|None=None,
-            highlight:dict|None=None,
+            count:CountOptions|None=None,
+            highlight:HighlightOptions|None=None,
             return_stored_source:bool=False,
             score_details:bool=False,
             **kwargs:Any
@@ -729,9 +742,9 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             - path, str|list[str]|None : field to search in
             - query, str|list[str]|None : text to search for
             - index, str : name of the index to use for the search. Defaults to defaut
-            - count, dict|None : document that specifies the count options for retrieving
+            - count, CountOptions|None : document that specifies the count options for retrieving
                                  a count of the results
-            - highlight, dict|None : document that specifies the highlight options for 
+            - highlight, HighlightOptions|None : document that specifies the highlight options for 
                                      displaying search terms in their original context
             - return_stored_source, bool : Indicates whether to use the copy of the documents
                                            in the Atlas Search index (with just a subset of the fields)
@@ -754,10 +767,22 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
                             - synonyms
                             - like, dict|list[dict] (allow looking for similar documents)
         """
+
+        if not collector_name and not operator_name:
+            operator_name = "text"
+
         
-        self.stages.append(
-            Search.from_operator(
+        # If pipeline is empty, adds a search stage
+        if len(self) == 0:
+            # if facet_type is not None:
+            #     kwargs.update({"type":facet_type})
+            # elif clause_type is not None:
+            #     kwargs.update({"type":clause_type})
+
+            self._init_search(
+                search_class="search",
                 operator_name=operator_name,
+                collector_name=collector_name,
                 path=path,
                 query=query,
                 index=index,
@@ -767,30 +792,43 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
                 score_details=score_details,
                 **kwargs
             )
-        )
         
+        # If pipeline is not empty then the first stage must be Search stage.
+        # If so, adds the operator to the existing stage using Compound.
+        elif len(self) >= 1 and isinstance(self.stages[0], Search):
+            kwargs.update({
+                # "collector_name":collector_name,
+                "operator_name":operator_name,
+                "path":path,
+                "query":query,
+            })
+            has_facet_arg = self.__has_facet_arg(**kwargs)
+            if has_facet_arg:
+                self._append_facet(facet_type, **kwargs)
+            else:
+                self._append_clause(clause_type, **kwargs)
 
+        else:
+            raise TypeError("search stage has to be the first stage of the pipeline")
+        
         return self
     
-    def search_compound(self)->"Compound":
-        """Adds a compound search stage"""
 
-        self.stages.insert(
-            0,
-            Search.compound()
-        )
-        return self.stages[0]
-
-    
     def search_meta(
             self,
-            path:str|list[str]=None,
-            query:str|list[str]=None,
+            path:str|list[str]|None=None,
+            query:str|list[str]|None=None,
             *,
-            operator_name:OperatorLiteral="text",
+            operator_name:OperatorLiteral|None=None,
+            collector_name:Literal["facet"]|None=None,
+            # Including the below parameters to give them visibility
+            #---------------------------------------------------
+            clause_type:ClauseType|None=None,
+            facet_type:FacetType|None=None,
+            #---------------------------------------------------
             index:str="default",
-            count:dict|None=None,
-            highlight:dict|None=None,
+            count:CountOptions|None=None,
+            highlight:HighlightOptions|None=None,
             return_stored_source:bool=False,
             score_details:bool=False,
             **kwargs:Any
@@ -830,8 +868,65 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
                             - like, dict|list[dict] (allow looking for similar documents)
         """
         
-        self.stages.append(
-            SearchMeta.from_operator(
+        if not collector_name and not operator_name:
+            operator_name = "text"
+
+        
+        # If pipeline is empty, adds a search stage
+        if len(self) == 0:
+            self._init_search(
+                search_class="searchMeta",
+                operator_name=operator_name,
+                collector_name=collector_name,
+                path=path,
+                query=query,
+                index=index,
+                count=count,
+                highlight=highlight,
+                return_stored_source=return_stored_source,
+                score_details=score_details,
+                **kwargs
+            )
+        
+        # If pipeline is not empty then the first stage must be Search stage.
+        # If so, adds the operator to the existing stage using Compound.
+        elif len(self) >= 1 and isinstance(self.stages[0], Search):
+            kwargs.update({
+                # "collector_name":collector_name,
+                "operator_name":operator_name,
+                "path":path,
+                "query":query,
+            })
+            has_facet_arg = self.__has_facet_arg(**kwargs)
+            if has_facet_arg:
+                self._append_facet(facet_type, **kwargs)
+            else:
+                self._append_clause(clause_type, **kwargs)
+
+        else:
+            raise TypeError("search stage has to be the first stage of the pipeline")
+
+        return self
+
+
+    def _init_search(
+            self, 
+            search_class:Literal["search", "searchMeta"], 
+            path:str|list[str]|None=None,
+            query:str|list[str]|None=None,
+            *,
+            operator_name:OperatorLiteral|None=None,
+            collector_name:Literal["facet"]|None=None,
+            index:str="default",
+            count:CountOptions|None=None,
+            highlight:HighlightOptions|None=None,
+            return_stored_source:bool=False,
+            score_details:bool=False,
+            **kwargs:Any)->None:
+        """Adds a search stage to the pipeline."""
+
+        if not collector_name and operator_name:
+            search_stage = SearchStageMap[search_class].from_operator(
                 operator_name=operator_name,
                 path=path,
                 query=query,
@@ -842,11 +937,115 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
                 score_details=score_details,
                 **kwargs
             )
+        else:
+            search_stage = SearchStageMap[search_class].init_facet(
+                operator_name=operator_name,
+                path=path,
+                query=query,
+                index=index,
+                count=count,
+                highlight=highlight,
+                return_stored_source=return_stored_source,
+                score_details=score_details,
+                collector_name=collector_name,
+                **kwargs
+            )
+
+        self.stages.append(
+            search_stage
         )
+
+        return None
+
+
+    def _append_clause(
+            self, 
+            clause_type:ClauseType|None=None,
+            *,
+            operator_name:OperatorLiteral|None=None,
+            path:str|list[str]|None=None,
+            query:str|list[str]|None=None,  
+            **kwargs:Any)->None:
+        """Adds a clause to the search stage of the pipeline."""
+
+        first_stage = self.stages[0]
+        if clause_type is None:
+            clause_type = "should"
+
+        if clause_type == "should":
+            default_minimum_should_match = 1
+        else:
+            default_minimum_should_match = 0
+
+        minimum_should_match = kwargs.pop("minimum_should_match", default_minimum_should_match)
+
+        if isinstance(first_stage.collector, Facet):
+            if isinstance(first_stage.collector.operator, Compound):
+                # Add clause to existing compound
+                first_stage.__get_operators_map__(operator_name=operator_name)(clause_type, path=path, query=query, **kwargs)
+            elif first_stage.collector.operator is None:
+                # Create a compound operator with the to-be operator as a clause
+                new_operator = Compound(minimum_should_match=minimum_should_match)
+                new_operator.__get_operators_map__(operator_name=operator_name)(clause_type, path=path, query=query, **kwargs)
+                first_stage.operator = new_operator  
+            else:
+                # Retrieve current operator and create a compound operator
+                # and add the current operator as a clause
+                new_operator = Compound(should=[first_stage.collector.operator], minimum_should_match=minimum_should_match)
+                new_operator.__get_operators_map__(operator_name=operator_name)(clause_type, path=path, query=query, **kwargs)
+                first_stage.operator = new_operator
+        elif isinstance(first_stage.operator, Compound):
+            # Add clause to existing compound
+            first_stage.__get_operators_map__(operator_name=operator_name)(clause_type, path=path, query=query, **kwargs)
+        elif first_stage.operator is not None:
+            # Create a compound operator with the to-be operator as a clause
+            new_operator = Compound(minimum_should_match=minimum_should_match)
+            new_operator.__get_operators_map__(operator_name=operator_name)(clause_type, path=path, query=query, **kwargs)
+            first_stage.operator = new_operator
+
+        else:
+            # Create an operator
+            first_stage.operator = OperatorMap[operator_name](path=path, query=query, **kwargs)
+
+        return None
+
+
+    def _append_facet(self, facet_type:FacetType|None=None,  **kwargs:Any)->None:
+        """Adds a facet to the search stage of the pipeline."""
+
+        if not facet_type:
+            facet_type = "string"
+
+        first_stage = self.stages[0]
+        operator = None
+        if first_stage.operator is not None:
+            operator = first_stage.operator
+            first_stage.operator = None
+
+        if not isinstance(first_stage.collector, Facet):
+            first_stage.collector = Facet(operator=operator)
+
+        first_stage.collector.facet(type=facet_type, **kwargs)
+
+
+        return None
+
+
+    @classmethod
+    def __has_facet_arg(cls, **kwargs:Any)->bool:
+        """Checks if the kwargs contains a facet argument"""
+
+        facet_args = ["facet_type", "num_buckets", "boundaries", "default"]
+        has_facet_arg = False
+
+        for arg in facet_args:
+            if arg in kwargs:
+                has_facet_arg = True
+                break
+
+        return has_facet_arg
         
-
-        return self
-
+      
     def set(self, document:dict={}, **kwargs:Any)->Self:
         """
         Adds a set stage to the current pipeline.
@@ -1004,8 +1203,23 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         return self
 
 if __name__ =="__main__":
-
-    pipeline = Pipeline()
-    pipeline.search(operator_name="text", query="test", path=["details", "id_epd", "id_serial", "name"] )
-    pipeline.run()
+    from datetime import datetime
+    from monggregate.search.collectors import StringFacet, NumericFacet
     
+    pipeline = Pipeline()
+    pipeline.search_meta(
+    index="movies",
+    collector_name="facet", 
+    operator=Search.Range(
+        path="released", 
+        gte=datetime(year=2000, month=1, day=1), 
+        lte=datetime(year=2015, month=1, day=31)
+        ),
+    facets=[
+        StringFacet(name="directorsFacet", path="directors", num_buckets=7),
+        NumericFacet(name="yearFacet", path="year", boundaries=[2000, 2005, 2010, 2015]),
+    ]
+)
+    search_stage = pipeline[0]
+    statement = search_stage.statement
+    print(statement)

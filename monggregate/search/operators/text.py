@@ -30,7 +30,7 @@ text has the following syntax:
 
 
 """
-
+from monggregate.base import pyd
 from monggregate.search.operators.operator import SearchOperator
 from monggregate.search.commons.fuzzy import FuzzyOptions
 

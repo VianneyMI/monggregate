@@ -63,10 +63,10 @@ facet           The result to a facet query is a mapping of the defined facet na
 
 """
 
-from monggregate.stages.search import Search
+from monggregate.stages.search.base import SearchConfig, SearchBase
 
 
-class SearchMeta(Search):
+class SearchMeta(SearchBase):
     """
     Creates a $searchMeta statement in an aggregation pipeline
 
@@ -115,9 +115,10 @@ class SearchMeta(Search):
                 "scoreDetails":self.score_details
             }
         
-        method:dict[str, dict] = self.collector or self.operator
+        method = self.collector or self.operator
 
-        config.update(method)
+    
+        config.update(method.statement)
 
         _statement = {
             "$searchMeta":config
