@@ -774,6 +774,11 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         
         # If pipeline is empty, adds a search stage
         if len(self) == 0:
+            # if facet_type is not None:
+            #     kwargs.update({"type":facet_type})
+            # elif clause_type is not None:
+            #     kwargs.update({"type":clause_type})
+
             self._init_search(
                 search_class="search",
                 operator_name=operator_name,

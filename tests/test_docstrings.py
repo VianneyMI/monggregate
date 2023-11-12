@@ -67,6 +67,9 @@ def test_sync_docstrings()->None:
                                      # which can be functions, variables or classes
     stages_members.pop("AnyStage")
     stages_members.pop("Union")
+    stages_members.pop("SearchStageMap")
+
+    print(stages_members)
 
 
     # Filtering non-classes stages members
