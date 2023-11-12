@@ -68,7 +68,7 @@ EXAMPLE : To create a wildcard expression which searches for any string containi
 from monggregate.base import pyd
 from monggregate.search.operators.operator import SearchOperator
 
-class Wilcard(SearchOperator):
+class Wildcard(SearchOperator):
     """
     Creates a wilcard operation statement in an Atlas Search query.
 

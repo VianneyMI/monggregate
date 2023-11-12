@@ -2,4 +2,4 @@
 # (linters and static type checkers)
 # Those are used for monggregate contributors
 
-mypy==0.971
+mypy==1.6.1

@@ -166,23 +166,30 @@ The following limitations apply:
 """
 
 from datetime import datetime
-from typing import Literal
+from typing import Any, Callable, Literal
+from typing_extensions import Self
 
 from monggregate.base import BaseModel, pyd
 from monggregate.fields import FieldName
 from monggregate.search.collectors.collector import SearchCollector
 from monggregate.search.operators import(
     Autocomplete,
+    Compound,
     Equals,
     Exists,
+    MoreLikeThis,
     Range,
     Regex,
     Text,
-    Wilcard,
+    Wildcard,
     AnyOperator
-    
 )
+from monggregate.search.operators.operator import OperatorLiteral
 from monggregate.search.commons import FuzzyOptions
+
+# Aliases
+# ----------------------------------------------
+FacetType = Literal['string', 'number', 'date']
 
 # Strings
 # ----------------------------------------------
@@ -248,7 +255,6 @@ class FacetDefinition(BaseModel):
         return name
         
 
-
 class StringFacet(FacetDefinition):
     """
     String facet definition
@@ -297,6 +303,7 @@ class NumericFacet(FacetDefinition):
         
         return self.resolve({self.name : self.dict(by_alias=True, exclude={"name"})})
 
+
 class DateFacet(FacetDefinition):
     """
     Numeric facet definition
@@ -311,14 +318,15 @@ class DateFacet(FacetDefinition):
 
     type : Literal['date'] = 'date'
     boundaries : list[datetime]
-    default : str
+    default : str|None
 
     @property
     def statement(self) -> dict:
         
         return self.resolve({self.name : self.dict(by_alias=True, exclude={"name"})})
 
-Facets = list[NumericFacet|DateFacet|StringFacet]
+AnyFacet = StringFacet|NumericFacet|DateFacet
+Facets = list[AnyFacet]
 
 # Collector
 # ----------------------------------------------
@@ -341,7 +349,7 @@ class Facet(SearchCollector):
     operator : AnyOperator|None
     facets : Facets = []
 
-    # FIXME : The below validator will be usable only when the automatic conversion to statement is deprecated <VM, 20/05/2023>
+
     @pyd.validator("facets")
     def validate_facets(cls, facets:Facets)->Facets:
         """
@@ -349,12 +357,15 @@ class Facet(SearchCollector):
         Ensures the facets names are unique
         """
 
-        names = set()
+        names = []
         for facet in facets:
-            names.add(facet.name)
+            names.append(facet.name)
 
-        if len(facets) > len(names):
-            raise ValueError("Some facets have identical names")
+        if len(facets) > len(set(names)):
+            msg = "Some facets have identical names. Facet names must be unique."
+            msg += "\n"
+            msg += f"Facets names : {names}"
+            raise ValueError(msg)
         
         return facets
 
@@ -380,6 +391,285 @@ class Facet(SearchCollector):
         
         return self.resolve(_statement)
     
+    #---------------------------------------------------------
+    # Constructors
+    #---------------------------------------------------------
+    @classmethod
+    def from_operator(
+        cls, 
+        operator_name:OperatorLiteral,
+        path:str|list[str]|None=None,
+        query:str|list[str]|None=None,
+        fuzzy:FuzzyOptions|None=None,
+        score:dict|None=None,
+        **kwargs:Any)->Self:
+        """Instantiates a search stage from a search operator"""
+
+        kwargs.update(
+            {
+                "path":path,
+                "query":query,
+                "fuzzy":fuzzy,
+                "score":score
+            }
+        )
+
+        return cls.__get_constructors_map__(operator_name)(**kwargs)
+
+
+    @classmethod
+    def init_autocomplete(
+        cls,
+        query:str|list[str], 
+        path:str, 
+        token_order:str="any",
+        fuzzy:FuzzyOptions|None=None,
+        score:dict|None=None,
+        **kwargs:Any)->Self:
+        """
+        Creates a search stage with an autocomplete operator
+        
+        Summary:
+        -----------------------------
+        This stage searches for a word or phrase that contains a sequence of characters from an incomplete input string.
+
+        """
+
+
+        _autocomplete = Autocomplete(
+            query=query,
+            path=path,
+            token_order=token_order,
+            fuzzy=fuzzy,
+            score=score,
+            **kwargs
+        )
+
+        return cls(operator=_autocomplete)
+    
+
+    @classmethod
+    def init_compound(
+        cls,
+        minimum_should_clause:int=1,
+        *,
+        must : list[AnyOperator]=[],
+        must_not : list[AnyOperator]=[],
+        should : list[AnyOperator]=[],
+        filter : list[AnyOperator]=[],
+        **kwargs:Any
+        
+    )->Self:
+        """xxxx"""
+ 
+
+        _compound = Compound(
+            must=must,
+            must_not=must_not,
+            should=should,
+            filter=filter,
+            minimum_should_clause=minimum_should_clause,
+            **kwargs
+        )
+
+        return cls(operator=_compound)
+
+
+    @classmethod
+    def init_equals(
+        cls,
+        path:str,
+        value:str|int|float|bool|datetime,
+        score:dict|None=None,
+        **kwargs:Any
+        )->Self:
+        """
+        Creates a search stage with an equals operator
+
+        Summary:
+        --------------------------------
+        This checks whether a field matches a value you specify.
+        You may want to use this for filtering purposes post textual search.
+        That is you may want to use it in a compound query or as, the second stage of your search.
+        
+        """
+
+      
+        _equals = Equals(
+            path=path,
+            value=value,
+            score=score
+        )
+
+        return cls(operator=_equals)
+
+
+    @classmethod
+    def init_exists(cls, path:str, **kwargs:Any)->Self:
+        """
+        Creates a search stage with an exists operator
+
+        Summary:
+        --------------------------------
+        This checks whether a field matches a value you specify.
+        You may want to use this for filtering purposes post textual search.
+        That is you may want to use it in a compound query or as, the second stage of your search.
+        
+        """
+
+
+        _exists = Exists(path=path)
+
+        return cls(operator=_exists)
+    
+    
+    @classmethod
+    def init_more_like_this(cls, like:dict|list[dict], **kwargs:Any)->Self:
+        """
+        Creates a search stage  with a more_like_this operator
+
+        Summary:
+        --------------------------------
+        The moreLikeThis operator returns documents similar to input documents. 
+        The moreLikeThis operator allows you to build features for your applications 
+        that display similar or alternative results based on one or more given documents.
+
+        """
+        
+      
+        _more_like_this = MoreLikeThis(like=like)
+
+        return cls(operator=_more_like_this)
+
+
+    @classmethod
+    def init_range(
+        cls,
+        path:str|list[str],
+        gt:int|float|datetime|None=None,
+        lt:int|float|datetime|None=None,
+        gte:int|float|datetime|None=None,
+        lte:int|float|datetime|None=None,
+        score:dict|None=None,
+        **kwargs:Any
+    )->Self:
+        """
+        Creates a search stage with a range operator
+
+        Summary:
+        --------------------------------
+        This checks whether a field value falls into a specific range
+        You may want to use this for filtering purposes post textual search.
+        That is you may want to use it in a compound query or as, the second stage of your search.
+        
+        
+        """
+
+        _range = Range(
+            path=path,
+            gt=gt,
+            gte=gte,
+            lt=lt,
+            lte=lte,
+            score=score
+        )
+
+        return cls(operator=_range)
+
+
+    @classmethod
+    def init_regex(
+        cls,
+        query:str|list[str],
+        path:str|list[str],
+        allow_analyzed_field:bool=False,
+        score:dict|None=None,
+        **kwargs:Any
+    )->Self:
+        """
+        Creates a search stage with a regex operator.
+
+        Summary:
+        ----------------------------
+        regex interprets the query field as a regular expression. regex is a term-level operator, meaning that the query field isn't analyzed (read processed).
+        
+        """
+
+     
+        _regex = Regex(
+            query=query,
+            path=path,
+            allow_analyzed_field=allow_analyzed_field,
+            score=score
+        )
+
+        return cls(operator=_regex)
+
+
+    @classmethod
+    def init_text(
+        cls,
+        query:str|list[str],
+        path:str|list[str],
+        fuzzy:FuzzyOptions|None=None,
+        score:dict|None=None,
+        synonyms:str|None=None,
+        **kwargs:Any
+    )->Self:
+        """
+        Creates a search stage with a text opertor
+
+        Summary:
+        ---------------------------------
+        The text operator performs a full-text search using the analyzer that you specify in the index configuration. 
+        If you omit an analyzer, the text operator uses the default standard analyzer.
+        
+        """
+
+
+        _text = Text(
+            query=query,
+            path=path,
+            score=score,
+            fuzzy=fuzzy,
+            synonyms=synonyms
+        )
+
+        return cls(operator=_text)
+
+
+    @classmethod
+    def init_wildcard(
+        cls,
+        query:str|list[str],
+        path:str|list[str],
+        allow_analyzed_field:bool=False,
+        score:dict|None=None,
+        **kwargs:Any
+    )->Self:
+        """
+        Creates a search stage with a wildcard opertor
+
+        Summary:
+        ---------------------------------
+        The wildcard operator enables queries which use special characters in the search string that can match any character.
+        
+        """
+
+        
+        _wilcard = Wildcard(
+            query=query,
+            path=path,
+            allow_analyzed_field=allow_analyzed_field,
+            score=score
+        )
+
+        return cls(operator=_wilcard)
+
+
+    # ----------------------------------------------
+    # Operators
+    # ----------------------------------------------
     def autocomplete(
             self,
             *,
@@ -388,45 +678,144 @@ class Facet(SearchCollector):
             token_order:str="any",
             fuzzy:FuzzyOptions|None=None,
             score:dict|None=None,
-    )->"Facet":
+            **kwargs:Any
+    )->Self:
         """Adds an autocomplete clause to the current facet instance."""
         
-        autocomplete = Autocomplete(
+        _autocomplete = Autocomplete(
             query=query,
             path=path,
             token_order=token_order,
             fuzzy=fuzzy,
             score=score
         )
-        self.operator = autocomplete
+
+        clause_type = kwargs.get("type", "should")
+        if clause_type == "should":
+            default_minimum_should_match = 1
+        else:
+            default_minimum_should_match = 0
+
+        minimum_should_match = kwargs.pop("minimum_should_match", default_minimum_should_match)
+
+        if not self.operator:
+            self.operator = _autocomplete
+        elif isinstance(self.operator, Compound):
+            self.operator.autocomplete(
+                type=clause_type,
+                minimum_should_match=minimum_should_match, 
+                **_autocomplete.dict())
+        else:
+            new_operator = Compound(
+                should=[self.operator, _autocomplete],
+                minimum_should_match=minimum_should_match
+                )
+            self.operator = new_operator
 
         return self
     
     def equals(
             self,
-            type,
             path:str,
             value:str|int|float|bool|datetime,
-            score:dict|None=None
-    )->"Facet":
+            score:dict|None=None,
+            **kwargs:Any
+    )->Self:
         """Adds an equals clause to the current facet instance."""
 
-        equals = Equals(
+        _equals = Equals(
             path=path,
             value=value,
             score=score
         )
 
-        self.operator = equals
+        clause_type = kwargs.get("type", "should")
+        if clause_type == "should":
+            default_minimum_should_match = 1
+        else:
+            default_minimum_should_match = 0
+
+        minimum_should_match = kwargs.pop("minimum_should_match", default_minimum_should_match)
+
+        if not self.operator:
+            self.operator = _equals
+        elif isinstance(self.operator, Compound):
+            self.operator.equals(
+                type=clause_type,
+                minimum_should_match=minimum_should_match, 
+                **_equals.dict())
+        else:
+            new_operator = Compound(
+                should=[self.operator, _equals],
+                minimum_should_match=minimum_should_match
+                )
+            self.operator = new_operator
+
 
 
         return self
 
-    def exists(self, path:str)->"Facet":
+    def exists(self, path:str, **kwargs:Any)->Self:
         """Adds an exists clause to the current facet instance."""
 
-        exists = Exists(path=path)
-        self.operator = exists
+        _exists = Exists(path=path)
+        
+        clause_type = kwargs.get("type", "should")
+        if clause_type == "should":
+            default_minimum_should_match = 1
+        else:
+            default_minimum_should_match = 0
+
+        minimum_should_match = kwargs.pop("minimum_should_match", default_minimum_should_match)
+
+        if not self.operator:
+            self.operator = _exists
+        elif isinstance(self.operator, Compound):
+            self.operator.exists(
+                type=clause_type,
+                minimum_should_match=minimum_should_match, 
+                **_exists.dict())
+        else:
+            new_operator = Compound(
+                should=[self.operator, _exists],
+                minimum_should_match=minimum_should_match
+                )
+            self.operator = new_operator
+
+
+        return self
+    
+    def more_like_this(
+            self,
+            like:dict|list[dict],
+            **kwargs:Any
+    )->Self:
+        """Adds a more_like_this clause to the current facet instance."""
+
+        _more_like_this = MoreLikeThis(like=like)
+        
+        clause_type = kwargs.get("type", "should")
+        if clause_type == "should":
+            default_minimum_should_match = 1
+        else:
+            default_minimum_should_match = 0
+
+        minimum_should_match = kwargs.pop("minimum_should_match", default_minimum_should_match)
+
+        if not self.operator:
+            self.operator = _more_like_this
+        elif isinstance(self.operator, Compound):
+            self.operator.more_like_this(
+                type=clause_type,
+                minimum_should_match=minimum_should_match, 
+                **_more_like_this.dict())
+        else:
+            new_operator = Compound(
+                should=[self.operator, _more_like_this],
+                minimum_should_match=minimum_should_match
+                )
+            self.operator = new_operator
+
 
         return self
 
@@ -438,11 +827,12 @@ class Facet(SearchCollector):
             lt:int|float|datetime|None=None,
             gte:int|float|datetime|None=None,
             lte:int|float|datetime|None=None,
-            score:dict|None=None
-    )->"Facet":
+            score:dict|None=None,
+            **kwargs:Any
+    )->Self:
         """Adds a range clause to the current facet instance."""
 
-        range_ = Range(
+        _range = Range(
             path=path,
             gt=gt,
             gte=gte,
@@ -451,7 +841,28 @@ class Facet(SearchCollector):
             score=score
         )
 
-        self.operator = range_
+        clause_type = kwargs.get("type", "should")
+        if clause_type == "should":
+            default_minimum_should_match = 1
+        else:
+            default_minimum_should_match = 0
+
+        minimum_should_match = kwargs.pop("minimum_should_match", default_minimum_should_match)
+
+        if not self.operator:
+            self.operator = _range
+        elif isinstance(self.operator, Compound):
+            self.operator.range(
+                type=clause_type,
+                minimum_should_match=minimum_should_match, 
+                **_range.dict())
+        else:
+            new_operator = Compound(
+                should=[self.operator, _range],
+                minimum_should_match=minimum_should_match
+                )
+            self.operator = new_operator
+
 
 
         return self
@@ -462,18 +873,40 @@ class Facet(SearchCollector):
             query:str|list[str],
             path:str|list[str],
             allow_analyzed_field:bool=False,
-            score:dict|None=None
-    )->"Facet":
+            score:dict|None=None,
+            **kwargs:Any
+    )->Self:
         """Adds a regex clause to the current facet instance."""
 
-        regex = Regex(
+        _regex = Regex(
             query=query,
             path=path,
             allow_analyzed_field=allow_analyzed_field,
             score=score
         )
 
-        self.operator = regex
+        clause_type = kwargs.get("type", "should")
+        if clause_type == "should":
+            default_minimum_should_match = 1
+        else:
+            default_minimum_should_match = 0
+
+        minimum_should_match = kwargs.pop("minimum_should_match", default_minimum_should_match)
+
+        if not self.operator:
+            self.operator = _regex
+        elif isinstance(self.operator, Compound):
+            self.operator.regex(
+                type=clause_type,
+                minimum_should_match=minimum_should_match, 
+                **_regex.dict())
+        else:
+            new_operator = Compound(
+                should=[self.operator, _regex],
+                minimum_should_match=minimum_should_match
+                )
+            self.operator = new_operator
+
 
         return self
 
@@ -484,11 +917,12 @@ class Facet(SearchCollector):
             path:str|list[str],
             fuzzy:FuzzyOptions|None=None,
             score:dict|None=None,
-            synonyms:str|None=None
-    )->"Facet":
+            synonyms:str|None=None,
+            **kwargs:Any
+    )->Self:
         """Adds a text clause to the current facet instance."""
 
-        text = Text(
+        _text = Text(
             query=query,
             path=path,
             score=score,
@@ -496,7 +930,28 @@ class Facet(SearchCollector):
             synonyms=synonyms
         )
 
-        self.operator = text
+        clause_type = kwargs.get("type", "should")
+        if clause_type == "should":
+            default_minimum_should_match = 1
+        else:
+            default_minimum_should_match = 0
+
+        minimum_should_match = kwargs.pop("minimum_should_match", default_minimum_should_match)
+
+        if not self.operator:
+            self.operator = _text
+        elif isinstance(self.operator, Compound):
+            self.operator.text(
+                type=clause_type,
+                minimum_should_match=minimum_should_match, 
+                **_text.dict())
+        else:
+            new_operator = Compound(
+                should=[self.operator, _text],
+                minimum_should_match=minimum_should_match
+                )
+            self.operator = new_operator
+
 
 
         return self
@@ -508,44 +963,245 @@ class Facet(SearchCollector):
             path:str|list[str],
             allow_analyzed_field:bool=False,
             score:dict|None=None,
-    )->"Facet":
+            **kwargs:Any
+    )->Self:
         """Adds a wildcard clause to the current facet instance."""
 
-        wildcard = Wilcard(
+        _wildcard = Wildcard(
             query=query,
             path=path,
             allow_analyzed_field=allow_analyzed_field,
             score=score
         )
 
-        self.operator = wildcard
+        clause_type = kwargs.get("type", "should")
+        if clause_type == "should":
+            default_minimum_should_match = 1
+        else:
+            default_minimum_should_match = 0
+
+        minimum_should_match = kwargs.pop("minimum_should_match", default_minimum_should_match)
+
+        if not self.operator:
+            self.operator = _wildcard
+        elif isinstance(self.operator, Compound):
+            self.operator.wildcard(
+                type=clause_type,
+                minimum_should_match=minimum_should_match, 
+                **_wildcard.dict())
+        else:
+            new_operator = Compound(
+                should=[self.operator, _wildcard],
+                minimum_should_match=minimum_should_match
+                )
+            self.operator = new_operator
+
 
         return self
     
-    def add(
+    # ----------------------------------------------
+    # Facets
+    # ----------------------------------------------
+    def facet(
             self,
             path:str,
             name:str|None=None,
-            type:Literal['string', 'number', 'date']='string',
-            num_buckets:int=10,
+            type:FacetType='string',
+            num_buckets:int|None=None,
             boundaries:list[int|float]|list[datetime]|None=None,
             default:str|None=None
-    )->"Facet":
+    )->Self:
         
         if type=="string":
+            if num_buckets is None:
+                num_buckets = 10
             facet = StringFacet(
                 name=name,
                 path=path,
                 num_buckets=num_buckets
             )
-        else:
+        elif type=="number":
             facet = NumericFacet(
                 name=name,
                 path=path,
                 boundaries=boundaries,
                 default=default
             )
+        elif type=="date":
+            facet = DateFacet(
+                name=name,
+                path=path,
+                boundaries=boundaries,
+                default=default
+            )
+        else:
+            raise ValueError(f"Invalid facet type. Valid facet types are 'string', 'number' and 'date'. Got {type} instead.")
 
         self.facets.append(facet)
 
         return self
+
+    def numeric(
+            self,
+            path:str,
+            *,
+            boundaries:list[int|float],
+            name:str|None=None,
+            default:str|None=None
+    )->Self:
+        """Adds a numeric facet to the current facet instance."""
+
+        self.facet(
+            type="number",
+            path=path,
+            name=name,
+            boundaries=boundaries,
+            default=default
+        )
+        return self
+    
+    def date(
+            self,
+            path:str,
+            *,
+            boundaries:list[datetime],
+            name:str|None=None,
+            default:str|None=None
+    )->Self:
+        """Adds a date facet to the current facet instance."""
+
+        self.facet(
+            type="date",
+            path=path,
+            name=name,
+            boundaries=boundaries,
+            default=default
+        )
+        return self
+    
+    def string(
+            self,
+            path:str,
+            *,
+            num_buckets:int=10,
+            name:str|None=None
+    )->Self:
+        """Adds a string facet to the current facet instance."""
+
+        self.facet(
+            type="string",
+            path=path,
+            name=name,
+            num_buckets=num_buckets
+        )
+        return self
+    
+    # ----------------------------------------------
+    # Facet Interface
+    # ----------------------------------------------
+    @staticmethod
+    def NumericFacet(
+        *,
+        path:str,
+        name:FacetName|None=None,
+        boundaries:list[int|float],
+        default:str|None=None
+    )->NumericFacet:
+        """Returns a numeric facet instance."""
+
+        return NumericFacet(
+            name=name,
+            path=path,
+            boundaries=boundaries,
+            default=default
+        )
+    
+    @staticmethod
+    def StringFacet(
+        *,
+        path:str,
+        name:FacetName|None=None,
+        num_buckets:int=10
+    )->StringFacet:
+        """Returns a string facet instance."""
+
+        return StringFacet(
+            name=name,
+            path=path,
+            num_buckets=num_buckets
+        )
+    
+    @staticmethod
+    def DateFacet(
+        *,
+        path:str,
+        name:FacetName|None=None,
+        boundaries:list[datetime],
+        default:str|None=None
+    )->DateFacet:
+        """Returns a date facet instance."""
+
+        return DateFacet(
+            name=name,
+            path=path,
+            boundaries=boundaries,
+            default=default
+    )
+
+    # TODO : Overload this method to make return type more precise.
+    @staticmethod
+    def Facet(
+        *,
+        type:Literal['string', 'number', 'date'],
+        path:str,
+        name:FacetName|None=None,
+        num_buckets:int=10,
+        boundaries:list[int|float]|list[datetime]|None=None,
+        default:str|None=None
+    )->AnyFacet:
+        """Returns a facet instance."""
+
+        if type=="string":
+            facet = Facet.StringFacet(
+                name=name,
+                path=path,
+                num_buckets=num_buckets
+            )
+        elif type=="number":
+            facet = Facet.NumericFacet(
+                name=name,
+                path=path,
+                boundaries=boundaries,
+                default=default
+            )
+        else:
+            facet = Facet.DateFacet(
+                name=name,
+                path=path,
+                boundaries=boundaries,
+                default=default
+            )
+
+        return facet
+
+    # ----------------------------------------------
+    # Utilities
+    # ----------------------------------------------
+    @classmethod
+    def __get_constructors_map__(cls, operator_name:str)->Callable[...,Self]:
+        """Returns appropriate constructor from operator name"""
+
+        _constructors_map = {
+            "autocomplete":cls.init_autocomplete,
+            "compound":cls.init_compound,
+            "equals":cls.init_equals,
+            "exists":cls.init_exists,
+            #"facet":cls.init_facet,
+            "more_like_this":cls.init_more_like_this,
+            "range":cls.init_range,
+            "regex":cls.init_regex,
+            "text":cls.init_text,
+            "wildcard":cls.init_wildcard
+        }
+
+        return _constructors_map[operator_name]
