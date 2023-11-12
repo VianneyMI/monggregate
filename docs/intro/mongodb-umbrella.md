@@ -8,7 +8,7 @@ However, here we will focus on the database itself and in particular its query l
 
 **MQL** stands for **M**ongoDB **Q**uery **L**anguage. It is the language used to query MongoDB databases. It is a JSON-based query language that allows you to query documents in a collection.
 
-**MQL** allows you to [perform CRUD operations](https://www.mongodb.com/docs/manual/crud/), that inserts (**C**reate), querys (**R**ead), updates (**U**pdate) and deletes (**D**elete) documents in a collection.
+**MQL** allows you to [perform CRUD operations](https://www.mongodb.com/docs/manual/crud/), that inserts (**C**reate), queries (**R**ead), updates (**U**pdate) and deletes (**D**elete) documents in a collection.
 
 In the context of an application or web service, **MQL** would typically be used through a driver or an Object Document Mapper (ODM).<br>
 The official MongoDB driver for Python is [PyMongo](https://pymongo.readthedocs.io/en/stable/). It is a low-level driver that allows you to interact with MongoDB databases. And two of the most popular ODM are [MongoEngine](https://mongoengine-odm.readthedocs.io/) and [Beanie](https://beanie-odm.dev/).
@@ -39,7 +39,7 @@ In the [following page](mongodb-aggregation-framework.md), we will do a deep-div
 
 As Atlas Search is a part of the aggregation framework, `monggregate` also offers a way to use it.
 
-## **Features To Consider**
+## **MongoDB Latest Features**
 
 MongoDB also offers capabilities for **time series** collections, semantic and **vector search** and probably much more that may or may not be integrated in monggregate in the future.
 
