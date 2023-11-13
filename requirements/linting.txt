@@ -1,0 +1,5 @@
+# This file gathers linting dependencies
+# (linters and static type checkers)
+# Those are used for monggregate contributors
+
+mypy==1.6.1

@@ -65,6 +65,11 @@ def test_sync_docstrings()->None:
     # --------------------------------------
     stages_members = stages.__dict__ # mapping between member name and members of the package
                                      # which can be functions, variables or classes
+    stages_members.pop("AnyStage")
+    stages_members.pop("Union")
+    stages_members.pop("SearchStageMap")
+
+    print(stages_members)
 
 
     # Filtering non-classes stages members
@@ -103,3 +108,7 @@ def extract_content(text:str)->str:
         content = content.replace(to_be_removed, "")
 
     return content
+
+if __name__ == "__main__":
+    test_sync_docstrings()
+    print("OK")

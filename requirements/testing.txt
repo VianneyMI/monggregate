@@ -1,0 +1,9 @@
+# This file gathers testing dependencies
+# Packages used to test the package
+
+certifi
+pytest==7.1.3
+pytest-html==3.2.0
+python-dotenv==1.0.0
+# Temporarily adding the below but se should launch the tests with and without the optional dependecies
+-r optional.txt

@@ -102,7 +102,7 @@ class Dollar(Singleton):
 
     # Any below should be replaced by a Union of
     # all operators or by Typevar bounded by Operator
-    def __getattr__(self, name)->str|Any:
+    def __getattr__(self, name:str)->str|Any:
         """
         Overloads the __getattr__ method.
 
@@ -117,6 +117,15 @@ class Dollar(Singleton):
             output = self.__class__.__dict__[name]
 
         return output
+    
+
+    def field(self, name:str)->str:
+        """Returns a reference to a field"""
+
+        if not name.startswith("$"):
+            name = f"${name}"
+
+        return name
 
     #--------------------------------
     # Accumulators

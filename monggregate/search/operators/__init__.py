@@ -24,6 +24,7 @@ wildcard            Supports special characters in the query string that can mat
 
 """
 
+
 from monggregate.search.operators.autocomplete import Autocomplete
 from monggregate.search.operators.compound import Compound
 from monggregate.search.operators.equals import Equals
@@ -32,6 +33,17 @@ from monggregate.search.operators.more_like_this import MoreLikeThis
 from monggregate.search.operators.range import Range
 from monggregate.search.operators.regex import Regex
 from monggregate.search.operators.text import Text
-from monggregate.search.operators.wildcard import Wilcard
+from monggregate.search.operators.wildcard import Wildcard
 
-AnyOperator = Autocomplete | Compound | Equals | Exists | MoreLikeThis | Range | Regex | Text | Wilcard
+AnyOperator = Autocomplete | Compound | Equals | Exists | MoreLikeThis | Range | Regex | Text | Wildcard
+OperatorMap = {
+    "autocomplete": Autocomplete,
+    "compound": Compound,
+    "equals": Equals,
+    "exists": Exists,
+    "moreLikeThis": MoreLikeThis,
+    "range": Range,
+    "regex": Regex,
+    "text": Text,
+    "wildcard": Wildcard,
+}

@@ -1,0 +1,45 @@
+site_name: Monggregate Documentation
+site_url: https://vianneymi.github.io/monggregate/
+nav:
+  - Home: index.md
+  - Intro:
+    - MongoDB Umbrella: intro/mongodb-umbrella.md
+    - MongoDB Aggregation Framework: intro/mongodb-aggregation-framework.md
+    - Why use Monggregate ?: intro/why-use-monggregate.md
+  - Tutorial:
+    - Getting Started: tutorial/getting-started.md
+    - Pipelines: tutorial/pipeline.md
+    - Stages: tutorial/stages.md
+    - Operators: tutorial/operators.md
+    - Search: tutorial/search.md
+  - How-To:
+    - Get Data: how-to/setup.md
+    - Common Pipelines Use Cases: 
+      - Home: how-to/commons/home.md
+      - Select a nested document: how-to/commons/select-a-nested-document.md
+      - Create or Update a collection: how-to/commons/create-or-update-a-collection.md
+      - Combine collections: how-to/commons/combine-collections.md
+  - Contributing: contributing.md
+  #- API Reference: api.md
+  - Changelog: changelog.md
+
+# # Using mkdocstrings to generate documentation from docstrings (API Reference)
+# plugins:
+#   - mkdocstrings
+
+
+# Using the Material theme for styling
+theme: 
+  name: material
+  logo: img/logo.png
+  favicon: img/logo.png
+  # Material Options for syntax highlighting
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+
