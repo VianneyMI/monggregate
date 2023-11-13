@@ -117,14 +117,24 @@ from monggregate.stages.stage import Stage
 
 class Out(Stage):
     """
-    Creates a out statement for an aggregation pipeline out stage.
+    Abstraction for the MongoDB $out statement that writes the documents returned by the aggregation pipeline to a specified collection.
 
     Attributes:
-    ---------------------------
-        - db, str|None : name of the db to output the collection. Defaults to current collection.
+    -----------
+        - db, str|None : name of the db to output the collection. Defaults to the current collection.
         - collection, str : name of the output collection
 
+    Online MongoDB documentation:
+    -----------------------------
+    Takes the documents returned by the aggregation pipeline and writes them to a specified collection.
+    The out stage must be the last stage in the pipeline. The out operator lets the aggregation framework return result sets of any size.
+
+    WARNING : out replaces the specified collection if it exists.
+    See [Replace Existing Collection](https://www.mongodb.com/docs/manual/reference/operator/aggregation/out/#std-label-replace-existing-collection) for details.
+    
+    Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/out/#mongodb-pipeline-pipe.-out
     """
+
 
     db : str|None
     collection : str = pyd.Field(...,alias="coll")

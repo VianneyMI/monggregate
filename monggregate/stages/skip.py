@@ -66,14 +66,25 @@ from monggregate.stages.stage import Stage
 
 class Skip(Stage):
     """
-    Creates a skip statement for an aggregation pipeline skip stage.
+    Abstration of MongoDB $skip statement that skips over the specified number of documents that pass into the stage and passes the remaining documents to the next stage in the pipeline.
 
     Attributes:
-    -----------------------
+    -----------
         - statement, dict : the statement generated after instantiation
         - value, int : positive integer representing the number of documents to be skipped.
 
+    Online MongoDB documentation:
+    -----------------------------
+    Skips over the specified number of documents that pass into the stage and passes the remaining documents to the next stage in the pipeline.
+    
+    $skip takes a positive integer that specifies the maximum number of documents to skip.
+
+    NOTE : Starting in MongoDB 5.0, the $skip pipeline aggregation has a 64-bit integer limit.
+    Values passed to the pipeline which exceed this limit will return an invalid argument error.
+    
+    Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/skip/#mongodb-pipeline-pipe.-skip
     """
+
 
     value : int # Add gt 0 constraint ? check behavior with 0
 

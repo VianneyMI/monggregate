@@ -132,16 +132,26 @@ from monggregate.utils import to_unique_list
 ProjectionArgs = str | list[str] | set[str]
 
 class Project(Stage):
-    """"
-    Creates a project statement for an aggregation pipeline project stage.
+    """
+    Abstraction of MongoDB $project statement which Passes along the documents with the requested fields to the next stage in the pipeline.
 
     Attributes:
-    ---------------------------
+    -----------
         - projection, dict | None : projection to be applied
         - fields, ProjectionArgs | None : fields  to be kept or excluded (depending on include/exclude parameters when those are booleans)
         - include, ProjectionArgs| dict | bool | None : fields to be kept
         - exclude, ProjectionArgs | dict | bool | None : fields to be excluded
+    
+    Online MongoDB documentation:
+    -----------------------------
+    Passes along the documents with the requested fields to the next stage in the pipeline. The specified fields can be existing fields from the input documents or newly computed fields.
 
+    The $project takes a document that can specify the inclusion of fields,
+    the suppression of the _id field, the addition of new fields, and the resetting of the values of existing fields. Alternatively, you may specify the exclusion of fields.
+
+    The $project specifications have the following forms:
+    
+    Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/project/#mongodb-pipeline-pipe.-project
     """
 
     include : list[str] | dict | bool | None = None

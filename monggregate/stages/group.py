@@ -70,22 +70,32 @@ from monggregate.utils import validate_field_path, validate_field_paths
 
 class Group(Stage):
     """
-    Creates a group statement for an aggregation pipeline group stage.
+    Abstraction of MongoDB $group statement which separates documents into groups according to a "group key".
 
     Attributes:
-    ------------------------
+    -----------
         - by,  str | list[str] | set[str] | dict | None : field or group of fields to group by
         - query, dict | None : Computed aggregated values (per group)
+    
+    Online MongoDB documentation:
+    -----------------------------
+    The $group stage separates documents into groups according to a "group key". The output is one document for each unique group key.
 
+    A group key is often a field, or group of fields. The group key can also be the result of an expression. Use the _id field in the $group pipeline stage to set the group key. See below for
+    usage examples.
 
+    In the $group stage output, the _id field is set to the group key for that document.
+
+    The output documents can also contain additional fields that are set using
+    accumulator expressions.
+
+    NOTE : The group stage does not order its output documents.
+
+    Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/group/#mongodb-pipeline-pipe.-group
     """
 
     by : Any  = pyd.Field(None, alias = "_id") # | or any constant value, in this case
                                                 # the stage returns a single document that aggregates values across all of the input documents
-    #sum
-    #avg
-    #count
-    #result : Any
     query : dict = {}
 
     # Validators

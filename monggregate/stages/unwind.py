@@ -72,16 +72,22 @@ from monggregate.utils import validate_field_path
 
 class Unwind(Stage):
     """
-    Creates a unwind statement for an aggregation pipeline unwind stage.
+    Abstration of MongoDB $unwind statement that deconstructs an array field from the input documents to output a document for each element.
 
     Attributes:
-    ---------------------------------
+    -----------
 
         - path_to_array (path), str : path to an array field
         - include_array_index, str : name of a new field to hold the array index of the element
                                     NOTE : The name cannot start with a dollar sign
         - always (preserve_null_and_empty_index), bool : whether to output documents for input documents where the path does not resolve to a valid array. Defaults to False
 
+    Online MongoDB documentation:
+    -----------------------------
+    Deconstructs an array field from the input documents to output a document for each element.
+    Each output document is the input document with the value of the array field replaced by the element.
+    
+    Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/unwind/#mongodb-pipeline-pipe.-unwind
     """
 
     # Attributes

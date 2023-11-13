@@ -177,27 +177,35 @@ from monggregate.stages.stage import Stage
 
 class UnionWith(Stage):
     """
-    Creates a $unionWith statement in a aggregation pipeline
+    Abstration of MongoDB $unionWith statement that combines pipeline results from two collections into a single results set.
 
     Attributes:
-    ---------------------------------
+    -----------
         - collection / coll, str : The collection or view whose pipeline results you wish to include in the result set
         - pipeline, list[dict] | Pipeline | None : An aggregation pipeline to apply to the specified coll.
     
-    """
+    Online MongoDB documentation:
+    -----------------------------
+    Performs a union of two collections.
+    unionWith combines pipeline results from two collections into a single result set. The stage outputs the combined result set (including duplicates) to the next stage.
 
-    collection : str = pyd.Field(alias="coll")
-    # Find a way to better type pipeline while avoiding circular imports <VM, 18/06/2023>
-    pipeline : list[dict] | None = None
+    The order in which the combined result set documents are output is unspecified.
+    
+    Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/unionWith/#mongodb-pipeline-pipe.-unionWith
+    """
+    
+    collection: str = pyd.Field(alias="coll")
+    # Find a way to better type the pipeline while avoiding circular imports <VM, 18/06/2023>
+    pipeline: list[dict] | None = None
 
     @pyd.validator("pipeline", pre=True, always=True)
-    def validate_pipeline(cls, pipeline:Any):
-        """Validates pipeline"""
+    def validate_pipeline(cls, pipeline: Any):
+        """Validates the pipeline"""
 
         output = pipeline
         if isinstance(pipeline, BaseModel):
             output =  pipeline.statement
-        
+
         return output
 
     @property
@@ -206,13 +214,12 @@ class UnionWith(Stage):
 
         if self.pipeline:
             statement = {
-                "$unionWith" : {
-                    "coll" : self.collection,
-                    "pipeline" : self.pipeline
+                "$unionWith": {
+                    "coll": self.collection,
+                    "pipeline": self.pipeline
                 }
             }
         else:
-            statement = {"$unionWith":self.collection}
-            
+            statement = {"$unionWith": self.collection}
+
         return self.resolve(statement)
-        

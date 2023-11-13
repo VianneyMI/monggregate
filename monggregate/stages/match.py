@@ -56,16 +56,26 @@ from monggregate.expressions import Expression
 
 class Match(Stage):
     """
-    Creates a match statement for an aggregation pipeline match stage.
+    Abstraction of MongoDB $match statement that filters the documents to pass to the next pipeline stage based on the specified condition(s).
 
     Attributes:
-    -------------------
+    -----------
 
         - query, dict : a simple MQL query use to filter the documents.
         - expression, Expression : an aggregation expression used to filter the documents
     
     NOTE : Use query if you're using a MQL query and expression if you're using aggregation expressions.
     
+    
+    Online MongoDB documentation:
+    -----------------------------
+    Filters the documents to pass only the documents that match the specified condition(s) to the next pipeline stage.
+    
+    $match takes a document that specifies the query conditions. The query syntax is identical to the read operation query syntax; i.e.
+    $match does not accept raw aggregation expressions. Instead, use a $expr query expression to include aggregation expression in
+    $match
+
+    Source :  https://www.mongodb.com/docs/manual/reference/operator/aggregation/match/#mongodb-pipeline-pipe.-match
     """
 
     query : dict = {} #| None
