@@ -260,7 +260,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         )
         return self
 
-    def bucket(self, *, by:Any, boundaries:list, default:Any=None, output:dict|None=None)->Self:
+    def bucket(self, *, by:Any, group_by:Any,   boundaries:list, default:Any=None, output:dict|None=None)->Self:
         """
         Adds a bucket stage to the current pipeline.
 
@@ -310,7 +310,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         )
         return self
 
-    def bucket_auto(self, *, by:Any, buckets:int, output:dict=None, granularity:GranularityEnum|None=None)->Self:
+    def bucket_auto(self, *, by:Any, group_by:Any, buckets:int, output:dict=None, granularity:GranularityEnum|None=None)->Self:
         """
         Adds a bucket_auto stage to the current pipeline
 
@@ -368,7 +368,13 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             )
         return self
 
-    def explode(self, path:str, *,  include_array_index:str|None=None, always:bool=False)->Self:
+    def explode(self, \
+                path_to_array:str, 
+                path:str, 
+                *,  
+                include_array_index:str|None=None, 
+                always:bool=False, 
+                preserve_null_and_empty_arrays:bool=False)->Self:
         """
         Adds a unwind stage to the current pipeline.
 
@@ -391,7 +397,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             )
         return self
 
-    def group(self, *,  by:Any|None=None, query:dict={})->Self:
+    def group(self, *,  by:Any|None=None, _id:Any|None=None, query:dict={})->Self:
         """
         Adds a group stage to the current pipeline.
 
@@ -432,7 +438,9 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         right:str|None=None,
         on:str|None=None,
         left_on:str|None=None,
-        right_on:str=None)->Self:
+        local_field:str|None=None,
+        right_on:str=None,
+        foreign_field:str=None)->Self:
         """
         Adds a lookup stage to the current pipeline.
 
