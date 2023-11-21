@@ -60,8 +60,7 @@ from monggregate.utils import validate_field_path
 
 class Bucket(Stage):
     """
-    Creates a bucket statement for an aggregation pipeline bucket stage.
-    This stage aggregates documents into buckets specified by the boundaries argument.
+    Abstraction of MongoDB $bucket stage that aggregates documents into buckets specified by boundaries.
 
     Attributes:
     ---------------------------------
@@ -96,6 +95,15 @@ class Bucket(Stage):
                               If you specify and output document, only the fields specified in the document are returned; i.e.
                               the count field is not returned unless it is explicitly included in the output document
 
+
+    Online MongoDB documentation:
+    ------------------------------
+    Categorizes incoming documents into groups, called buckets, based on a specified expression and bucket boundaries and outputs a document per each bucket. Each output document contains an _id field whose value specifies the inclusive lower bound of the bucket. The
+    output option specifies the fields included in each output document.
+
+    $bucket only produces output documents for buckets that contain at least one input document.                           
+    
+    Source :  https://www.mongodb.com/docs/manual/meta/aggregation-quick-reference/
     """
 
     by : Any = pyd.Field(...,alias="group_by")

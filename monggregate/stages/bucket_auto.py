@@ -106,8 +106,7 @@ class GranularityEnum(StrEnum):
 
 class BucketAuto(Stage):
     """
-    Creates a bucket statement for an aggregation pipeline bucket stage.
-    This stage aggregates documents into buckets automatically computed to statisfy the number of buckets desired
+    Abstraction of MongoDB $bucketAuto stage that aggregates documents into buckets automatically computed to satisfy the number of buckets desired
     and provided as an input.
 
     Attributes:
@@ -132,6 +131,22 @@ class BucketAuto(Stage):
                                   Available only if the all groupBy values are numeric and none of them are NaN.
                                   https://en.wikipedia.org/wiki/Preferred_number
 
+    Online MongoDB documentation:
+    -----------------------------
+    Categorizes incoming documents into a specific number of groups, called buckets, based on a specified expression.
+    Bucket boundaries are automatically determined in an attempt to evenly distribute the documents into the specified number of buckets.
+
+    Each bucket is represented as a document in the output. The document for each bucket contains:
+
+        * An _id object that specifies the bounds of the bucket.
+
+            * The _id.min field specifies the inclusive lower bound for the bucket.
+
+            * The _id.max field specifies the upper bound for the bucket. This bound is exclusive for all buckets except the final bucket in the series, where it is inclusive.
+
+        * A count field that contains the number of documents in the bucket. The count field is included by default when the output document is not specified.
+    
+    Source :  https://www.mongodb.com/docs/manual/reference/operator/aggregation/bucketAuto/
     """
 
     # Attributes

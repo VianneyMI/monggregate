@@ -1,6 +1,7 @@
 venv
 .env
 notes.md
+**/*~
 **/notebook.ipynb
 **/report.html
 .mypy_cache

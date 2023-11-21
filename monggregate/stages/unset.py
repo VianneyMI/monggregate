@@ -52,30 +52,34 @@ from monggregate.fields import FieldName
 
 class Unset(Stage):
     """
-    Creates an $unset statement for an aggregation pipeline unset stage.
+    Abstration of MongoDB $unset statement that removes/exludes fields from documents.
 
     Attributes:
-    --------------------
+    -----------
 
         - field, str|None: field to be removed
         - fields, list[str]|None, list of fields to be removed
+
+    Online MongoDB documentation:
+    -----------------------------
+    Removes/excludes fields from documents.
     
+    Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/unset/#definition
     """
 
-    field : FieldName|None
-    fields : list[FieldName]|None
+    field: FieldName | None
+    fields: list[FieldName] | None
 
     @property
     def statement(self) -> dict:
-        
+
         if self.field:
             _statement = {
-                "$unset":self.field
+                "$unset": self.field
             }
         else:
             _statement = {
-                "$unset":self.fields
+                "$unset": self.fields
             }
 
         return self.resolve(_statement)
-    

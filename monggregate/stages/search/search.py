@@ -98,15 +98,10 @@ from monggregate.search.commons import FuzzyOptions
 # Classes
 # -----------------------------------------------------
 class Search(SearchBase):
-    """"Creates a $search stage to perform a full-text search on the specified field or fields which must be covered by an Atlas Search index.
-
-    Descrtiption
-    -----------------------
-    The $search stage performs a full-text search on the specified field or fields 
-    which must be covered by an Atlas Search index.
+    """"Abstraction of MongoDB $search stage that performs a full-text search on the specified field or fields.
 
     Attributes:
-    -----------------------
+    -----------
         - index, str : name of the Atlas Search index to use. Defaults to default.
 
         - count, CountOptions|None : Document that specifies the count options for retrieving a count
@@ -131,7 +126,13 @@ class Search(SearchBase):
         - <collector-name>, dict|None : Name of the collector to use with the query. You can provide
                                         a document that contains the collector-specific options as the value
                                         for this field. Either this or <operator-name> is required.
+    
+    Online MongoDB documentation
+    -----------------------
+    The $search stage performs a full-text search on the specified field or fields 
+    which must be covered by an Atlas Search index.
 
+    Source : https://www.mongodb.com/docs/atlas/atlas-search/query-syntax/#mongodb-pipeline-pipe.-search
     """
     
     @property
