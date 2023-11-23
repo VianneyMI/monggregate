@@ -316,6 +316,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         self.stages.append(
             Bucket(
                 by = by,
+                group_by = group_by,
                 boundaries = boundaries,
                 default = default,
                 output = output
@@ -372,6 +373,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         self.stages.append(
             BucketAuto(
                 by = by,
+                group_by = group_by,
                 buckets = buckets,
                 output = output,
                 granularity = granularity
@@ -740,6 +742,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         self.stages.append(
             Out(
                 collection=collection,
+                coll=coll,
                 db = db
             )
         )
@@ -1403,8 +1406,10 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         self.stages.append(
                 Unwind(
                     path = path,
+                    path_to_array = path_to_array,
                     include_array_index = include_array_index,
-                    always = always
+                    always = always,
+                    preserve_null_and_empty_arrays = preserve_null_and_empty_arrays
                 )
             )
         return self
