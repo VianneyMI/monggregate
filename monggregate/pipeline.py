@@ -716,7 +716,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             )
         return self
 
-    def out(self, collection:str, *, db:str|None=None)->Self:
+    def out(self, collection:str, coll:str, *, db:str|None=None)->Self:
         """
         Adds an out stage to the current pipeline.
         Takes the documents returned by the aggregation pipeline and writes them to a specified collection. Starting in MongoDB 4.4, you can specify the output database.
@@ -785,7 +785,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             )
         return self
 
-    def replace_root(self, path:str|None=None, *,document:dict|None=None)->Self:
+    def replace_root(self, path:str|None=None, path_to_new_root:str|None=None, *,document:dict|None=None)->Self:
         """
         Adds a replace_root stage to the current pipeline.
         Replaces the input document with the specified document.
@@ -817,7 +817,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             )
         return self
 
-    def replace_with(self, path:str|None=None, *,document:dict|None=None)->Self:
+    def replace_with(self, path:str|None=None, path_to_new_root:str|None=None, *,document:dict|None=None)->Self:
         """
         Adds a replace_with stage to the current pipeline.
 
@@ -1347,7 +1347,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             )
         return self
     
-    def union_with(self, collection:str, pipeline:list[dict]|None=None)->Self:
+    def union_with(self, collection:str, coll:str, pipeline:list[dict]|None=None)->Self:
         """
         Adds a union_with stage to the current pipeline.
         Performs a union of two collections. unionWith combines pipeline results from two collections into a single result set. The stage outputs the combined result set (including duplicates) to the next stage.
@@ -1375,7 +1375,12 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         return self
 
-    def unwind(self, path:str, include_array_index:str|None=None, always:bool=False)->Self:
+    def unwind(self, \
+               path:str, 
+               path_to_array:str, 
+               include_array_index:str|None=None, 
+               always:bool=False, 
+               preserve_null_and_empty_arrays:bool=False)->Self:
         """
         Adds a unwind stage to the current pipeline.
 
