@@ -265,7 +265,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         )
         return self
 
-    def bucket(self, *, by:Any, group_by:Any,   boundaries:list, default:Any=None, output:dict|None=None)->Self:
+    def bucket(self, *, boundaries:list, by:Any=None, group_by:Any=None, default:Any=None, output:dict|None=None)->Self:
         """
         Adds a bucket stage to the current pipeline.
         This stage aggregates documents into buckets specified by the boundaries argument.
@@ -312,11 +312,11 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         
         Source :  https://www.mongodb.com/docs/manual/meta/aggregation-quick-reference/
         """
-
+        
         self.stages.append(
             Bucket(
-                by = by,
-                group_by = group_by,
+                by = by or group_by,
+                #group_by = group_by or by,
                 boundaries = boundaries,
                 default = default,
                 output = output
@@ -324,7 +324,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         )
         return self
 
-    def bucket_auto(self, *, by:Any, group_by:Any, buckets:int, output:dict=None, granularity:GranularityEnum|None=None)->Self:
+    def bucket_auto(self, *, by:Any=None, group_by:Any=None, buckets:int, output:dict=None, granularity:GranularityEnum|None=None)->Self:
         """
         Adds a bucket_auto stage to the current pipeline.
         This stage aggregates documents into buckets automatically computed to statisfy the number of buckets desired
@@ -372,8 +372,8 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         self.stages.append(
             BucketAuto(
-                by = by,
-                group_by = group_by,
+                by = by or group_by,
+                #group_by = group_by,
                 buckets = buckets,
                 output = output,
                 granularity = granularity
@@ -412,8 +412,8 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         return self
 
     def explode(self, \
-                path_to_array:str, 
-                path:str, 
+                path_to_array:str|None=None, 
+                path:str|None=None, 
                 *,  
                 include_array_index:str|None=None, 
                 always:bool=False, 
@@ -718,7 +718,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             )
         return self
 
-    def out(self, collection:str, coll:str, *, db:str|None=None)->Self:
+    def out(self, collection:str|None=None, coll:str|None=None, *, db:str|None=None)->Self:
         """
         Adds an out stage to the current pipeline.
         Takes the documents returned by the aggregation pipeline and writes them to a specified collection. Starting in MongoDB 4.4, you can specify the output database.
@@ -741,8 +741,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         self.stages.append(
             Out(
-                collection=collection,
-                coll=coll,
+                collection=collection or coll,
                 db = db
             )
         )
@@ -1379,8 +1378,8 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         return self
 
     def unwind(self, \
-               path:str, 
-               path_to_array:str, 
+               path:str|None=None, 
+               path_to_array:str|None=None, 
                include_array_index:str|None=None, 
                always:bool=False, 
                preserve_null_and_empty_arrays:bool=False)->Self:
@@ -1405,11 +1404,9 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         self.stages.append(
                 Unwind(
-                    path = path,
-                    path_to_array = path_to_array,
+                    path = path or path_to_array,
                     include_array_index = include_array_index,
-                    always = always,
-                    preserve_null_and_empty_arrays = preserve_null_and_empty_arrays
+                    always = always or preserve_null_and_empty_arrays,
                 )
             )
         return self
