@@ -49,8 +49,22 @@ from monggregate.operators.accumulators.accumulator import Accumulator
 
 class Count(Accumulator):
     """
-    Creates a $count expression.
+    Abstration of MongoDB $count expression that returns the number of documents in a group.
 
+    Online MongoDB documentation:
+    -----------------------------
+    Returns the number of documents in a group.
+    $count is available in these stages:
+
+        * $bucket
+        * $bucketAuto
+        * $group
+        * $setWindowpyd.Fields (Available starting in MongoDB 5.0)
+
+    NOTE : Disambiguation
+    This page describes the $count aggregation accumulator. For the $count aggregation pipeline stage, [see $count (aggregation pipeline)](https://www.mongodb.com/docs/manual/reference/operator/aggregation/count/#mongodb-pipeline-pipe.-count)
+    
+    Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/count-accumulator/#mongodb-group-grp.-count
     """
 
 
