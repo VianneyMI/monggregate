@@ -265,7 +265,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         )
         return self
 
-    def bucket(self, *, by:Any, boundaries:list, default:Any=None, output:dict|None=None)->Self:
+    def bucket(self, *, boundaries:list, by:Any=None, group_by:Any=None, default:Any=None, output:dict|None=None)->Self:
         """
         Adds a bucket stage to the current pipeline.
         This stage aggregates documents into buckets specified by the boundaries argument.
@@ -312,10 +312,11 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         
         Source :  https://www.mongodb.com/docs/manual/meta/aggregation-quick-reference/
         """
-
+        
         self.stages.append(
             Bucket(
-                by = by,
+                by = by or group_by,
+                #group_by = group_by or by,
                 boundaries = boundaries,
                 default = default,
                 output = output
@@ -323,7 +324,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         )
         return self
 
-    def bucket_auto(self, *, by:Any, buckets:int, output:dict=None, granularity:GranularityEnum|None=None)->Self:
+    def bucket_auto(self, *, by:Any=None, group_by:Any=None, buckets:int, output:dict=None, granularity:GranularityEnum|None=None)->Self:
         """
         Adds a bucket_auto stage to the current pipeline.
         This stage aggregates documents into buckets automatically computed to statisfy the number of buckets desired
@@ -371,7 +372,8 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         self.stages.append(
             BucketAuto(
-                by = by,
+                by = by or group_by,
+                #group_by = group_by,
                 buckets = buckets,
                 output = output,
                 granularity = granularity
@@ -409,7 +411,13 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             )
         return self
 
-    def explode(self, path:str, *,  include_array_index:str|None=None, always:bool=False)->Self:
+    def explode(self, \
+                path_to_array:str|None=None, 
+                path:str|None=None, 
+                *,  
+                include_array_index:str|None=None, 
+                always:bool=False, 
+                preserve_null_and_empty_arrays:bool=False)->Self:
         """
         Adds a unwind stage to the current pipeline.
 
@@ -438,7 +446,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             )
         return self
 
-    def group(self, *,  by:Any|None=None, query:dict={})->Self:
+    def group(self, *,  by:Any|None=None, _id:Any|None=None, query:dict={})->Self:
         """
         Adds a group stage to the current pipeline.
         The group stage separates documents into groups according to a "group key". The output is one document for each unique group key.
@@ -507,7 +515,9 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         right:str|None=None,
         on:str|None=None,
         left_on:str|None=None,
-        right_on:str=None)->Self:
+        local_field:str|None=None,
+        right_on:str=None,
+        foreign_field:str=None)->Self:
         """
         Adds a lookup stage to the current pipeline.
         Performs a left outer join to a collection in the same database to filter in documents from the "joined" collection for processing. The
@@ -708,7 +718,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             )
         return self
 
-    def out(self, collection:str, *, db:str|None=None)->Self:
+    def out(self, collection:str|None=None, coll:str|None=None, *, db:str|None=None)->Self:
         """
         Adds an out stage to the current pipeline.
         Takes the documents returned by the aggregation pipeline and writes them to a specified collection. Starting in MongoDB 4.4, you can specify the output database.
@@ -731,7 +741,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         self.stages.append(
             Out(
-                collection=collection,
+                collection=collection or coll,
                 db = db
             )
         )
@@ -777,7 +787,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             )
         return self
 
-    def replace_root(self, path:str|None=None, *,document:dict|None=None)->Self:
+    def replace_root(self, path:str|None=None, path_to_new_root:str|None=None, *,document:dict|None=None)->Self:
         """
         Adds a replace_root stage to the current pipeline.
         Replaces the input document with the specified document.
@@ -809,7 +819,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             )
         return self
 
-    def replace_with(self, path:str|None=None, *,document:dict|None=None)->Self:
+    def replace_with(self, path:str|None=None, path_to_new_root:str|None=None, *,document:dict|None=None)->Self:
         """
         Adds a replace_with stage to the current pipeline.
 
@@ -1339,7 +1349,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             )
         return self
     
-    def union_with(self, collection:str, pipeline:list[dict]|None=None)->Self:
+    def union_with(self, collection:str, coll:str, pipeline:list[dict]|None=None)->Self:
         """
         Adds a union_with stage to the current pipeline.
         Performs a union of two collections. unionWith combines pipeline results from two collections into a single result set. The stage outputs the combined result set (including duplicates) to the next stage.
@@ -1367,7 +1377,12 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         return self
 
-    def unwind(self, path:str, include_array_index:str|None=None, always:bool=False)->Self:
+    def unwind(self, \
+               path:str|None=None, 
+               path_to_array:str|None=None, 
+               include_array_index:str|None=None, 
+               always:bool=False, 
+               preserve_null_and_empty_arrays:bool=False)->Self:
         """
         Adds a unwind stage to the current pipeline.
 
@@ -1389,9 +1404,9 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         self.stages.append(
                 Unwind(
-                    path = path,
+                    path = path or path_to_array,
                     include_array_index = include_array_index,
-                    always = always
+                    always = always or preserve_null_and_empty_arrays,
                 )
             )
         return self
