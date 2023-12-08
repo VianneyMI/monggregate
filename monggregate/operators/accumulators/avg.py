@@ -75,7 +75,7 @@ from monggregate.operators.accumulators.accumulator import Accumulator
 
 class Average(Accumulator):
     """
-    Abstration of MongoDB $avg statement that returns the average value of numeric values.
+    Abstration of MongoDB $avg operator that returns the average value of numeric values.
 
     Attributes
     ----------
