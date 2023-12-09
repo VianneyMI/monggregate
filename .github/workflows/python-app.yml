@@ -56,7 +56,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-pr-review
-          filter_mode: nofilter
+          filter_mode: added
           level: warning
 
       - uses: reviewdog/action-setup@v1
@@ -70,7 +70,7 @@ jobs:
         run: |
           pip3 install ruff
           ruff check . \
-            | reviewdog -name=Ruff -reporter=local -reporter=github-pr-review -efm="%f:%l:%c: %m" -filter-mode=nofilter -fail-on-error=false
+            | reviewdog -name=Ruff -reporter=local -reporter=github-pr-review -efm="%f:%l:%c: %m" -filter-mode=added -fail-on-error=false
 
       - name: Check Mypy linting
         if: always()
@@ -78,7 +78,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-pr-review
-          filter_mode: nofilter
+          filter_mode: added
           setup_command: pip3 install --no-cache-dir --upgrade -r requirements/all.txt
           setup_method: install
           level: warning
