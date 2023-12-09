@@ -10,7 +10,6 @@ from abc import ABC, abstractmethod
 from typing import Any, TypeGuard
 
 
-
 # 3rd Party imports
 # ---------------------------
 try:
