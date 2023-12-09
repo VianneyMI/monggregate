@@ -84,5 +84,4 @@ jobs:
           setup_command: pip3 install --no-cache-dir --upgrade -r ../requirements/all.txt
           setup_method: install
           level: warning
-          workdir: mongreggate
           mypy_flags: --python-version 3.10
