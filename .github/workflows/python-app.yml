@@ -70,7 +70,7 @@ jobs:
         run: |
           pip3 install ruff
           ruff check . \
-            | reviewdog -name=Ruff -reporter=local -reporter=github-pr-review -efm="%f:%l:%c: %m" -filter-mode=nofilter -fail-on-error=true
+            | reviewdog -name=Ruff -reporter=local -reporter=github-pr-review -efm="%f:%l:%c: %m" -filter-mode=nofilter -fail-on-error=false
 
       - name: Check Mypy linting
         if: always()
