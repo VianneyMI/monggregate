@@ -20,12 +20,16 @@ nav:
       - Create or Update a collection: how-to/commons/create-or-update-a-collection.md
       - Combine collections: how-to/commons/combine-collections.md
   - Contributing: contributing.md
-  #- API Reference: api.md
+  - API Reference: api.md
   - Changelog: changelog.md
 
-# # Using mkdocstrings to generate documentation from docstrings (API Reference)
-# plugins:
-#   - mkdocstrings
+ # Using mkdocstrings to generate documentation from docstrings (API Reference)
+plugins:
+- mkdocstrings:
+    handlers:
+      python:
+        options:
+          docstring_style: numpy
 
 
 # Using the Material theme for styling
