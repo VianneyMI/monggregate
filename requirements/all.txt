@@ -1,6 +1,12 @@
+# Usage
 -r core.txt
+-r optional.txt
+
+# Development
 -r doc.txt
 -r linting.txt
--r optional.txt
 -r testing.txt
 -r typing.txt
+
+# Deployment
+-r build.txt

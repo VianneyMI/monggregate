@@ -1,0 +1,5 @@
+# This file gahters packages used to build and deployment process
+
+setuptools==69.0.2
+twine==4.0.2
+build==1.0.3
