@@ -1,6 +1,6 @@
 """Pipeline Module"""
 
-from typing import Any, Literal, Union, Dict
+from typing import Any, Literal
 from warnings import warn
 
 from typing_extensions import Self
@@ -44,7 +44,6 @@ from monggregate.dollar import ROOT
 from monggregate.utils import StrEnum
 
 
-
 class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     """
     MongoDB aggregation pipeline abstraction
@@ -60,10 +59,10 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         the list of Stages that the pipeline is made of.
         Similarly to the pipeline itself. This package constructs
         abstraction for MongoDB aggregation framework pipeline stages.
-    on_call, OnCallEnum
+    on_call : str
         pipeline instances are callable. This defines the behavior of the instance
         when called. See OnCallEnum above. Defaults to export
-    db, Database
+    db : pymongo.database
         pymongo database instance. Can be optionally provided to make a pipeline instance self sufficient
 
     Examples
@@ -71,7 +70,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     You can instantiate a pipeline instance as follow:
 
         >>> pipeline = Pipeline(collection="listingsAndReviews") # collection is the only mandatory attribute
-                                                                # example using MongoDB AirBnB demo dataset : https://www.mongodb.com/docs/atlas/sample-data/sample-airbnb/#std-label-sample-airbnb
+                                                                # [example using MongoDB AirBnB demo dataset](https://www.mongodb.com/docs/atlas/sample-data/sample-airbnb/#std-label-sample-airbnb)
     and then add stages to the pipeline by calling its wrapper stages method as shown below:
 
         >>> pipeline.match(
@@ -257,7 +256,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         ----------------------------
         Adds new fields to documents. set outputs documents that contain all existing fields from the inputs documents and newly added fields. Both stages are equivalent to a project stage that explicitly specifies all existing fields in the inputs documents and adds the new fields.
         
-        [Source](!https://www.mongodb.com/docs/manual/reference/operator/aggregation/set/#mongodb-pipeline-pipe.-set)
+        [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/set/#mongodb-pipeline-pipe.-set)
         """
 
         document = document | kwargs
@@ -266,25 +265,33 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         )
         return self
 
-    #def bucket(self, *, boundaries:list, by:str|list[str]|set[str]=None, group_by:Any=None, default:Any=None, output:dict|None=None)->éSelf:
-    def bucket(self, *, boundaries, by=None, group_by=None, default=None, output=None)->Self:
+    def bucket(self, \
+               *, 
+               boundaries:list,
+               by:str|list[str]|set[str]=None,
+               group_by:str|list[str]|set[str]=None,
+               default:Any=None,
+               output:dict|None=None
+               )->Self:
         """
         Adds a bucket stage to the current pipeline. This stage aggregates
         documents into buckets specified by the boundaries argument.
 
         Parameters
         ----------
-        by : str|list[str]|set[str]
+        by : str or list[str] or set[str], optional
             field or fields to group the documents unless a default is provided,
             each input document must resolve the groupBy field path or
             expression to a value that falls within one of the ranges
             specified by the boundaries.
+        group_by : str or list[str] or set[str], optional
+            Alias for the parameter `by`.
         boundaries : list
-            an array of values that specify the boundaries for each bucket.
+            An array of values that specify the boundaries for each bucket.
             Each adjacent pair of values acts as the inclusive lower boundary
             and the exclusive upper boundary for the bucket.
             NOTE : You must specify at least two boundaries.
-        default : Any
+        default : Any, optional
             A literal that specifies the _id (group name) of an additional
             bucket that contains all documents whoe groupBy expression result
             does not fall into a bucket specified by the boundaries. If
@@ -293,7 +300,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             must be less than the lowest boundary or greather than or
             equal to the highest boundary value. The default value can
             be of a different type than the entries in boundaries.
-        output : dict
+        output : dict, optional
             A document that specifies the fields to include in the output documents in addition to
             the _id field. To specify the field to include you must use accumulator expressions
                 
@@ -320,7 +327,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         option specifies the fields included in each output document. $bucket
         only produces output documents for buckets that contain at least one input document.                           
         
-        [Source](!https://www.mongodb.com/docs/manual/meta/aggregation-quick-reference/)
+        [Source](https://www.mongodb.com/docs/manual/meta/aggregation-quick-reference/)
         """
         
         self.stages.append(
@@ -334,36 +341,51 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         )
         return self
 
-    def bucket_auto(self, *, by:Any=None, group_by:Any=None, buckets:int, output:dict=None, granularity:GranularityEnum|None=None)->Self:
+    def bucket_auto(self, \
+                    *,
+                    by:str|list[str]|set[str]=None,
+                    group_by:str|list[str]|set[str]=None,
+                    buckets:int,
+                    output:dict=None,
+                    granularity:GranularityEnum|None=None
+                    )->Self:
         """
         Adds a bucket_auto stage to the current pipeline.
-        This stage aggregates documents into buckets automatically computed to statisfy the number of buckets desired
-        and provided as an input.
+        This stage aggregates documents into buckets automatically computed
+        to statisfy the number of buckets desired and provided as an input.
 
-        Arguments:
-        ---------------------------------
-        by : str|list[str]|set[str], An expression to group documents. To specify a field path
-                                     prefix the field name with a dollar sign $ and enclose it in quotes.
-        buckets : int, number of buckets desired
-        output : dict, A document that specifieds the fields to include in the oupput documents in addition
-                       to the _id field. To specify the field to include, you must use accumulator expressions.
+        Parameters
+        ----------
+        by : str or list[str] or set[str], optional
+            An expression to group documents. To specify a field path prefix
+            the field name with a dollar sign $ and enclose it in quotes.
+        group_by : str or list[str] or set[str], optional
+            Alias for the parameter `by`.
+        buckets : int
+            Number of buckets desired.
+        output : dict
+            A document that specifieds the fields to include in the oupput
+            documents in addition to the _id field. To specify the field to
+            include, you must use accumulator expressions.
+            The defaut count field is not included in the output document
+            when output is specified. Explicitly specify the count expression
+            as part of the output document to include it:
 
-                       The defaut count field is not included in the output document when output is specified. Explicitly specify the count expression
-                       as part of the output document to include it:
+                >>>    {
+                        "outputfield1": { "accumulator": "expression1" },
+                        ...
+                        count: { $sum: 1 }
+                        }
 
-                       >>> {
-                                <outputfield1>: { <accumulator>: <expression1> },
-                                ...
-                                count: { $sum: 1 }
-                           }
-        granularity : str | None, A string that specifies the preferred number series to use to ensure that the calculated
-                                  boundary edges end on preferred round numbers of their powers of 10.
+        granularity : monggregate.stages.GranularityEnum, optional
+            A string that specifies the preferred number series to use to
+            ensure that the calculated boundary edges end on preferred round
+            numbers of their powers of 10. Available only if the all groupBy
+            values are numeric and none of them are NaN. [Source](https://en.wikipedia.org/wiki/Preferred_number)
+            
 
-                                  Available only if the all groupBy values are numeric and none of them are NaN.
-                                  https://en.wikipedia.org/wiki/Preferred_number
-
-        Online MongoDB documentation:
-        -----------------------------
+        Online MongoDB documentation
+        ----------------------------
         Categorizes incoming documents into a specific number of groups, called buckets, based on a specified expression.
         Bucket boundaries are automatically determined in an attempt to evenly distribute the documents into the specified number of buckets.
 
@@ -377,13 +399,12 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
             * A count field that contains the number of documents in the bucket. The count field is included by default when the output document is not specified.
         
-        Source :  https://www.mongodb.com/docs/manual/reference/operator/aggregation/bucketAuto/
+        [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/bucketAuto/)
         """
 
         self.stages.append(
             BucketAuto(
                 by = by or group_by,
-                #group_by = group_by,
                 buckets = buckets,
                 output = output,
                 granularity = granularity
@@ -413,7 +434,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         <string> is the name of the output field which has the count as its value.
         <string> must be a non-empty string, must not start with $ and must not contain the . character.
         
-        Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/count/#mongodb-pipeline-pipe.-count
+        [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/count/#mongodb-pipeline-pipe.-count)
         """
 
         self.stages.append(
@@ -444,7 +465,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         Deconstructs an array field from the input documents to output a document for each element.
         Each output document is the input document with the value of the array field replaced by the element.
         
-        Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/unwind/#mongodb-pipeline-pipe.-unwind
+        [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/unwind/#mongodb-pipeline-pipe.-unwind)
         """
 
         self.stages.append(
@@ -481,7 +502,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         NOTE : The group stage does not order its output documents.
 
-        Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/group/#mongodb-pipeline-pipe.-group
+        [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/group/#mongodb-pipeline-pipe.-group)
         """
 
         self.stages.append(
@@ -512,7 +533,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         NOTE : Starting in MongoDB 5.0, the $limit pipeline aggregation has a 64-bit integer limit. Values
         passed to the pipeline which exceed this limit will return a invalid argument error.
 
-        Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/group/#mongodb-pipeline-pipe.-group
+        [Source](https://www.mongodb.com/docs/v7.0/reference/operator/aggregation/limit/#-limit--aggregation-)
         """
 
         self.stages.append(
@@ -572,7 +593,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         To combine elements from two different collections, use the $unionWith pipeline stage.
 
-        Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/lookup/#mongodb-pipeline-pipe.-lookup
+        [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/lookup/#mongodb-pipeline-pipe.-lookup)
         """
 
         self.stages.append(
@@ -718,7 +739,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         $match does not accept raw aggregation expressions. Instead, use a $expr query expression to include aggregation expression in
         $match
 
-        Source :  https://www.mongodb.com/docs/manual/reference/operator/aggregation/match/#mongodb-pipeline-pipe.-match
+        [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/match/#mongodb-pipeline-pipe.-match)
 
         """
 
@@ -746,7 +767,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         WARNING : out replaces the specified collection if it exists.
         See [Replace Existing Collection](https://www.mongodb.com/docs/manual/reference/operator/aggregation/out/#std-label-replace-existing-collection) for details.
         
-        Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/out/#mongodb-pipeline-pipe.-out
+        [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/out/#mongodb-pipeline-pipe.-out)
         """
 
         self.stages.append(
@@ -783,7 +804,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         The $project specifications have the following forms:
         
-        Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/project/#mongodb-pipeline-pipe.-project
+        [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/project/#mongodb-pipeline-pipe.-project)
         """
 
         projection = projection | kwargs
@@ -816,12 +837,12 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         Replaces the input document with the specified document.
         The operation replaces all existing fields in the input document, including the _id field.
         You can promote an existing embedded document to the top level, or create a new document for promotion
-        (see example:https://www.mongodb.com/docs/manual/reference/operator/aggregation/replaceRoot/#std-label-new-replacement-doc).
+        (see [example](https://www.mongodb.com/docs/manual/reference/operator/aggregation/replaceRoot/#std-label-new-replacement-doc)).
 
         The replacement document can be any valid expression that resolves to a document.
         The stage errors and fails if <replacementDocument> is not a document. For more information on expressions, see Expressions.
         
-        Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/replaceRoot/#mongodb-pipeline-pipe.-replaceRoot
+        [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/replaceRoot/#mongodb-pipeline-pipe.-replaceRoot)
         """
 
         self.stages.append(
@@ -845,12 +866,12 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         Replaces the input document with the specified document.
         The operation replaces all existing fields in the input document, including the _id field.
         You can promote an existing embedded document to the top level, or create a new document for promotion
-        (see example:https://www.mongodb.com/docs/manual/reference/operator/aggregation/replaceRoot/#std-label-new-replacement-doc).
+        (see [example](https://www.mongodb.com/docs/manual/reference/operator/aggregation/replaceRoot/#std-label-new-replacement-doc)).
 
         The replacement document can be any valid expression that resolves to a document.
         The stage errors and fails if <replacementDocument> is not a document. For more information on expressions, see Expressions.
         
-        Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/replaceRoot/#mongodb-pipeline-pipe.-replaceRoot
+        [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/replaceRoot/#mongodb-pipeline-pipe.-replaceRoot)
         """
 
         self.stages.append(
@@ -872,7 +893,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         -----------------------------
         Randomly selects the specified number of documents from the input documents.
         
-        Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/sample/#mongodb-pipeline-pipe.-sample
+        [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/sample/#mongodb-pipeline-pipe.-sample)
         """
 
         self.stages.append(
@@ -942,7 +963,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         The search stage performs a full-text search on the specified field or fields 
         which must be covered by an Atlas Search index.
 
-        Source : https://www.mongodb.com/docs/atlas/atlas-search/query-syntax/#mongodb-pipeline-pipe.-search
+        [Source](https://www.mongodb.com/docs/atlas/atlas-search/query-syntax/#mongodb-pipeline-pipe.-search)
         """
 
         if not collector_name and not operator_name:
@@ -1241,7 +1262,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         -----------------------------
         Adds new fields to documents. set outputs documents that contain all existing fields from the inputs documents and newly added fields. Both stages are equivalent to a project stage that explicitly specifies all existing fields in the inputs documents and adds the new fields.
         
-        Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/set/#mongodb-pipeline-pipe.-set
+        [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/set/#mongodb-pipeline-pipe.-set)
         """
 
         document = document | kwargs
@@ -1269,7 +1290,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         NOTE : Starting in MongoDB 5.0, the $skip pipeline aggregation has a 64-bit integer limit.
         Values passed to the pipeline which exceed this limit will return an invalid argument error.
         
-        Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/skip/#mongodb-pipeline-pipe.-skip
+        [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/skip/#mongodb-pipeline-pipe.-skip)
         """
 
         self.stages.append(
@@ -1313,7 +1334,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         -----------------------------
         Sorts all input documents and returns them to the pipeline in sorted order.
         
-        Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/sort/#mongodb-pipeline-pipe.-sort
+        [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/sort/#mongodb-pipeline-pipe.-sort)
         """
 
         query = query | kwargs
@@ -1351,7 +1372,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         The documents are sorted by count in descending order.
 
-        Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/sortByCount/#mongodb-pipeline-pipe.-sortByCount
+        [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/sortByCount/#mongodb-pipeline-pipe.-sortByCount)
         """
 
         self.stages.append(
@@ -1378,7 +1399,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         The order in which the combined result set documents are output is unspecified.
         
-        Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/unionWith/#mongodb-pipeline-pipe.-unionWith
+        [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/unionWith/#mongodb-pipeline-pipe.-unionWith)
         """
 
         self.stages.append(
@@ -1409,7 +1430,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         Deconstructs an array field from the input documents to output a document for each element.
         Each output document is the input document with the value of the array field replaced by the element.
         
-        Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/unwind/#mongodb-pipeline-pipe.-unwind
+        [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/unwind/#mongodb-pipeline-pipe.-unwind)
         """
 
         self.stages.append(
@@ -1437,7 +1458,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         -----------------------------
         Removes/excludes fields from documents.
         
-        Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/unset/#definition
+        [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/unset/#definition)
         """
 
         self.stages.append(
