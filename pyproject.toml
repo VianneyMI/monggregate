@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "monggregate"
-version = "0.19.0"
+version = "0.19.1"
 description = "MongoDB aggregation pipelines made easy. Joins, grouping, counting and much more..."
 readme = "README.md"
 authors = [{ name = "Vianney Mixtur", email = "vianney.mixtur@outlook.fr" }]
@@ -28,9 +28,6 @@ dependencies = [
 requires-python = ">=3.10"
 
 
-[tool.setuptools.packages.find]
-where = ["monggregate"]
-
 [project.optional-dependencies]
 mongo = ["pymongo >= 3.0.0"]
 dev = ["bumpver", "pytest", "mypy", "pylint"]
@@ -40,7 +37,7 @@ Homepage = "https://github.com/VianneyMI/monggregate"
 documentation = "https://vianneymi.github.io/monggregate/"
 
 [tool.bumpver]
-current_version = "0.19.0"
+current_version = "0.19.1"
 version_pattern = "MAJOR.MINOR.PATCH"
 commit_message = "bump version {old_version} -> {new_version}"
 commit = true
