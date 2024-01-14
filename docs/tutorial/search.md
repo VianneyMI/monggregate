@@ -48,6 +48,39 @@ In the next sections, we will talk only about the `$search` stage, but everythin
 
 ## **Basic Search**
 
+The `Search` class the and the `search` method have default parameters so that it is easy to quickly get started. 
+
+Building your search request is as simple as, the following code:
+
+```python
+
+pipeline.search(
+        path="description"
+        query="apple", 
+    )
+
+```
+
+By default, the search will be performed on the `text` operator.
+
+You can also enhance your the search experience by making a fuzzy search, just by adding the `fuzzy` parameter:
+
+
+```python
+
+from monggregate.search.commons import FuzzyOptions
+
+pipeline.search(
+        path="description"
+        query="apple", 
+        fuzzy=FuzzyOptions(
+            max_edits=2
+        )
+    )
+
+```
+
+You can build even richer search queries by adding more operators to your search stage as shown in the next section.
 
 ## **Search Pipelines**
 
@@ -96,8 +129,8 @@ This example is copied from MongoDB official doc and has just been adapted to `m
 Let's review what is going on here.
 
 The first search call, initializes a `$search` stage with an "empty" `compound` operator.
-The second search call, completes the `compound` operator by adding a `must` clause.
-The third search call, appends a `mustNot` clause to the `compound` operator.
+The second search call, completes the `compound` operator by adding a `text` operator in a `must` clause.
+The third search call, appends a `text` operator in a `mustNot` clause to the `compound` operator.
 
 At the end, the generated query will return documents containing the word "varieties" in the "description" field, but not containing the word "apples" in the "description" field.
 
