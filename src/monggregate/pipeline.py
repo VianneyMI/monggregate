@@ -34,7 +34,7 @@ from monggregate.stages import (
     Unwind,
     Unset
 )
-from monggregate.stages.search.base import OperatorLiteral
+from monggregate.stages.search.base import SearchBase, OperatorLiteral
 from monggregate.search.operators import OperatorMap
 from monggregate.search.operators.compound import Compound, ClauseType
 from monggregate.search.collectors.facet import Facet, FacetType
@@ -1059,7 +1059,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         
         # If pipeline is not empty then the first stage must be Search stage.
         # If so, adds the operator to the existing stage using Compound.
-        elif len(self) >= 1 and isinstance(self.stages[0], Search):
+        elif len(self) >= 1 and isinstance(self.stages[0], SearchMeta):
             kwargs.update({
                 # "collector_name":collector_name,
                 "operator_name":operator_name,
