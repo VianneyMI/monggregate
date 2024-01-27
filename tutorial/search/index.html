@@ -66,6 +66,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#atlas-search" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -428,6 +433,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Search
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -437,6 +453,58 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#atlas-search" class="md-nav__link">
+    Atlas Search
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-atlas-search-through-monggregate" class="md-nav__link">
+    Using Atlas Search through monggregate
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basic-search" class="md-nav__link">
+    Basic Search
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#search-pipelines" class="md-nav__link">
+    Search Pipelines
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#faceted-search" class="md-nav__link">
+    Faceted Search
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -689,6 +757,49 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#atlas-search" class="md-nav__link">
+    Atlas Search
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-atlas-search-through-monggregate" class="md-nav__link">
+    Using Atlas Search through monggregate
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basic-search" class="md-nav__link">
+    Basic Search
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#search-pipelines" class="md-nav__link">
+    Search Pipelines
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#faceted-search" class="md-nav__link">
+    Faceted Search
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -704,7 +815,134 @@
 
   <h1>Search</h1>
 
-<p>Coming soon !</p>
+<p>The aggregation framework provide advanced search functionalities through the <code>$search</code> and <code>$searchMeta</code> stages.</p>
+<p>Note: the <code>$search</code> and <code>$searchMeta</code> stages are only available with MongoDB Atlas.</p>
+<h2 id="atlas-search"><strong>Atlas Search</strong></h2>
+<p>Atlas Search offers similar features than other search engines like ElasticSearch or Algolia.
+Such features include:</p>
+<ul>
+<li>Full-text search</li>
+<li>Fuzzy search</li>
+<li>Autocompletion</li>
+<li>Highlighting</li>
+<li>Faceting</li>
+<li>Geospatial search</li>
+<li>Relevance scoring</li>
+<li>Query analytics</li>
+</ul>
+<p>You can see a more detailled list of features <a href="https://www.mongodb.com/docs/atlas/atlas-search/atlas-search-overview/">here</a>.</p>
+<h2 id="using-atlas-search-through-monggregate"><strong>Using Atlas Search through monggregate</strong></h2>
+<p>Like for the other stages <code>monggregate</code> defines a class and a <code>pipeline</code> method for the search stages.
+However, there is a slight difference with the other stages. The search stages are themselves very similar to pipelines.
+You will better grasp this concept in one <a href="#search-pipelines">the below sections</a>.</p>
+<p>The search stages define their own set of operators called <strong>search operators</strong>.
+Below an non-exhaustive list of the search operators:</p>
+<ul>
+<li>Autocomplete</li>
+<li>Compound</li>
+<li>Text</li>
+<li>Regex </li>
+</ul>
+<p>Like for the other stages the search stages can be enhanced with one or several operators. Unlike the other stages, it is required to use at least one operator with the search stages.
+The operators listed previously are some of most commonly used operators. </p>
+<p>The <code>text</code> operator is the central operator that allows to perform full-text search. It takes in an optional fuzzy parameter which allows to perform fuzzy search.</p>
+<p>The <code>autocomplete</code> operator allows to perform autocompletion. </p>
+<p>The <code>compound</code> operator allows to combine several search operators together while giving each of them a different weight or role thanks to the clause types <code>filter</code>, <code>must</code>, <code>mustNot</code> and <code>should</code>. </p>
+<ul>
+<li><code>filter</code> clauses define text that must be present in the documents matching the query.</li>
+<li><code>must</code> clauses are similar to <code>filter</code> clauses, but they also affect the relevance score of the documents.</li>
+<li><code>mustNot</code> clauses define text that must not be present in the documents matching the query.</li>
+<li><code>should</code> clauses define text that may be present in the documents matching the query. They also affect the relevance score of the documents. A minimum number of <code>should</code> clauses matches can be defined through the <code>minimumShouldMatch</code> parameter.</li>
+</ul>
+<p>The <code>facet</code> collector (sort of operator) allows to perform faceting on the results of the search. It is a very powerful feature and common feature in good search experiences.</p>
+<p>Again, the search features are so vast, that they could have their own package, but fortunately for you, they have been included in <code>monggregate</code>.</p>
+<p>How do you build search queries with <code>monggregate</code>? Let's see that in the next section.
+In the next sections, we will only talk about the <code>$search</code> stage, but everything applies to the <code>$searchMeta</code> stage as well.</p>
+<h2 id="basic-search"><strong>Basic Search</strong></h2>
+<p>The <code>Search</code> class the and the <code>search</code> method have default parameters so that it is easy to quickly get started. </p>
+<p>Building your search request is as simple as, the following code:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>        <span class="n">path</span><span class="o">=</span><span class="s2">&quot;description&quot;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>        <span class="n">query</span><span class="o">=</span><span class="s2">&quot;apple&quot;</span><span class="p">,</span> 
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="p">)</span>
+</span></code></pre></div>
+<p>By default, the search will be performed on the <code>text</code> operator.</p>
+<p>You can also enhance your the search experience by making a fuzzy search, just by adding the <code>fuzzy</code> parameter:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span> <span class="nn">monggregate.search.commons</span> <span class="kn">import</span> <span class="n">FuzzyOptions</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>        <span class="n">path</span><span class="o">=</span><span class="s2">&quot;description&quot;</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>        <span class="n">query</span><span class="o">=</span><span class="s2">&quot;apple&quot;</span><span class="p">,</span> 
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>        <span class="n">fuzzy</span><span class="o">=</span><span class="n">FuzzyOptions</span><span class="p">(</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>            <span class="n">max_edits</span><span class="o">=</span><span class="mi">2</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>        <span class="p">)</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="p">)</span>
+</span></code></pre></div>
+<p>You can build even richer search queries by adding more operators to your search stage as shown in the next section.</p>
+<h2 id="search-pipelines"><strong>Search Pipelines</strong></h2>
+<p>The search stages can be composed of multiple search operators, thus defining a compound search.
+As such, unlike for other stages, calling the <code>search</code> method on a <code>pipeline</code> object several times will not add a new <code>search</code> stage every time. Instead, every call will complete the previous <code>search</code> stage by appending a new clause or a new facet.</p>
+<p>NOTE: The <code>$search</code> stage has to be the first stage of the pipeline.</p>
+<p>As an example, the following code:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>        <span class="n">index</span><span class="o">=</span><span class="s2">&quot;fruits&quot;</span><span class="p">,</span> 
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>        <span class="n">operator_name</span><span class="o">=</span><span class="s2">&quot;compound&quot;</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="p">)</span><span class="o">.</span><span class="n">search</span><span class="p">(</span> 
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>        <span class="n">clause_type</span><span class="o">=</span><span class="s2">&quot;must&quot;</span><span class="p">,</span> 
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>        <span class="n">query</span><span class="o">=</span><span class="s2">&quot;varieties&quot;</span><span class="p">,</span> 
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>        <span class="n">path</span><span class="o">=</span><span class="s2">&quot;description&quot;</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    <span class="p">)</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>        <span class="n">clause_type</span><span class="o">=</span><span class="s2">&quot;mustNot&quot;</span><span class="p">,</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>        <span class="n">query</span><span class="o">=</span><span class="s2">&quot;apples&quot;</span><span class="p">,</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>        <span class="n">path</span><span class="o">=</span><span class="s2">&quot;description&quot;</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    <span class="p">)</span>
+</span></code></pre></div>
+will generate the following pipeline:
+<div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">[</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">        </span><span class="nt">&quot;$search&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">            </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;fruits&quot;</span><span class="p">,</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">            </span><span class="nt">&quot;compound&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">                </span><span class="nt">&quot;must&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">                    </span><span class="nt">&quot;query&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;varieties&quot;</span><span class="p">,</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">                    </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;description&quot;</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">                </span><span class="p">},</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">                </span><span class="nt">&quot;mustNot&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">                    </span><span class="nt">&quot;query&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;apples&quot;</span><span class="p">,</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">                    </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;description&quot;</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">                </span><span class="p">}</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">            </span><span class="p">}</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="p">]</span>
+</span></code></pre></div></p>
+<p>This example was copied from a past version* of MongoDB official doc and has just been adapted to <code>monggregate</code> syntax.
+Let's review what is going on here.</p>
+<p>The first search call, initializes a <code>$search</code> stage with an "empty" <code>compound</code> operator.
+The second search call, completes the <code>compound</code> operator by adding a <code>text</code> operator in a <code>must</code> clause.
+The third search call, appends a <code>text</code> operator in a <code>mustNot</code> clause to the <code>compound</code> operator.</p>
+<p>At the end, the generated query will return documents containing the word "varieties" in the "description" field, but not containing the word "apples" in the "description" field.</p>
+<p>*Unfortunately, the current version of the doc does not provide such example anymore. It is planned that we update this page to use the movies collection instead.</p>
+<h2 id="faceted-search"><strong>Faceted Search</strong></h2>
+<p>Unlike previous sections, this section will be illustrated with the <code>search_meta</code> method instead of the <code>search</code> method, as it is a bit more relevant in the context of faceted search.</p>
+<p><code>monggregate</code> eases the process of building faceted search queries.</p>
+<p>You can initialize a faceted search query as follows:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">search_meta</span><span class="p">(</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="n">index</span><span class="o">=</span><span class="s2">&quot;fruits&quot;</span><span class="p">,</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="n">collector_name</span><span class="o">=</span><span class="s2">&quot;facet&quot;</span><span class="p">,</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="p">)</span>
+</span></code></pre></div>
+<p>Then, you can add facets to your search query as follows:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">search_meta</span><span class="p">(</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    <span class="n">facet_type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    <span class="n">path</span><span class="o">=</span><span class="s2">&quot;category&quot;</span><span class="p">,</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="p">)</span>
+</span></code></pre></div>
+<p>The first code sample initializes the faceted search but it is not usable as such. It is required to add at least one facet to the search query.</p>
+<p>The second code sample adds a facet to the search query. The facet is of type <code>string</code> and will be performed on the <code>category</code> field.</p>
+<p>After initializing the faceted search, you can add as many facets as you want to your search query and you can also add other search operators to your search query (in the order that you want) such that the facets will be performed on the results of the search.</p>
 
 
 
