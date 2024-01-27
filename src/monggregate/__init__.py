@@ -5,7 +5,7 @@ from monggregate.dollar import S, SS
 from monggregate.pipeline import Pipeline
 
 
-__version__ = "0.19.0"
+__version__ = "0.20.0"
 __author__ = "Vianney Mixtur"
 __contact__ = "prenom.nom@outlook.fr"
 __copyright__ = "Copyright © 2022 Vianney Mixtur"
