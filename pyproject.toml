@@ -38,11 +38,11 @@ documentation = "https://vianneymi.github.io/monggregate/"
 
 [tool.bumpver]
 current_version = "0.20.0"
-version_pattern = "MAJOR.MINOR.PATCH"
+version_pattern = "MAJOR.MINOR.PATCH[PYTAGNUM]"
 commit_message = "bump version {old_version} -> {new_version}"
-commit = true
+commit = false
 tag = true
-push = true
+push = false
 
 [tool.bumpver.file_patterns]
 "pyproject.toml" = [
