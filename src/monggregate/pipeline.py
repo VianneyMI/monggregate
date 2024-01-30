@@ -1453,12 +1453,12 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         Arguments:
         ---------------------------------
 
-            - index, str : name of the index to use for the search
-            - path, str : path to the vector field to search in
-            - query_vector, list[float] : vector to search for
-            - num_candidates, int : number of candidates to retrieve
-            - limit, int : number of documents to return
-            - filter, dict|None : filter to apply to the search
+            - index, str : name of the Atlas Vector Search index to use
+            - path, str : path to the vector field to search
+            - query_vector, list[float] : array of numbers of the BSON double type that represent the query vector
+            - num_candidates, int : number of nearest neighbors to use during the search
+            - limit, int : number of documents to return in the results
+            - filter, dict|None : any MQL match expression that compares an indexed field with a boolean, number (not decimals), or string to use as a prefilter
         
         """
 
