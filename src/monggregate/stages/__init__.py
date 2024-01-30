@@ -21,6 +21,7 @@ from monggregate.stages.sort import Sort
 from monggregate.stages.union_with import UnionWith
 from monggregate.stages.unwind import Unwind
 from monggregate.stages.unset import Unset
+from monggregate.stages.vector_search import VectorSearch
 
 
 
@@ -66,4 +67,5 @@ AnyStage = Union[
     UnionWith,
     Unwind,
     Unset,
+    VectorSearch
 ]

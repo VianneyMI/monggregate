@@ -32,7 +32,8 @@ from monggregate.stages import (
     Sort,
     UnionWith,
     Unwind,
-    Unset
+    Unset,
+    VectorSearch,
 )
 from monggregate.stages.search.base import OperatorLiteral
 from monggregate.search.operators import OperatorMap
@@ -1435,25 +1436,41 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         )
 
         return self
-
-if __name__ =="__main__":
-    from datetime import datetime
-    from monggregate.search.collectors import StringFacet, NumericFacet
     
-    pipeline = Pipeline()
-    pipeline.search_meta(
-    index="movies",
-    collector_name="facet", 
-    operator=Search.Range(
-        path="released", 
-        gte=datetime(year=2000, month=1, day=1), 
-        lte=datetime(year=2015, month=1, day=31)
-        ),
-    facets=[
-        StringFacet(name="directorsFacet", path="directors", num_buckets=7),
-        NumericFacet(name="yearFacet", path="year", boundaries=[2000, 2005, 2010, 2015]),
-    ]
-)
-    search_stage = pipeline[0]
-    statement = search_stage.statement
-    print(statement)
+
+    def vector_search(
+            self,
+            index:str,
+            path:str,
+            query_vector:list[float],
+            num_candidates:int,
+            limit:int,
+            filter:dict|None=None, 
+            )->Self:
+        """
+        Adds a vector_search stage to the current pipeline.
+
+        Arguments:
+        ---------------------------------
+
+            - index, str : name of the index to use for the search
+            - path, str : path to the vector field to search in
+            - query_vector, list[float] : vector to search for
+            - num_candidates, int : number of candidates to retrieve
+            - limit, int : number of documents to return
+            - filter, dict|None : filter to apply to the search
+        
+        """
+
+        self.stages.append(
+            VectorSearch(
+                index=index,
+                path=path,
+                query_vector=query_vector,
+                num_candidates=num_candidates,
+                limit=limit,
+                filter=filter
+            )
+        
+        )
+        return self
