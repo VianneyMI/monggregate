@@ -35,7 +35,7 @@ from monggregate.stages import (
     Unset,
     VectorSearch,
 )
-from monggregate.stages.search.base import OperatorLiteral
+from monggregate.stages.search.base import SearchBase, OperatorLiteral
 from monggregate.search.operators import OperatorMap
 from monggregate.search.operators.compound import Compound, ClauseType
 from monggregate.search.collectors.facet import Facet, FacetType
@@ -1060,14 +1060,14 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         
         # If pipeline is not empty then the first stage must be Search stage.
         # If so, adds the operator to the existing stage using Compound.
-        elif len(self) >= 1 and isinstance(self.stages[0], Search):
+        elif len(self) >= 1 and isinstance(self.stages[0], SearchMeta):
             kwargs.update({
                 # "collector_name":collector_name,
                 "operator_name":operator_name,
                 "path":path,
                 "query":query,
             })
-            has_facet_arg = self.__has_facet_arg(**kwargs)
+            has_facet_arg = self.__has_facet_arg(facet_type=facet_type, **kwargs)
             if has_facet_arg:
                 self._append_facet(facet_type, **kwargs)
             else:
@@ -1149,33 +1149,38 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         minimum_should_match = kwargs.pop("minimum_should_match", default_minimum_should_match)
 
+        kwargs.update({
+            "path":path,
+            "query":query
+        })
+
         if isinstance(first_stage.collector, Facet):
             if isinstance(first_stage.collector.operator, Compound):
                 # Add clause to existing compound
-                first_stage.__get_operators_map__(operator_name=operator_name)(clause_type, path=path, query=query, **kwargs)
+                first_stage.__get_operators_map__(operator_name=operator_name)(clause_type, **kwargs)
             elif first_stage.collector.operator is None:
                 # Create a compound operator with the to-be operator as a clause
                 new_operator = Compound(minimum_should_match=minimum_should_match)
-                new_operator.__get_operators_map__(operator_name=operator_name)(clause_type, path=path, query=query, **kwargs)
+                new_operator.__get_operators_map__(operator_name=operator_name)(clause_type, **kwargs)
                 first_stage.operator = new_operator  
             else:
                 # Retrieve current operator and create a compound operator
                 # and add the current operator as a clause
                 new_operator = Compound(should=[first_stage.collector.operator], minimum_should_match=minimum_should_match)
-                new_operator.__get_operators_map__(operator_name=operator_name)(clause_type, path=path, query=query, **kwargs)
+                new_operator.__get_operators_map__(operator_name=operator_name)(clause_type, **kwargs)
                 first_stage.operator = new_operator
         elif isinstance(first_stage.operator, Compound):
             # Add clause to existing compound
-            first_stage.__get_operators_map__(operator_name=operator_name)(clause_type, path=path, query=query, **kwargs)
+            first_stage.__get_operators_map__(operator_name=operator_name)(clause_type, **kwargs)
         elif first_stage.operator is not None:
             # Create a compound operator with the to-be operator as a clause
             new_operator = Compound(minimum_should_match=minimum_should_match)
-            new_operator.__get_operators_map__(operator_name=operator_name)(clause_type, path=path, query=query, **kwargs)
+            new_operator.__get_operators_map__(operator_name=operator_name)(clause_type, **kwargs)
             first_stage.operator = new_operator
 
         else:
             # Create an operator
-            first_stage.operator = OperatorMap[operator_name](path=path, query=query, **kwargs)
+            first_stage.operator = OperatorMap[operator_name](**kwargs)
 
         return None
 
@@ -1209,7 +1214,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         has_facet_arg = False
 
         for arg in facet_args:
-            if arg in kwargs:
+            if arg in kwargs and kwargs[arg] is not None:
                 has_facet_arg = True
                 break
 

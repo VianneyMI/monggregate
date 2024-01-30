@@ -1009,7 +1009,8 @@ class Facet(SearchCollector):
             type:FacetType='string',
             num_buckets:int|None=None,
             boundaries:list[int|float]|list[datetime]|None=None,
-            default:str|None=None
+            default:str|None=None,
+            **kwargs:Any # NOTE : To prevent errors from passing extra argumentscf #100 on GitHub <VM, 22/01/2024>
     )->Self:
         
         if type=="string":
