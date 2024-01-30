@@ -32,7 +32,8 @@ from monggregate.stages import (
     Sort,
     UnionWith,
     Unwind,
-    Unset
+    Unset,
+    VectorSearch,
 )
 from monggregate.stages.search.base import SearchBase, OperatorLiteral
 from monggregate.search.operators import OperatorMap
@@ -1439,4 +1440,42 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             Unset(field=field, fields=fields)
         )
 
+        return self
+    
+
+    def vector_search(
+            self,
+            index:str,
+            path:str,
+            query_vector:list[float],
+            num_candidates:int,
+            limit:int,
+            filter:dict|None=None, 
+            )->Self:
+        """
+        Adds a vector_search stage to the current pipeline.
+
+        Arguments:
+        ---------------------------------
+
+            - index, str : name of the Atlas Vector Search index to use
+            - path, str : path to the vector field to search
+            - query_vector, list[float] : array of numbers of the BSON double type that represent the query vector
+            - num_candidates, int : number of nearest neighbors to use during the search
+            - limit, int : number of documents to return in the results
+            - filter, dict|None : any MQL match expression that compares an indexed field with a boolean, number (not decimals), or string to use as a prefilter
+        
+        """
+
+        self.stages.append(
+            VectorSearch(
+                index=index,
+                path=path,
+                query_vector=query_vector,
+                num_candidates=num_candidates,
+                limit=limit,
+                filter=filter
+            )
+        
+        )
         return self
