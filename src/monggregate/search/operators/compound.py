@@ -57,7 +57,7 @@ such as autocomplete, text, or span, to specify query criteria.
 """
 
 from datetime import datetime
-from typing import Literal, Callable
+from typing import Any, Literal, Callable
 
 from typing_extensions import Self
 
@@ -161,6 +161,7 @@ class Compound(SearchOperator):
             token_order:str="any",
             fuzzy:FuzzyOptions|None=None,
             score:dict|None=None,
+            **kwargs:Any
     )->Self:
         """Adds an autocomplete clause to the current compound instance."""
         
@@ -184,7 +185,8 @@ class Compound(SearchOperator):
             must_not:list["Clause|Compound"]=[],
             should:list["Clause|Compound"]=[],
             filter:list["Clause|Compound"]=[],
-            minimum_should_match:int=0
+            minimum_should_match:int=0,
+            **kwargs:Any
         )->Self:
         """Adds a compound clause to the current compound instance."""
 
@@ -206,7 +208,8 @@ class Compound(SearchOperator):
             type,
             path:str,
             value:str|int|float|bool|datetime,
-            score:dict|None=None
+            score:dict|None=None,
+            **kwargs:Any
     )->Self:
         """Adds an equals clause to the current compound instance."""
 
@@ -221,7 +224,7 @@ class Compound(SearchOperator):
         return self
 
 
-    def exists(self, type:ClauseType, path:str)->Self:
+    def exists(self, type:ClauseType, path:str, **kwargs:Any)->Self:
         """Adds an exists clause to the current compound instance."""
 
         _exists = Exists(path=path)
@@ -230,7 +233,7 @@ class Compound(SearchOperator):
         return self
 
 
-    def more_like_this(self, type:ClauseType, like:dict|list[dict])->Self:
+    def more_like_this(self, type:ClauseType, like:dict|list[dict], **kwargs:Any)->Self:
         """Adds a more_like_this clause to the current compound instance."""
 
         _more_like_this = MoreLikeThis(like=like)
@@ -248,7 +251,8 @@ class Compound(SearchOperator):
             lt:int|float|datetime|None=None,
             gte:int|float|datetime|None=None,
             lte:int|float|datetime|None=None,
-            score:dict|None=None
+            score:dict|None=None,
+            **kwargs:Any
     )->Self:
         """Adds a range clause to the current compound instance."""
 
@@ -273,7 +277,8 @@ class Compound(SearchOperator):
             query:str|list[str],
             path:str|list[str],
             allow_analyzed_field:bool=False,
-            score:dict|None=None
+            score:dict|None=None,
+            **kwargs:Any
     )->Self:
         """Adds a regex clause to the current compound instance."""
 
@@ -298,7 +303,8 @@ class Compound(SearchOperator):
             path:str|list[str],
             fuzzy:FuzzyOptions|None=None,
             score:dict|None=None,
-            synonyms:str|None=None
+            synonyms:str|None=None,
+            **kwargs:Any
     )->Self:
         """Adds a text clause to the current compound instance."""
 
@@ -323,6 +329,7 @@ class Compound(SearchOperator):
             path:str|list[str],
             allow_analyzed_field:bool=False,
             score:dict|None=None,
+            **kwargs:Any
     )->Self:
         """Adds a wildcard clause to the current compound instance."""
 
