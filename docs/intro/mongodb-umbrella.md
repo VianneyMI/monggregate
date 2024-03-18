@@ -37,7 +37,8 @@ In the [following page](mongodb-aggregation-framework.md), we will do a deep-div
 
 [Atlas Search ](https://www.mongodb.com/docs/atlas/atlas-search/atlas-search-overview/) is a full-text search service that is fully integrated with MongoDB Atlas. It allows you to perform text search on your data and is based on [Apache Lucene](https://lucene.apache.org/).
 
-As Atlas Search is a part of the aggregation framework, `monggregate` also offers a way to use it.
+As the aggregation framework is the entry point for Atlas Search, `monggregate` also offers a way to use it.
+Check out the search page[here](../tutorial/search.md) for more details.
 
 ## **MongoDB Latest Features**
 

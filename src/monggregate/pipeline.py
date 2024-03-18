@@ -32,9 +32,10 @@ from monggregate.stages import (
     Sort,
     UnionWith,
     Unwind,
-    Unset
+    Unset,
+    VectorSearch,
 )
-from monggregate.stages.search.base import OperatorLiteral
+from monggregate.stages.search.base import SearchBase, OperatorLiteral
 from monggregate.search.operators import OperatorMap
 from monggregate.search.operators.compound import Compound, ClauseType
 from monggregate.search.collectors.facet import Facet, FacetType
@@ -1059,14 +1060,14 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         
         # If pipeline is not empty then the first stage must be Search stage.
         # If so, adds the operator to the existing stage using Compound.
-        elif len(self) >= 1 and isinstance(self.stages[0], Search):
+        elif len(self) >= 1 and isinstance(self.stages[0], SearchMeta):
             kwargs.update({
                 # "collector_name":collector_name,
                 "operator_name":operator_name,
                 "path":path,
                 "query":query,
             })
-            has_facet_arg = self.__has_facet_arg(**kwargs)
+            has_facet_arg = self.__has_facet_arg(facet_type=facet_type, **kwargs)
             if has_facet_arg:
                 self._append_facet(facet_type, **kwargs)
             else:
@@ -1148,33 +1149,38 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         minimum_should_match = kwargs.pop("minimum_should_match", default_minimum_should_match)
 
+        kwargs.update({
+            "path":path,
+            "query":query
+        })
+
         if isinstance(first_stage.collector, Facet):
             if isinstance(first_stage.collector.operator, Compound):
                 # Add clause to existing compound
-                first_stage.__get_operators_map__(operator_name=operator_name)(clause_type, path=path, query=query, **kwargs)
+                first_stage.__get_operators_map__(operator_name=operator_name)(clause_type, **kwargs)
             elif first_stage.collector.operator is None:
                 # Create a compound operator with the to-be operator as a clause
                 new_operator = Compound(minimum_should_match=minimum_should_match)
-                new_operator.__get_operators_map__(operator_name=operator_name)(clause_type, path=path, query=query, **kwargs)
+                new_operator.__get_operators_map__(operator_name=operator_name)(clause_type, **kwargs)
                 first_stage.operator = new_operator  
             else:
                 # Retrieve current operator and create a compound operator
                 # and add the current operator as a clause
                 new_operator = Compound(should=[first_stage.collector.operator], minimum_should_match=minimum_should_match)
-                new_operator.__get_operators_map__(operator_name=operator_name)(clause_type, path=path, query=query, **kwargs)
+                new_operator.__get_operators_map__(operator_name=operator_name)(clause_type, **kwargs)
                 first_stage.operator = new_operator
         elif isinstance(first_stage.operator, Compound):
             # Add clause to existing compound
-            first_stage.__get_operators_map__(operator_name=operator_name)(clause_type, path=path, query=query, **kwargs)
+            first_stage.__get_operators_map__(operator_name=operator_name)(clause_type, **kwargs)
         elif first_stage.operator is not None:
             # Create a compound operator with the to-be operator as a clause
             new_operator = Compound(minimum_should_match=minimum_should_match)
-            new_operator.__get_operators_map__(operator_name=operator_name)(clause_type, path=path, query=query, **kwargs)
+            new_operator.__get_operators_map__(operator_name=operator_name)(clause_type, **kwargs)
             first_stage.operator = new_operator
 
         else:
             # Create an operator
-            first_stage.operator = OperatorMap[operator_name](path=path, query=query, **kwargs)
+            first_stage.operator = OperatorMap[operator_name](**kwargs)
 
         return None
 
@@ -1208,7 +1214,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         has_facet_arg = False
 
         for arg in facet_args:
-            if arg in kwargs:
+            if arg in kwargs and kwargs[arg] is not None:
                 has_facet_arg = True
                 break
 
@@ -1435,25 +1441,41 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         )
 
         return self
-
-if __name__ =="__main__":
-    from datetime import datetime
-    from monggregate.search.collectors import StringFacet, NumericFacet
     
-    pipeline = Pipeline()
-    pipeline.search_meta(
-    index="movies",
-    collector_name="facet", 
-    operator=Search.Range(
-        path="released", 
-        gte=datetime(year=2000, month=1, day=1), 
-        lte=datetime(year=2015, month=1, day=31)
-        ),
-    facets=[
-        StringFacet(name="directorsFacet", path="directors", num_buckets=7),
-        NumericFacet(name="yearFacet", path="year", boundaries=[2000, 2005, 2010, 2015]),
-    ]
-)
-    search_stage = pipeline[0]
-    statement = search_stage.statement
-    print(statement)
+
+    def vector_search(
+            self,
+            index:str,
+            path:str,
+            query_vector:list[float],
+            num_candidates:int,
+            limit:int,
+            filter:dict|None=None, 
+            )->Self:
+        """
+        Adds a vector_search stage to the current pipeline.
+
+        Arguments:
+        ---------------------------------
+
+            - index, str : name of the Atlas Vector Search index to use
+            - path, str : path to the vector field to search
+            - query_vector, list[float] : array of numbers of the BSON double type that represent the query vector
+            - num_candidates, int : number of nearest neighbors to use during the search
+            - limit, int : number of documents to return in the results
+            - filter, dict|None : any MQL match expression that compares an indexed field with a boolean, number (not decimals), or string to use as a prefilter
+        
+        """
+
+        self.stages.append(
+            VectorSearch(
+                index=index,
+                path=path,
+                query_vector=query_vector,
+                num_candidates=num_candidates,
+                limit=limit,
+                filter=filter
+            )
+        
+        )
+        return self

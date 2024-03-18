@@ -9,6 +9,7 @@ All the classes of the package inherit from one of the classes defined in this m
 from abc import ABC, abstractmethod
 from typing import Any, TypeGuard
 
+
 # 3rd Party imports
 # ---------------------------
 try:
