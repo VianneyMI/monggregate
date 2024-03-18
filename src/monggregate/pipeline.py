@@ -293,7 +293,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             and the exclusive upper boundary for the bucket.
             NOTE : You must specify at least two boundaries.
         default : Any, optional
-            A literal that specifies the _id (group name) of an additional
+            A literal that specifies the `_id` (group name) of an additional
             bucket that contains all documents whoe groupBy expression result
             does not fall into a bucket specified by the boundaries. If
             unspecified, each input document must resolve groupBy expression
@@ -303,7 +303,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             be of a different type than the entries in boundaries.
         output : dict, optional
             A document that specifies the fields to include in the output documents in addition to
-            the _id field. To specify the field to include you must use accumulator expressions
+            the `_id` field. To specify the field to include you must use accumulator expressions
                 
                 >>> {"outputField1" : {"accumulator":"expression1}}
                     ....
@@ -323,9 +323,9 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         ----------------------------
         Categorizes incoming documents into groups, called buckets, based 
         on a specified expression and bucket boundaries and outputs a document
-        per each bucket. Each output document contains an _id field whose
+        per each bucket. Each output document contains an `_id` field whose
         value specifies the inclusive lower bound of the bucket. The output
-        option specifies the fields included in each output document. $bucket
+        option specifies the fields included in each output document. `$bucket`
         only produces output documents for buckets that contain at least one input document.                           
         
         [Source](https://www.mongodb.com/docs/manual/meta/aggregation-quick-reference/)
@@ -366,7 +366,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             Number of buckets desired.
         output : dict
             A document that specifieds the fields to include in the oupput
-            documents in addition to the _id field. To specify the field to
+            documents in addition to the `_id` field. To specify the field to
             include, you must use accumulator expressions.
             The defaut count field is not included in the output document
             when output is specified. Explicitly specify the count expression
@@ -392,11 +392,11 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         Each bucket is represented as a document in the output. The document for each bucket contains:
 
-            * An _id object that specifies the bounds of the bucket.
+            * An `_id` object that specifies the bounds of the bucket.
 
-                * The _id.min field specifies the inclusive lower bound for the bucket.
+                * The `_id.min` field specifies the inclusive lower bound for the bucket.
 
-                * The _id.max field specifies the upper bound for the bucket. This bound is exclusive for all buckets except the final bucket in the series, where it is inclusive.
+                * The `_id.max` field specifies the upper bound for the bucket. This bound is exclusive for all buckets except the final bucket in the series, where it is inclusive.
 
             * A count field that contains the number of documents in the bucket. The count field is included by default when the output document is not specified.
         
@@ -419,18 +419,19 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         Adds a count stage to the current pipeline.
         Passes a document to the next stage that contains a count of the number of documents input to the stage.
 
-        Arguments
-        -------------------------------
+        Parameters
+        ----------
+        name: str
+            Name of the output field which the count as its value.
+            Must be a non-empty string, must not start with `$`, and must not contain the `.` character.
 
-            - name, str : name of the output field which the count as its value.
-                        Must be a non-empty string, must not start with $, and must not contain the . character.
-
-        Online MongoDB documentation:
-        -----------------------------
+        Online MongoDB documentation
+        ----------------------------
         Passes a document to the next stage that contains a count of the number of documents input to the stage.
 
-        $count has the following prototype form:
-        >>> {"$count":"string"}
+        `$count` has the following prototype form:
+
+            >>> {"$count":"string"}
 
         <string> is the name of the output field which has the count as its value.
         <string> must be a non-empty string, must not start with $ and must not contain the . character.
@@ -444,8 +445,8 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         return self
 
     def explode(self, \
-                path_to_array:str|None=None, 
                 path:str|None=None, 
+                path_to_array:str|None=None, 
                 *,  
                 include_array_index:str|None=None, 
                 always:bool=False, 
@@ -453,16 +454,18 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         """
         Adds a unwind stage to the current pipeline.
 
-        Arguments:
-        ---------------------------------
+        Parameters
+        ----------
+        path (path_to_array): str
+            Path to an array field
+        include_array_index : str
+            Name of a new field to hold the array index of the element
+            NOTE : The name cannot start with a dollar sign
+        always (preserve_null_and_empty_index):  bool
+            Whether to output documents for input documents where the path does not resolve to a valid array. Defaults to False
 
-            - path_to_array (path), str : path to an array field
-            - include_array_index, str : name of a new field to hold the array index of the element
-                                        NOTE : The name cannot start with a dollar sign
-            - always (preserve_null_and_empty_index), bool : whether to output documents for input documents where the path does not resolve to a valid array. Defaults to False
-
-        Online MongoDB documentation:
-        -----------------------------
+        Online MongoDB documentation
+        ----------------------------
         Deconstructs an array field from the input documents to output a document for each element.
         Each output document is the input document with the value of the array field replaced by the element.
         
@@ -484,19 +487,21 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         The group stage separates documents into groups according to a "group key". The output is one document for each unique group key.
         The output documents can also contain additional fields that are set using accumulator expressions.
         
-        Arguments:
-        ------------------------
-            - by,  str | list[str] | set[str] | dict | None : field or group of fields to group by
-            - query, dict | None : Computed aggregated values (per group)
+        Parameters
+        ----------
+        by : str | list[str] | set[str] | dict | None
+            Field or group of fields to group by.
+        query :  dict | None
+            Computed aggregated values (per group).
 
-        Online MongoDB documentation:
+        Online MongoDB documentation
         -----------------------------
-        The $group stage separates documents into groups according to a "group key". The output is one document for each unique group key.
+        The `$group` stage separates documents into groups according to a "group key". The output is one document for each unique group key.
 
-        A group key is often a field, or group of fields. The group key can also be the result of an expression. Use the _id field in the $group pipeline stage to set the group key. See below for
+        A group key is often a field, or group of fields. The group key can also be the result of an expression. Use the `_id` field in the `$group` pipeline stage to set the group key. See below for
         usage examples.
 
-        In the $group stage output, the _id field is set to the group key for that document.
+        In the `$group` stage output, the `_id` field is set to the group key for that document.
 
         The output documents can also contain additional fields that are set using
         accumulator expressions.
@@ -519,19 +524,19 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         Adds a limit stage to the current pipeline.
         Limits the number of documents passed to the next stage in the pipeline.
 
-        Arguments:
-        ---------------------------------
-            - value, int : the actual limit to apply.
-                           limits the number of documents returned by the stage to
-                           the provided value.
+        Parameters
+        ----------
+        value : int
+            the actual limit to apply. Limits the number of documents returned by the stage to
+            the provided value.
 
         Online MongoDB documentation:
         -----------------------------
         Limits the number of documents passed to the next stage in the pipeline.
         
-        $limit takes a positive integer that specifies the maximum number of documents to pass along.
+        `$limit` takes a positive integer that specifies the maximum number of documents to pass along.
 
-        NOTE : Starting in MongoDB 5.0, the $limit pipeline aggregation has a 64-bit integer limit. Values
+        NOTE : Starting in MongoDB 5.0, the `$limit` pipeline aggregation has a 64-bit integer limit. Values
         passed to the pipeline which exceed this limit will return a invalid argument error.
 
         [Source](https://www.mongodb.com/docs/v7.0/reference/operator/aggregation/limit/#-limit--aggregation-)
@@ -556,43 +561,61 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         lookup stage adds a new array field to each input document. The new array field contains the matching documents from the "joined" collection. The
         lookup stage passes these reshaped documents to the next stage.
         
-        Arguments:
-        ----------------------------
-            - right / from (official MongoDB name), str : foreign collection
-            - left_on / local_field (official MongoDB name)), str | None : field of the current collection to join on
-            - right_on / foreign_field (official MongoDB name), str | None : field of the foreign collection to join on
-            - let, dict | None : variables to be used in the inner pipeline
-            - pipeline, list[dict] | None : pipeline to run on the foreign collection.
-            - name / as, str : name of the field containing the matches from the foreign collection
+        Parameters
+        ----------
+        right : str
+            Foreign collection.
+        from : str
+            Alias for `right` (official MongoDB name).
+        left_on : str | None
+            Field of the current collection to join on.
+        local_field : str | None 
+            Alias for `left_on` (official MongoDB name).
+        right_on : str | None
+            Field of the foreign collection to join on
+        foreign_field : str | None
+            Alias for `right_on`(official MongoDB name).
+        let :  dict | None
+            Variables to be used in the inner pipeline
+        pipeline : list[dict] | None
+            Pipeline to run on the foreign collection.
+        name : str
+            Name of the field containing the matches from the foreign collection.
+        as : str
+            Alias for `name`.
 
-            NOTE (pipeline and let attributes) : To reference variables in pipeline stages, use the "$$<variable>" syntax.
 
-            The let variables can be accessed by the stages in the pipeline, including additional $lookup
-            stages nested in the pipeline.
+        NOTE (pipeline and let attributes) : To reference variables in pipeline stages, use the "$$<variable>" syntax.
 
-            * A $match stage requires the use of an $expr operator to access the variables.
-            The $expr operator allows the use of aggregation expressions inside of the $match syntax.
+        The let variables can be accessed by the stages in the pipeline, including additional `$lookup`
+        stages nested in the pipeline.
 
-            Starting in MongoDB 5.0, the $eq, $lt, $lte, $gt, and $gte comparison operators placed in an
-            $expr operator can use an index on the from collection referenced in a $lookup stage. Limitations:
+        * A `$match` stage requires the use of an `$expr` operator to access the variables.
+        The `$expr` operator allows the use of aggregation expressions inside of the `$match` syntax.
 
-                * Multikey indexes are not used.
+        Starting in MongoDB 5.0, the `$eq`, `$lt`, `$lte`, `$gt`, and `$gte` comparison operators placed in an
+        `$expr` operator can use an index on the from collection referenced in a `$lookup` stage. Limitations:
 
-                * Indexes are not used for comparisons where the operand is an array or the operand type is undefined.
+            * Multikey indexes are not used.
 
-                * Indexes are not used for comparisons with more than one field path operand.
+            * Indexes are not used for comparisons where the operand is an array or the operand type is undefined.
 
-            * Other (non-$match) stages in the pipeline do not require an
-            $expr operator to access the variables.
+            * Indexes are not used for comparisons with more than one field path operand.
+
+        * Other (non-`$match`) stages in the pipeline do not require an
+        `$expr` operator to access the variables.
 
         Online MongoDB documentation:
         -----------------------------
-        Performs a left outer join to a collection in the same database to filter in documents from the "joined" collection for processing. The lookup stage adds a new array field to each input document. The new array field contains the matching documents from the "joined" collection. The
+        Performs a left outer join to a collection in the same database to
+        filter in documents from the "joined" collection for processing. The
+        lookup stage adds a new array field to each input document. The new
+        array field contains the matching documents from the "joined" collection. The
         lookup stage passes these reshaped documents to the next stage.
 
-        Starting in MongoDB 5.1, $lookup works across sharded collections.
+        Starting in MongoDB 5.1, `$lookup` works across sharded collections.
 
-        To combine elements from two different collections, use the $unionWith pipeline stage.
+        To combine elements from two different collections, use the `$unionWith` pipeline stage.
 
         [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/lookup/#mongodb-pipeline-pipe.-lookup)
         """
@@ -622,15 +645,15 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         This is a virtual and unofficial stage. It is not documented on MongoDB aggregation pipeline reference page.
         As such, there is no Join class implementation in this package.
 
-        Arguments:
-        -------------------
-            - other, str : collection to join
-            - how, 'left', 'right', 'inner' : type of join to be performed
-                                              'left' preserve the left collection
-                                              'right' preserve the right collection
-                                              'inner' returns only documents from
-                                                      the left collection that match
-                                                      documents from the right collection
+        Parameters
+        ----------
+        other : str
+            Collection to join.
+        how : type of join to be performed
+            'left' preserve the left collection.
+            'right' preserve the right collection.
+            'inner' returns only documents from the left collection that match
+            documents from the right collection.
 
             - on, str|None=None: key to use to perform the join, 
                                  if the key name is the same in both collections
@@ -724,11 +747,12 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         Adds a match stage to the current pipeline.
         Filters the documents to pass only the documents that match the specified condition(s) to the next pipeline stage.
 
-        Arguments:
-        -------------------
-
-            - query, dict : a simple MQL query use to filter the documents.
-            - expression, Expression : an aggregation expression used to filter the documents
+        Parameters
+        ----------
+        query : dict
+            A simple MQL query use to filter the documents.
+        expression : Expression
+            An aggregation expression used to filter the documents.
     
         NOTE : Use query if you're using a MQL query and expression if you're using aggregation expressions.
 
@@ -736,9 +760,9 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         -----------------------------
         Filters the documents to pass only the documents that match the specified condition(s) to the next pipeline stage.
         
-        $match takes a document that specifies the query conditions. The query syntax is identical to the read operation query syntax; i.e.
-        $match does not accept raw aggregation expressions. Instead, use a $expr query expression to include aggregation expression in
-        $match
+        `$match` takes a document that specifies the query conditions. The query syntax is identical to the read operation query syntax; i.e.
+        `$match` does not accept raw aggregation expressions. Instead, use a `$expr` query expression to include aggregation expression in
+        `$match`.
 
         [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/match/#mongodb-pipeline-pipe.-match)
 
@@ -755,10 +779,12 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         Adds an out stage to the current pipeline.
         Takes the documents returned by the aggregation pipeline and writes them to a specified collection. Starting in MongoDB 4.4, you can specify the output database.
 
-        Arguments:
-        ---------------------------
-            - db, str|None : name of the db to output the collection. Defaults to the current collection.
-        - collection, str : name of the output collection
+        Parameters
+        ----------
+        db : str|None
+            Name of the db to output the collection. Defaults to the current collection.
+        collection : str
+            Name of the output collection
 
         Online MongoDB documentation:
         -----------------------------
@@ -789,21 +815,25 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         Adds a project stage to the current pipeline.
         Passes along the documents with the requested fields to the next stage in the pipeline. The specified fields can be existing fields from the input documents or newly computed fields.
 
-        Arguments:
-        ---------------------------
-            - projection, dict | None : projection to be applied
-            - fields, ProjectionArgs | None : fields  to be kept or excluded (depending on include/exclude parameters when those are booleans)
-            - include, ProjectionArgs| dict | bool | None : fields to be kept
-            - exclude, ProjectionArgs | dict | bool | None : fields to be excluded
+        Parameters
+        ----------
+        projection : dict | None
+            Projection to be applied.
+        fields : ProjectionArgs | None
+            Fields  to be kept or excluded (depending on include/exclude parameters when those are booleans).
+        include : ProjectionArgs| dict | bool | None
+            Fields to be kept.
+        exclude : ProjectionArgs | dict | bool | None
+            Fields to be excluded.
 
         Online MongoDB documentation:
         -----------------------------
         Passes along the documents with the requested fields to the next stage in the pipeline. The specified fields can be existing fields from the input documents or newly computed fields.
 
-        The $project takes a document that can specify the inclusion of fields,
-        the suppression of the _id field, the addition of new fields, and the resetting of the values of existing fields. Alternatively, you may specify the exclusion of fields.
+        The `$project` takes a document that can specify the inclusion of fields,
+        the suppression of the `_id` field, the addition of new fields, and the resetting of the values of existing fields. Alternatively, you may specify the exclusion of fields.
 
-        The $project specifications have the following forms:
+        The `$project` specifications have the following forms:
         
         [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/project/#mongodb-pipeline-pipe.-project)
         """
@@ -823,20 +853,22 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         """
         Adds a replace_root stage to the current pipeline.
         Replaces the input document with the specified document.
-        The operation replaces all existing fields in the input document, including the _id field.
+        The operation replaces all existing fields in the input document, including the `_id` field.
         You can promote an existing embedded document to the top level, or create a new document for promotion
         
-        Arguments:
-        -------------------------------------
-
-            - statement, dict : the statement generated during instantiation after parsing the other arguments
-            - path_to_new_root, str|None : the path to the embedded document to be promoted
-            - document, dict|None : document being created and to be set as the new root or expression
+        Parameters
+        ----------
+        statement : dict
+            The statement generated during instantiation after parsing the other arguments
+        path_to_new_root : str|None
+            The path to the embedded document to be promoted.
+        document : dict|None
+            Document being created and to be set as the new root or expression.
 
         Online MongoDB documentation:
         -----------------------------
         Replaces the input document with the specified document.
-        The operation replaces all existing fields in the input document, including the _id field.
+        The operation replaces all existing fields in the input document, including the `_id` field.
         You can promote an existing embedded document to the top level, or create a new document for promotion
         (see [example](https://www.mongodb.com/docs/manual/reference/operator/aggregation/replaceRoot/#std-label-new-replacement-doc)).
 
@@ -855,17 +887,19 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         """
         Adds a replace_with stage to the current pipeline.
 
-        Arguments:
-        -------------------------------------
-
-            - statement, dict : the statement generated during instantiation after parsing the other arguments
-            - path_to_new_root, str|None : the path to the embedded document to be promoted
-            - document, dict|None : document being created and to be set as the new root or expression
+        Parameters
+        ----------
+        statement : dict
+            The statement generated during instantiation after parsing the other arguments.
+        path_to_new_root : str|None
+            The path to the embedded document to be promoted.
+        document : dict|None
+            Document being created and to be set as the new root or expression.
 
         Online MongoDB documentation:
         -----------------------------
         Replaces the input document with the specified document.
-        The operation replaces all existing fields in the input document, including the _id field.
+        The operation replaces all existing fields in the input document, including the `_id` field.
         You can promote an existing embedded document to the top level, or create a new document for promotion
         (see [example](https://www.mongodb.com/docs/manual/reference/operator/aggregation/replaceRoot/#std-label-new-replacement-doc)).
 
@@ -885,10 +919,12 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         Adds a sample stage to the current pipeline.
         Randomly selects the specified number of documents from the input documents.
 
-        Arguments:
-        -----------------------
-            - statement, dict : the statement generated after instantiation
-            - value, int : positive integer representing the number of documents to be randomly picked. Defaults to 10.
+        Parameters
+        ----------
+        statement : dict
+            The statement generated after instantiation.
+        value : int
+            Positive integer representing the number of documents to be randomly picked. Defaults to 10.
 
         Online MongoDB documentation:
         -----------------------------
@@ -929,35 +965,40 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         NOTE : if used, search has to be the first stage of the pipeline
 
-        Arguments:
-        -------------------------------
-            - path, str|list[str]|None : field to search in
-            - query, str|list[str]|None : text to search for
-            - index, str : name of the index to use for the search. Defaults to defaut
-            - count, CountOptions|None : document that specifies the count options for retrieving
-                                 a count of the results
-            - highlight, HighlightOptions|None : document that specifies the highlight options for 
-                                     displaying search terms in their original context
-            - return_stored_source, bool : Indicates whether to use the copy of the documents
-                                           in the Atlas Search index (with just a subset of the fields)
-                                           or to return the original full document (slower).
-                                           Defaults to False.
-                                           True => Use the copy
-                                           False => Do a lookup and return the original documents.
-            - score_details, bool : Indicates whether to retrieve the detailed breakdown of the score for
-                                    the documents in the results. Defaults to False.
-                                    To view the details, you must use the $meta expression in the 
-                                    $project stage.
-            - operator_name, str : Name of the operator to search with. Use the compound operator to run a 
-                              compound (i.e query with multiple operators).
-            - kwargs, Any : Operators specific options.
-                            Includes (non-exhaustive):
-                            - fuzzy, FuzzyOptions (controls fuzzy matching options)
-                            - score, dict (controls scoring options)
-                            - value, numeric|bool|date (for filtering)
-                            - allow_analyzed_field, bool (controls index scanning)
-                            - synonyms
-                            - like, dict|list[dict] (allow looking for similar documents)
+        Parameters
+        ----------
+        path : str|list[str]|None
+            Field to search in.
+        query : str|list[str]|None
+            Text to search for.
+        index : str
+            Name of the index to use for the search. Defaults to default.
+        count : CountOptions|None
+            Document that specifies the count options for retrieving
+            a count of the results.
+        highlight : HighlightOptions|None
+            Document that specifies the highlight options for displaying 
+            search terms in their original context.
+        return_stored_source : bool
+            Indicates whether to use the copy of the documents in the Atlas
+            Search index (with just a subset of the fields) or to return the
+            original full document (slower). Defaults to False. True => Use the copy
+            False => Do a lookup and return the original documents.
+        score_details : bool
+            Indicates whether to retrieve the detailed breakdown of the score for 
+            the documents in the results. Defaults to False. To view the details,
+            you must use the `$meta` expression in the `$project` stage.
+        operator_name : str
+            Name of the operator to search with. Use the compound operator to run a 
+            compound (i.e query with multiple operators).
+        kwargs :  Any
+            Operators specific options. Includes (non-exhaustive):
+                - fuzzy, FuzzyOptions (controls fuzzy matching options)
+                - score, dict (controls scoring options)
+                - value, numeric|bool|date (for filtering)
+                - allow_analyzed_field, bool (controls index scanning)
+                - synonyms
+                - like, dict|list[dict] (allow looking for similar documents).
         
         Online MongoDB documentation:
         -----------------------------
@@ -1038,35 +1079,40 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         
         NOTE : if used, search has to be the first stage of the pipeline
 
-        Arguments:
-        -------------------------------
-            - path, str|list[str]|None : field to search in
-            - query, str|list[str]|None : text to search for
-            - index, str : name of the index to use for the search. Defaults to defaut
-            - count, dict|None : document that specifies the count options for retrieving
-                                 a count of the results
-            - highlight, dict|None : document that specifies the highlight options for 
-                                     displaying search terms in their original context
-            - return_stored_source, bool : Indicates whether to use the copy of the documents
-                                           in the Atlas Search index (with just a subset of the fields)
-                                           or to return the original full document (slower).
-                                           Defaults to False.
-                                           True => Use the copy
-                                           False => Do a lookup and return the original documents.
-            - score_details, bool : Indicates whether to retrieve the detailed breakdown of the score for
-                                    the documents in the results. Defaults to False.
-                                    To view the details, you must use the $meta expression in the 
-                                    $project stage.
-            - operator_name, str : Name of the operator to search with. Use the compound operator to run a 
-                              compound (i.e query with multiple operators).
-            - kwargs, Any : Operators specific options.
-                            Includes (non-exhaustive):
-                            - fuzzy, FuzzyOptions (controls fuzzy matching options)
-                            - score, dict (controls scoring options)
-                            - value, numeric|bool|date (for filtering)
-                            - allow_analyzed_field, bool (controls index scanning)
-                            - synonyms
-                            - like, dict|list[dict] (allow looking for similar documents)
+        Parameters
+        ----------
+        path : str|list[str]|None
+            Field to search in.
+        query : str|list[str]|None
+            Text to search for.
+        index : str
+            Name of the index to use for the search. Defaults to default.
+        count : CountOptions|None
+            Document that specifies the count options for retrieving
+            a count of the results.
+        highlight : HighlightOptions|None
+            Document that specifies the highlight options for displaying 
+            search terms in their original context.
+        return_stored_source : bool
+            Indicates whether to use the copy of the documents in the Atlas
+            Search index (with just a subset of the fields) or to return the
+            original full document (slower). Defaults to False. True => Use the copy
+            False => Do a lookup and return the original documents.
+        score_details : bool
+            Indicates whether to retrieve the detailed breakdown of the score for 
+            the documents in the results. Defaults to False. To view the details,
+            you must use the `$meta` expression in the `$project` stage.
+        operator_name : str
+            Name of the operator to search with. Use the compound operator to run a 
+            compound (i.e query with multiple operators).
+        kwargs :  Any
+            Operators specific options. Includes (non-exhaustive):
+                - fuzzy, FuzzyOptions (controls fuzzy matching options)
+                - score, dict (controls scoring options)
+                - value, numeric|bool|date (for filtering)
+                - allow_analyzed_field, bool (controls index scanning)
+                - synonyms
+                - like, dict|list[dict] (allow looking for similar documents).
         """
         
         if not collector_name and not operator_name:
@@ -1255,14 +1301,15 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     def set(self, document:dict={}, **kwargs:Any)->Self:
         """
         Adds a set stage to the current pipeline.
-        Adds new fields to documents. $set outputs documents that conain all existing fields from the inputs documents
+        Adds new fields to documents. `$set` outputs documents that conain all existing fields from the inputs documents
         and newly added fields.
-        Both stages are equivalent to a $project stage that explicitly specifies all existing fields in the inputs documents and adds the new fields.
+        Both stages are equivalent to a `$project` stage that explicitly specifies all existing fields in the inputs documents and adds the new fields.
 
-        Arguments:
-        ---------------------------------
-            - statement, dict :
-            - document, dict : new fields to be added
+        Parameters
+        ----------
+        statement : dict
+        document : dict
+            New fields to be added.
 
         Online MongoDB documentation:
         -----------------------------
@@ -1282,18 +1329,20 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         Adds a skip stage to the current pipeline.
         Skips over the specified number of documents that pass into the stage and passes the remaining documents to the next stage in the pipeline.
 
-        Arguments:
-        -----------------------
-            - statement, dict : the statement generated after instantiation
-            - value, int : positive integer representing the number of documents to be skipped.
+        Parameters
+        ----------
+        statement : dict
+            The statement generated after instantiation.
+        value : int
+            Positive integer representing the number of documents to be skipped.
 
         Online MongoDB documentation:
         -----------------------------
         Skips over the specified number of documents that pass into the stage and passes the remaining documents to the next stage in the pipeline.
         
-        $skip takes a positive integer that specifies the maximum number of documents to skip.
+        `$skip` takes a positive integer that specifies the maximum number of documents to skip.
 
-        NOTE : Starting in MongoDB 5.0, the $skip pipeline aggregation has a 64-bit integer limit.
+        NOTE : Starting in MongoDB 5.0, the `$skip` pipeline aggregation has a 64-bit integer limit.
         Values passed to the pipeline which exceed this limit will return an invalid argument error.
         
         [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/skip/#mongodb-pipeline-pipe.-skip)
@@ -1314,14 +1363,18 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         Adds a sort stage to the current pipeline.
         Sorts all input documents and returns them to the pipeline in sorted order.
         
-        Arguments:
-        -----------------------
-            - statement, dict : the statement generated after instantiation
-            - query, dict : fields-sort order mapping. 1 for ascending order, -1 for descending order. Defaults to {}
-                            if not provided, the query will be built from ascending and descending parameters.
-
-            - ascending, set[str] | dict | None : fields to sort on ascending order on
-            - descending, set[str] | dict | None : fields to sort on descending order on
+        Parameters
+        ----------
+        statement : dict
+            The statement generated after instantiation.
+        query : dict
+            Fields-sort order mapping. 1 for ascending order, -1 for 
+            descending order. Defaults to {} if not provided, the
+            query will be built from ascending and descending parameters.
+        ascending : set[str] | dict | None
+            Fields to sort on ascending order on.
+        descending : set[str] | dict | None
+            Fields to sort on descending order on.
 
         NOTE : When trying to sort on several fields and opposite orders use query rather than using ascending and descending simunateously.
 
@@ -1359,21 +1412,23 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         Adds a sort_by_count stage to the current pipeline.
         Groups incoming documents based on the value of a specified expression, then computes the count of documents in each distinct group.
 
-        Each output document contains two fields: an _id field containing the distinct grouping value,
+        Each output document contains two fields: an `_id` field containing the distinct grouping value,
         and a count field containing the number of documents belonging to that grouping or category.
 
         The documents are sorted by count in descending order.
 
-        Arguments:
-        -------------------------
-            - _statement, dict : the statement generated during the validation process
-            - by, str : the key to group, sort and count on
+        Parameters
+        ----------
+        _statement : dict
+            The statement generated during the validation process.
+        by : str
+            The key to group, sort and count on.
 
         Online MongoDB documentation:
         -----------------------------
         Groups incoming documents based on the value of a specified expression, then computes the count of documents in each distinct group.
 
-        Each output document contains two fields: an _id field containing the distinct grouping value,
+        Each output document contains two fields: an `_id` field containing the distinct grouping value,
         and a count field containing the number of documents belonging to that grouping or category.
 
         The documents are sorted by count in descending order.
@@ -1392,11 +1447,15 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         Performs a union of two collections. unionWith combines pipeline results from two collections into a single result set. The stage outputs the combined result set (including duplicates) to the next stage.
 
         The order in which the combined result set documents are output is unspecified.
-        Arguments:
-        ---------------------------------
         
-            - collection / coll, str : The collection or view whose pipeline results you wish to include in the result set
-            - pipeline, list[dict] | Pipeline | None : An aggregation pipeline to apply to the specified coll.
+        Parameters
+        ----------
+        collection : str
+            The collection or view whose pipeline results you wish to include in the result set.
+        coll : str
+            Alias for `collection`. 
+        pipeline : list[dict] | Pipeline | None
+            An aggregation pipeline to apply to the specified coll.
 
         Online MongoDB documentation:
         -----------------------------
@@ -1423,13 +1482,19 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         """
         Adds a unwind stage to the current pipeline.
 
-        Arguments:
-        ---------------------------------
-
-            - path_to_array (path), str : path to an array field
-            - include_array_index, str : name of a new field to hold the array index of the element
-                                    NOTE : The name cannot start with a dollar sign
-            - always (preserve_null_and_empty_index), bool : whether to output documents for input documents where the path does not resolve to a valid array. Defaults to False
+        Parameters
+        ----------
+        path_to_array : str
+            Path to an array field.
+        path : str
+            Alias for `path_to_array`.
+        include_array_index :  str
+            Name of a new field to hold the array index of the element
+            NOTE : The name cannot start with a dollar sign
+        always : bool
+            Whether to output documents for input documents where the path does not resolve to a valid array. Defaults to False
+        preserve_null_and_empty_index : bool
+            Alias for `always`
 
         Online MongoDB documentation:
         -----------------------------
@@ -1454,11 +1519,12 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         Adds an unset stage to the current pipeline.
         Removes/excludes fields from documents.
         
-        Arguments:
-        -------------------------------
-
-            - field, str|None: field to be removed
-            - fields, list[str]|None, list of fields to be removed
+        Parameters
+        ----------
+        field : str|None
+            Field to be removed.
+        fields : list[str]|None
+            List of fields to be removed.
         
         Online MongoDB documentation:
         -----------------------------
@@ -1486,15 +1552,20 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         """
         Adds a vector_search stage to the current pipeline.
 
-        Arguments:
-        ---------------------------------
-
-            - index, str : name of the Atlas Vector Search index to use
-            - path, str : path to the vector field to search
-            - query_vector, list[float] : array of numbers of the BSON double type that represent the query vector
-            - num_candidates, int : number of nearest neighbors to use during the search
-            - limit, int : number of documents to return in the results
-            - filter, dict|None : any MQL match expression that compares an indexed field with a boolean, number (not decimals), or string to use as a prefilter
+        Parameters
+        ----------
+        index : str
+            Name of the Atlas Vector Search index to use.
+        path : str
+            Path to the vector field to search.
+        query_vector : list[float]
+            Array of numbers of the BSON double type that represent the query vector.
+        num_candidates : int
+            Number of nearest neighbors to use during the search.
+        limit : int
+            Number of documents to return in the results.
+        filter : dict|None
+            Any MQL match expression that compares an indexed field with a boolean, number (not decimals), or string to use as a prefilter.
         
         """
 
