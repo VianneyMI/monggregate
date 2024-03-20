@@ -64,7 +64,7 @@ class Count(Accumulator):
     NOTE : Disambiguation
     This page describes the $count aggregation accumulator. For the $count aggregation pipeline stage, [see $count (aggregation pipeline)](https://www.mongodb.com/docs/manual/reference/operator/aggregation/count/#mongodb-pipeline-pipe.-count)
     
-    Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/count-accumulator/#mongodb-group-grp.-count
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/count-accumulator/#mongodb-group-grp.-count)
     """
 
 

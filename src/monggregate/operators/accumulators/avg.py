@@ -79,7 +79,7 @@ class Average(Accumulator):
 
     Attributes
     ----------
-        - expression : Any valid expression
+    expression : Any valid expression
 
     Online MongoDB documentation:
     -----------------------------
