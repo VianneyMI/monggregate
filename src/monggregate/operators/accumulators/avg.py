@@ -100,7 +100,7 @@ class Average(Accumulator):
 
     In MongoDB 3.2 and earlier, $avg is available in the $group stage only.
 
-    Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/avg/#mongodb-group-grp.-avg
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/avg/#mongodb-group-grp.-avg)
     """
 
     expression : Any
