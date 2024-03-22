@@ -88,12 +88,35 @@ from monggregate.operators.array.array import ArrayOperator
 
 class SortArray(ArrayOperator):
     """
-    Creates a $sortArray expression
+    Abstraction of MongoDB $sortArray expression which sorts an array based 
+    on its elements.
 
     Attributes
     --------------------------
         - expression, Expression : Any valid expression that resolves to an array
         - by, dict[str, Literal[1, -1]] :  document indicating a sort order
+    
+    Online MongoDB documentation
+    ----------------------------
+    Sorts an array based on its elements. The sort order is user specified.
+
+    $sortArray has the following syntax:
+
+        >>> $sortArray: {
+            input: <array>,
+            sortBy: <sort spec>
+        }
+
+            Field       Type        Description
+
+        *   input       Expression  The array to be sorted.
+                                    The result is null if the expression
+                                        * is missing
+                                        * evaluates to null
+                                        * evaluates to undefined
+        *   sortBy      document    The document specifies a sort ordering
+
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/sortArray/#mongodb-expression-exp.-sortArray)
     """
 
     expression : Any = pyd.Field(alias="input")

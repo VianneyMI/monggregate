@@ -50,7 +50,7 @@ from monggregate.operators.array.array import ArrayOperator
 
 class MinN(ArrayOperator):
     """
-    Creates a $minN expression
+    Abstraction of MongoDB $minN expression which returns the n smallest values in an array.
 
     Attributes
     --------------------------
@@ -58,6 +58,11 @@ class MinN(ArrayOperator):
         - limit / n , int : An expression that resolves to a positive integer.
                             The integer specifies the number of array elements taht $maxN returns.
 
+    Online MongoDB documentation
+    ----------------------------
+    Returns the n smallest values in an array.
+
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/minN-array-element/#mongodb-expression-exp.-minN)
     """
 
     expression : Any = pyd.Field(alias="input")
