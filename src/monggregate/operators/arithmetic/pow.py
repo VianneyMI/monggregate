@@ -44,14 +44,28 @@ from monggregate.operators.arithmetic.arithmetic import ArithmeticOperator
 
 class Pow(ArithmeticOperator):
     """
-    Creates a $pow expression
+    Abstraction of MongoDB $pow expression which raises a number to the specified exponent.
 
     Attributes
     -------------------
         - number, Any : the numerator of the division
         - exponent, Any : the denominator of the division
             
-    
+    Online MongoDB documentation
+    ----------------------------
+    Raises a number to the specified exponent and returns the result. 
+    $pow has the following syntax:.
+
+    The $pow expression has the following syntax:
+
+        >>> { $pow: [ <expression1>, <expression2>] }
+
+    The <number> expression can be any valid expression as long as it resolves to a number.
+
+    The <exponent> expression can be any valid expression as long as it resolves to a number.
+
+    You cannot raise 0 to a negative exponent.
+    [Source](https://docs.mongodb.com/manual/reference/operator/aggregation/pow/#mongodb-expression-exp.-pow)
     """
 
 

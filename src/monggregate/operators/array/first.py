@@ -102,12 +102,17 @@ from monggregate.operators.array.array import ArrayOnlyOperator
 
 class First(ArrayOnlyOperator):
     """
-    Creates a $first expression
+    Abstraction of MongoDB $first expression which returns the first element in an array.
 
     Attributes
     -------------------
         - expression, Expression : Any valid expressions as long as it resolves to an array, null or missing value.
 
+    Online MongoDB documentation
+    ----------------------------
+    Returns the first element in an array.
+
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/first-array-element/#mongodb-expression-exp.-first)
     """
 
     @property

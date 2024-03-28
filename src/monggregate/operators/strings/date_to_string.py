@@ -88,9 +88,35 @@ from monggregate.operators.strings.string import StringOperator
 
 class DateToString(StringOperator):
     """
-    xxx
+    Abstraction of MongoDB $dateToString expression which converts a date 
+    object to a string according to a user-specified format.
+
+    Attributes
+    -------------------
+        - date, Any : The date to convert to string. <dateExpression> must be a valid expression that resolves to a Date, a Timestamp, or an ObjectID.
+        - format_, Any : Optional. The date format specification. <formatString> can be any string literal, containing 0 or more format specifiers. 
+                        For a list of specifiers available, see Format Specifiers.
+        - timezone, Any : Optional. The timezone of the operation result. <tzExpression> must be a valid expression that resolves to a 
+                            string formatted as either an Olson Timezone Identifier or a UTC Offset. If no timezone is provided, the result is displayed in UTC.
+        - on_null, Any : Optional. The value to return if the date is null or missing. The arguments can be any valid expression.
+                            If unspecified, $dateToString returns null if the date is null or missing.
             
-    
+    Online MongoDB documentation
+    ----------------------------
+    Converts a date object to a string according to a user-specified format.
+
+    The $dateToString expression has the following operator expression syntax:
+
+        >>> { 
+                $dateToString: {
+                    date: <dateExpression>,
+                    format: <formatString>,
+                    timezone: <tzExpression>,
+                    onNull: <expression>
+                } 
+            }
+
+    [Source]{https://docs.mongodb.com/manual/reference/operator/aggregation/dateToString/#mongodb-expression-exp.-dateToString}
     """
 
 

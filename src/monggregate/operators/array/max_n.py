@@ -50,7 +50,8 @@ from monggregate.operators.array.array import ArrayOperator
 
 class MaxN(ArrayOperator):
     """
-    Creates a $maxN expression
+    Abstraction of MongoDB $maxN expression which returns the n largest 
+    values in an array.
 
     Attributes
     --------------------------
@@ -58,6 +59,11 @@ class MaxN(ArrayOperator):
         - limit / n , int : An expression that resolves to a positive integer.
                             The integer specifies the number of array elements taht $maxN returns.
 
+    Online MongoDB documentation
+    ----------------------------
+    Returns the n largest values in an array.
+
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/maxN-array-element/#mongodb-expression-exp.-maxN)
     """
 
     expression : Any = pyd.Field(alias="input")
