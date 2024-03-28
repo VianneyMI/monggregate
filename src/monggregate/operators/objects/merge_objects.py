@@ -46,12 +46,24 @@ from monggregate.operators.array.array import ArrayOperator
 
 class MergeObjects(ArrayOperator):
     """
-    Creates an $arrayToObject expression
+    Abstraction of MongoDB $arrayToObject expression which combines 
+    multiple documents into a single document.
 
     Attribute
     ---------------------
         - expression, Expression : Any valid expression or list of expression
 
+    Online MongoDB documentation
+    ----------------------------
+    Combines multiple documents into a single document.
+
+    $mergeObjects is available in these stages:
+
+        * $bucket
+        * $bucketAuto
+        * $group
+
+    [Source]{https://www.mongodb.com/docs/manual/reference/operator/aggregation/mergeObjects/#mongodb-expression-exp.-mergeObjects}
     """
 
     expression : Any | list[Any]
