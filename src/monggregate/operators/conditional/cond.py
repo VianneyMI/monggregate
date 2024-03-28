@@ -37,7 +37,8 @@ from monggregate.operators.conditional.conditional import ConditionalOperator
 
 class Cond(ConditionalOperator):
     """
-    Creates a $cond expression
+    Abstraction of MongoDB $cond expression which evaluates a boolean 
+    expression to return one of the two specified return expressions.
 
     Attributes
     -------------------
@@ -51,8 +52,30 @@ class Cond(ConditionalOperator):
 
     if_, then_ and else_ have precedence over expression, true_ and false_
     Thus only the first syntax will be used whatever combination of arguments is provided (as long as it is valid)
-            
+
+    Online MongoDB documentation
+    ----------------------------
+    Evaluates a boolean expression to return one of the two specified return expressions.
+
+    The $cond expression has one of two syntaxes:
+
+        >>> { $cond: { if: <boolean-expression>, then: <true-case>, else: <false-case> } }
+
+        or
+
+        >>> { $cond: [ <boolean-expression>, <true-case>, <false-case> ] }
+
+
+    $cond requires all three arguments (if-then-else) for either syntax.
+
+    If the <boolean-expression> evaluates to true, then 
+    $cond evaluates and returns the value of the <true-case> expression. 
+    Otherwise, $cond evaluates and returns the value of the <false-case> expression.
+
+    The arguments can be any valid expression. 
+    For more information on expressions, see Expressions.      
     
+    [Source]{https://docs.mongodb.com/manual/reference/operator/aggregation/cond/#mongodb-expression-exp.-cond}
     """
 
     # Syntax 2
