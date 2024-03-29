@@ -90,12 +90,33 @@ from monggregate.operators.accumulators.accumulator import Accumulator
 
 class Sum(Accumulator):
     """
-    Creates a $sum expression.
+    Abstraction of MongoDB $sum expression.
 
     Attributes
     -----------------------
         - operands, list[Expression] : Any valid list of expressions
         - operand, Expression : Any valid expression
+        
+    Online MongoDB documentation
+    ----------------------------
+    Calculates and returns the collective sum of numeric values.
+    $sum ignores non-numeric values.
+
+        * $sum is available in these stages:
+        * $addFields (Available starting in MongoDB 3.4)
+        * $bucket
+        * $bucketAuto
+        * $group
+        * $match stage that includes an $expr expression
+        * $project
+        * $replaceRoot (Available starting in MongoDB 3.4)
+        * $replaceWith (Available starting in MongoDB 4.2)
+        * $set (Available starting in MongoDB 4.2)
+        * $setWindowFields (Available starting in MongoDB 5.0)
+
+    In MongoDB 3.2 and earlier, $sum is available in the $group stage only.
+    
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/sum/#mongodb-group-grp.-sum)
     """
 
     expression : Any

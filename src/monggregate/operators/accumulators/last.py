@@ -56,12 +56,28 @@ from monggregate.operators.accumulators.accumulator import Accumulator
 
 class Last(Accumulator):
     """
-    Creates a $last expression.
+    Abstraction of MongoDB $last expression.
 
     Attributes
     ------------------------
         - expression, Expression : Any valid expression
 
+    Online MongoDB documentation
+    ----------------------------
+    Returns the value that results from applying an expression to the last document in a group of documents. Only meaningful when documents are in a defined order.
+    
+    `$last` is available in these stages:
+
+        * $bucket
+        * $bucketAuto
+        * $group
+        * $setWindowFields (Available starting in MongoDB 5.0)
+
+    NOTE: Disambiguation
+    This page describes the $last aggregation accumulator.
+    For the `$last` array operator, see $last (array operator)
+
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/last/#mongodb-group-grp.-last)
     """
 
     expression : Any

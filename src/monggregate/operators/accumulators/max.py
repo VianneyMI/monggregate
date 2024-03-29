@@ -81,11 +81,32 @@ from monggregate.operators.accumulators.accumulator import Accumulator
 
 class Max(Accumulator):
     """
-    Creates a $max expression.
+    Abstraction of MongoDB $max expression.
 
     Attributes
     ---------------------
         - expression, Expression : Any valid expression
+
+    Online MongoDB documentation
+    ----------------------------
+    Returns the maximum value.
+    $max compares both value and type, using the specified BSON comparison order for values of different types.
+
+        * $max is available in these stages:
+        * $addFields (Available starting in MongoDB 3.4)
+        * $bucket
+        * $bucketAuto
+        * $group
+        * $match stage that includes an $expr expression
+        * $project
+        * $replaceRoot (Available starting in MongoDB 3.4)
+        * $replaceWith (Available starting in MongoDB 4.2)
+        * $set (Available starting in MongoDB 4.2)
+        * $setWindowFields (Available starting in MongoDB 5.0)
+
+    In MongoDB 3.2 and earlier, $max is available in the $group stage only.
+
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/max/#mongodb-group-grp.-max)
     """
 
     expression : Any
