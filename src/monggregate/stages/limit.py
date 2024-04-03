@@ -1,5 +1,5 @@
 """
-Module definining an interface to MongoDB `$limit` stage operation in aggregation pipeline.
+Module defining an interface to MongoDB `$limit` stage operation in aggregation pipeline.
 """
 
 from monggregate.base import pyd
@@ -25,7 +25,7 @@ class Limit(Stage):
     NOTE : Starting in MongoDB 5.0, the `$limit` pipeline aggregation has a 64-bit integer limit. Values
     passed to the pipeline which exceed this limit will return a invalid argument error.
 
-    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/group/#mongodb-pipeline-pipe.-group)
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/limit/)
     """
     
     value : int = pyd.Field(gt=0)

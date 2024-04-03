@@ -1,5 +1,5 @@
 """
-Module definining an interface to MongoDB `$bucket` stage operation in aggrgation pipeline.
+Module definining an interface to MongoDB `$bucket` stage operation in aggregation pipeline.
 """
 
 from typing import Any
@@ -47,21 +47,24 @@ class Bucket(Stage):
                 ....
                 {"outputField2" : {"accumulator":"expression2}}
 
-        If you do not specify an output document, the operation returns a count field containing
+        If you do not specify an output document, the operation returns a `count` field containing
         the number of documents in each bucket.
 
         If you specify and output document, only the fields specified in the document are returned; i.e.
-        the count field is not returned unless it is explicitly included in the output document
+        the `count` field is not returned unless it is explicitly included in the output document.
 
 
     Online MongoDB documentation:
     ------------------------------
-    Categorizes incoming documents into groups, called buckets, based on a specified expression and bucket boundaries and outputs a document per each bucket. Each output document contains an _id field whose value specifies the inclusive lower bound of the bucket. The
-    output option specifies the fields included in each output document.
+    Categorizes incoming documents into groups, called buckets, based on a 
+    specified expression and bucket boundaries and outputs a document per 
+    each bucket. Each output document contains an `_id` field whose value 
+    specifies the inclusive lower bound of the bucket. The output option 
+    specifies the fields included in each output document.
 
     `$bucket` only produces output documents for buckets that contain at least one input document.                           
     
-    [Source](https://www.mongodb.com/docs/manual/meta/aggregation-quick-reference/)
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/bucket/)
     """
 
     by : Any = pyd.Field(...,alias="group_by")

@@ -1,5 +1,5 @@
 """
-Module definining an interface to MongoDB `$lookup` stage operation in aggregation pipeline.
+Module defining an interface to MongoDB `$lookup` stage operation in aggregation pipeline.
 """
 
 from monggregate.base import pyd
@@ -75,7 +75,7 @@ class Lookup(Stage):
 
     To combine elements from two different collections, use the `$unionWith` pipeline stage.
 
-    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/lookup/#mongodb-pipeline-pipe.-lookup)
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/lookup/)
     """
 
     right : str | None = pyd.Field(None, alias = "from")

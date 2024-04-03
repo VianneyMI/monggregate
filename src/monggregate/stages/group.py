@@ -1,5 +1,5 @@
 """
-Module definining an interface to MongoDB `$group` stage operation in aggrgation pipeline.
+Module defining an interface to MongoDB `$group` stage operation in aggregation pipeline.
 """
 
 
@@ -26,10 +26,10 @@ class Group(Stage):
     "group key". The output is one document for each unique group key.
 
     A group key is often a field, or group of fields. The group key can 
-    also be the result of an expression. Use the _id field in the `$group` 
+    also be the result of an expression. Use the `_id` field in the `$group` 
     pipeline stage to set the group key. See below for usage examples.
 
-    In the `$group` stage output, the _id field is set to the group key 
+    In the `$group` stage output, the `_id` field is set to the group key 
     for that document.
 
     The output documents can also contain additional fields that are set using
@@ -37,7 +37,7 @@ class Group(Stage):
 
     NOTE : The group stage does not order its output documents.
 
-    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/group/#mongodb-pipeline-pipe.-group)
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/group/)
     """
 
     by : Any  = pyd.Field(None, alias = "_id") # | or any constant value, in this case
