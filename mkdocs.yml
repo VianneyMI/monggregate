@@ -24,6 +24,11 @@ nav:
     - Pipeline: api/pipeline.md
     - Stages:
       - Bucket_auto: api/stages/bucket_auto.md
+      - Bucket: api/stages/bucket.md
+      - Count: api/stages/count.md
+      - Group: api/stages/group.md
+      - Limit: api/stages/limit.md
+      - Lookup: api/stages/lookup.md
   - Changelog: changelog.md
 
  # Using mkdocstrings to generate documentation from docstrings (API Reference)

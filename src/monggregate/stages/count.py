@@ -1,37 +1,5 @@
 """
-Module definining an interface to MongoDB $count stage operation in aggrgation pipeline
-
-Online MongoDB documentation:
---------------------------------------------------------------------------------------------------------------------
-
-Last Updated (in this package) : 18/09/2022
-Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/count/#mongodb-pipeline-pipe.-count
-
-Definition
--------------------
-
-Passes a document to the next stage that contains a count of the number of documents input to the stage.
-
-$count has the following prototype form:
-   >>> {"$count":"string"}
-
-<string> is the name of the output field which has the count as its value.
-<string> must be a non-empty string, must not start with $ and must not contain the . character.
-
-
-Behavior
--------------------
-The $count stage is equivalent to the following
-$group + $project sequence:
-
-   >>>  db.collection.aggregate([
-            { $group: { _id: null, myCount: { $sum: 1 } } },
-            { $project: { _id: 0 } }
-        ])
-
-where myCount would be the output field that contains the count. You can specify another name for the output field.
-
-
+Module definining an interface to MongoDB `$count` stage operation in aggrgation pipeline.
 """
 
 from monggregate.stages.stage import Stage
@@ -39,12 +7,15 @@ from monggregate.fields import FieldName
 
 class Count(Stage):
     """
-    Abstraction of MongoDB $count statement that counts the number of documents input to the stage.
+    Abstraction of MongoDB `$count` statement that counts the number of 
+    documents input to the stage.
 
-    Attributes:
-    -------------------------------
-    - name, str : name of the output field which the count as its value.
-                  Must be a non-empty string, must not start with $, and must not contain the . character.
+    Parameters
+    ----------
+    - name, str
+        Name of the output field which the count as its value.
+        Must be a non-empty string, must not start with $, and must not 
+        contain the . character.
 
                   
     Online MongoDB documentation:
@@ -52,12 +23,13 @@ class Count(Stage):
     Passes a document to the next stage that contains a count of the number of documents input to the stage.
 
     $count has the following prototype form:
-    >>> {"$count":"string"}
-
-    <string> is the name of the output field which has the count as its value.
-    <string> must be a non-empty string, must not start with $ and must not contain the . character.
     
-    Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/count/#mongodb-pipeline-pipe.-count
+        >>> {"$count":"string"}
+
+    `<string>` is the name of the output field which has the count as its value.
+    `<string>` must be a non-empty string, must not start with $ and must not contain the . character.
+    
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/count/#mongodb-pipeline-pipe.-count)
     """
 
     name: FieldName
