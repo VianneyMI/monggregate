@@ -12,7 +12,7 @@ class Count(Stage):
 
     Parameters
     ----------
-    - name, str
+    name : str
         Name of the output field which the count as its value.
         Must be a non-empty string, must not start with `$`, and must not 
         contain the `.` character.
