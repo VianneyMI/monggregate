@@ -81,7 +81,7 @@ from monggregate.operators.accumulators.accumulator import Accumulator
 
 class Max(Accumulator):
     """
-    Abstraction of MongoDB $max expression.
+    Abstraction of MongoDB $max operator.
 
     Attributes
     ---------------------
@@ -91,8 +91,8 @@ class Max(Accumulator):
     ----------------------------
     Returns the maximum value.
     $max compares both value and type, using the specified BSON comparison order for values of different types.
-
-        * $max is available in these stages:
+    
+    $max is available in these stages:
         * $addFields (Available starting in MongoDB 3.4)
         * $bucket
         * $bucketAuto

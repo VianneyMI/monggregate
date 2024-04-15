@@ -35,7 +35,7 @@ from monggregate.operators.array.array import ArrayOperator
 
 class In(ArrayOperator):
     """
-    Abstraction of MongoDB $in expression which returns a boolean indicating 
+    Abstraction of MongoDB $in operator which returns a boolean indicating 
     whether a specified value is in an array.
 
     Attributes

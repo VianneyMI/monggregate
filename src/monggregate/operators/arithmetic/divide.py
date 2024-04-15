@@ -27,7 +27,7 @@ from monggregate.operators.arithmetic.arithmetic import ArithmeticOperator
 
 class Divide(ArithmeticOperator):
     """
-    Abstraction of MongoDB $divide expression which divides one number by
+    Abstraction of MongoDB $divide operator which divides one number by
     another and returns the result.
 
     Attributes

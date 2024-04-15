@@ -88,7 +88,7 @@ from monggregate.operators.strings.string import StringOperator
 
 class DateToString(StringOperator):
     """
-    Abstraction of MongoDB $dateToString expression which converts a date 
+    Abstraction of MongoDB $dateToString operator which converts a date 
     object to a string according to a user-specified format.
 
     Attributes
@@ -116,7 +116,7 @@ class DateToString(StringOperator):
                 } 
             }
 
-    [Source]{https://docs.mongodb.com/manual/reference/operator/aggregation/dateToString/#mongodb-expression-exp.-dateToString}
+    [Source](https://docs.mongodb.com/manual/reference/operator/aggregation/dateToString/#mongodb-expression-exp.-dateToString)
     """
 
 

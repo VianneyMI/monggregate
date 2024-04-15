@@ -50,7 +50,7 @@ from monggregate.operators.array.array import ArrayOperator
 
 class MinN(ArrayOperator):
     """
-    Abstraction of MongoDB $minN expression which returns the n smallest values in an array.
+    Abstraction of MongoDB $minN operator which returns the n smallest values in an array.
 
     Attributes
     --------------------------

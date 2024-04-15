@@ -32,7 +32,7 @@ from monggregate.operators.array.array import ArrayOnlyOperator
 
 class Size(ArrayOnlyOperator):
     """
-    Abstraction of MongoDB $size expression which counts and returns the total number 
+    Abstraction of MongoDB $size operator which counts and returns the total number 
     of items in an array.
 
     Attributes

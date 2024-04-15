@@ -30,7 +30,7 @@ from monggregate.operators.comparison.comparator import Comparator
 
 class NotEqual(Comparator):
     """
-    Abstraction of MongoDB $ne expression which compares two values and 
+    Abstraction of MongoDB $ne operator which compares two values and 
     returns true when the values are not equivalent, false otherwise.
 
     Attributes
@@ -54,7 +54,7 @@ class NotEqual(Comparator):
 
     The arguments can be any valid expression. For more information on expressions, see Expressions.
     
-    [Source]{https://www.mongodb.com/docs/manual/reference/operator/aggregation/ne/#mongodb-expression-exp.-ne}
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/ne/#mongodb-expression-exp.-ne)
     """
 
     @property

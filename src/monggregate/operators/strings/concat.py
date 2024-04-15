@@ -26,7 +26,7 @@ from monggregate.operators.strings.string import StringOperator
 
 class Concat(StringOperator):
     """
-    Abstraction of MongoDB $concat expression which concatenates strings 
+    Abstraction of MongoDB $concat operator which concatenates strings 
     and returns the concatenated string.
 
     Attributes
@@ -45,7 +45,7 @@ class Concat(StringOperator):
     If the argument resolves to a value of null or refers to a field that is missing, 
     $concat returns null.
 
-    [Source]{https://docs.mongodb.com/manual/reference/operator/aggregation/concat/#mongodb-expression-exp.-concat}
+    [Source](https://docs.mongodb.com/manual/reference/operator/aggregation/concat/#mongodb-expression-exp.-concat)
     """
 
 

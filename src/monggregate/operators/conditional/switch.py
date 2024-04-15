@@ -59,7 +59,7 @@ from monggregate.operators.conditional.conditional import ConditionalOperator
 
 class Switch(ConditionalOperator):
     """
-    Abstraction of MongoDB $switch expression which evaluates a series of 
+    Abstraction of MongoDB $switch operator which evaluates a series of 
     case expressions.
 
     Attributes
@@ -92,7 +92,7 @@ class Switch(ConditionalOperator):
 
     The objects in the branches array must contain only a case field and a then field.       
     
-    [Source]{https://docs.mongodb.com/manual/reference/operator/aggregation/switch/#mongodb-expression-exp.-switch}
+    [Source](https://docs.mongodb.com/manual/reference/operator/aggregation/switch/#mongodb-expression-exp.-switch)
     """
 
 

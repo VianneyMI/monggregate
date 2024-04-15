@@ -8,14 +8,15 @@ from monggregate.operators.date.date import DateOperator
 
 class Millisecond(DateOperator):
     """
-    Creates a $millisecond expression
+    Abstraction of MongoDB $millisecond operator which returns the 
+    millisecond portion of a date as an integer between 0 and 999.
 
     Attributes
     -------------------
         - expression, Any : the expression that must resolve to a date
         - timezone, Any | None : the timezone to use for the date
             
-    
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/millisecond)
     """
 
 

@@ -27,7 +27,7 @@ from monggregate.operators.comparison.comparator import Comparator
 
 class LowerThan(Comparator):
     """
-    Abstraction of MongoDB $lt expression which compares two values and 
+    Abstraction of MongoDB $lt operator which compares two values and 
     returns true when the first value is less than the second value, false
     otherwise.
 
@@ -52,7 +52,7 @@ class LowerThan(Comparator):
 
     For more information on expressions, see Expressions.
     
-    [Source]{https://www.mongodb.com/docs/manual/reference/operator/aggregation/lt/#mongodb-expression-exp.-lt}
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/lt/#mongodb-expression-exp.-lt)
     """
 
     @property

@@ -41,7 +41,7 @@ from monggregate.operators.arithmetic.arithmetic import ArithmeticOperator
 
 class Subtract(ArithmeticOperator):
     """
-    Abstraction of MongoDB $substract expression which subtracts two numbers 
+    Abstraction of MongoDB $substract operator which subtracts two numbers 
     to return the difference, or two dates to return the difference 
     in milliseconds, or a date and a number in milliseconds to return the 
     resulting date.

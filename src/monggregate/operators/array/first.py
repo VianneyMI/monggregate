@@ -102,7 +102,7 @@ from monggregate.operators.array.array import ArrayOnlyOperator
 
 class First(ArrayOnlyOperator):
     """
-    Abstraction of MongoDB $first expression which returns the first element in an array.
+    Abstraction of MongoDB $first operator which returns the first element in an array.
 
     Attributes
     -------------------

@@ -33,7 +33,7 @@ from monggregate.operators.accumulators.accumulator import Accumulator
 
 class Push(Accumulator):
     """
-    Abstraction of MongoDB $push expression.
+    Abstraction of MongoDB $push operator.
 
     Attributes
     -------------------
@@ -44,7 +44,6 @@ class Push(Accumulator):
     $push returns an array of all values that result from applying an expression to documents.
 
     $push is available in these stages:
-
         * $bucket
         * $bucketAuto
         * $group

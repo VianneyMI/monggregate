@@ -54,7 +54,7 @@ from monggregate.operators.boolean.boolean import BooleanOperator
 
 class And(BooleanOperator):
     """
-    Abstraction of MongoDB $and expression which evaluates one or more expressions and returns true if all of the expressions are true.
+    Abstraction of MongoDB $and operator which evaluates one or more expressions and returns true if all of the expressions are true.
 
     Attributes
     -------------------
@@ -72,7 +72,7 @@ class And(BooleanOperator):
 
     For more information on expressions, see Expressions.
 
-    [Source]{https://www.mongodb.com/docs/manual/reference/operator/aggregation/and/#mongodb-expression-exp.-and}
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/and/#mongodb-expression-exp.-and)
     """
 
     expressions : list[Any]

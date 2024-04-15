@@ -90,7 +90,7 @@ from monggregate.operators.accumulators.accumulator import Accumulator
 
 class Sum(Accumulator):
     """
-    Abstraction of MongoDB $sum expression.
+    Abstraction of MongoDB $sum operator.
 
     Attributes
     -----------------------
@@ -102,7 +102,7 @@ class Sum(Accumulator):
     Calculates and returns the collective sum of numeric values.
     $sum ignores non-numeric values.
 
-        * $sum is available in these stages:
+    $sum is available in these stages:
         * $addFields (Available starting in MongoDB 3.4)
         * $bucket
         * $bucketAuto

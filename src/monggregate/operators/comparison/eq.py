@@ -31,7 +31,7 @@ from monggregate.operators.comparison.comparator import Comparator
 
 class Equal(Comparator):
     """
-    Abstraction of MongoDB $eq expression which Compares two values and 
+    Abstraction of MongoDB $eq operator which Compares two values and 
     returns true when the values are equivalent, False otherwise.
 
     Attributes
@@ -55,7 +55,7 @@ class Equal(Comparator):
 
     The arguments can be any valid expression. For more information on expressions, see Expressions.
     
-    [Source]{https://www.mongodb.com/docs/manual/reference/operator/aggregation/eq/#mongodb-expression-exp.-eq}
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/eq/#mongodb-expression-exp.-eq)
 
 
     """
