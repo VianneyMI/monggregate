@@ -63,7 +63,7 @@ facet           The result to a facet query is a mapping of the defined facet na
 
 """
 
-from monggregate.stages.search.base import SearchConfig, SearchBase
+from monggregate.stages.search.base import SearchBase
 
 
 class SearchMeta(SearchBase):

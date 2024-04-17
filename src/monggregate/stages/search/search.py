@@ -68,31 +68,13 @@ The $$SEARCH_META aggregation variable can't be used in any subsequent stage aft
                                                        
 """
 
-from datetime import datetime
-from typing import Any, Callable, Literal
 try:
     from typing import Self
 except ImportError:
     from typing_extensions import Self
     
-from monggregate.base import pyd
-from monggregate.stages.stage import Stage
-from monggregate.stages.search.base import SearchConfig, SearchBase
-from monggregate.search.collectors import Facet, Facets
-from monggregate.search.operators import(
-    Autocomplete,
-    Compound,
-    Equals,
-    Exists,
-    MoreLikeThis,
-    Range,
-    Regex,
-    Text,
-    Wildcard,
-    AnyOperator
-)
-from monggregate.search.operators.compound import ClauseType
-from monggregate.search.commons import FuzzyOptions
+from monggregate.stages.search.base import SearchBase
+
 
 
 # Classes
