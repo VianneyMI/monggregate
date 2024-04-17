@@ -24,3 +24,16 @@ from monggregate.search.collectors.facet import (
     # String
     FacetName, 
 )
+
+
+__all__ = [
+    "Facet",
+    "FacetBucket",
+    "FacetBuckets",
+    "FacetResult",
+    "StringFacet",
+    "NumericFacet",
+    "DateFacet",
+    "Facets",
+    "FacetName",
+]
