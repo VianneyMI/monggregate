@@ -32,12 +32,25 @@ from monggregate.operators.array.array import ArrayOnlyOperator
 
 class Size(ArrayOnlyOperator):
     """
-    Creates a $size expression
+    Abstraction of MongoDB $size operator which counts and returns the total number 
+    of items in an array.
 
     Attributes
     --------------------
         - expression : Any valid expression that resolves to an array
 
+    Online MongoDB documentation
+    ----------------------------
+    Counts and returns the total number of items in an array.
+
+    $size has the following syntax:
+
+        >>> { $size: <expression> }
+
+    The argument for $size can be any expression as long as it resolves to an array.
+    For more information on expressions, see Expressions.
+
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/size/#mongodb-expression-exp.-size)
     """
 
     @property

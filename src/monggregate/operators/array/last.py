@@ -106,12 +106,23 @@ from monggregate.operators.array.array import ArrayOnlyOperator
 
 class Last(ArrayOnlyOperator):
     """
-    Creates a $last expression
+    Abstraction of MongoDB $last operator which returns the last element 
+    in an array.
 
     Attributes
     -----------------------------
         - expression, Expression : Any valid expression
 
+    Online MongoDB documentation
+    ----------------------------
+    Returns the last element in an array.
+
+    NOTE : Disambiguation
+        This page describes the $last array operator.
+        For the $last aggregation accumulator,
+        see [$last (aggregation accumulator)](https://www.mongodb.com/docs/manual/reference/operator/aggregation/last-array-element/#mongodb-expression-exp.-last)
+
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/last-array-element/#mongodb-expression-exp.-last)
     """
 
     @property

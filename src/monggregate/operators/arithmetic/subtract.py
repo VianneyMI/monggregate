@@ -41,14 +41,31 @@ from monggregate.operators.arithmetic.arithmetic import ArithmeticOperator
 
 class Subtract(ArithmeticOperator):
     """
-    Creates a $substract expression
+    Abstraction of MongoDB $substract operator which subtracts two numbers 
+    to return the difference, or two dates to return the difference 
+    in milliseconds, or a date and a number in milliseconds to return the 
+    resulting date.
 
     Attributes
     -------------------
         - left, Any : the numerator of the division
         - right, Any : the denominator of the division
             
+    Online MongoDB documentation
+    ----------------------------
+    Subtracts two numbers to return the difference, or two dates to return the difference in milliseconds, 
+    or a date and a number in milliseconds to return the resulting date.
+
+    The $substract expression has the following syntax:
+
+        >>> { $substract: [ <expression1>, <expression2>] }
+
+    The second argument is subtracted from the first argument.
+
+    The arguments can be any valid expression as long as they resolve to numbers and/or dates. To subtract a number from a date, the date must be the first argument. 
+    For more information on expressions, see Expressions.
     
+    [Source](https://docs.mongodb.com/manual/reference/operator/aggregation/substract/#mongodb-expression-exp.-substract)
     """
 
 

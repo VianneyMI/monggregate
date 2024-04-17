@@ -53,14 +53,39 @@ from monggregate.operators.array.array import ArrayOperator
 
 class ArrayToObject(ArrayOperator):
     """
-    Creates an $arrayToObject expression
+    Abstraction of MongoDB $arrayToObject operator which converts an array into a single document.
 
     Attributes
     ----------------------
         - expression, Expression : Any valid expression that resolves to an array of two-element arrays
                                    or array if documents that contains "k" and "v" fields.
 
+    Online MongoDB documentation
+    ----------------------------
+    Converts an array into a single document; the array must be either:
 
+        * An array of two-element arrays where the first element is the field name,
+        and the second element is the field value:
+
+        >>> [ [ "item", "abc123"], [ "qty", 25 ] ]
+
+    OR
+
+        * An array of documents that contains two fields, k and v where:
+
+            * The k field contains the field name.
+
+            * The v field contains the value of the field.
+
+        >>> [ { "k": "item", "v": "abc123"}, { "k": "qty", "v": 25 } ]
+
+    $arrayToObject has the following syntax:
+
+        >>> { $arrayToObject: <expression> }
+
+    The <expression> can be any valid expression that that resolves to an array of two-element arrays or array of documents that contains "k" and "v" fields.
+    
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/arrayToObject/#mongodb-expression-exp.-arrayToObject)
     """
 
     expression : Any

@@ -35,13 +35,29 @@ from monggregate.operators.array.array import ArrayOperator
 
 class In(ArrayOperator):
     """
-    Creates a $in expression
+    Abstraction of MongoDB $in operator which returns a boolean indicating 
+    whether a specified value is in an array.
 
     Attributes
     ------------------------------
         - left, Expression : Any valid expression (to be looked for in right)
         - right, Expression : Any valid expression that resolves to an array (containing left or not).
 
+    Online MongoDB documentation
+    ----------------------------
+    Returns a boolean indicating whether a specified value is in an array.
+    NOTE : This document describes the $in aggregation operator. For the $in query operator see [$in](mongodb.com/docs/manual/reference/operator/query/in/)
+
+    $in has the following operator expression syntax:
+        >>> { $in: [ <expression>, <array expression> ] }
+
+            Operand             Description
+        *  <expression>         Any valid expression.
+        *  <array expression>   Any valid expression that resolves to an array.
+
+    WARNING : Unlike the $in query operator, the aggregation $in operator does not support matching by regular expressions.
+
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/in/#mongodb-expression-exp.-in)
     """
 
     left : Any

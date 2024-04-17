@@ -469,7 +469,7 @@ class DollarDollar(Singleton):
     MongoDB double dollar sign ($$) abstraction in python.
 
     This class is a singleton class meant to be used as a namespace for all MongoDB aggregation variables.
-    Can also be used to refrence a user-defined variable.
+    Can also be used to reference a user-defined variable.
 
     Examples:
     ------------------------------

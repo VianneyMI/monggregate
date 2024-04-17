@@ -91,12 +91,24 @@ from monggregate.base import BaseModel
 
 class Type_(BaseModel):
     """
-    Creates a $type expression
+    Abstraction of MongoDB $type operator which returns a string that 
+    specifies the BSON type of the argument.
 
     Attributes
     -------------------
         - expression, Any : expression whose type must be evaluated
+    
+    Online MongoDB documentation
+    ----------------------------
+    Returns a string that specifies the BSON type of the argument.
 
+    $type has the following operator expression syntax:
+
+        >>> { $type: <expression> }
+
+    The argument can be any valid expression.
+
+    [Source](https://docs.mongodb.com/manual/reference/operator/aggregation/type/#mongodb-expression-exp.-type)
     """
 
     expression:Any

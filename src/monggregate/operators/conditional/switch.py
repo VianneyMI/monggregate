@@ -59,7 +59,8 @@ from monggregate.operators.conditional.conditional import ConditionalOperator
 
 class Switch(ConditionalOperator):
     """
-    Creates a $switch expression
+    Abstraction of MongoDB $switch operator which evaluates a series of 
+    case expressions.
 
     Attributes
     -------------------
@@ -68,8 +69,30 @@ class Switch(ConditionalOperator):
         - default, Any|None : The path to take if no branch case expression evaluates to true.
                          Although optional, if default is unspecified and no branch case evaluates to true, 
                          $switch returns an error.
-            
     
+    Online MongoDB documentation
+    ----------------------------
+    Evaluates a series of case expressions. 
+    When it finds an expression which evaluates to true, 
+    $switch executes a specified expression and breaks out of the control flow.
+
+    The $switch expression has the following syntax:
+
+        >>> {
+                $switch: {
+                    branches: [
+                        { case: <expression>, then: <expression> },
+                        { case: <expression>, then: <expression> },
+                        ...
+                    ],
+                    default: <expression>
+                }
+            }
+
+
+    The objects in the branches array must contain only a case field and a then field.       
+    
+    [Source](https://docs.mongodb.com/manual/reference/operator/aggregation/switch/#mongodb-expression-exp.-switch)
     """
 
 

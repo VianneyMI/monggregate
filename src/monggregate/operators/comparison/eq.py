@@ -31,12 +31,32 @@ from monggregate.operators.comparison.comparator import Comparator
 
 class Equal(Comparator):
     """
-    Creates a $eq expression
+    Abstraction of MongoDB $eq operator which Compares two values and 
+    returns true when the values are equivalent, False otherwise.
 
     Attributes
     -------------------
         - left, Expression : Left operand. Can be any valid expression.
         - right, Expression : Right operand. Can be any valid expression.
+
+    Online MongoDB documentation
+    ----------------------------
+    Compares two values and returns:
+
+        * true when the values are equivalent.
+
+        * false when the values are not equivalent.
+
+    The $eq compares both value and type, using the specified BSON comparison order for values of different types.
+
+    $eq has the following syntax:
+
+        >>> { $eq: [ <expression1>, <expression2> ] }
+
+    The arguments can be any valid expression. For more information on expressions, see Expressions.
+    
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/eq/#mongodb-expression-exp.-eq)
+
 
     """
 

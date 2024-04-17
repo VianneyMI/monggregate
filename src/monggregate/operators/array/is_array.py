@@ -30,12 +30,20 @@ from monggregate.operators.array.array import ArrayOnlyOperator
 
 class IsArray(ArrayOnlyOperator):
     """
-    Creates a $isArray expression
+    Abstraction of MongoDB $isArray operator which determines if the operand is an array.
 
     Attributes
     -------------------------
         - expression : Any valid expression
 
+    Online MongoDB documentation
+    ----------------------------
+    Determines if the operand is an array. Returns a boolean.
+
+    $isArray has the following syntax:
+        >>> { $isArray: [ <expression> ] }
+
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/isArray/#mongodb-expression-exp.-isArray)
     """
 
     @property

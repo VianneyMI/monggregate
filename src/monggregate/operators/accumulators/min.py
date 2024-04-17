@@ -81,11 +81,32 @@ from monggregate.operators.accumulators.accumulator import Accumulator
 
 class Min(Accumulator):
     """
-    Creates a $min expression.
+    Abstraction of MongoDB $min operator.
 
     Attributes
     ----------------------
         - expression, Expression : Any valid expression
+
+
+    Online MongoDB documentation
+    ----------------------------
+    Returns the minimum value.
+    $min compares both value and type, using the specified BSON comparison order for values of different types.
+
+    $min is available in these stages:
+        * $addFields (Available starting in MongoDB 3.4)
+        * $bucket
+        * $bucketAuto
+        * $group
+        * $match stage that includes an $expr expression
+        * $project
+        * $replaceRoot (Available starting in MongoDB 3.4)
+        * $replaceWith (Available starting in MongoDB 4.2)
+        * $set (Available starting in MongoDB 4.2)
+        * $setWindowFields (Available starting in MongoDB 5.0)
+
+    In MongoDB 3.2 and earlier, $min is available in the $group stage only.
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/min/#mongodb-group-grp.-min)
     """
 
     expression : Any

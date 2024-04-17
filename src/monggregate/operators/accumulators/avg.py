@@ -12,7 +12,7 @@ Changed in version 5.0.
 
 $avg
 Returns the average value of the numeric values.
-$avgignores non-numeric values.
+$avg ignores non-numeric values.
 
     * $avg is available in these stages:
     * $addFields (Available starting in MongoDB 3.4)
@@ -75,12 +75,31 @@ from monggregate.operators.accumulators.accumulator import Accumulator
 
 class Average(Accumulator):
     """
-    Creates a $avg expression.
+    Abstration of MongoDB $avg operator that returns the average value of numeric values.
 
     Attributes
-    ------------------------
-        - expression : Any valid expression
+    ----------
+    expression : Any valid expression
 
+    Online MongoDB documentation:
+    -----------------------------
+    Returns the average value of the numeric values.
+    $avg ignores non-numeric values.
+    $avg is available in these stages:
+        * $addFields (Available starting in MongoDB 3.4)
+        * $bucket
+        * $bucketAuto
+        * $group
+        * $match stage that includes an $expr expression
+        * $project
+        * $replaceRoot (Available starting in MongoDB 3.4)
+        * $replaceWith (Available starting in MongoDB 4.2)
+        * $set (Available starting in MongoDB 4.2)
+        * $setWindowFields (Available starting in MongoDB 5.0)
+
+    In MongoDB 3.2 and earlier, $avg is available in the $group stage only.
+
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/avg/#mongodb-group-grp.-avg)
     """
 
     expression : Any
