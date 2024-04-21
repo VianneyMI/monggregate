@@ -10,7 +10,6 @@ from monggregate import _run
 from monggregate.base import BaseModel
 from monggregate.stages import (
     AnyStage,
-    Stage,
     BucketAuto,
     GranularityEnum,
     Bucket,
@@ -35,14 +34,13 @@ from monggregate.stages import (
     Unset,
     VectorSearch,
 )
-from monggregate.stages.search.base import SearchBase, OperatorLiteral
+from monggregate.stages.search.base import OperatorLiteral
 from monggregate.search.operators import OperatorMap
 from monggregate.search.operators.compound import Compound, ClauseType
 from monggregate.search.collectors.facet import Facet, FacetType
 from monggregate.search.commons import CountOptions, HighlightOptions
 from monggregate.operators import MergeObjects
 from monggregate.dollar import ROOT
-from monggregate.utils import StrEnum
 
 
 
