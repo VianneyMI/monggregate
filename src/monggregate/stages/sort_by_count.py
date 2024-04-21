@@ -47,7 +47,7 @@ $group + $sort sequence:
 
 """
 
-from monggregate.base import pyd
+from monggregate.base import pyd, Expression
 from monggregate.stages.stage import Stage
 from monggregate.utils import validate_field_path
 
@@ -81,7 +81,7 @@ class SortByCount(Stage):
 
 
     @property
-    def expression(self)->dict:
+    def expression(self)->Expression:
         """Generates sort_by_count stage statement from SortByCount class keywords arguments"""
 
         return  self.express({

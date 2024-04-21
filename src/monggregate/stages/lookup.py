@@ -245,7 +245,7 @@ For more information, see [$lookup Optimization](https://www.mongodb.com/docs/ma
 
 """
 
-from monggregate.base import pyd
+from monggregate.base import pyd, Expression
 from monggregate.stages.stage import Stage
 from monggregate.utils import StrEnum
 
@@ -376,7 +376,7 @@ class Lookup(Stage):
         return type_
 
     @property
-    def expression(self)->dict:
+    def expression(self)->Expression:
         """Generates statement from attributes"""
 
 

@@ -497,7 +497,8 @@ class Expression(BaseModel):
 
        
         return self.__class__(content=type_.Type_(operand=self))
-        
+    
+
 
 if __name__ == "__main__":
     #result = Expression.field("left") & Expression.field("right")

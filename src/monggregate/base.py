@@ -8,6 +8,7 @@ All the classes of the package inherit from one of the classes defined in this m
 #----------------------------
 from abc import ABC, abstractmethod
 from typing import Any, TypeGuard
+from typing_extensions import Self
 
 
 # 3rd Party imports
@@ -24,34 +25,36 @@ class Singleton:
     """Singleton metaclass"""
 
     _instance = None
-    def __new__(cls, *args, **kwargs):
+    def __new__(cls, *args:Any, **kwargs:Any)->Self:
         if not isinstance(cls._instance, cls):
             cls._instance = object.__new__(cls, *args, **kwargs)
         return cls._instance
+    
+Expression = dict[str, Any]
 
 class BaseModel(pyd.BaseModel, ABC):
     """Mongreggate base class"""
 
-    def to_expression(self)->dict:
+    def to_expression(self)->Expression|list[Expression]:
         """Converts an instance of a class inheriting from BaseModel to an expression"""
 
         return self.express(self)
 
     @classmethod
-    def express(cls, obj:Any)->dict|list[dict]:
+    def express(cls, obj:Any)->Expression|list[Expression]:
         """Resolves an expression encapsulated in an object from a class inheriting from BaseModel"""
 
         return express(obj)
 
     @property
     @abstractmethod
-    def expression(self)->dict:
+    def expression(self)->Expression:
         """Stage statement absctract method"""
 
         # this is a lazy attribute
         # what is currently in generate statement should go in here
 
-    def __call__(self)->dict:
+    def __call__(self)->Expression|list[Expression]:
         """Makes an instance of any class inheriting from this class callable"""
 
         return self.to_expression()

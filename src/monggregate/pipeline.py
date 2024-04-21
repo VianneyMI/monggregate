@@ -5,9 +5,8 @@ from warnings import warn
 
 from typing_extensions import Self
 
-from monggregate import _run
 
-from monggregate.base import BaseModel
+from monggregate.base import BaseModel, Expression
 from monggregate.stages import (
     AnyStage,
     BucketAuto,
@@ -22,6 +21,7 @@ from monggregate.stages import (
     Project,
     ReplaceRoot,
     Sample,
+    Stage,
     Search,
     SearchMeta,
     SearchStageMap,
@@ -46,23 +46,16 @@ from monggregate.dollar import ROOT
 
 class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     """
-    MongoDB aggregation pipeline abstraction
+    MongoDB aggregation pipeline abstraction.
 
     Attributes
     -----------------------
-        - collection, str : reference collection for the pipeline.
-                            This is the collection where the aggregation will be done.
-                            However some stages in the pipeline might work with additional
-                            collections (e.g. lookup stage)
+     stages : list[Stage]
+        the list of Stages that the pipeline is made of.
+        Similarly to the pipeline itself. This package constructs
+        abstraction for MongoDB aggregation framework pipeline stages.
 
-        - stages, list[Stage] : the list of Stages that the pipeline is made of.
-                                Similarly to the pipeline itself. This package constructs
-                                abstraction for MongoDB aggregation framework pipeline stages.
 
-        - on_call, OnCallEnum : pipeline instances are callable. This defines the behavior of the instance
-                                when called. See OnCallEnum above. Defaults to export
-
-        - -db, Database : pymongo database instance. Can be optionally provided to make a pipeline instance self sufficient
 
     Usage
     -----------------------
@@ -102,20 +95,26 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
     """
 
-    # instance of pymongo or motor database to allow pipeline to directly runnable
-    _db : _run.Database | _run.AsyncIOMotorDatabase | _run.MotorDatabase | None = None
-    # name of the collection to run the pipeline on
-    collection : str | None =None
-    # list of stages that compose the pipeline
-    stages : list[AnyStage] = []
+
+    stages : list[AnyStage|Expression] = []
    
     
 
     @property
-    def expression(self)->list[dict]:
+    def expression(self)->list[Expression]:
         """Returns the pipeline statement"""
 
-        return [stage.expression for stage in self.stages]
+        # TODO : Add test on this case <VM, 21/04/2024>
+        # https://github.com/VianneyMI/monggregate/issues/106
+        stages_expressions = []
+
+        for stage in self.stages:
+            if isinstance(stage, Stage):
+                stages_expressions.append(stage.expression)
+            else:
+                stages_expressions.append(stage)
+
+        return stages_expressions
 
 
 
@@ -123,55 +122,6 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     # ------------------------------------------------
     # Pipeline Internal Methods
     #-------------------------------------------------
-    if _run.MOTOR:
-        async def __call__(self)->list[dict[str, Any]]:
-            """Makes a pipeline instance callable and executes the entire pipeline when called"""
-    
-            return await self.run()
-
-        
-        async def run(self)->list[dict[str, Any]]:
-            """Executes the entire pipeline"""
-
-            if self._db is None:
-                raise ValueError("db is not defined. Please indicate which database to run the pipeline on")
-
-            if not self.collection:
-                raise ValueError("collection is not defined. Please indicate which collection to run the pipeline on")
-
-            # TODO : Allow to yield results as they come in <VM, 08/09/2023>
-            cursor = self._db[self.collection].aggregate(pipeline=self.export())
-            array = await cursor.to_list(length=None)
-
-            return array
-        
-    elif _run.PYMONGO:
-        def __call__(self)->list[dict[str, Any]]:
-            """Makes a pipeline instance callable and executes the entire pipeline when called"""
-    
-            return self.run()
-
-        
-        def run(self)->list[dict[str, Any]]:
-            """Executes the entire pipeline"""
-
-            if self._db is None:
-                raise ValueError("_db is not defined. Please indicate which database to run the pipeline on")
-
-            if not self.collection:
-                raise ValueError("collection is not defined. Please indicate which collection to run the pipeline on")
-
-            stages = self.export()
-            array = list(self._db[self.collection].aggregate(pipeline=stages))
-            return array
-    else:
-        def __call__(self)->None:
-            self.run()
-        
-        def run(self)->None:
-            raise NotImplementedError("No database driver found. Please install pymongo or motor")
-
-    
     def export(self)->list[dict]:
         """
         Exports current pipeline to pymongo format.
@@ -181,11 +131,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         """
 
-        stages = []
-        for stage in self.stages:
-            stages.append(stage())
-
-        return stages
+        return self.expression
 
 
     def to_statements(self)->list[dict]:
@@ -202,8 +148,6 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             raise TypeError(f"unsupported operand type(s) for +: 'Pipeline' and '{type(other)}'")
         
         return Pipeline(
-            _db=self._db,
-            collection=self.collection, 
             stages=self.stages + other.stages
             )
     
@@ -323,7 +267,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         )
         return self
 
-    def bucket_auto(self, *, by:Any=None, group_by:Any=None, buckets:int, output:dict=None, granularity:GranularityEnum|None=None)->Self:
+    def bucket_auto(self, *, by:Any=None, group_by:Any=None, buckets:int, output:dict|None=None, granularity:GranularityEnum|None=None)->Self:
         """
         Adds a bucket_auto stage to the current pipeline.
         This stage aggregates documents into buckets automatically computed to statisfy the number of buckets desired
@@ -515,8 +459,8 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         on:str|None=None,
         left_on:str|None=None,
         local_field:str|None=None,
-        right_on:str=None,
-        foreign_field:str=None)->Self:
+        right_on:str|None=None,
+        foreign_field:str|None=None)->Self:
         """
         Adds a lookup stage to the current pipeline.
         Performs a left outer join to a collection in the same database to filter in documents from the "joined" collection for processing. The

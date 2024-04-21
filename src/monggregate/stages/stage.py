@@ -2,16 +2,29 @@
 
 # Standard Library imports
 #----------------------------
-from abc import ABC
+from abc import ABC, abstractmethod
+
 
 # Package imports
 # ---------------------------
-from monggregate.base import BaseModel
+from monggregate.base import BaseModel, Expression
 from monggregate.utils import StrEnum
 
 
 class Stage(BaseModel, ABC):
     """MongoDB pipeline stage interface base class"""
+
+    @abstractmethod
+    def to_expression(self)->Expression:
+        """Converts an instance of a class inheriting from BaseModel to an expression"""
+
+        return self.express(self)
+
+    
+    def __call__(self)->Expression:
+        """Makes an instance of any class inheriting from this class callable"""
+
+        return self.to_expression()
 
 
 class StageEnum(StrEnum):

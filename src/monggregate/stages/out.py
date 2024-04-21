@@ -112,7 +112,7 @@ Restrictions
 
 """
 
-from monggregate.base import pyd
+from monggregate.base import pyd, Expression
 from monggregate.stages.stage import Stage
 
 class Out(Stage):
@@ -140,7 +140,7 @@ class Out(Stage):
     collection : str = pyd.Field(...,alias="coll")
 
     @property
-    def expression(self)->dict:
+    def expression(self)->Expression:
         """Generates statement from attributes"""
 
 

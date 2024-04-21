@@ -49,7 +49,7 @@ Restrictions
 
 from typing import Any
 
-from monggregate.base import pyd
+from monggregate.base import pyd, Expression as _Expression
 from monggregate.stages.stage import Stage
 from monggregate.operators.operator import Operator
 from monggregate.expressions import Expression
@@ -94,7 +94,7 @@ class Match(Stage):
         return operand
 
     @property
-    def expression(self) -> dict:
+    def expression(self) -> _Expression:
 
         if self.operand:
             _statement = self.express({"$match":{"$expr":self.operand}})

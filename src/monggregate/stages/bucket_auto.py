@@ -81,7 +81,7 @@ The values of the series are multiplied by a power of 10 when the groupBy values
 """
 
 from typing import Any
-from monggregate.base import pyd
+from monggregate.base import pyd, Expression
 from monggregate.stages.stage import Stage
 from monggregate.fields import FieldName
 from monggregate.operators.accumulators.accumulator import AccumulatorExpression
@@ -164,7 +164,7 @@ class BucketAuto(Stage):
     # Output
     #-----------------------------------------------------------------------------
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
 
       # NOTE : maybe it would be better to use _to_unique_list here
       # or to further validate by.

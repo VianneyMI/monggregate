@@ -148,7 +148,7 @@ To learn more, see [Create a Local Atlas Deployment](https://www.mongodb.com/doc
 
 """
 
-from monggregate.base import pyd
+from monggregate.base import pyd, Expression
 from monggregate.stages.stage import Stage
 
 class VectorSearch(Stage):
@@ -175,7 +175,7 @@ class VectorSearch(Stage):
     query_vector : list[float]
 
     @pyd.validator("num_candidates", pre=True, always=True)
-    def validate_num_candidates(cls, num_candidates:int, values:dict):
+    def validate_num_candidates(cls, num_candidates:int, values:dict)->int:
         """Validates that num_candidates is less than or equal to 10000"""
     
         limit:int = values.get("limit", 1)
@@ -185,7 +185,7 @@ class VectorSearch(Stage):
         return num_candidates
     
     @property
-    def expression(self) -> dict[str, dict]:
+    def expression(self) -> Expression:
         """Generates set stage statement from arguments"""
 
         return self.express({"$vectorSearch" : {

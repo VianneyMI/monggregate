@@ -51,7 +51,7 @@ See the following for more information on each:
 
 """
 
-from monggregate.base import pyd
+from monggregate.base import pyd, Expression    
 from monggregate.stages.stage import Stage
 
 class Limit(Stage):
@@ -79,7 +79,7 @@ class Limit(Stage):
     value : int = pyd.Field(gt=0)
 
     @property
-    def expression(self)->dict:
+    def expression(self)->Expression:
 
         return self.express({
             "$limit" : self.value

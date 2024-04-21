@@ -95,7 +95,7 @@ the returned sort order will always be the same across multiple executions of th
 """
 
 from typing import Literal
-from monggregate.base import pyd
+from monggregate.base import pyd, Expression
 from monggregate.stages.stage import Stage
 from monggregate.utils import to_unique_list
 
@@ -266,7 +266,7 @@ class Sort(Stage):
         return query
 
     @property
-    def expression(self)->dict[str, dict]:
+    def expression(self)->Expression:
         """Generates statement from other attributes"""
 
         return  self.express({"$sort":self.query})

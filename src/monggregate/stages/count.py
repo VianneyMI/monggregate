@@ -34,6 +34,7 @@ where myCount would be the output field that contains the count. You can specify
 
 """
 
+from monggregate.base import Expression
 from monggregate.stages.stage import Stage
 from monggregate.fields import FieldName
 
@@ -63,7 +64,7 @@ class Count(Stage):
     name: FieldName
 
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
         return self.express({
             "$count": self.name
         })
