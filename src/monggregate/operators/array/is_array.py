@@ -47,14 +47,14 @@ class IsArray(ArrayOnlyOperator):
     """
 
     @property
-    def operand(self) -> dict:
-        return self.resolve({
-            "$isArray":self.operand
+    def expression(self) -> dict:
+        return self.express({
+            "$isArray":self.expression
         })
 
 def is_array(array:Any)->IsArray:
     """Returns a $isArray operator"""
 
     return IsArray(
-        operand = array
+        expression = array
     )

@@ -51,9 +51,9 @@ class Exists(SearchOperator):
 
 
     @property
-    def operand(self) -> dict:
+    def expression(self) -> dict:
         
-        return self.resolve({
+        return self.express({
             "exists" : {
                 "path":self.path
             }

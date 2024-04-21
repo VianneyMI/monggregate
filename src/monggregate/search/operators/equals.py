@@ -96,9 +96,9 @@ class Equals(SearchOperator, smart_union=True):
     score : dict|None
 
     @property
-    def operand(self) -> dict:
+    def expression(self) -> dict:
             
-            return self.resolve({
+            return self.express({
                 "equals":{
                     "path": self.path,
                     "value": self.value,

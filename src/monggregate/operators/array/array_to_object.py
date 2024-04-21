@@ -88,16 +88,16 @@ class ArrayToObject(ArrayOperator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/arrayToObject/#mongodb-expression-exp.-arrayToObject)
     """
 
-    operand : Any
+    expression : Any
 
 
     @property
-    def operand(self) -> dict:
-        return self.resolve({
-            "$arrayToObject" : self.operand
+    def expression(self) -> dict:
+        return self.express({
+            "$arrayToObject" : self.expression
         })
 
 def array_to_object(expression:Any)->ArrayToObject:
     """Returns a $arrayToObject operator"""
 
-    return ArrayToObject(operand=expression)
+    return ArrayToObject(expression=expression)

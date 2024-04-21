@@ -102,13 +102,13 @@ class Average(Accumulator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/avg/#mongodb-group-grp.-avg)
     """
 
-    operand : Any
+    expression : Any
 
     @property
-    def operand(self) -> dict:
+    def expression(self) -> dict:
 
-        return self.resolve({
-            "$avg" : self.operand
+        return self.express({
+            "$avg" : self.expression
         })
     
 Avg = Average
@@ -116,6 +116,6 @@ Avg = Average
 def average(operand:Any)->Average:
     """Returns a $avg operator"""
 
-    return Average(operand=operand)
+    return Average(expression=operand)
 
 avg = average

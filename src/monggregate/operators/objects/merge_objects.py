@@ -66,16 +66,16 @@ class MergeObjects(ArrayOperator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/mergeObjects/#mongodb-expression-exp.-mergeObjects)
     """
 
-    operand : Any | list[Any]
+    expression : Any | list[Any]
 
 
     @property
-    def operand(self) -> dict:
-        return self.resolve({
-            "$mergeObjects" : self.operand
+    def expression(self) -> dict:
+        return self.express({
+            "$mergeObjects" : self.expression
         })
 
 def merge_objects(expression:Any)->MergeObjects:
     """Returns a $mergeObjects operator"""
 
-    return MergeObjects(operand=expression)
+    return MergeObjects(expression=expression)

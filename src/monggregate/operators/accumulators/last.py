@@ -80,18 +80,18 @@ class Last(Accumulator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/last/#mongodb-group-grp.-last)
     """
 
-    operand : Any
+    expression : Any
 
 
 
     @property
-    def operand(self) -> dict:
+    def expression(self) -> dict:
 
-        return self.resolve({
-            "$last" : self.operand
+        return self.express({
+            "$last" : self.expression
         })
 
 def last(operand:Any)->Last:
     """Returns a $last operator"""
 
-    return Last(operand=operand)
+    return Last(expression=operand)

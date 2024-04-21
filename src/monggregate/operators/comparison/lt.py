@@ -56,9 +56,9 @@ class LowerThan(Comparator):
     """
 
     @property
-    def operand(self) -> dict:
+    def expression(self) -> dict:
 
-        return self.resolve({
+        return self.express({
             "$lt":[self.left, self.right]
         })
 

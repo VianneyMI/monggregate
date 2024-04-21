@@ -105,7 +105,7 @@ class SearchMeta(SearchBase):
     """
 
     @property
-    def operand(self) -> dict[str, dict]:
+    def expression(self) -> dict[str, dict]:
     
         config = {
                 "index":self.index,
@@ -118,11 +118,11 @@ class SearchMeta(SearchBase):
         method = self.collector or self.operator
 
     
-        config.update(method.operand)
+        config.update(method.expression)
 
         _statement = {
             "$searchMeta":config
         }
      
-        return self.resolve(_statement)
+        return self.express(_statement)
     

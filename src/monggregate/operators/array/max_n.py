@@ -66,15 +66,15 @@ class MaxN(ArrayOperator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/maxN-array-element/#mongodb-expression-exp.-maxN)
     """
 
-    operand : Any = pyd.Field(alias="input")
+    expression : Any = pyd.Field(alias="input")
     limit : Any = pyd.Field(1, alias="n")
 
     @property
-    def operand(self) -> dict:
-        return self.resolve({
+    def expression(self) -> dict:
+        return self.express({
             "$maxN" : {
                 "n" : self.limit,
-                "input" : self.operand
+                "input" : self.expression
             }
         })
 
@@ -82,6 +82,6 @@ def max_n(expression:Any, limit:Any=1)->MaxN:
     """Returns a $maxN operator"""
 
     return MaxN(
-        operand = expression,
+        expression = expression,
         limit = limit
     )

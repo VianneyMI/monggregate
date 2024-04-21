@@ -185,10 +185,10 @@ class VectorSearch(Stage):
         return num_candidates
     
     @property
-    def operand(self) -> dict[str, dict]:
+    def expression(self) -> dict[str, dict]:
         """Generates set stage statement from arguments"""
 
-        return self.resolve({"$vectorSearch" : {
+        return self.express({"$vectorSearch" : {
             "index" : self.index,
             "path" : self.path,
             "queryVector" : self.query_vector,

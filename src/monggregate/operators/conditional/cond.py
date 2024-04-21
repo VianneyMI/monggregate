@@ -79,7 +79,7 @@ class Cond(ConditionalOperator):
     """
 
     # Syntax 2
-    operand : Any|None
+    expression : Any|None
     # NOTE: below trailing underscores and aliases might not be needed as true/false are not protected in python
     # (but True and False are) <VM, 14/08/2023>
     true_ : Any|None = pyd.Field(alias="true") 
@@ -139,8 +139,8 @@ class Cond(ConditionalOperator):
 
     
     @property
-    def operand(self) -> dict:
-        return self.resolve({
+    def expression(self) -> dict:
+        return self.express({
             "$cond" : {
                 "if" : self.if_,
                 "then" : self.then_,

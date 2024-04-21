@@ -140,7 +140,7 @@ class Out(Stage):
     collection : str = pyd.Field(...,alias="coll")
 
     @property
-    def operand(self)->dict:
+    def expression(self)->dict:
         """Generates statement from attributes"""
 
 
@@ -158,4 +158,4 @@ class Out(Stage):
                 "$out" : self.collection
             }
 
-        return self.resolve(statement)
+        return self.express(statement)

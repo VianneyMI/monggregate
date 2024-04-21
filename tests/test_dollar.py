@@ -23,9 +23,9 @@ def test_singletons()->None:
 def test_simple_expressions()->None:
     """Tests some simple expressions"""
 
-    assert S.sum(1).operand == {"$sum": 1}
+    assert S.sum(1).expression == {"$sum": 1}
 
-    assert S.type_("number").operand == {"$type": "number"}
+    assert S.type_("number").expression == {"$type": "number"}
 
     #S.avg(S.multiply(S.price, S.quantity)).statement == {"$avg": [{"$multiply": ["$price", "$quantity"]}]}
 

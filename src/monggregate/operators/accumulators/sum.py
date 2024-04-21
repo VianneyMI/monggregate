@@ -119,22 +119,22 @@ class Sum(Accumulator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/sum/#mongodb-group-grp.-sum)
     """
 
-    operand : Any
+    expression : Any
 
 
     @property
-    def operand(self) -> dict:
+    def expression(self) -> dict:
 
-        return self.resolve({
-            "$sum" : self.operand
+        return self.express({
+            "$sum" : self.expression
         })
 
 def sum(*args:Any)->Sum:
     """Returns a $sum operator"""
 
     if len(args)>1:
-        output = Sum(operand=list(args))
+        output = Sum(expression=list(args))
     else:
-        output = Sum(operand=args[0])
+        output = Sum(expression=args[0])
 
     return output

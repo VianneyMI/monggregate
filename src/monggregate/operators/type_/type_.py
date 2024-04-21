@@ -111,13 +111,13 @@ class Type_(BaseModel):
     [Source](https://docs.mongodb.com/manual/reference/operator/aggregation/type/#mongodb-expression-exp.-type)
     """
 
-    operand:Any
+    expression:Any
 
     @property
-    def operand(self)->dict:
+    def expression(self)->dict:
 
-        return self.resolve({
-            "$type":self.operand
+        return self.express({
+            "$type":self.expression
         })
     
 
@@ -125,5 +125,5 @@ def type_(expression:Any)->Type_:
     """Returns a $type operator"""
 
     return Type_(
-        operand=expression
+        expression=expression
     )

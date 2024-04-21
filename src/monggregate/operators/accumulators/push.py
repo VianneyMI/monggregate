@@ -52,18 +52,18 @@ class Push(Accumulator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/push/#mongodb-group-grp.-push)
     """
 
-    operand : Any
+    expression : Any
 
 
 
     @property
-    def operand(self) -> dict:
+    def expression(self) -> dict:
 
-        return self.resolve({
-            "$push" : self.operand
+        return self.express({
+            "$push" : self.expression
         })
 
 def push(operand:Any)->Push:
     """Returns a $push operator"""
 
-    return Push(operand=operand)
+    return Push(expression=operand)

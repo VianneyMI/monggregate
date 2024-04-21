@@ -376,7 +376,7 @@ class Lookup(Stage):
         return type_
 
     @property
-    def operand(self)->dict:
+    def expression(self)->dict:
         """Generates statement from attributes"""
 
 
@@ -412,4 +412,4 @@ class Lookup(Stage):
                 }
             }
 
-        return self.resolve(statement)
+        return self.express(statement)

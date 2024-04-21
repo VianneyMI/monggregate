@@ -72,10 +72,10 @@ class Sample(Stage):
     value : int = pyd.Field(10, gt=0)
 
     @property
-    def operand(self)->dict:
+    def expression(self)->dict:
         """Generate statement from arguments"""
 
-        return self.resolve({
+        return self.express({
             "$sample" : {
                 "size" : self.value
             }

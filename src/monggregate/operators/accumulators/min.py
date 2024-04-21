@@ -109,18 +109,18 @@ class Min(Accumulator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/min/#mongodb-group-grp.-min)
     """
 
-    operand : Any
+    expression : Any
 
 
 
     @property
-    def operand(self) -> dict:
+    def expression(self) -> dict:
 
-        return self.resolve({
-            "$min" : self.operand
+        return self.express({
+            "$min" : self.expression
         })
 
 def min(operand:Any)->Min:
     """Returns a $min operator"""
 
-    return Min(operand=operand)
+    return Min(expression=operand)

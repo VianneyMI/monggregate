@@ -73,8 +73,8 @@ class Pow(ArithmeticOperator):
     exponent : Any
 
     @property
-    def operand(self) -> dict:
-        return self.resolve({
+    def expression(self) -> dict:
+        return self.express({
             "$pow" : [self.number, self.exponent]
         })
     

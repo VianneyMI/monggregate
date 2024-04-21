@@ -204,12 +204,12 @@ class UnionWith(Stage):
 
         output = pipeline
         if isinstance(pipeline, BaseModel):
-            output =  pipeline.operand
+            output =  pipeline.expression
 
         return output
 
     @property
-    def operand(self) -> dict[str, dict]:
+    def expression(self) -> dict[str, dict]:
         """Generates $unionWith statement"""
 
         if self.pipeline:
@@ -222,4 +222,4 @@ class UnionWith(Stage):
         else:
             statement = {"$unionWith": self.collection}
 
-        return self.resolve(statement)
+        return self.express(statement)

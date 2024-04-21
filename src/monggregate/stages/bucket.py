@@ -116,11 +116,11 @@ class Bucket(Stage):
     _validate_by = pyd.validator("by", pre=True, always=True, allow_reuse=True)(validate_field_path) # re-used pyd.validators
 
     @property
-    def operand(self) -> dict:
+    def expression(self) -> dict:
 
         # Generates statement
         #--------------------------------------
-        return self.resolve({
+        return self.express({
             "$bucket" : {
                 "groupBy" : self.by,
                 "boundaries" :self.boundaries,

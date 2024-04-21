@@ -257,7 +257,7 @@ class Project(Stage):
 
 
     @property
-    def operand(self)->dict[str, dict]:
+    def expression(self)->dict[str, dict]:
         """Generates statement from other attributes"""
 
-        return self.resolve({"$project":self.projection})
+        return self.express({"$project":self.projection})

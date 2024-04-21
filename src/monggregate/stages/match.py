@@ -79,7 +79,7 @@ class Match(Stage):
     """
 
     query : dict = {} #| None
-    operand : Any | None = None
+    expression : Any | None = None
 
     @pyd.validator("expression", pre=True, always=True)
     def validate_expression(cls, expression)-> Any:
@@ -94,12 +94,12 @@ class Match(Stage):
         return expression
 
     @property
-    def operand(self) -> dict:
+    def expression(self) -> dict:
 
-        if self.operand:
-            _statement = self.resolve({"$match":{"$expr":self.operand}})
+        if self.expression:
+            _statement = self.express({"$match":{"$expr":self.expression}})
             
         else:
-            _statement =  self.resolve({"$match":self.query})
+            _statement =  self.express({"$match":self.query})
 
         return _statement

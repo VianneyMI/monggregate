@@ -164,11 +164,11 @@ class BucketAuto(Stage):
     # Output
     #-----------------------------------------------------------------------------
     @property
-    def operand(self) -> dict:
+    def expression(self) -> dict:
 
       # NOTE : maybe it would be better to use _to_unique_list here
       # or to further validate by.
-      return   self.resolve({
+      return   self.express({
             "$bucketAuto" : {
                 "groupBy" : self.by,
                 "buckets" : self.buckets,

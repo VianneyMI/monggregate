@@ -81,9 +81,9 @@ class SortByCount(Stage):
 
 
     @property
-    def operand(self)->dict:
+    def expression(self)->dict:
         """Generates sort_by_count stage statement from SortByCount class keywords arguments"""
 
-        return  self.resolve({
+        return  self.express({
             "$sortByCount" : self.by
         })

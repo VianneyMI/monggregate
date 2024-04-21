@@ -52,8 +52,8 @@ class Multiply(ArithmeticOperator):
     operands : list[Any]
 
     @property
-    def operand(self) -> dict:
-        return self.resolve({
+    def expression(self) -> dict:
+        return self.express({
             "$multiply" : self.operands
         })
     

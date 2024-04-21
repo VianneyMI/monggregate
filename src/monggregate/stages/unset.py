@@ -71,7 +71,7 @@ class Unset(Stage):
     fields: list[FieldName] | None
 
     @property
-    def operand(self) -> dict:
+    def expression(self) -> dict:
 
         if self.field:
             _statement = {
@@ -82,4 +82,4 @@ class Unset(Stage):
                 "$unset": self.fields
             }
 
-        return self.resolve(_statement)
+        return self.express(_statement)

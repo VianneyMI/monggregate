@@ -65,15 +65,15 @@ class MinN(ArrayOperator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/minN-array-element/#mongodb-expression-exp.-minN)
     """
 
-    operand : Any = pyd.Field(alias="input")
+    expression : Any = pyd.Field(alias="input")
     limit : Any = pyd.Field(1, alias="n")
 
     @property
-    def operand(self) -> dict:
-        return self.resolve({
+    def expression(self) -> dict:
+        return self.express({
             "$minN" : {
                 "n" : self.limit,
-                "input" : self.operand
+                "input" : self.expression
             }
         })
 
@@ -81,6 +81,6 @@ def min_n(expression:Any, limit:Any=1)->MinN:
     """Returns a $minN operator"""
 
     return MinN(
-        operand = expression,
+        expression = expression,
         limit = limit
     )

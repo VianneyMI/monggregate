@@ -92,8 +92,8 @@ class Wildcard(SearchOperator):
     score : dict | None = None
 
     @property
-    def operand(self) -> dict:
+    def expression(self) -> dict:
         
-        return self.resolve({
+        return self.express({
             "wildcard":self.dict(exclude_none=True, by_alias=True)
         })

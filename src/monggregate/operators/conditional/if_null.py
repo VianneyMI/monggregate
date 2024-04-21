@@ -72,19 +72,19 @@ class IfNull(ConditionalOperator):
     """
 
 
-    operand : Any # NOTE : Maybe diverge from Mongo and do not allow multiple expressions <VM, 14/08/2023>
+    expression : Any # NOTE : Maybe diverge from Mongo and do not allow multiple expressions <VM, 14/08/2023>
     output : Any
 
     @property
-    def operand(self) -> dict:
-        return self.resolve({
-            "$ifNull" : [self.operand, self.output]
+    def expression(self) -> dict:
+        return self.express({
+            "$ifNull" : [self.expression, self.output]
         })
     
 def if_null(expression:Any, output:Any)->IfNull:
     """Returns an $if_null operator"""
 
     return IfNull(
-        operand=expression,
+        expression=expression,
         output=output
     )

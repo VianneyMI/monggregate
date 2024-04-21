@@ -126,8 +126,8 @@ class DateToString(StringOperator):
     on_null : Any
 
     @property
-    def operand(self) -> dict:
-        return self.resolve({
+    def expression(self) -> dict:
+        return self.express({
             "$dateToString" : self.dict(by_alias=True, exclude_none=True)
         })
     

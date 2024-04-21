@@ -32,15 +32,20 @@ class Singleton:
 class BaseModel(pyd.BaseModel, ABC):
     """Mongreggate base class"""
 
+    def to_expression(self)->dict:
+        """Converts an instance of a class inheriting from BaseModel to an expression"""
+
+        return self.express(self)
+
     @classmethod
-    def resolve(cls, obj:Any)->dict|list[dict]:
+    def express(cls, obj:Any)->dict|list[dict]:
         """Resolves an expression encapsulated in an object from a class inheriting from BaseModel"""
 
-        return resolve(obj)
+        return express(obj)
 
     @property
     @abstractmethod
-    def operand(self)->dict:
+    def expression(self)->dict:
         """Stage statement absctract method"""
 
         # this is a lazy attribute
@@ -49,7 +54,7 @@ class BaseModel(pyd.BaseModel, ABC):
     def __call__(self)->dict:
         """Makes an instance of any class inheriting from this class callable"""
 
-        return self.resolve(self.operand)
+        return self.express(self.expression)
 
     class Config(pyd.BaseConfig):
         """Base configuration for classes inheriting from this"""
@@ -65,25 +70,25 @@ def isbasemodel(instance:Any)->TypeGuard[BaseModel]:
 
     return isinstance(instance, BaseModel)
 
-def resolve(obj:Any)->dict|list[dict]:
+def express(obj:Any)->dict|list[dict]:
         """Resolves an expression encapsulated in an object from a class inheriting from BaseModel"""
 
         if isbasemodel(obj):
-            output:dict|list = obj.operand
+            output:dict|list = obj.expression
         elif isinstance(obj, list) and any(map(isbasemodel, obj)):
             output = []
             for element in obj:
                 if isinstance(element, BaseModel):
-                    output.append(element.operand)
+                    output.append(element.expression)
                 else:
                     output.append(element)
         elif isinstance(obj, dict):
             output = {}
             for key, value in obj.items():
                 if isinstance(value, BaseModel):
-                    output[key] = value.operand
+                    output[key] = value.expression
                 else:
-                    output[key] = resolve(value)
+                    output[key] = express(value)
         else:
             output = obj
 

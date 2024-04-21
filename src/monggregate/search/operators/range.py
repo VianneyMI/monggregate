@@ -110,7 +110,7 @@ class Range(SearchOperator, smart_union=True):
 
 
     @property
-    def operand(self) -> dict:
+    def expression(self) -> dict:
             
             params = {
                 "path": self.path,
@@ -127,5 +127,5 @@ class Range(SearchOperator, smart_union=True):
             else:
                 params["lte"] = self.lte
 
-            return self.resolve({"range":params})
+            return self.express({"range":params})
     

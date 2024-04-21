@@ -73,8 +73,8 @@ class Subtract(ArithmeticOperator):
     right: Any
 
     @property
-    def operand(self) -> dict:
-        return self.resolve({
+    def expression(self) -> dict:
+        return self.express({
             "$substract" : [self.left, self.right]
         })
     
