@@ -613,8 +613,10 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         # TODO : Append collection name in foreign collection documents field names to avoid collision and override of field when promoting sub-documents
         # Ex : {"a":1, "b":2, "c":{"a":3, "d":0}} after promoting "c" would become {"a":3, "b":2, "d":0} and we want to prevent this
 
-        right = self.collection
-        self.collection = left
+        # TODO : Review this following collection removal in pipeline <VM, 21/04/2024>
+        # right = self.collection
+        # self.collection = left
+        right = "N/A"
         self.__join_common(right=right, on=on, left_on=left_on, right_on=right_on)
         
     def __inner_join(self, right:str, on:str|None, left_on:str|None, right_on:str|None) -> None:

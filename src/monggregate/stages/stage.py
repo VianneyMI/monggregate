@@ -14,7 +14,6 @@ from monggregate.utils import StrEnum
 class Stage(BaseModel, ABC):
     """MongoDB pipeline stage interface base class"""
 
-    @abstractmethod
     def to_expression(self)->Expression:
         """Converts an instance of a class inheriting from BaseModel to an expression"""
 
