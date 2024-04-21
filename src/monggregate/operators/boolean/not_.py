@@ -35,7 +35,7 @@ class Not(BooleanOperator):
 
     Attributes
     -------------------
-        - expression, Expression : Any valid expression
+        - operand, Any:Any valid expression
     
     Online MongoDB documentation
     ----------------------------
@@ -51,17 +51,17 @@ class Not(BooleanOperator):
 
     """
 
-    expression : Any
+    operand : Any
 
     @property
-    def expression(self) -> dict:
+    def operand(self) -> dict:
         return self.resolve({
-            "$not" : [self.expression]
+            "$not" : [self.operand]
         })
 
 def not_(expression:Any)->Not:
     """Returns a $not operator"""
 
     return Not(
-        expression=expression
+        operand=expression
     )

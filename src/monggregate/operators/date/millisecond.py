@@ -169,19 +169,19 @@ class Millisecond(DateOperator):
     """
 
 
-    expression : Any
+    operand : Any
     timezone : Any | None
 
     @property
-    def expression(self) -> dict:
+    def operand(self) -> dict:
 
         if self.timezone:
             inner = {
-                "date" : self.expression,
+                "date" : self.operand,
                 "timezone" : self.timezone
             }
         else:
-            inner = self.expression
+            inner = self.operand
 
         return self.resolve({
             "$millisecond" : inner
@@ -191,6 +191,6 @@ def millisecond(expression:Any, timezone:Any)->Millisecond:
     """Returns an $millisecond operator"""
 
     return Millisecond(
-        expression=expression,
+        operand=expression,
         timezone=timezone
     )

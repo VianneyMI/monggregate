@@ -62,7 +62,7 @@ class Match(Stage):
     -----------
 
         - query, dict : a simple MQL query use to filter the documents.
-        - expression, Expression : an aggregation expression used to filter the documents
+        - operand, Any:an aggregation expression used to filter the documents
     
     NOTE : Use query if you're using a MQL query and expression if you're using aggregation expressions.
     
@@ -79,7 +79,7 @@ class Match(Stage):
     """
 
     query : dict = {} #| None
-    expression : Any | None = None
+    operand : Any | None = None
 
     @pyd.validator("expression", pre=True, always=True)
     def validate_expression(cls, expression)-> Any:
@@ -94,10 +94,10 @@ class Match(Stage):
         return expression
 
     @property
-    def expression(self) -> dict:
+    def operand(self) -> dict:
 
-        if self.expression:
-            _statement = self.resolve({"$match":{"$expr":self.expression}})
+        if self.operand:
+            _statement = self.resolve({"$match":{"$expr":self.operand}})
             
         else:
             _statement =  self.resolve({"$match":self.query})

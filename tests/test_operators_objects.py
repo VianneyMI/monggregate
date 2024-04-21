@@ -17,7 +17,7 @@ class TestObjectsOperators:
         """Tests the $mergeObjects operator"""
 
         merge_objects_op = MergeObjects(
-            expression = "$quantity"
+            operand = "$quantity"
         )
 
         # Unit test
@@ -26,7 +26,7 @@ class TestObjectsOperators:
 
         # Functinal test
         # ---------------
-        assert merge_objects_op.expression == merge_objects("$quantity").expression == {
+        assert merge_objects_op.operand == merge_objects("$quantity").operand == {
             "$mergeObjects" : "$quantity"
         }
 
@@ -34,7 +34,7 @@ class TestObjectsOperators:
         """Tests the $mergeObjects operator"""
 
         object_to_array_op = ObjectToArray(
-            expression = "$dimensions"
+            operand = "$dimensions"
         )
 
         # Unit test
@@ -43,6 +43,6 @@ class TestObjectsOperators:
 
         # Functinal test
         # ---------------
-        assert object_to_array_op.expression == object_to_array("$dimensions").expression == {
+        assert object_to_array_op.operand == object_to_array("$dimensions").operand == {
             "$objectToArray" : "$dimensions"
         }

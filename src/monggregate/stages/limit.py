@@ -79,7 +79,7 @@ class Limit(Stage):
     value : int = pyd.Field(gt=0)
 
     @property
-    def expression(self)->dict:
+    def operand(self)->dict:
 
         return self.resolve({
             "$limit" : self.value

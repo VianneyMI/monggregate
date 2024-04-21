@@ -68,7 +68,7 @@ class First(Accumulator):
 
     Attributes
     ------------------------
-        - expression, Expression : Any valid expression
+        - operand, Any : Any valid expression
 
     Online MongoDB documentation:
     ------------------------------
@@ -88,17 +88,17 @@ class First(Accumulator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/first/#mongodb-group-grp.-first)
     """
 
-    expression : Any
+    operand : Any
 
 
     @property
-    def expression(self) -> dict:
+    def operand(self) -> dict:
 
         return self.resolve({
-            "$first" : self.expression
+            "$first" : self.operand
         })
 
 def first(expression:Any)->First:
     """Returns a $first operator"""
 
-    return First(expression=expression)
+    return First(operand=expression)

@@ -49,17 +49,17 @@ class Concat(StringOperator):
     """
 
 
-    expressions : list[Any]
+    operands : list[Any]
 
     @property
-    def expression(self) -> dict:
+    def operand(self) -> dict:
         return self.resolve({
-            "$concat" : self.expressions
+            "$concat" : self.operands
         })
     
 def concat(*args:Any)->Concat:
     """Returns an $concat operator"""
 
     return Concat(
-        expressions=list(args)
+        operands=list(args)
     )

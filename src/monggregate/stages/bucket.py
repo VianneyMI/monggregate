@@ -116,7 +116,7 @@ class Bucket(Stage):
     _validate_by = pyd.validator("by", pre=True, always=True, allow_reuse=True)(validate_field_path) # re-used pyd.validators
 
     @property
-    def expression(self) -> dict:
+    def operand(self) -> dict:
 
         # Generates statement
         #--------------------------------------

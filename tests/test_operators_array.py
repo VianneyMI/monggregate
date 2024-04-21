@@ -29,7 +29,7 @@ class TestArrayOperators:
     def test_array_to_object(self)->None:
         """Tests the $arrayToObject operator class and mirror function"""
 
-        array_to_object_op = ArrayToObject(expression="$dimensions")
+        array_to_object_op = ArrayToObject(operand="$dimensions")
 
         # Unit test
         # -----------------
@@ -37,7 +37,7 @@ class TestArrayOperators:
 
         # Functional test
         # -----------------
-        assert array_to_object_op.expression == array_to_object("$dimensions").expression == {
+        assert array_to_object_op.operand == array_to_object("$dimensions").operand == {
             "$arrayToObject" :"$dimensions"
         }
 
@@ -47,7 +47,7 @@ class TestArrayOperators:
 
 
         filter_op = Filter(
-            expression = [1, 2, 3, 4],
+            operand = [1, 2, 3, 4],
             let = "num",
             query = greather_than("$$num", 2),
         )
@@ -58,11 +58,11 @@ class TestArrayOperators:
 
         # Functional test
         # ---------------------
-        assert filter_op.expression  == filter(
+        assert filter_op.operand  == filter(
             [1, 2, 3, 4],
             "num",
             greather_than("$$num", 2)
-            ).expression == {
+            ).operand == {
             "$filter" : {
                 "input" : [1, 2, 3, 4],
                 "as" : "num",
@@ -78,7 +78,7 @@ class TestArrayOperators:
 
 
         first_op = First(
-            expression = [1, 2, 3, 4]
+            operand = [1, 2, 3, 4]
         )
 
         # Unit test
@@ -87,7 +87,7 @@ class TestArrayOperators:
 
         # Functional test
         # ---------------------
-        assert first_op.expression  == first([1, 2, 3, 4]).expression == {
+        assert first_op.operand  == first([1, 2, 3, 4]).operand == {
             "$first" : [1, 2, 3, 4]
         }
 
@@ -105,14 +105,14 @@ class TestArrayOperators:
 
         # Functional test
         # -----------------------
-        assert in_op.expression == in_(1, [1, 2, 3, 4]).expression == {
+        assert in_op.operand == in_(1, [1, 2, 3, 4]).operand == {
             "$in" : [1, [1, 2, 3, 4]]
         }
 
     def test_is_array(self)->None:
         """Tests the $isArray operator class and mirror function"""
 
-        is_array_op = IsArray(expression=[1, 2, 3,4])
+        is_array_op = IsArray(operand=[1, 2, 3,4])
 
         # Unit test
         # --------------------
@@ -120,7 +120,7 @@ class TestArrayOperators:
 
         # Functional test
         # --------------------
-        assert is_array_op.expression == is_array([1, 2, 3, 4]).expression == {
+        assert is_array_op.operand == is_array([1, 2, 3, 4]).operand == {
             "$isArray" : [1, 2, 3, 4]
         }
 
@@ -129,7 +129,7 @@ class TestArrayOperators:
 
 
         last_op = Last(
-            expression = [1, 2, 3, 4]
+            operand = [1, 2, 3, 4]
         )
 
         # Unit test
@@ -138,7 +138,7 @@ class TestArrayOperators:
 
         # Functional test
         # ---------------------
-        assert last_op.expression  == last([1, 2, 3, 4]).expression == {
+        assert last_op.operand  == last([1, 2, 3, 4]).operand == {
             "$last" : [1, 2, 3, 4]
         }
 
@@ -148,7 +148,7 @@ class TestArrayOperators:
 
         max_n_op = MaxN(
             limit = 1,
-            expression = [1, 2, 3, 4]
+            operand = [1, 2, 3, 4]
         )
 
         # Unit test
@@ -157,7 +157,7 @@ class TestArrayOperators:
 
         # Functional test
         # --------------------
-        assert max_n_op.expression == max_n([1, 2, 3, 4], 1).expression == {
+        assert max_n_op.operand == max_n([1, 2, 3, 4], 1).operand == {
             "$maxN" : {
                 "n" : 1,
                 "input" : [1, 2, 3, 4]
@@ -169,7 +169,7 @@ class TestArrayOperators:
 
         min_n_op = MinN(
             limit = 1,
-            expression = [1, 2, 3, 4]
+            operand = [1, 2, 3, 4]
         )
 
         # Unit test
@@ -178,7 +178,7 @@ class TestArrayOperators:
 
         # Functional test
         # --------------------
-        assert min_n_op.expression == min_n([1, 2, 3, 4], 1).expression == {
+        assert min_n_op.operand == min_n([1, 2, 3, 4], 1).operand == {
             "$minN" : {
                 "n" : 1,
                 "input" : [1, 2, 3, 4]
@@ -189,7 +189,7 @@ class TestArrayOperators:
         """Tests the $size operator class and mirror function"""
 
         size_op = Size(
-            expression = [1, 2, 3, 4]
+            operand = [1, 2, 3, 4]
         )
 
         # Unit test
@@ -198,7 +198,7 @@ class TestArrayOperators:
 
         # Functional test
         # ---------------------
-        assert size_op.expression == size([1, 2, 3, 4]).expression == {
+        assert size_op.operand == size([1, 2, 3, 4]).operand == {
             "$size" : [1, 2, 3, 4]
         }
 
@@ -207,7 +207,7 @@ class TestArrayOperators:
         """Tests the $sortArray operator class and mirror function"""
 
         sort_array_op = SortArray(
-            expression ="$team",
+            operand ="$team",
             sort_by = {"name":1}
             )
 
@@ -217,7 +217,7 @@ class TestArrayOperators:
 
         # Functional test
         # ----------------
-        assert sort_array_op.expression == sort_array("$team", {"name":1}).expression == {
+        assert sort_array_op.operand == sort_array("$team", {"name":1}).operand == {
             "$sortArray" : {
                 "input" : "$team",
                 "sortBy" : {

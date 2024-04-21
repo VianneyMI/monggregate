@@ -111,7 +111,7 @@ class Last(ArrayOnlyOperator):
 
     Attributes
     -----------------------------
-        - expression, Expression : Any valid expression
+        - operand, Any:Any valid expression
 
     Online MongoDB documentation
     ----------------------------
@@ -126,14 +126,14 @@ class Last(ArrayOnlyOperator):
     """
 
     @property
-    def expression(self) -> dict:
+    def operand(self) -> dict:
         return self.resolve({
-            "$last":self.expression
+            "$last":self.operand
         })
 
 def last(array:Any)->Last:
     """Returns a $last operator"""
 
     return Last(
-        expression = array
+        operand = array
     )

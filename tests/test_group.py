@@ -15,7 +15,7 @@ def test_group_stage():
             query = {
                 "output":{"$sum":"income"}
             }
-        ).expression == {
+        ).operand == {
             "$group":{
                 "_id":["$name", "$age"],
                 "output":{"$sum":"income"}
@@ -37,7 +37,7 @@ def test_group_stage():
                 "output":{"$sum":"income"}
             }
         }
-    assert  group.expression == expected_statement
+    assert  group.operand == expected_statement
     #, list(diff(expected_statement, group.statement)) 
     
 
@@ -48,7 +48,7 @@ def test_group_stage():
             query = {
                 "output":{"$sum":"income"}
             }
-        ).expression == {
+        ).operand == {
             "$group":{
                 "_id":{"name":"$name", "age":"$age"},
                 "output":{"$sum":"income"}
@@ -68,7 +68,7 @@ def test_group_in_pipeline():
             query = {
                 "output":{"$sum":"income"}
             }
-        ).expression == [
+        ).operand == [
             {
                 "$group":{
                     "_id":["$name", "$age"],
@@ -84,7 +84,7 @@ def test_group_in_pipeline():
             query = {
                 "output":{"$sum":"income"}
             }
-        ).expression == [
+        ).operand == [
             {
                 "$group":{
                     "_id":["$age", "$name"],
@@ -100,7 +100,7 @@ def test_group_in_pipeline():
             query = {
                 "output":{"$sum":"income"}
             }
-        ).expression == [
+        ).operand == [
             {
                 "$group":{
                     "_id":{"name":"$name", "age":"$age"},

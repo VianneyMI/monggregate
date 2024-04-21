@@ -57,7 +57,7 @@ class ArrayToObject(ArrayOperator):
 
     Attributes
     ----------------------
-        - expression, Expression : Any valid expression that resolves to an array of two-element arrays
+        - operand, Any:Any valid expression that resolves to an array of two-element arrays
                                    or array if documents that contains "k" and "v" fields.
 
     Online MongoDB documentation
@@ -88,16 +88,16 @@ class ArrayToObject(ArrayOperator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/arrayToObject/#mongodb-expression-exp.-arrayToObject)
     """
 
-    expression : Any
+    operand : Any
 
 
     @property
-    def expression(self) -> dict:
+    def operand(self) -> dict:
         return self.resolve({
-            "$arrayToObject" : self.expression
+            "$arrayToObject" : self.operand
         })
 
 def array_to_object(expression:Any)->ArrayToObject:
     """Returns a $arrayToObject operator"""
 
-    return ArrayToObject(expression=expression)
+    return ArrayToObject(operand=expression)

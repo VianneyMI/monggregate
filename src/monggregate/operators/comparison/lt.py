@@ -33,8 +33,8 @@ class LowerThan(Comparator):
 
     Attributes
     -------------------
-        - left, Expression : Left operand. Can be any valid expression.
-        - right, Expression : Right operand. Can be any valid expression.
+        - left, Any :Left operand. Can be any valid expression.
+        - right, Any :Right operand. Can be any valid expression.
     
     Online MongoDB documentation
     ----------------------------
@@ -56,7 +56,7 @@ class LowerThan(Comparator):
     """
 
     @property
-    def expression(self) -> dict:
+    def operand(self) -> dict:
 
         return self.resolve({
             "$lt":[self.left, self.right]

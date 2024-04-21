@@ -38,7 +38,7 @@ class Expression(BaseModel):
     content : Any
 
     @property
-    def expression(self)->Any:
+    def operand(self)->Any:
         return self.resolve(self.content)
 
     #----------------------------------------------------
@@ -76,7 +76,7 @@ class Expression(BaseModel):
         """Creates an $avg expression"""
 
        
-        return self.__class__(content=accumulators.Avg(expression=self))
+        return self.__class__(content=accumulators.Avg(operand=self))
         
 
     def count(self)->Self:
@@ -90,41 +90,41 @@ class Expression(BaseModel):
         """Creates a $first expression"""
 
        
-        return  self.__class__(content=accumulators.First(expression=self))
+        return  self.__class__(content=accumulators.First(operand=self))
         
 
     def last(self)->Self:
         """Creates a $last expression"""
 
        
-        return self.__class__(content=accumulators.Last(expression=self))
+        return self.__class__(content=accumulators.Last(operand=self))
         
 
     def max(self)->Self:
         """Creates a $max expression"""
 
        
-        return self.__class__(content=accumulators.Max(expression=self))
+        return self.__class__(content=accumulators.Max(operand=self))
         
 
     def min(self)->Self:
         """Creates a $min expression"""
 
        
-        return self.__class__(content=accumulators.Min(expression=self))
+        return self.__class__(content=accumulators.Min(operand=self))
         
 
     def push(self)->Self:
         """Creates a $push expression"""
 
        
-        return  self.__class__(content=accumulators.Push(expression=self))
+        return  self.__class__(content=accumulators.Push(operand=self))
         
 
     def sum(self)->Self:
         """Creates a $sum expression"""
 
-        return  self.__class__(content=accumulators.Sum(expression=self))
+        return  self.__class__(content=accumulators.Sum(operand=self))
         
 
     
@@ -246,7 +246,7 @@ class Expression(BaseModel):
         """Creates a $arrayToObject expression"""
 
        
-        return self.__class__(content=array.ArrayToObject(expression=self))
+        return self.__class__(content=array.ArrayToObject(operand=self))
         
     
     def in_(self, right:Self)->Self:
@@ -266,7 +266,7 @@ class Expression(BaseModel):
 
        
         return  self.__class__(content=array.Filter(
-            expression=self,
+            operand=self,
             query=query,
             let=let,
             limit=limit
@@ -277,35 +277,35 @@ class Expression(BaseModel):
         """Creates a $isArray expression"""
 
        
-        return self.__class__(content=array.IsArray(expression=self))
+        return self.__class__(content=array.IsArray(operand=self))
         
 
     def max_n(self, limit:int=1)->Self:
         """Creates a $maxN expression"""
 
        
-        return self.__class__(content=array.MaxN(expression=self, limit=limit))
+        return self.__class__(content=array.MaxN(operand=self, limit=limit))
         
 
     def min_n(self, limit:int=1)->Self:
         """Creates a $maxN expression"""
 
        
-        return self.__class__(content=array.MinN(expression=self, limit=limit))
+        return self.__class__(content=array.MinN(operand=self, limit=limit))
     
 
     def size(self)->Self:
         """Creates a $size expression"""
 
        
-        return self.__class__(content=array.Size(expression=self))
+        return self.__class__(content=array.Size(operand=self))
         
 
     def sort_array(self, by:dict[str, Literal[1, -1]])->Self:
         """Creates a $sortArray expression"""
 
        
-        return self.__class__(content=array.SortArray(expression=self, by=by))
+        return self.__class__(content=array.SortArray(operand=self, by=by))
     
     
     #---------------------------------------------------
@@ -319,7 +319,7 @@ class Expression(BaseModel):
         """
 
        
-        return self.__class__(content=boolean.And(expressions=[self, other]))
+        return self.__class__(content=boolean.And(operands=[self, other]))
         
 
     def __or__(self, other:Self)->Self:
@@ -330,7 +330,7 @@ class Expression(BaseModel):
         """
 
        
-        return self.__class__(content=boolean.Or(expressions=[self, other]))
+        return self.__class__(content=boolean.Or(operands=[self, other]))
        
 
     def __invert__(self)->Self:
@@ -341,7 +341,7 @@ class Expression(BaseModel):
         """
 
        
-        return  self.__class__(content=boolean.Not(expression=self))
+        return  self.__class__(content=boolean.Not(operand=self))
 
 
     #---------------------------------------------------
@@ -432,14 +432,14 @@ class Expression(BaseModel):
         """Creates a $ifNull expression"""
 
        
-        return self.__class__(content=conditional.IfNull(expression=self, output=output))
+        return self.__class__(content=conditional.IfNull(operand=self, output=output))
     
     
     def switch(self, branches:list[Any], default:Self)->Self:
         """Creates a $switch expression"""
 
        
-        return self.__class__(content=conditional.Switch(expression=self, branches=branches, default=default))
+        return self.__class__(content=conditional.Switch(operand=self, branches=branches, default=default))
 
     #---------------------------------------------------
     # Date Operators
@@ -448,7 +448,7 @@ class Expression(BaseModel):
         """Creates a $millisecond expression"""
 
        
-        return self.__class__(content=date.Millisecond(expression=self))
+        return self.__class__(content=date.Millisecond(operand=self))
 
     #---------------------------------------------------
     # Objects Operators
@@ -457,14 +457,14 @@ class Expression(BaseModel):
         """Creates a $mergeObjects operator"""
 
        
-        return self.__class__(content=objects.MergeObjects(expression=self))
+        return self.__class__(content=objects.MergeObjects(operand=self))
         
 
     def object_to_array(self)->Self:
         """Creates a $objectToArray operator"""
 
        
-        return self.__class__(content=objects.ObjectToArray(expression=self))
+        return self.__class__(content=objects.ObjectToArray(operand=self))
     
 
     #---------------------------------------------------
@@ -474,20 +474,20 @@ class Expression(BaseModel):
         """Creates a $concat operator"""
 
        
-        return self.__class__(content=strings.Concat(expressions=[self, *args]))
+        return self.__class__(content=strings.Concat(operands=[self, *args]))
     
     def date_from_string(self)->Self:
         """Creates a $dateFromString operator"""
 
        
-        return self.__class__(content=strings.DateFromString(expression=self))
+        return self.__class__(content=strings.DateFromString(operand=self))
     
     
     def date_to_string(self)->Self:
         """Creates a $dateToString operator"""
 
        
-        return self.__class__(content=strings.DateToString(expression=self))
+        return self.__class__(content=strings.DateToString(operand=self))
 
     #---------------------------------------------------
     # Type Operators
@@ -496,7 +496,7 @@ class Expression(BaseModel):
         """Creates a $type operator"""
 
        
-        return self.__class__(content=type_.Type_(expression=self))
+        return self.__class__(content=type_.Type_(operand=self))
         
 
 if __name__ == "__main__":

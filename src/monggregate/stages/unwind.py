@@ -102,7 +102,7 @@ class Unwind(Stage):
     _validates_path_to_array = pyd.validator("path_to_array", allow_reuse=True, pre=True, always=True)(validate_field_path)
 
     @property
-    def expression(self)->dict[str, dict]:
+    def operand(self)->dict[str, dict]:
         """Generates set stage statement from arguments"""
 
         params = {"path":self.path_to_array}

@@ -63,7 +63,7 @@ class Count(Stage):
     name: FieldName
 
     @property
-    def expression(self) -> dict:
+    def operand(self) -> dict:
         return self.resolve({
             "$count": self.name
         })

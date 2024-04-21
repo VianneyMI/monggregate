@@ -85,7 +85,7 @@ class Max(Accumulator):
 
     Attributes
     ---------------------
-        - expression, Expression : Any valid expression
+        - operand, Any:Any valid expression
 
     Online MongoDB documentation
     ----------------------------
@@ -109,18 +109,18 @@ class Max(Accumulator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/max/#mongodb-group-grp.-max)
     """
 
-    expression : Any
+    operand : Any
 
 
 
     @property
-    def expression(self) -> dict:
+    def operand(self) -> dict:
 
         return self.resolve({
-            "$max" : self.expression
+            "$max" : self.operand
         })
 
-def max(expression:Any)->Max:
+def max(operand:Any)->Max:
     """Returns a $last operator"""
 
-    return Max(expression=expression)
+    return Max(operand=operand)

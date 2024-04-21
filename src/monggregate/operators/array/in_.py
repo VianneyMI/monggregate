@@ -40,8 +40,8 @@ class In(ArrayOperator):
 
     Attributes
     ------------------------------
-        - left, Expression : Any valid expression (to be looked for in right)
-        - right, Expression : Any valid expression that resolves to an array (containing left or not).
+        - left, Any :Any valid expression (to be looked for in right)
+        - right, Any :Any valid expression that resolves to an array (containing left or not).
 
     Online MongoDB documentation
     ----------------------------
@@ -65,7 +65,7 @@ class In(ArrayOperator):
 
 
     @property
-    def expression(self) -> dict:
+    def operand(self) -> dict:
         return self.resolve({
             "$in":[self.left, self.right]
         })

@@ -72,7 +72,7 @@ class Text(SearchOperator):
     synonyms : str | None = None
 
     @property
-    def expression(self) -> dict:
+    def operand(self) -> dict:
         
         return self.resolve({
             "text" : self.dict(exclude_none=True, by_alias=True)

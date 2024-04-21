@@ -70,7 +70,7 @@ class Count(Accumulator):
 
 
     @property
-    def expression(self) -> dict:
+    def operand(self) -> dict:
 
         return self.resolve({
             "$count" : {}

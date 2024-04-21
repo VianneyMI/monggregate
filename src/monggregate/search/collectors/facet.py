@@ -274,7 +274,7 @@ class StringFacet(FacetDefinition):
     num_buckets : int = 10
 
     @property
-    def expression(self) -> dict:
+    def operand(self) -> dict:
         
         return self.resolve({self.name : self.dict(by_alias=True, exclude={"name"})})
 
@@ -299,7 +299,7 @@ class NumericFacet(FacetDefinition):
     default : str|None
 
     @property
-    def expression(self) -> dict:
+    def operand(self) -> dict:
         
         return self.resolve({self.name : self.dict(by_alias=True, exclude={"name"})})
 
@@ -321,7 +321,7 @@ class DateFacet(FacetDefinition):
     default : str|None
 
     @property
-    def expression(self) -> dict:
+    def operand(self) -> dict:
         
         return self.resolve({self.name : self.dict(by_alias=True, exclude={"name"})})
 
@@ -371,7 +371,7 @@ class Facet(SearchCollector):
 
 
     @property
-    def expression(self) -> dict:
+    def operand(self) -> dict:
 
         if not self.facets:
             raise ValueError("No facets were defined")
@@ -384,10 +384,10 @@ class Facet(SearchCollector):
         }
 
         for facet in self.facets:
-            _statement["facet"]["facets"].update(facet.expression)
+            _statement["facet"]["facets"].update(facet.operand)
 
         if self.operator:
-            _statement["facet"].update({"operator":self.operator.expression})
+            _statement["facet"].update({"operator":self.operator.operand})
         
         return self.resolve(_statement)
     

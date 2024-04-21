@@ -106,7 +106,7 @@ class First(ArrayOnlyOperator):
 
     Attributes
     -------------------
-        - expression, Expression : Any valid expressions as long as it resolves to an array, null or missing value.
+        - operand, Any:Any valid expressions as long as it resolves to an array, null or missing value.
 
     Online MongoDB documentation
     ----------------------------
@@ -116,14 +116,14 @@ class First(ArrayOnlyOperator):
     """
 
     @property
-    def expression(self) -> dict:
+    def operand(self) -> dict:
         return self.resolve({
-            "$first":self.expression
+            "$first":self.operand
         })
 
 def first(array:Any)->First:
     """Returns a $first operator"""
 
     return First(
-        expression = array
+        operand = array
     )

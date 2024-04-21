@@ -85,7 +85,7 @@ class Min(Accumulator):
 
     Attributes
     ----------------------
-        - expression, Expression : Any valid expression
+        - operand, Any:Any valid expression
 
 
     Online MongoDB documentation
@@ -109,18 +109,18 @@ class Min(Accumulator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/min/#mongodb-group-grp.-min)
     """
 
-    expression : Any
+    operand : Any
 
 
 
     @property
-    def expression(self) -> dict:
+    def operand(self) -> dict:
 
         return self.resolve({
-            "$min" : self.expression
+            "$min" : self.operand
         })
 
-def min(expression:Any)->Min:
+def min(operand:Any)->Min:
     """Returns a $min operator"""
 
-    return Min(expression=expression)
+    return Min(operand=operand)

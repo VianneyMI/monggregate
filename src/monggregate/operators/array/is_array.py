@@ -34,7 +34,7 @@ class IsArray(ArrayOnlyOperator):
 
     Attributes
     -------------------------
-        - expression : Any valid expression
+        - operand : Any valid expression
 
     Online MongoDB documentation
     ----------------------------
@@ -47,14 +47,14 @@ class IsArray(ArrayOnlyOperator):
     """
 
     @property
-    def expression(self) -> dict:
+    def operand(self) -> dict:
         return self.resolve({
-            "$isArray":self.expression
+            "$isArray":self.operand
         })
 
 def is_array(array:Any)->IsArray:
     """Returns a $isArray operator"""
 
     return IsArray(
-        expression = array
+        operand = array
     )

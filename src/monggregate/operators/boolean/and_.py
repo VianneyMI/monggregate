@@ -75,18 +75,18 @@ class And(BooleanOperator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/and/#mongodb-expression-exp.-and)
     """
 
-    expressions : list[Any]
+    operands : list[Any]
 
     @property
-    def expression(self) -> dict:
+    def operand(self) -> dict:
         return self.resolve({
-            "$and" : self.expressions
+            "$and" : self.operands
         })
 
 def and_(*args:Any)->And:
     """Returns a $and operator"""
 
     return And(
-        expressions=list(args)
+        operands=list(args)
     )
 

@@ -49,17 +49,17 @@ class Multiply(ArithmeticOperator):
     """
 
 
-    expressions : list[Any]
+    operands : list[Any]
 
     @property
-    def expression(self) -> dict:
+    def operand(self) -> dict:
         return self.resolve({
-            "$multiply" : self.expressions
+            "$multiply" : self.operands
         })
     
 def multiply(*args:Any)->Multiply:
     """Returns a $multiply operator"""
 
     return Multiply(
-        expressions=list(args)
+        operands=list(args)
     )

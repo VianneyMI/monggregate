@@ -37,7 +37,7 @@ class Size(ArrayOnlyOperator):
 
     Attributes
     --------------------
-        - expression : Any valid expression that resolves to an array
+        - operand : Any valid expression that resolves to an array
 
     Online MongoDB documentation
     ----------------------------
@@ -54,14 +54,14 @@ class Size(ArrayOnlyOperator):
     """
 
     @property
-    def expression(self) -> dict:
+    def operand(self) -> dict:
         return self.resolve({
-            "$size":self.expression
+            "$size":self.operand
         })
 
 def size(array:Any)->Size:
     """Returns a $size operator"""
 
     return Size(
-        expression = array
+        operand = array
     )

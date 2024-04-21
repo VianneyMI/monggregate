@@ -57,7 +57,7 @@ class Divide(ArithmeticOperator):
     denominator : Any
 
     @property
-    def expression(self) -> dict:
+    def operand(self) -> dict:
         return self.resolve({
             "$divide" : [self.numerator, self.denominator]
         })

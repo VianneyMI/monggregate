@@ -23,7 +23,7 @@ class TestAccumulatorOperators:
         """Tests the $avg operator class and mirror function"""
 
         average_op = Average(
-        expression = [1, 2, 3, 4]
+        operand = [1, 2, 3, 4]
         )
 
         # Unit test
@@ -32,7 +32,7 @@ class TestAccumulatorOperators:
 
         # Functional test
         # ---------------------
-        assert average_op.expression  == average([1, 2, 3, 4]).expression == {
+        assert average_op.operand  == average([1, 2, 3, 4]).operand == {
             "$avg" : [1, 2, 3, 4]
         }
 
@@ -47,7 +47,7 @@ class TestAccumulatorOperators:
 
         # Functional test
         # ---------------------
-        assert count_op.expression  == count().expression == {
+        assert count_op.operand  == count().operand == {
             "$count" : {}
         }
 
@@ -58,7 +58,7 @@ class TestAccumulatorOperators:
 
 
         first_op = First(
-            expression = [1, 2, 3, 4]
+            operand = [1, 2, 3, 4]
         )
 
         # Unit test
@@ -67,7 +67,7 @@ class TestAccumulatorOperators:
 
         # Functional test
         # ---------------------
-        assert first_op.expression  == first([1, 2, 3, 4]).expression == {
+        assert first_op.operand  == first([1, 2, 3, 4]).operand == {
             "$first" : [1, 2, 3, 4]
         }
 
@@ -77,7 +77,7 @@ class TestAccumulatorOperators:
 
 
         last_op = Last(
-            expression = [1, 2, 3, 4]
+            operand = [1, 2, 3, 4]
         )
 
         # Unit test
@@ -86,7 +86,7 @@ class TestAccumulatorOperators:
 
         # Functional test
         # ---------------------
-        assert last_op.expression  == last([1, 2, 3, 4]).expression == {
+        assert last_op.operand  == last([1, 2, 3, 4]).operand == {
             "$last" : [1, 2, 3, 4]
         }
 
@@ -95,7 +95,7 @@ class TestAccumulatorOperators:
 
 
         max_op = Max(
-            expression = [1, 2, 3, 4]
+            operand = [1, 2, 3, 4]
         )
 
         # Unit test
@@ -104,7 +104,7 @@ class TestAccumulatorOperators:
 
         # Functional test
         # ---------------------
-        assert max_op.expression  == max([1, 2, 3, 4]).expression == {
+        assert max_op.operand  == max([1, 2, 3, 4]).operand == {
             "$max" : [1, 2, 3, 4]
         }
 
@@ -113,7 +113,7 @@ class TestAccumulatorOperators:
 
 
         min_op = Min(
-            expression = [1, 2, 3, 4]
+            operand = [1, 2, 3, 4]
         )
 
         # Unit test
@@ -122,7 +122,7 @@ class TestAccumulatorOperators:
 
         # Functional test
         # ---------------------
-        assert min_op.expression  == min([1, 2, 3, 4]).expression == {
+        assert min_op.operand  == min([1, 2, 3, 4]).operand == {
             "$min" : [1, 2, 3, 4]
         }
 
@@ -131,7 +131,7 @@ class TestAccumulatorOperators:
         """Tests the $push operator class and mirror function"""
 
         push_op = Push(
-            expression = {
+            operand = {
                 "item" : "$item",
                 "quantity" : "$quantity"
             }
@@ -143,10 +143,10 @@ class TestAccumulatorOperators:
 
         # Functional test
         # ---------------------
-        assert push_op.expression == push({
+        assert push_op.operand == push({
                 "item" : "$item",
                 "quantity" : "$quantity"
-            }).expression == {
+            }).operand == {
                 "$push" : {
                 "item" : "$item",
                 "quantity" : "$quantity"
@@ -159,7 +159,7 @@ class TestAccumulatorOperators:
 
 
         sum_op = Sum(
-            expression = [1, 2, 3, {"$literal":4}]
+            operand = [1, 2, 3, {"$literal":4}]
         )
 
         # Unit test
@@ -168,6 +168,6 @@ class TestAccumulatorOperators:
 
         # Functional test
         # ---------------------
-        assert sum_op.expression  == sum([1, 2, 3, {"$literal":4}]).expression == {
+        assert sum_op.operand  == sum([1, 2, 3, {"$literal":4}]).operand == {
             "$sum" : [1, 2, 3, {"$literal":4}]
         }

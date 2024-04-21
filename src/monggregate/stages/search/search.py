@@ -116,7 +116,7 @@ class Search(SearchBase):
     """
     
     @property
-    def expression(self) -> dict[str, dict]:
+    def operand(self) -> dict[str, dict]:
     
         config = {
                 "index":self.index,
@@ -128,7 +128,7 @@ class Search(SearchBase):
         
         method = self.collector or self.operator
 
-        config.update(method.expression)
+        config.update(method.operand)
 
         _statement = {
             "$search":config

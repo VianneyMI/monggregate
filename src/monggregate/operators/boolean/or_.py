@@ -52,17 +52,17 @@ class Or(BooleanOperator):
 
     """
 
-    expressions : list[Any]
+    operands : list[Any]
 
     @property
-    def expression(self) -> dict:
+    def operand(self) -> dict:
         return self.resolve({
-            "$or" : self.expressions
+            "$or" : self.operands
         })
 
 def or_(*args:Any)->Or:
     """Returns a $or operator"""
 
     return Or(
-        expressions=list(args)
+        operands=list(args)
     )

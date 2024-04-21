@@ -95,7 +95,7 @@ class Sum(Accumulator):
     Attributes
     -----------------------
         - operands, list[Expression] : Any valid list of expressions
-        - operand, Expression : Any valid expression
+        - operand, Any :Any valid expression
         
     Online MongoDB documentation
     ----------------------------
@@ -119,22 +119,22 @@ class Sum(Accumulator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/sum/#mongodb-group-grp.-sum)
     """
 
-    expression : Any
+    operand : Any
 
 
     @property
-    def expression(self) -> dict:
+    def operand(self) -> dict:
 
         return self.resolve({
-            "$sum" : self.expression
+            "$sum" : self.operand
         })
 
 def sum(*args:Any)->Sum:
     """Returns a $sum operator"""
 
     if len(args)>1:
-        output = Sum(expression=list(args))
+        output = Sum(operand=list(args))
     else:
-        output = Sum(expression=args[0])
+        output = Sum(operand=args[0])
 
     return output

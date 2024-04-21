@@ -112,10 +112,10 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     
 
     @property
-    def expression(self)->list[dict]:
+    def operand(self)->list[dict]:
         """Returns the pipeline statement"""
 
-        return [stage.expression for stage in self.stages]
+        return [stage.operand for stage in self.stages]
 
 
 
@@ -647,8 +647,8 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         self.stages.append(
             ReplaceRoot(
                 document=MergeObjects(
-                    expression=[ROOT, "$"+join_field]
-                ).expression
+                    operand=[ROOT, "$"+join_field]
+                ).operand
             )
         )
         self.stages.append(
@@ -695,7 +695,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         -------------------
 
             - query, dict : a simple MQL query use to filter the documents.
-            - expression, Expression : an aggregation expression used to filter the documents
+            - operand, Any:an aggregation expression used to filter the documents
     
         NOTE : Use query if you're using a MQL query and expression if you're using aggregation expressions.
 
@@ -713,7 +713,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         query = query | kwargs
         self.stages.append(
-                Match(query=query, expression=expression)
+                Match(query=query, operand=expression)
             )
         return self
 

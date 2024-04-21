@@ -50,17 +50,17 @@ class Add(ArithmeticOperator):
     """
 
 
-    expressions : list[Any]
+    operands : list[Any]
 
     @property
-    def expression(self) -> dict:
+    def operand(self) -> dict:
         return self.resolve({
-            "$add" : self.expressions
+            "$add" : self.operands
         })
     
 def add(*args:Any)->Add:
     """Returns a $add operator"""
 
     return Add(
-        expressions=list(args)
+        operands=list(args)
     )

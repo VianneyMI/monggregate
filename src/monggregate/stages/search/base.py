@@ -63,7 +63,7 @@ class SearchConfig(BaseModel):
     score_details : bool  = False
 
     @property
-    def expression(self):
+    def operand(self):
         """Returns the statement of the stage"""
 
         raise NotImplementedError("statement property must be implemented in subclasses")
@@ -141,7 +141,7 @@ class SearchBase(Stage, SearchConfig):
         return value
     
     @property
-    def expression(self):
+    def operand(self):
         """Returns the statement of the stage"""
 
         raise NotImplementedError("statement property must be implemented in subclasses")

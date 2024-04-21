@@ -60,7 +60,7 @@ class Last(Accumulator):
 
     Attributes
     ------------------------
-        - expression, Expression : Any valid expression
+        - operand, Any:Any valid expression
 
     Online MongoDB documentation
     ----------------------------
@@ -80,18 +80,18 @@ class Last(Accumulator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/last/#mongodb-group-grp.-last)
     """
 
-    expression : Any
+    operand : Any
 
 
 
     @property
-    def expression(self) -> dict:
+    def operand(self) -> dict:
 
         return self.resolve({
-            "$last" : self.expression
+            "$last" : self.operand
         })
 
-def last(expression:Any)->Last:
+def last(operand:Any)->Last:
     """Returns a $last operator"""
 
-    return Last(expression=expression)
+    return Last(operand=operand)

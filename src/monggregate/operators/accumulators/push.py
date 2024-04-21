@@ -37,7 +37,7 @@ class Push(Accumulator):
 
     Attributes
     -------------------
-        - expression, Expression : Any valid expression
+        - operand, Any:Any valid expression
 
     Online MongoDB documentation
     ----------------------------
@@ -52,18 +52,18 @@ class Push(Accumulator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/push/#mongodb-group-grp.-push)
     """
 
-    expression : Any
+    operand : Any
 
 
 
     @property
-    def expression(self) -> dict:
+    def operand(self) -> dict:
 
         return self.resolve({
-            "$push" : self.expression
+            "$push" : self.operand
         })
 
-def push(expression:Any)->Push:
+def push(operand:Any)->Push:
     """Returns a $push operator"""
 
-    return Push(expression=expression)
+    return Push(operand=operand)

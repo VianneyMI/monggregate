@@ -266,7 +266,7 @@ class Sort(Stage):
         return query
 
     @property
-    def expression(self)->dict[str, dict]:
+    def operand(self)->dict[str, dict]:
         """Generates statement from other attributes"""
 
         return  self.resolve({"$sort":self.query})

@@ -93,7 +93,7 @@ class SortArray(ArrayOperator):
 
     Attributes
     --------------------------
-        - expression, Expression : Any valid expression that resolves to an array
+        - operand, Any:Any valid expression that resolves to an array
         - by, dict[str, Literal[1, -1]] :  document indicating a sort order
     
     Online MongoDB documentation
@@ -119,14 +119,14 @@ class SortArray(ArrayOperator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/sortArray/#mongodb-expression-exp.-sortArray)
     """
 
-    expression : Any = pyd.Field(alias="input")
+    operand : Any = pyd.Field(alias="input")
     by : dict[str, Literal[1, -1]] = pyd.Field(1, alias="sort_by")
 
     @property
-    def expression(self) -> dict:
+    def operand(self) -> dict:
         return self.resolve({
             "$sortArray":{
-                "input" : self.expression,
+                "input" : self.operand,
                 "sortBy" : self.by
             }
         })
@@ -135,6 +135,6 @@ def sort_array(expression:Any, sort_by:dict[str, Literal[1, -1]])->SortArray:
     """Returns a $first operator"""
 
     return SortArray(
-        expression = expression,
+        operand = expression,
         sort_by = sort_by
     )

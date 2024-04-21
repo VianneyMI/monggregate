@@ -51,7 +51,7 @@ class MergeObjects(ArrayOperator):
 
     Attribute
     ---------------------
-        - expression, Expression : Any valid expression or list of expression
+        - operand, Any:Any valid expression or list of expression
 
     Online MongoDB documentation
     ----------------------------
@@ -66,16 +66,16 @@ class MergeObjects(ArrayOperator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/mergeObjects/#mongodb-expression-exp.-mergeObjects)
     """
 
-    expression : Any | list[Any]
+    operand : Any | list[Any]
 
 
     @property
-    def expression(self) -> dict:
+    def operand(self) -> dict:
         return self.resolve({
-            "$mergeObjects" : self.expression
+            "$mergeObjects" : self.operand
         })
 
 def merge_objects(expression:Any)->MergeObjects:
     """Returns a $mergeObjects operator"""
 
-    return MergeObjects(expression=expression)
+    return MergeObjects(operand=expression)
