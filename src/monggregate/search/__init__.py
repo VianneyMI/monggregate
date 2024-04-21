@@ -58,4 +58,4 @@ __all__ = [
     "Wildcard",
     "AnyOperator",
     "OperatorMap",
-    ]
+]
