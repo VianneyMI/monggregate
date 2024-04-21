@@ -41,7 +41,7 @@ class CountOptions(BaseModel):
         return value
 
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
         
         return self.express(self.dict(by_alias=True))
     

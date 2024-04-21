@@ -65,7 +65,7 @@ EXAMPLE : To create a wildcard expression which searches for any string containi
 
 """
 
-from monggregate.base import pyd
+from monggregate.base import pyd, Expression
 from monggregate.search.operators.operator import SearchOperator
 
 class Wildcard(SearchOperator):
@@ -92,7 +92,7 @@ class Wildcard(SearchOperator):
     score : dict | None = None
 
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
         
         return self.express({
             "wildcard":self.dict(exclude_none=True, by_alias=True)

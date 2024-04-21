@@ -28,6 +28,7 @@ exists ahs the following syntax:
 
 """
 
+from monggregate.base import Expression
 from monggregate.search.operators.operator import SearchOperator
 
 class Exists(SearchOperator):
@@ -51,7 +52,7 @@ class Exists(SearchOperator):
 
 
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
         
         return self.express({
             "exists" : {

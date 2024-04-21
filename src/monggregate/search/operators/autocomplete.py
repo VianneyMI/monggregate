@@ -129,6 +129,7 @@ For a demonstration of this workaround, [see Compound Example](https://www.mongo
 
 """
 
+from monggregate.base import Expression
 from monggregate.utils import StrEnum
 from monggregate.search.operators.operator import SearchOperator
 from monggregate.search.commons import FuzzyOptions
@@ -171,7 +172,7 @@ class Autocomplete(SearchOperator):
     score : dict|None
 
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
         
         return self.express({
             "autocomplete":{

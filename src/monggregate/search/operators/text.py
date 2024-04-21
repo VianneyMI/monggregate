@@ -30,7 +30,7 @@ text has the following syntax:
 
 
 """
-from monggregate.base import pyd
+from monggregate.base import Expression
 from monggregate.search.operators.operator import SearchOperator
 from monggregate.search.commons.fuzzy import FuzzyOptions
 
@@ -72,7 +72,7 @@ class Text(SearchOperator):
     synonyms : str | None = None
 
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
         
         return self.express({
             "text" : self.dict(exclude_none=True, by_alias=True)

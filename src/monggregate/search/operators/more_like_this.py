@@ -83,8 +83,8 @@ To search for non-string values, you can combine a moreLikeThis query with a nea
 You can't use the moreLikeThis operator inside the embeddedDocument operator to query documents in an array.
 
 """
-
-from monggregate.base import pyd
+from typing import Any
+from monggregate.base import pyd, Expression
 from monggregate.search.operators.operator import SearchOperator
 
 
@@ -105,7 +105,7 @@ class MoreLikeThis(SearchOperator):
     like : dict | list[dict]
 
     @pyd.validator("like", pre=True, always=True)
-    def validate_like(cls, v):
+    def validate_like(cls, v:dict[str, Any])->dict[str, Any]|list[dict[str, Any]]:
         if isinstance(v, list):
             if len(v)==0:
                 raise ValueError("The 'like' field must be a non-empty list of BSON documents.")
@@ -113,7 +113,7 @@ class MoreLikeThis(SearchOperator):
         return v
     
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
         
         return self.express({
             "moreLikeThis" : {

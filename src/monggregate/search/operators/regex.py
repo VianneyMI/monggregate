@@ -53,6 +53,7 @@ The Atlas Search regex operator uses the [Lucene regular expression engine](http
 
 """
 
+from monggregate.base import Expression
 from monggregate.search.operators.operator import SearchOperator
 
 class Regex(SearchOperator):
@@ -81,7 +82,7 @@ class Regex(SearchOperator):
     score : dict | None = None
 
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
             
             return self.express({
                 "regex":{

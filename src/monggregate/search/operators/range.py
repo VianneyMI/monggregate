@@ -68,7 +68,7 @@ score           object                  Modify the score assigned to matching   
 
 
 from datetime import datetime
-from monggregate.base import pyd
+from monggregate.base import pyd, Expression
 from monggregate.search.operators.operator import SearchOperator
 
 class Range(SearchOperator, smart_union=True):
@@ -97,20 +97,20 @@ class Range(SearchOperator, smart_union=True):
     score : dict|None
 
     @pyd.validator("gte", pre=True, always=True)
-    def at_least_one_lower(cls, value, values):
+    def at_least_one_lower(cls, value:int | float | datetime | None, values:dict)->int | float | datetime | None:
         if value is None and values.get("gt") is None:
             raise ValueError("at least one of gte or gt must be specified")
         return value
     
     @pyd.validator("lte", pre=True, always=True)
-    def at_least_one_upper(cls, value, values):
+    def at_least_one_upper(cls, value:int | float | datetime | None, values:dict)->int | float | datetime | None:
         if value is None and values.get("lt") is None:
             raise ValueError("at least one of lte or lt must be specified")
         return value
 
 
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
             
             params = {
                 "path": self.path,

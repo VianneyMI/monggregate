@@ -61,7 +61,7 @@ from typing import Any, Literal, Callable
 
 from typing_extensions import Self
 
-from monggregate.base import pyd
+from monggregate.base import Expression
 from monggregate.search.operators.operator import SearchOperator, OperatorLiteral
 from monggregate.search.operators.clause import (
     Clause,
@@ -111,7 +111,7 @@ class Compound(SearchOperator):
     minimum_should_match : int = 0
 
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
 
         clauses = {}
         if self.must:
