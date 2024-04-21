@@ -73,7 +73,8 @@ try:
 except ImportError:
     from typing_extensions import Self
 from monggregate.stages.search.base import SearchBase
-# Classes
+
+# -----------------------------------------------------
 # -----------------------------------------------------
 class Search(SearchBase):
     """"Abstraction of MongoDB $search stage that performs a full-text search on the specified field or fields.
