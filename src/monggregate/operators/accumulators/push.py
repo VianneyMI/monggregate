@@ -57,7 +57,7 @@ class Push(Accumulator):
 
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
 
         return self.resolve({
             "$push" : self.expression

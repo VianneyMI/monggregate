@@ -92,7 +92,7 @@ class First(Accumulator):
 
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
 
         return self.resolve({
             "$first" : self.expression

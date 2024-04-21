@@ -40,7 +40,7 @@ class BaseModel(pyd.BaseModel, ABC):
 
     @property
     @abstractmethod
-    def statement(self)->dict:
+    def expression(self)->dict:
         """Stage statement absctract method"""
 
         # this is a lazy attribute
@@ -49,7 +49,7 @@ class BaseModel(pyd.BaseModel, ABC):
     def __call__(self)->dict:
         """Makes an instance of any class inheriting from this class callable"""
 
-        return self.resolve(self.statement)
+        return self.resolve(self.expression)
 
     class Config(pyd.BaseConfig):
         """Base configuration for classes inheriting from this"""
@@ -69,19 +69,19 @@ def resolve(obj:Any)->dict|list[dict]:
         """Resolves an expression encapsulated in an object from a class inheriting from BaseModel"""
 
         if isbasemodel(obj):
-            output:dict|list = obj.statement
+            output:dict|list = obj.expression
         elif isinstance(obj, list) and any(map(isbasemodel, obj)):
             output = []
             for element in obj:
                 if isinstance(element, BaseModel):
-                    output.append(element.statement)
+                    output.append(element.expression)
                 else:
                     output.append(element)
         elif isinstance(obj, dict):
             output = {}
             for key, value in obj.items():
                 if isinstance(value, BaseModel):
-                    output[key] = value.statement
+                    output[key] = value.expression
                 else:
                     output[key] = resolve(value)
         else:

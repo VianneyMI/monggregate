@@ -72,7 +72,7 @@ class Sample(Stage):
     value : int = pyd.Field(10, gt=0)
 
     @property
-    def statement(self)->dict:
+    def expression(self)->dict:
         """Generate statement from arguments"""
 
         return self.resolve({

@@ -52,7 +52,7 @@ class Concat(StringOperator):
     expressions : list[Any]
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
         return self.resolve({
             "$concat" : self.expressions
         })

@@ -114,7 +114,7 @@ class Type_(BaseModel):
     expression:Any
 
     @property
-    def statement(self)->dict:
+    def expression(self)->dict:
 
         return self.resolve({
             "$type":self.expression

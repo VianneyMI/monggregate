@@ -92,7 +92,7 @@ class ArrayToObject(ArrayOperator):
 
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
         return self.resolve({
             "$arrayToObject" : self.expression
         })

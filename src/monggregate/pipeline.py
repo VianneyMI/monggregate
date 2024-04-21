@@ -112,10 +112,10 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     
 
     @property
-    def statement(self)->list[dict]:
+    def expression(self)->list[dict]:
         """Returns the pipeline statement"""
 
-        return [stage.statement for stage in self.stages]
+        return [stage.expression for stage in self.stages]
 
 
 
@@ -648,7 +648,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             ReplaceRoot(
                 document=MergeObjects(
                     expression=[ROOT, "$"+join_field]
-                ).statement
+                ).expression
             )
         )
         self.stages.append(

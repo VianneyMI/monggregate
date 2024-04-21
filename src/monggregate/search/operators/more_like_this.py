@@ -113,7 +113,7 @@ class MoreLikeThis(SearchOperator):
         return v
     
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
         
         return self.resolve({
             "moreLikeThis" : {

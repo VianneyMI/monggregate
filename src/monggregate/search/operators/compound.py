@@ -111,7 +111,7 @@ class Compound(SearchOperator):
     minimum_should_match : int = 0
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
 
         clauses = {}
         if self.must:
@@ -217,7 +217,7 @@ class Compound(SearchOperator):
             path=path,
             value=value,
             score=score
-        ).statement
+        ).expression
 
         self._register_clause(type, _equals)
 

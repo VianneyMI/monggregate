@@ -55,7 +55,7 @@ class Or(BooleanOperator):
     expressions : list[Any]
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
         return self.resolve({
             "$or" : self.expressions
         })

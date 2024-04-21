@@ -32,7 +32,7 @@ class TestAccumulatorOperators:
 
         # Functional test
         # ---------------------
-        assert average_op.statement  == average([1, 2, 3, 4]).statement == {
+        assert average_op.expression  == average([1, 2, 3, 4]).expression == {
             "$avg" : [1, 2, 3, 4]
         }
 
@@ -47,7 +47,7 @@ class TestAccumulatorOperators:
 
         # Functional test
         # ---------------------
-        assert count_op.statement  == count().statement == {
+        assert count_op.expression  == count().expression == {
             "$count" : {}
         }
 
@@ -67,7 +67,7 @@ class TestAccumulatorOperators:
 
         # Functional test
         # ---------------------
-        assert first_op.statement  == first([1, 2, 3, 4]).statement == {
+        assert first_op.expression  == first([1, 2, 3, 4]).expression == {
             "$first" : [1, 2, 3, 4]
         }
 
@@ -86,7 +86,7 @@ class TestAccumulatorOperators:
 
         # Functional test
         # ---------------------
-        assert last_op.statement  == last([1, 2, 3, 4]).statement == {
+        assert last_op.expression  == last([1, 2, 3, 4]).expression == {
             "$last" : [1, 2, 3, 4]
         }
 
@@ -104,7 +104,7 @@ class TestAccumulatorOperators:
 
         # Functional test
         # ---------------------
-        assert max_op.statement  == max([1, 2, 3, 4]).statement == {
+        assert max_op.expression  == max([1, 2, 3, 4]).expression == {
             "$max" : [1, 2, 3, 4]
         }
 
@@ -122,7 +122,7 @@ class TestAccumulatorOperators:
 
         # Functional test
         # ---------------------
-        assert min_op.statement  == min([1, 2, 3, 4]).statement == {
+        assert min_op.expression  == min([1, 2, 3, 4]).expression == {
             "$min" : [1, 2, 3, 4]
         }
 
@@ -143,10 +143,10 @@ class TestAccumulatorOperators:
 
         # Functional test
         # ---------------------
-        assert push_op.statement == push({
+        assert push_op.expression == push({
                 "item" : "$item",
                 "quantity" : "$quantity"
-            }).statement == {
+            }).expression == {
                 "$push" : {
                 "item" : "$item",
                 "quantity" : "$quantity"
@@ -168,6 +168,6 @@ class TestAccumulatorOperators:
 
         # Functional test
         # ---------------------
-        assert sum_op.statement  == sum([1, 2, 3, {"$literal":4}]).statement == {
+        assert sum_op.expression  == sum([1, 2, 3, {"$literal":4}]).expression == {
             "$sum" : [1, 2, 3, {"$literal":4}]
         }

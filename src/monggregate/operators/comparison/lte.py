@@ -57,7 +57,7 @@ class LowerThanOrEqual(Comparator):
     """
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
 
         return self.resolve({
             "$lte":[self.left, self.right]

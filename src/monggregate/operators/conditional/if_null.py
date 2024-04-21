@@ -76,7 +76,7 @@ class IfNull(ConditionalOperator):
     output : Any
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
         return self.resolve({
             "$ifNull" : [self.expression, self.output]
         })

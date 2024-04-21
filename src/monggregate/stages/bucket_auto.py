@@ -164,7 +164,7 @@ class BucketAuto(Stage):
     # Output
     #-----------------------------------------------------------------------------
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
 
       # NOTE : maybe it would be better to use _to_unique_list here
       # or to further validate by.

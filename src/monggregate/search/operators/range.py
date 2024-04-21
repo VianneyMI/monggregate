@@ -110,7 +110,7 @@ class Range(SearchOperator, smart_union=True):
 
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
             
             params = {
                 "path": self.path,

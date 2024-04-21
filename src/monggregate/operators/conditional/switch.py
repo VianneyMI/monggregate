@@ -100,7 +100,7 @@ class Switch(ConditionalOperator):
     default : Any|None
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
         return self.resolve({
             "$switch" : {
                 "branches" : self.branches,

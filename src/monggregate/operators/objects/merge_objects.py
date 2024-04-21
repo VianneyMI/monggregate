@@ -70,7 +70,7 @@ class MergeObjects(ArrayOperator):
 
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
         return self.resolve({
             "$mergeObjects" : self.expression
         })

@@ -81,7 +81,7 @@ class Regex(SearchOperator):
     score : dict | None = None
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
             
             return self.resolve({
                 "regex":{

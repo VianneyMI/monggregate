@@ -105,7 +105,7 @@ class Average(Accumulator):
     expression : Any
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
 
         return self.resolve({
             "$avg" : self.expression
@@ -113,9 +113,9 @@ class Average(Accumulator):
     
 Avg = Average
 
-def average(expression:Any)->Average:
+def average(operand:Any)->Average:
     """Returns a $avg operator"""
 
-    return Average(expression=expression)
+    return Average(expression=operand)
 
 avg = average

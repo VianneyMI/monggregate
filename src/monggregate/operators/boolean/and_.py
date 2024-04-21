@@ -78,7 +78,7 @@ class And(BooleanOperator):
     expressions : list[Any]
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
         return self.resolve({
             "$and" : self.expressions
         })

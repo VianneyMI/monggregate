@@ -117,7 +117,7 @@ class Group(Stage):
         return query
 
     @property
-    def statement(self) -> dict[str, dict]:
+    def expression(self) -> dict[str, dict]:
         """Generates set stage statement from arguments"""
 
 

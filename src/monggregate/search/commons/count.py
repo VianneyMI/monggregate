@@ -41,7 +41,7 @@ class CountOptions(BaseModel):
         return value
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
         
         return self.resolve(self.dict(by_alias=True))
     
@@ -52,6 +52,6 @@ class CountResults(BaseModel):
     total : int|None
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
         
         return self.resolve(self.dict(by_alias=True))

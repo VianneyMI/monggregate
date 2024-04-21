@@ -94,7 +94,7 @@ class Match(Stage):
         return expression
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
 
         if self.expression:
             _statement = self.resolve({"$match":{"$expr":self.expression}})

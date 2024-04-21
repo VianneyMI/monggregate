@@ -110,7 +110,7 @@ class Filter(ArrayOperator):
     limit : int | None = pyd.Field(None, ge=1) # NOTE : limit can actually be an expression but constraints are  invalid with any type
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
         return self.resolve({
             "$filter":{
                "input" : self.expression,

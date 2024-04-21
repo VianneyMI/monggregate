@@ -61,7 +61,7 @@ class Equal(Comparator):
     """
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
 
         return self.resolve({
             "$eq":[self.left, self.right]

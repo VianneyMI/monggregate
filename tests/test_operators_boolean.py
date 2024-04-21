@@ -32,7 +32,7 @@ class TestBooleanOperators:
 
         # Functional tests
         # --------------------------
-        assert and_operator.statement == and_(First(expression=[1, 2, 3, 4]), First(expression=[4, 5, 6, 7])).statement == {
+        assert and_operator.expression == and_(First(expression=[1, 2, 3, 4]), First(expression=[4, 5, 6, 7])).expression == {
             "$and" : [
                 {
                     "$first" : [1, 2, 3, 4]
@@ -55,7 +55,7 @@ class TestBooleanOperators:
 
         # Functional test
         # --------------------
-        assert not_op.statement == not_(greather_than("$qty", 250)).statement == {
+        assert not_op.expression == not_(greather_than("$qty", 250)).expression == {
             "$not" : [{"$gt":["$qty", 250]}]
         }
 
@@ -76,7 +76,7 @@ class TestBooleanOperators:
 
         # Functional tests
         # --------------------------
-        assert or_operator.statement == or_(First(expression=[1, 2, 3, 4]), First(expression=[4, 5, 6, 7])).statement  == {
+        assert or_operator.expression == or_(First(expression=[1, 2, 3, 4]), First(expression=[4, 5, 6, 7])).expression  == {
             "$or" : [
                 {
                     "$first" : [1, 2, 3, 4]

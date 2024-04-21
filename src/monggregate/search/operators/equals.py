@@ -96,7 +96,7 @@ class Equals(SearchOperator, smart_union=True):
     score : dict|None
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
             
             return self.resolve({
                 "equals":{

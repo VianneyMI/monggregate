@@ -54,7 +54,7 @@ class Not(BooleanOperator):
     expression : Any
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
         return self.resolve({
             "$not" : [self.expression]
         })

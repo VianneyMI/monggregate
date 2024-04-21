@@ -40,7 +40,7 @@ class TestSearchOperators:
 
         # Functional test
         # ---------------
-        assert autocomplete_op.statement == {
+        assert autocomplete_op.expression == {
             "autocomplete": {
                 "query": "m",
                 "path": "title",
@@ -79,7 +79,7 @@ class TestSearchOperators:
 
         # Functional test
         # ---------------
-        assert equals_op.statement == {
+        assert equals_op.expression == {
             "equals": {
                 "path": "title",
                 "score": None,
@@ -106,7 +106,7 @@ class TestSearchOperators:
 
         # Functional test
         # ---------------
-        assert exists_op.statement == {
+        assert exists_op.expression == {
             "exists": {
                 "path": "title",
             }
@@ -127,7 +127,7 @@ class TestSearchOperators:
 
         # Functional test
         # ---------------
-        assert more_like_this_op.statement == {
+        assert more_like_this_op.expression == {
             "moreLikeThis": {
                 "like": {
                     "_id": "5a934e000102030405000000",
@@ -160,7 +160,7 @@ class TestSearchOperators:
 
         # Functional test
         # ---------------
-        assert range_op.statement == {
+        assert range_op.expression == {
             "range": {
                 "path": "price",
                 "gte": 10,
@@ -190,7 +190,7 @@ class TestSearchOperators:
 
         # Functional test
         # ---------------
-        assert regex_op.statement == {
+        assert regex_op.expression == {
             "regex": {
                 "path": "title",
                 "query": "^test$",
@@ -213,7 +213,7 @@ class TestSearchOperators:
 
         # Functional test
         # ---------------
-        assert text_op.statement == {
+        assert text_op.expression == {
             "text": {
                 "query": "test",
                 "path": "description"
@@ -234,7 +234,7 @@ class TestSearchOperators:
 
         # Functional test
         # ---------------
-        assert wilcard_op.statement == {
+        assert wilcard_op.expression == {
             "wildcard": {
                 "allowAnalyzedField": False,
                 "path": "title",

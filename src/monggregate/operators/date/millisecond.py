@@ -173,7 +173,7 @@ class Millisecond(DateOperator):
     timezone : Any | None
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
 
         if self.timezone:
             inner = {

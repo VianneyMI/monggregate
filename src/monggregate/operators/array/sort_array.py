@@ -123,7 +123,7 @@ class SortArray(ArrayOperator):
     by : dict[str, Literal[1, -1]] = pyd.Field(1, alias="sort_by")
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
         return self.resolve({
             "$sortArray":{
                 "input" : self.expression,

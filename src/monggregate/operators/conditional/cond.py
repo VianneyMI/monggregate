@@ -139,7 +139,7 @@ class Cond(ConditionalOperator):
 
     
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
         return self.resolve({
             "$cond" : {
                 "if" : self.if_,

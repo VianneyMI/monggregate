@@ -171,7 +171,7 @@ class Autocomplete(SearchOperator):
     score : dict|None
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
         
         return self.resolve({
             "autocomplete":{

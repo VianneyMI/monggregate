@@ -7,7 +7,7 @@ from typing_extensions import Self
 
 # 3rd Party imports
 # ---------------------------
-from monggregate.base import BaseModel, pyd
+from monggregate.base import BaseModel
 
 # Local imports
 # ----------------------------
@@ -38,7 +38,7 @@ class Expression(BaseModel):
     content : Any
 
     @property
-    def statement(self)->Any:
+    def expression(self)->Any:
         return self.resolve(self.content)
 
     #----------------------------------------------------
@@ -64,8 +64,8 @@ class Expression(BaseModel):
     def variable(cls, name:str)->Self:
         """Creates a variable expression."""
 
-        while not variable.startswith("$$"):
-            variable = "$" + variable
+        while not name.startswith("$$"):
+            name = "$" + name
 
         return cls(content=Variable(name))
     

@@ -52,7 +52,7 @@ class Multiply(ArithmeticOperator):
     expressions : list[Any]
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
         return self.resolve({
             "$multiply" : self.expressions
         })

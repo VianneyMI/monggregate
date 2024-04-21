@@ -114,7 +114,7 @@ class Min(Accumulator):
 
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
 
         return self.resolve({
             "$min" : self.expression

@@ -63,7 +63,7 @@ class ObjectToArray(ArrayOperator):
     expression : Any
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
         return self.resolve({
             "$objectToArray" : self.expression
         })

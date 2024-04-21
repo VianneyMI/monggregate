@@ -85,7 +85,7 @@ class Last(Accumulator):
 
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
 
         return self.resolve({
             "$last" : self.expression

@@ -65,7 +65,7 @@ class In(ArrayOperator):
 
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
         return self.resolve({
             "$in":[self.left, self.right]
         })

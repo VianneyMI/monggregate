@@ -89,7 +89,7 @@ class Skip(Stage):
     value : int # Add gt 0 constraint ? check behavior with 0
 
     @property
-    def statement(self)->dict:
+    def expression(self)->dict:
         """Generate statement from arguments"""
 
         return self.resolve({

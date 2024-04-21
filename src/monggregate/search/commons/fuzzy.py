@@ -10,7 +10,7 @@ class FuzzyOptions(BaseModel):
     prefix_length : int = pyd.Field(0, alias="prefixLength")
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
         
         return self.resolve(self.dict(by_alias=True))
     

@@ -70,7 +70,7 @@ class MaxN(ArrayOperator):
     limit : Any = pyd.Field(1, alias="n")
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
         return self.resolve({
             "$maxN" : {
                 "n" : self.limit,

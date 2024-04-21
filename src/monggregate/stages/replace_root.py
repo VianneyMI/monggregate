@@ -103,7 +103,7 @@ class ReplaceRoot(Stage):
     _validates_path_to_new_root = pyd.validator("path_to_new_root", allow_reuse=True, pre=True, always=True)(validate_field_path)
 
     @property
-    def statement(self)->dict:
+    def expression(self)->dict:
         """Generate statements from argument"""
 
         if self.path_to_new_root:

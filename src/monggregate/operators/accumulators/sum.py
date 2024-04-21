@@ -123,7 +123,7 @@ class Sum(Accumulator):
 
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> dict:
 
         return self.resolve({
             "$sum" : self.expression
