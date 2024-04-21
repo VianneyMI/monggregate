@@ -72,7 +72,6 @@ try:
     from typing import Self
 except ImportError:
     from typing_extensions import Self
-    
 from monggregate.stages.search.base import SearchBase
 
 
