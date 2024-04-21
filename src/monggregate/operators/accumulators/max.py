@@ -123,4 +123,4 @@ class Max(Accumulator):
 def max(operand:Any)->Max:
     """Returns a $last operator"""
 
-    return Max(expression=operand)
+    return Max(operand=operand)

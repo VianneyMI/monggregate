@@ -29,7 +29,7 @@ class TestArrayOperators:
     def test_array_to_object(self)->None:
         """Tests the $arrayToObject operator class and mirror function"""
 
-        array_to_object_op = ArrayToObject(expression="$dimensions")
+        array_to_object_op = ArrayToObject(operand="$dimensions")
 
         # Unit test
         # -----------------
@@ -112,7 +112,7 @@ class TestArrayOperators:
     def test_is_array(self)->None:
         """Tests the $isArray operator class and mirror function"""
 
-        is_array_op = IsArray(expression=[1, 2, 3,4])
+        is_array_op = IsArray(operand=[1, 2, 3,4])
 
         # Unit test
         # --------------------

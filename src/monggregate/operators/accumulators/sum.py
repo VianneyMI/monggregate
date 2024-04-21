@@ -133,8 +133,8 @@ def sum(*args:Any)->Sum:
     """Returns a $sum operator"""
 
     if len(args)>1:
-        output = Sum(expression=list(args))
+        output = Sum(operand=list(args))
     else:
-        output = Sum(expression=args[0])
+        output = Sum(operand=args[0])
 
     return output

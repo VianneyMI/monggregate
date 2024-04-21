@@ -23,8 +23,8 @@ class TestBooleanOperators:
         # ---------------------------
         and_operator =  And(
             operands=[
-                First(expression=[1, 2, 3, 4]),
-                First(expression=[4, 5, 6, 7])
+                First(operand=[1, 2, 3, 4]),
+                First(operand=[4, 5, 6, 7])
             ]
         )
 
@@ -32,7 +32,7 @@ class TestBooleanOperators:
 
         # Functional tests
         # --------------------------
-        assert and_operator.expression == and_(First(expression=[1, 2, 3, 4]), First(expression=[4, 5, 6, 7])).expression == {
+        assert and_operator.expression == and_(First(operand=[1, 2, 3, 4]), First(operand=[4, 5, 6, 7])).expression == {
             "$and" : [
                 {
                     "$first" : [1, 2, 3, 4]
@@ -47,7 +47,7 @@ class TestBooleanOperators:
     def test_not(self)->None:
         """Tests the $not operator class and mirror function"""
 
-        not_op = Not(expression=greather_than("$qty", 250))
+        not_op = Not(operand=greather_than("$qty", 250))
 
         # Unit test
         # --------------------
@@ -67,8 +67,8 @@ class TestBooleanOperators:
         # ---------------------------
         or_operator = Or(
             operands=[
-                First(expression=[1, 2, 3, 4]),
-                First(expression=[4, 5, 6, 7])
+                First(operand=[1, 2, 3, 4]),
+                First(operand=[4, 5, 6, 7])
             ]
         )
 
@@ -76,7 +76,7 @@ class TestBooleanOperators:
 
         # Functional tests
         # --------------------------
-        assert or_operator.expression == or_(First(expression=[1, 2, 3, 4]), First(expression=[4, 5, 6, 7])).expression  == {
+        assert or_operator.expression == or_(First(operand=[1, 2, 3, 4]), First(operand=[4, 5, 6, 7])).expression  == {
             "$or" : [
                 {
                     "$first" : [1, 2, 3, 4]

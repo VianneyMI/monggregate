@@ -81,17 +81,17 @@ class Match(Stage):
     query : dict = {} #| None
     operand : Any | None = None
 
-    @pyd.validator("expression", pre=True, always=True)
-    def validate_expression(cls, expression)-> Any:
+    @pyd.validator("operand", pre=True, always=True)
+    def validate_operand(cls, operand:Any)-> Any:
         
-        c1 = isinstance(expression, dict) # expression is "expressed/resolved" already
-        c2 = isinstance(expression, Expression) # expression is an expression object
-        c3 = isinstance(expression, Operator) # expression is an operator object
+        c1 = isinstance(operand, dict) # expression is "expressed/resolved" already
+        c2 = isinstance(operand, Expression) # expression is an expression object
+        c3 = isinstance(operand, Operator) # expression is an operator object
 
-        if expression and not (c1 or c2 or c3):
+        if operand and not (c1 or c2 or c3):
             raise ValueError("The expression argument must be a valid expression, operator or a dict.")
         
-        return expression
+        return operand
 
     @property
     def expression(self) -> dict:

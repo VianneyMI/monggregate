@@ -142,7 +142,7 @@ def test_even_more_advanced_usage():
     ).add_fields(
         comments_count=comments_count
     ).match(
-        expression=comments_count>2
+        operand=comments_count>2
     ).limit(1)
 
 

@@ -94,4 +94,4 @@ class Last(Accumulator):
 def last(operand:Any)->Last:
     """Returns a $last operator"""
 
-    return Last(expression=operand)
+    return Last(operand=operand)

@@ -66,4 +66,4 @@ class Push(Accumulator):
 def push(operand:Any)->Push:
     """Returns a $push operator"""
 
-    return Push(expression=operand)
+    return Push(operand=operand)

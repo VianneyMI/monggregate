@@ -116,6 +116,6 @@ Avg = Average
 def average(operand:Any)->Average:
     """Returns a $avg operator"""
 
-    return Average(expression=operand)
+    return Average(operand=operand)
 
 avg = average

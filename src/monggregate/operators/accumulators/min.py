@@ -123,4 +123,4 @@ class Min(Accumulator):
 def min(operand:Any)->Min:
     """Returns a $min operator"""
 
-    return Min(expression=operand)
+    return Min(operand=operand)

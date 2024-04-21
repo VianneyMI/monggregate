@@ -647,7 +647,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         self.stages.append(
             ReplaceRoot(
                 document=MergeObjects(
-                    expression=[ROOT, "$"+join_field]
+                    operand=[ROOT, "$"+join_field]
                 ).expression
             )
         )
