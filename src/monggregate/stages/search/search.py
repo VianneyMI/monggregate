@@ -72,6 +72,8 @@ try:
     from typing import Self
 except ImportError:
     from typing_extensions import Self
+
+from monggregate.base import Expression
 from monggregate.stages.search.base import SearchBase
 
 
@@ -116,7 +118,7 @@ class Search(SearchBase):
     """
     
     @property
-    def expression(self) -> dict[str, dict]:
+    def expression(self) -> Expression:
     
         config = {
                 "index":self.index,
