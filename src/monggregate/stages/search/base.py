@@ -12,7 +12,7 @@ except ImportError:
 from monggregate.base import pyd, BaseModel
 from monggregate.stages.stage import Stage
 from monggregate.search.collectors import Facet
-from monggregate.search.operators import(
+from monggregate.search.operators import (
     Autocomplete,
     Compound,
     Equals,
