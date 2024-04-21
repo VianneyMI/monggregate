@@ -33,10 +33,10 @@ from monggregate.search.operators import (
 )
 
 __all__ = [
-    "FuzzyOptions", 
-    "CountOptions", 
-    "HighlightOptions", 
-    "HightlightOutput", 
+    "FuzzyOptions",
+    "CountOptions",
+    "HighlightOptions",
+    "HightlightOutput",
     "CountResults",
     "Facet",
     "Facets",
