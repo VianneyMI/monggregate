@@ -22,7 +22,7 @@ from monggregate.search.collectors.facet import (
     DateFacet,
     Facets,
     # String
-    FacetName, 
+    FacetName,
 )
 
 
