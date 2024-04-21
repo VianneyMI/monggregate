@@ -119,7 +119,7 @@ class Sum(Accumulator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/sum/#mongodb-group-grp.-sum)
     """
 
-    expression : Any
+    operand : Any
 
 
     @property

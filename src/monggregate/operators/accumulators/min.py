@@ -109,7 +109,7 @@ class Min(Accumulator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/min/#mongodb-group-grp.-min)
     """
 
-    expression : Any
+    operand : Any
 
 
 

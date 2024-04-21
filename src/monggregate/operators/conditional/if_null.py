@@ -72,7 +72,7 @@ class IfNull(ConditionalOperator):
     """
 
 
-    expression : Any # NOTE : Maybe diverge from Mongo and do not allow multiple expressions <VM, 14/08/2023>
+    operand : Any # NOTE : Maybe diverge from Mongo and do not allow multiple expressions <VM, 14/08/2023>
     output : Any
 
     @property
@@ -81,10 +81,10 @@ class IfNull(ConditionalOperator):
             "$ifNull" : [self.expression, self.output]
         })
     
-def if_null(expression:Any, output:Any)->IfNull:
+def if_null(operand:Any, output:Any)->IfNull:
     """Returns an $if_null operator"""
 
     return IfNull(
-        expression=expression,
+        operand=operand,
         output=output
     )

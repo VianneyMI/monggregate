@@ -79,7 +79,7 @@ class Match(Stage):
     """
 
     query : dict = {} #| None
-    expression : Any | None = None
+    operand : Any | None = None
 
     @pyd.validator("expression", pre=True, always=True)
     def validate_expression(cls, expression)-> Any:

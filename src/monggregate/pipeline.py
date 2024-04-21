@@ -686,7 +686,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         self.stages.insert(-3, filter_no_match)
 
-    def match(self, query:dict={}, expression:Any=None, **kwargs:Any)->Self:
+    def match(self, query:dict={}, operand:Any=None, **kwargs:Any)->Self:
         """
         Adds a match stage to the current pipeline.
         Filters the documents to pass only the documents that match the specified condition(s) to the next pipeline stage.
@@ -713,7 +713,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         query = query | kwargs
         self.stages.append(
-                Match(query=query, expression=expression)
+                Match(query=query, operand=operand)
             )
         return self
 

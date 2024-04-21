@@ -80,7 +80,7 @@ class Last(Accumulator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/last/#mongodb-group-grp.-last)
     """
 
-    expression : Any
+    operand : Any
 
 
 

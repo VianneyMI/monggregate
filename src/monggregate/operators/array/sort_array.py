@@ -119,7 +119,7 @@ class SortArray(ArrayOperator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/sortArray/#mongodb-expression-exp.-sortArray)
     """
 
-    expression : Any = pyd.Field(alias="input")
+    operand : Any = pyd.Field(alias="input")
     by : dict[str, Literal[1, -1]] = pyd.Field(1, alias="sort_by")
 
     @property
@@ -131,10 +131,10 @@ class SortArray(ArrayOperator):
             }
         })
 
-def sort_array(expression:Any, sort_by:dict[str, Literal[1, -1]])->SortArray:
+def sort_array(operand:Any, sort_by:dict[str, Literal[1, -1]])->SortArray:
     """Returns a $first operator"""
 
     return SortArray(
-        expression = expression,
+        operand = operand,
         sort_by = sort_by
     )

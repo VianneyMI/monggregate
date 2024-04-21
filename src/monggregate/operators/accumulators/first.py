@@ -88,7 +88,7 @@ class First(Accumulator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/first/#mongodb-group-grp.-first)
     """
 
-    expression : Any
+    operand : Any
 
 
     @property
@@ -98,7 +98,7 @@ class First(Accumulator):
             "$first" : self.expression
         })
 
-def first(expression:Any)->First:
+def first(operand:Any)->First:
     """Returns a $first operator"""
 
-    return First(expression=expression)
+    return First(operand=operand)

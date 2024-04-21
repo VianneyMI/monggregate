@@ -104,7 +104,7 @@ class Filter(ArrayOperator):
     
     """
 
-    expression : Any =  pyd.Field(alias="input")
+    operand : Any =  pyd.Field(alias="input")
     query : Any = pyd.Field(alias="cond")
     let : str | None = pyd.Field("this", alias="as")
     limit : int | None = pyd.Field(None, ge=1) # NOTE : limit can actually be an expression but constraints are  invalid with any type
@@ -120,11 +120,11 @@ class Filter(ArrayOperator):
             }
         })
 
-def filter(expression:Any, let:str, query:Any, limit:int|None=None)->Filter: 
+def filter(operand:Any, let:str, query:Any, limit:int|None=None)->Filter: 
     """Returns a $filter operator"""
 
     return Filter(
-        expression = expression,
+        opernad=operand,
         query = query,
         let = let,
         limit = limit

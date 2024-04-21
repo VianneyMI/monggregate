@@ -88,7 +88,7 @@ class ArrayToObject(ArrayOperator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/arrayToObject/#mongodb-expression-exp.-arrayToObject)
     """
 
-    expression : Any
+    operand : Any
 
 
     @property
@@ -97,7 +97,7 @@ class ArrayToObject(ArrayOperator):
             "$arrayToObject" : self.expression
         })
 
-def array_to_object(expression:Any)->ArrayToObject:
+def array_to_object(operand:Any)->ArrayToObject:
     """Returns a $arrayToObject operator"""
 
-    return ArrayToObject(expression=expression)
+    return ArrayToObject(operand=operand)

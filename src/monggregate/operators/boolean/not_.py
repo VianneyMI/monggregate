@@ -51,7 +51,7 @@ class Not(BooleanOperator):
 
     """
 
-    expression : Any
+    operand : Any
 
     @property
     def expression(self) -> dict:
@@ -59,9 +59,9 @@ class Not(BooleanOperator):
             "$not" : [self.expression]
         })
 
-def not_(expression:Any)->Not:
+def not_(operand:Any)->Not:
     """Returns a $not operator"""
 
     return Not(
-        expression=expression
+        operand=operand
     )

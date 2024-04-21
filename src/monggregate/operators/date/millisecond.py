@@ -169,7 +169,7 @@ class Millisecond(DateOperator):
     """
 
 
-    expression : Any
+    operand : Any
     timezone : Any | None
 
     @property
@@ -187,10 +187,10 @@ class Millisecond(DateOperator):
             "$millisecond" : inner
         })
     
-def millisecond(expression:Any, timezone:Any)->Millisecond:
+def millisecond(operand:Any, timezone:Any)->Millisecond:
     """Returns an $millisecond operator"""
 
     return Millisecond(
-        expression=expression,
+        operand=operand,
         timezone=timezone
     )

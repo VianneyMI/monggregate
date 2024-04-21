@@ -109,7 +109,7 @@ class Max(Accumulator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/max/#mongodb-group-grp.-max)
     """
 
-    expression : Any
+    operand : Any
 
 
 

@@ -102,7 +102,7 @@ class Average(Accumulator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/avg/#mongodb-group-grp.-avg)
     """
 
-    expression : Any
+    operand : Any
 
     @property
     def expression(self) -> dict:

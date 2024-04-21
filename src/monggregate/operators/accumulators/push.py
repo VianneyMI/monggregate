@@ -52,7 +52,7 @@ class Push(Accumulator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/push/#mongodb-group-grp.-push)
     """
 
-    expression : Any
+    operand : Any
 
 
 

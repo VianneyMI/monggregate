@@ -66,7 +66,7 @@ class MergeObjects(ArrayOperator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/mergeObjects/#mongodb-expression-exp.-mergeObjects)
     """
 
-    expression : Any | list[Any]
+    operand : Any | list[Any]
 
 
     @property
@@ -75,7 +75,7 @@ class MergeObjects(ArrayOperator):
             "$mergeObjects" : self.expression
         })
 
-def merge_objects(expression:Any)->MergeObjects:
+def merge_objects(operand:Any)->MergeObjects:
     """Returns a $mergeObjects operator"""
 
-    return MergeObjects(expression=expression)
+    return MergeObjects(operand=operand)

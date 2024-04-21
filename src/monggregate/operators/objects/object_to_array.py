@@ -60,7 +60,7 @@ class ObjectToArray(ArrayOperator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/objectToArray/#mongodb-expression-exp.-objectToArray)
     """
 
-    expression : Any
+    operand : Any
 
     @property
     def expression(self) -> dict:
@@ -68,7 +68,7 @@ class ObjectToArray(ArrayOperator):
             "$objectToArray" : self.expression
         })
 
-def object_to_array(expression:Any)->ObjectToArray:
+def object_to_array(operand:Any)->ObjectToArray:
     """Returns a $objectToArray operator"""
 
-    return ObjectToArray(expression=expression)
+    return ObjectToArray(operand=operand)
