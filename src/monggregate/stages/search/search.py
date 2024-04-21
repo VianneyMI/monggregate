@@ -78,7 +78,7 @@ from monggregate.stages.search.base import SearchBase
 # -----------------------------------------------------
 # -----------------------------------------------------
 class Search(SearchBase):
-    """"Abstraction of MongoDB $search stage that performs a full-text search on the specified field or fields.
+    """ "Abstraction of MongoDB $search stage that performs a full-text search on the specified field or fields.
 
     Attributes:
     -----------
