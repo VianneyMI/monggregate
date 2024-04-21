@@ -76,7 +76,7 @@ Specifiers          Description                                     Possible Val
 """
 
 from typing import Any
-from monggregate.base import pyd
+from monggregate.base import pyd, Expression
 from monggregate.operators.strings.string import StringOperator
 
 class DateFromString(StringOperator):
@@ -118,7 +118,7 @@ class DateFromString(StringOperator):
     on_null : Any
 
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
         return self.express({
             "$dateFromString" : self.dict(by_alias=True, exclude_none=True)
         })

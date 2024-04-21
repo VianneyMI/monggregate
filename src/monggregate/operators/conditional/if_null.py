@@ -44,6 +44,7 @@ $ifNull requires all three arguments (if-then-else) for either syntax.
 """
 
 from typing import Any
+from monggregate.base import Expression
 from monggregate.operators.conditional.conditional import ConditionalOperator
 
 class IfNull(ConditionalOperator):
@@ -76,7 +77,7 @@ class IfNull(ConditionalOperator):
     output : Any
 
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
         return self.express({
             "$ifNull" : [self.operand, self.output]
         })

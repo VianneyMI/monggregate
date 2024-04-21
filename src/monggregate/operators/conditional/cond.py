@@ -32,7 +32,7 @@ For more information on expressions, see Expressions.
 """
 
 from typing import Any
-from monggregate.base import pyd
+from monggregate.base import pyd, Expression
 from monggregate.operators.conditional.conditional import ConditionalOperator
 
 class Cond(ConditionalOperator):
@@ -139,7 +139,7 @@ class Cond(ConditionalOperator):
 
     
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
         return self.express({
             "$cond" : {
                 "if" : self.if_,

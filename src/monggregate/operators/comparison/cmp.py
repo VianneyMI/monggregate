@@ -28,6 +28,7 @@ For more information on expressions, see Expressions.
 """
 
 from typing import Any
+from monggregate.base import Expression
 from monggregate.operators.comparison.comparator import Comparator
 
 class Compare(Comparator):
@@ -63,7 +64,7 @@ class Compare(Comparator):
     """
 
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
 
         return self.express({
             "$cmp":[self.left, self.right]

@@ -6,7 +6,7 @@ https://www.mongodb.com/docs/atlas/atlas-search/counting/#std-label-count-ref
 
 from typing import Literal
 
-from monggregate.base import BaseModel, pyd
+from monggregate.base import BaseModel, pyd, Expression
 
 class CountOptions(BaseModel):
     """Class representing the count options in a $search query.
@@ -52,6 +52,6 @@ class CountResults(BaseModel):
     total : int|None
 
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
         
         return self.express(self.dict(by_alias=True))

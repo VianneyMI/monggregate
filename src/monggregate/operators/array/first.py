@@ -98,6 +98,7 @@ That is, the operation returns the following:
 """
 
 from typing import Any
+from monggregate.base import Expression
 from monggregate.operators.array.array import ArrayOnlyOperator
 
 class First(ArrayOnlyOperator):
@@ -116,7 +117,7 @@ class First(ArrayOnlyOperator):
     """
 
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
         return self.express({
             "$first":self.operand
         })

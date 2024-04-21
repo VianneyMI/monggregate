@@ -169,7 +169,7 @@ from datetime import datetime
 from typing import Any, Callable, Literal
 from typing_extensions import Self
 
-from monggregate.base import BaseModel, pyd
+from monggregate.base import BaseModel, pyd, Expression
 from monggregate.fields import FieldName
 from monggregate.search.collectors.collector import SearchCollector
 from monggregate.search.operators import(
@@ -274,7 +274,7 @@ class StringFacet(FacetDefinition):
     num_buckets : int = 10
 
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
         
         return self.express({self.name : self.dict(by_alias=True, exclude={"name"})})
 
@@ -299,7 +299,7 @@ class NumericFacet(FacetDefinition):
     default : str|None
 
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
         
         return self.express({self.name : self.dict(by_alias=True, exclude={"name"})})
 
@@ -321,7 +321,7 @@ class DateFacet(FacetDefinition):
     default : str|None
 
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
         
         return self.express({self.name : self.dict(by_alias=True, exclude={"name"})})
 
@@ -371,7 +371,7 @@ class Facet(SearchCollector):
 
 
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
 
         if not self.facets:
             raise ValueError("No facets were defined")

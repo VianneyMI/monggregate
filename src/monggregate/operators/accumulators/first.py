@@ -60,6 +60,7 @@ See the missing data example.
 
 
 from typing import Any
+from monggregate.base import Expression
 from monggregate.operators.accumulators.accumulator import Accumulator
 
 class First(Accumulator):
@@ -92,7 +93,7 @@ class First(Accumulator):
 
 
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
 
         return self.express({
             "$first" : self.operand

@@ -83,7 +83,7 @@ $sortArray to use a particular sorting algorithm.
 
 from typing import Any, Literal
 
-from monggregate.base import pyd
+from monggregate.base import pyd, Expression
 from monggregate.operators.array.array import ArrayOperator
 
 class SortArray(ArrayOperator):
@@ -123,7 +123,7 @@ class SortArray(ArrayOperator):
     by : dict[str, Literal[1, -1]] = pyd.Field(1, alias="sort_by")
 
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
         return self.express({
             "$sortArray":{
                 "input" : self.operand,

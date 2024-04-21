@@ -50,6 +50,7 @@ The following query, which contains multiple expressions supplied to $and, may p
 """
 
 from typing import Any
+from monggregate.base import Expression
 from monggregate.operators.boolean.boolean import BooleanOperator
 
 class And(BooleanOperator):
@@ -78,7 +79,7 @@ class And(BooleanOperator):
     operands : list[Any]
 
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
         return self.express({
             "$and" : self.operands
         })

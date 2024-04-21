@@ -28,6 +28,7 @@ $size errors.
 """
 
 from typing import Any
+from monggregate.base import Expression
 from monggregate.operators.array.array import ArrayOnlyOperator
 
 class Size(ArrayOnlyOperator):
@@ -54,7 +55,7 @@ class Size(ArrayOnlyOperator):
     """
 
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
         return self.express({
             "$size":self.operand
         })

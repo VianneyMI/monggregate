@@ -26,6 +26,7 @@ The arguments can be any valid expression. For more information on expressions, 
 """
 
 from typing import Any
+from monggregate.base import Expression
 from monggregate.operators.comparison.comparator import Comparator
 
 class NotEqual(Comparator):
@@ -58,7 +59,7 @@ class NotEqual(Comparator):
     """
 
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
 
         return self.express({
             "$ne":[self.left, self.right]

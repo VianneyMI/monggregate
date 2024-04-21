@@ -87,7 +87,7 @@ $type returns the string "missing".
 """
 
 from typing import Any
-from monggregate.base import BaseModel
+from monggregate.base import BaseModel, Expression
 
 class Type_(BaseModel):
     """
@@ -114,7 +114,7 @@ class Type_(BaseModel):
     operand : Any
 
     @property
-    def expression(self)->dict:
+    def expression(self)->Expression:
 
         return self.express({
             "$type":self.operand

@@ -23,6 +23,7 @@ For more information on expressions, see Expressions.
 """
 
 from typing import Any
+from monggregate.base import Expression
 from monggregate.operators.comparison.comparator import Comparator
 
 class LowerThanOrEqual(Comparator):
@@ -57,7 +58,7 @@ class LowerThanOrEqual(Comparator):
     """
 
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
 
         return self.express({
             "$lte":[self.left, self.right]

@@ -26,6 +26,7 @@ $or evaluates all other values as true, including non-zero numeric values and ar
 """
 
 from typing import Any
+from monggregate.base import Expression
 from monggregate.operators.boolean.boolean import BooleanOperator
 
 class Or(BooleanOperator):
@@ -55,7 +56,7 @@ class Or(BooleanOperator):
     operands : list[Any]
 
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
         return self.express({
             "$or" : self.operands
         })

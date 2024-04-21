@@ -27,6 +27,7 @@ The $not evaluates all other values as true, including non-zero numeric values a
 """
 
 from typing import Any
+from monggregate.base import Expression
 from monggregate.operators.boolean.boolean import BooleanOperator
 
 class Not(BooleanOperator):
@@ -54,7 +55,7 @@ class Not(BooleanOperator):
     operand : Any
 
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
         return self.express({
             "$not" : [self.operand]
         })

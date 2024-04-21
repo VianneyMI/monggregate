@@ -31,6 +31,7 @@ or if the second argument does not resolve to an array.
 """
 
 from typing import Any
+from monggregate.base import Expression
 from monggregate.operators.array.array import ArrayOperator
 
 class In(ArrayOperator):
@@ -65,7 +66,7 @@ class In(ArrayOperator):
 
 
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
         return self.express({
             "$in":[self.left, self.right]
         })

@@ -45,7 +45,7 @@ Behavior
 """
 
 from typing import Any
-from monggregate.base import pyd
+from monggregate.base import pyd, Expression
 from monggregate.operators.array.array import ArrayOperator
 
 class MaxN(ArrayOperator):
@@ -70,7 +70,7 @@ class MaxN(ArrayOperator):
     limit : Any = pyd.Field(1, alias="n")
 
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
         return self.express({
             "$maxN" : {
                 "n" : self.limit,

@@ -27,8 +27,10 @@ For more information on expressions, see Expressions.
 
 """
 
-from monggregate.operators.array.array import ArrayOperator
 from typing import Any
+
+from monggregate.base import Expression
+from monggregate.operators.array.array import ArrayOperator
 
 class ObjectToArray(ArrayOperator):
     """
@@ -63,7 +65,7 @@ class ObjectToArray(ArrayOperator):
     operand : Any
 
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
         return self.express({
             "$objectToArray" : self.operand
         })

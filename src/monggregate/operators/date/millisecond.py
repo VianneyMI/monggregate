@@ -119,6 +119,7 @@ The operation returns the following result:
 """
 
 from typing import Any
+from monggregate.base import Expression
 from monggregate.operators.date.date import DateOperator
 
 class Millisecond(DateOperator):
@@ -173,7 +174,7 @@ class Millisecond(DateOperator):
     timezone : Any | None
 
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
 
         if self.timezone:
             inner = {

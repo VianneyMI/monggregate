@@ -71,6 +71,7 @@ In the other supported stages:
 
 
 from typing import Any
+from monggregate.base import Expression
 from monggregate.operators.accumulators.accumulator import Accumulator
 
 class Average(Accumulator):
@@ -105,7 +106,7 @@ class Average(Accumulator):
     operand : Any
 
     @property
-    def expression(self) -> dict:
+    def expression(self) -> Expression:
 
         return self.express({
             "$avg" : self.operand
