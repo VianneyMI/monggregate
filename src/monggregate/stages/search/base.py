@@ -9,7 +9,6 @@ try:
     from typing import Self
 except ImportError:
     from typing_extensions import Self
-    
 from monggregate.base import pyd, BaseModel
 from monggregate.stages.stage import Stage
 from monggregate.search.collectors import Facet
