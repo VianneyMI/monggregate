@@ -75,7 +75,6 @@ except ImportError:
 from monggregate.stages.search.base import SearchBase
 
 
-
 # Classes
 # -----------------------------------------------------
 class Search(SearchBase):
