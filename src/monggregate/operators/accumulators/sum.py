@@ -126,7 +126,7 @@ class Sum(Accumulator):
     def expression(self) -> dict:
 
         return self.express({
-            "$sum" : self.expression
+            "$sum" : self.operand
         })
 
 def sum(*args:Any)->Sum:

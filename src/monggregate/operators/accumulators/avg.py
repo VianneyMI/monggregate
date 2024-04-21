@@ -108,7 +108,7 @@ class Average(Accumulator):
     def expression(self) -> dict:
 
         return self.express({
-            "$avg" : self.expression
+            "$avg" : self.operand
         })
     
 Avg = Average

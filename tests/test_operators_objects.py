@@ -17,7 +17,7 @@ class TestObjectsOperators:
         """Tests the $mergeObjects operator"""
 
         merge_objects_op = MergeObjects(
-            expression = "$quantity"
+            operand = "$quantity"
         )
 
         # Unit test
@@ -34,7 +34,7 @@ class TestObjectsOperators:
         """Tests the $mergeObjects operator"""
 
         object_to_array_op = ObjectToArray(
-            expression = "$dimensions"
+            operand = "$dimensions"
         )
 
         # Unit test

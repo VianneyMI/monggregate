@@ -88,7 +88,7 @@ class Last(Accumulator):
     def expression(self) -> dict:
 
         return self.express({
-            "$last" : self.expression
+            "$last" : self.operand
         })
 
 def last(operand:Any)->Last:

@@ -23,7 +23,7 @@ class TestAccumulatorOperators:
         """Tests the $avg operator class and mirror function"""
 
         average_op = Average(
-        expression = [1, 2, 3, 4]
+            operand = [1, 2, 3, 4]
         )
 
         # Unit test
@@ -58,7 +58,7 @@ class TestAccumulatorOperators:
 
 
         first_op = First(
-            expression = [1, 2, 3, 4]
+            operand = [1, 2, 3, 4]
         )
 
         # Unit test
@@ -77,7 +77,7 @@ class TestAccumulatorOperators:
 
 
         last_op = Last(
-            expression = [1, 2, 3, 4]
+            operand = [1, 2, 3, 4]
         )
 
         # Unit test
@@ -95,7 +95,7 @@ class TestAccumulatorOperators:
 
 
         max_op = Max(
-            expression = [1, 2, 3, 4]
+            operand = [1, 2, 3, 4]
         )
 
         # Unit test
@@ -113,7 +113,7 @@ class TestAccumulatorOperators:
 
 
         min_op = Min(
-            expression = [1, 2, 3, 4]
+            operand = [1, 2, 3, 4]
         )
 
         # Unit test
@@ -131,7 +131,7 @@ class TestAccumulatorOperators:
         """Tests the $push operator class and mirror function"""
 
         push_op = Push(
-            expression = {
+            operand = {
                 "item" : "$item",
                 "quantity" : "$quantity"
             }
@@ -159,7 +159,7 @@ class TestAccumulatorOperators:
 
 
         sum_op = Sum(
-            expression = [1, 2, 3, {"$literal":4}]
+            operand = [1, 2, 3, {"$literal":4}]
         )
 
         # Unit test

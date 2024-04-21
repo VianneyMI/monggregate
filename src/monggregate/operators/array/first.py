@@ -118,12 +118,12 @@ class First(ArrayOnlyOperator):
     @property
     def expression(self) -> dict:
         return self.express({
-            "$first":self.expression
+            "$first":self.operand
         })
 
 def first(array:Any)->First:
     """Returns a $first operator"""
 
     return First(
-        expression = array
+        operand = array
     )

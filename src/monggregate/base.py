@@ -54,7 +54,7 @@ class BaseModel(pyd.BaseModel, ABC):
     def __call__(self)->dict:
         """Makes an instance of any class inheriting from this class callable"""
 
-        return self.express(self.expression)
+        return self.to_expression()
 
     class Config(pyd.BaseConfig):
         """Base configuration for classes inheriting from this"""

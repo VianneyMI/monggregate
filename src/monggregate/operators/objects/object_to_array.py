@@ -65,7 +65,7 @@ class ObjectToArray(ArrayOperator):
     @property
     def expression(self) -> dict:
         return self.express({
-            "$objectToArray" : self.expression
+            "$objectToArray" : self.operand
         })
 
 def object_to_array(operand:Any)->ObjectToArray:

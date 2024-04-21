@@ -128,12 +128,12 @@ class Last(ArrayOnlyOperator):
     @property
     def expression(self) -> dict:
         return self.express({
-            "$last":self.expression
+            "$last":self.operand
         })
 
 def last(array:Any)->Last:
     """Returns a $last operator"""
 
     return Last(
-        expression = array
+        operand = array
     )

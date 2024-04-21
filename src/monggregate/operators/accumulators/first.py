@@ -95,7 +95,7 @@ class First(Accumulator):
     def expression(self) -> dict:
 
         return self.express({
-            "$first" : self.expression
+            "$first" : self.operand
         })
 
 def first(operand:Any)->First:

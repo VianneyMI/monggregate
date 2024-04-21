@@ -177,11 +177,11 @@ class Millisecond(DateOperator):
 
         if self.timezone:
             inner = {
-                "date" : self.expression,
+                "date" : self.operand,
                 "timezone" : self.timezone
             }
         else:
-            inner = self.expression
+            inner = self.operand
 
         return self.express({
             "$millisecond" : inner

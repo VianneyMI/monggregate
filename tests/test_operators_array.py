@@ -47,7 +47,7 @@ class TestArrayOperators:
 
 
         filter_op = Filter(
-            expression = [1, 2, 3, 4],
+            operand = [1, 2, 3, 4],
             let = "num",
             query = greather_than("$$num", 2),
         )
@@ -78,7 +78,7 @@ class TestArrayOperators:
 
 
         first_op = First(
-            expression = [1, 2, 3, 4]
+            operand = [1, 2, 3, 4]
         )
 
         # Unit test
@@ -129,7 +129,7 @@ class TestArrayOperators:
 
 
         last_op = Last(
-            expression = [1, 2, 3, 4]
+            operand = [1, 2, 3, 4]
         )
 
         # Unit test
@@ -148,7 +148,7 @@ class TestArrayOperators:
 
         max_n_op = MaxN(
             limit = 1,
-            expression = [1, 2, 3, 4]
+            operand = [1, 2, 3, 4]
         )
 
         # Unit test
@@ -169,7 +169,7 @@ class TestArrayOperators:
 
         min_n_op = MinN(
             limit = 1,
-            expression = [1, 2, 3, 4]
+            operand = [1, 2, 3, 4]
         )
 
         # Unit test
@@ -189,7 +189,7 @@ class TestArrayOperators:
         """Tests the $size operator class and mirror function"""
 
         size_op = Size(
-            expression = [1, 2, 3, 4]
+            operand = [1, 2, 3, 4]
         )
 
         # Unit test
@@ -207,7 +207,7 @@ class TestArrayOperators:
         """Tests the $sortArray operator class and mirror function"""
 
         sort_array_op = SortArray(
-            expression ="$team",
+            operand = "$team",
             sort_by = {"name":1}
             )
 
@@ -225,3 +225,9 @@ class TestArrayOperators:
                 }
             }
         }
+
+if __name__ == "__main__":
+    tests = TestArrayOperators()
+    tests.test_filter()
+    tests.test_max_n()
+    

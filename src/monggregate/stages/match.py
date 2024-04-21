@@ -96,8 +96,8 @@ class Match(Stage):
     @property
     def expression(self) -> dict:
 
-        if self.expression:
-            _statement = self.express({"$match":{"$expr":self.expression}})
+        if self.operand:
+            _statement = self.express({"$match":{"$expr":self.operand}})
             
         else:
             _statement =  self.express({"$match":self.query})

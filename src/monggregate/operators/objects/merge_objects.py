@@ -72,7 +72,7 @@ class MergeObjects(ArrayOperator):
     @property
     def expression(self) -> dict:
         return self.express({
-            "$mergeObjects" : self.expression
+            "$mergeObjects" : self.operand
         })
 
 def merge_objects(operand:Any)->MergeObjects:

@@ -73,7 +73,7 @@ class MinN(ArrayOperator):
         return self.express({
             "$minN" : {
                 "n" : self.limit,
-                "input" : self.expression
+                "input" : self.operand
             }
         })
 

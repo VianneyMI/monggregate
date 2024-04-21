@@ -56,12 +56,12 @@ class Size(ArrayOnlyOperator):
     @property
     def expression(self) -> dict:
         return self.express({
-            "$size":self.expression
+            "$size":self.operand
         })
 
 def size(array:Any)->Size:
     """Returns a $size operator"""
 
     return Size(
-        expression = array
+        operand = array
     )

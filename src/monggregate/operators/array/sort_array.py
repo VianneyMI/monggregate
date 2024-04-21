@@ -126,7 +126,7 @@ class SortArray(ArrayOperator):
     def expression(self) -> dict:
         return self.express({
             "$sortArray":{
-                "input" : self.expression,
+                "input" : self.operand,
                 "sortBy" : self.by
             }
         })

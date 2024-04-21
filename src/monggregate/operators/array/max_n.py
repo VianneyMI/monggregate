@@ -74,7 +74,7 @@ class MaxN(ArrayOperator):
         return self.express({
             "$maxN" : {
                 "n" : self.limit,
-                "input" : self.expression
+                "input" : self.operand
             }
         })
 
@@ -82,6 +82,6 @@ def max_n(operand:Any, limit:Any=1)->MaxN:
     """Returns a $maxN operator"""
 
     return MaxN(
-        opernad=operand,
+        operand=operand,
         limit = limit
     )

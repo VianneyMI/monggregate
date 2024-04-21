@@ -94,7 +94,7 @@ class ArrayToObject(ArrayOperator):
     @property
     def expression(self) -> dict:
         return self.express({
-            "$arrayToObject" : self.expression
+            "$arrayToObject" : self.operand
         })
 
 def array_to_object(operand:Any)->ArrayToObject:

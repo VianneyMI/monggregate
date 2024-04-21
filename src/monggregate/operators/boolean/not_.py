@@ -56,7 +56,7 @@ class Not(BooleanOperator):
     @property
     def expression(self) -> dict:
         return self.express({
-            "$not" : [self.expression]
+            "$not" : [self.operand]
         })
 
 def not_(operand:Any)->Not:

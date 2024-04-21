@@ -113,7 +113,7 @@ class Filter(ArrayOperator):
     def expression(self) -> dict:
         return self.express({
             "$filter":{
-               "input" : self.expression,
+               "input" : self.operand,
                "cond" : self.query,
                "as" : self.let,
                "limit" : self.limit
@@ -124,7 +124,7 @@ def filter(operand:Any, let:str, query:Any, limit:int|None=None)->Filter:
     """Returns a $filter operator"""
 
     return Filter(
-        opernad=operand,
+        operand=operand,
         query = query,
         let = let,
         limit = limit

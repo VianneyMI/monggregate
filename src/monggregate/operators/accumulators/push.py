@@ -60,7 +60,7 @@ class Push(Accumulator):
     def expression(self) -> dict:
 
         return self.express({
-            "$push" : self.expression
+            "$push" : self.operand
         })
 
 def push(operand:Any)->Push:

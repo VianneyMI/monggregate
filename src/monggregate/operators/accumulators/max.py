@@ -117,7 +117,7 @@ class Max(Accumulator):
     def expression(self) -> dict:
 
         return self.express({
-            "$max" : self.expression
+            "$max" : self.operand
         })
 
 def max(operand:Any)->Max:

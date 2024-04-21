@@ -117,7 +117,7 @@ class Min(Accumulator):
     def expression(self) -> dict:
 
         return self.express({
-            "$min" : self.expression
+            "$min" : self.operand
         })
 
 def min(operand:Any)->Min:
