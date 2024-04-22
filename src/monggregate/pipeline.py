@@ -76,22 +76,6 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         >>> db["listingsAndReviews"].aggregate(pipeline=pipeline()) # pipeline() here is actually equivalent to  pipeline.export()
 
-    Alternatively, your pipeline can be self sufficient and executes itself directly using the following approach:
-
-        >>> pipeline = Pipeline(
-            _db=db,
-            collection="listingsAndReviews",
-            on_call="run"
-        )
-
-        >>> pipeline.match(
-            query = { "room_type": "Entire home/apt"}
-        ).sort_by_count(
-            by =  "bed_type"
-        )
-
-        >>> pipeline() # pipeline() there is actually equivalent to  pipeline.run()
-
 
     """
 
@@ -133,11 +117,6 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         return self.expression
 
-
-    def to_statements(self)->list[dict]:
-        """Alias for export method"""
-
-        return self.export()
 
     # --------------------------------------------------
     # Pipeline List Methods
@@ -563,8 +542,6 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         if how == "left":
             self.__left_join(right=other, on=on, left_on=left_on, right_on=right_on)
-        elif how == "right":
-            self.__right_join(left=other, on=on, left_on=left_on, right_on=right_on)
         elif how == "inner":
             self.__inner_join(right=other, on=on, left_on=left_on, right_on=right_on)
 
@@ -605,19 +582,6 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         self.__join_common(right=right, on=on, left_on=left_on, right_on=right_on)
     
-    def __right_join(self, left:str, on:str|None, left_on:str, right_on:str|None) -> None:
-        """Implements SQL right join"""
-        
-        warn("This stage will override the collection attribute of the pipeline with left and may lead to strange behaviors if not anticipated.")
-        # TODO : Warns that this will override current pipeline collection by left
-        # TODO : Append collection name in foreign collection documents field names to avoid collision and override of field when promoting sub-documents
-        # Ex : {"a":1, "b":2, "c":{"a":3, "d":0}} after promoting "c" would become {"a":3, "b":2, "d":0} and we want to prevent this
-
-        # TODO : Review this following collection removal in pipeline <VM, 21/04/2024>
-        # right = self.collection
-        # self.collection = left
-        right = "N/A"
-        self.__join_common(right=right, on=on, left_on=left_on, right_on=right_on)
         
     def __inner_join(self, right:str, on:str|None, left_on:str|None, right_on:str|None) -> None:
         """Implements SQL inner join"""
