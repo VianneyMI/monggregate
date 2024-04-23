@@ -28,6 +28,7 @@ $size errors.
 """
 
 from typing import Any
+from monggregate.base import Expression
 from monggregate.operators.array.array import ArrayOnlyOperator
 
 class Size(ArrayOnlyOperator):
@@ -37,7 +38,7 @@ class Size(ArrayOnlyOperator):
 
     Attributes
     --------------------
-        - expression : Any valid expression that resolves to an array
+        - operand : Any valid expression that resolves to an array
 
     Online MongoDB documentation
     ----------------------------
@@ -54,14 +55,14 @@ class Size(ArrayOnlyOperator):
     """
 
     @property
-    def statement(self) -> dict:
-        return self.resolve({
-            "$size":self.expression
+    def expression(self) -> Expression:
+        return self.express({
+            "$size":self.operand
         })
 
 def size(array:Any)->Size:
     """Returns a $size operator"""
 
     return Size(
-        expression = array
+        operand = array
     )

@@ -169,7 +169,7 @@ from datetime import datetime
 from typing import Any, Callable, Literal
 from typing_extensions import Self
 
-from monggregate.base import BaseModel, pyd
+from monggregate.base import BaseModel, pyd, Expression
 from monggregate.fields import FieldName
 from monggregate.search.collectors.collector import SearchCollector
 from monggregate.search.operators import(
@@ -274,9 +274,9 @@ class StringFacet(FacetDefinition):
     num_buckets : int = 10
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> Expression:
         
-        return self.resolve({self.name : self.dict(by_alias=True, exclude={"name"})})
+        return self.express({self.name : self.dict(by_alias=True, exclude={"name"})})
 
 
 class NumericFacet(FacetDefinition):
@@ -299,9 +299,9 @@ class NumericFacet(FacetDefinition):
     default : str|None
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> Expression:
         
-        return self.resolve({self.name : self.dict(by_alias=True, exclude={"name"})})
+        return self.express({self.name : self.dict(by_alias=True, exclude={"name"})})
 
 
 class DateFacet(FacetDefinition):
@@ -321,9 +321,9 @@ class DateFacet(FacetDefinition):
     default : str|None
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> Expression:
         
-        return self.resolve({self.name : self.dict(by_alias=True, exclude={"name"})})
+        return self.express({self.name : self.dict(by_alias=True, exclude={"name"})})
 
 AnyFacet = StringFacet|NumericFacet|DateFacet
 Facets = list[AnyFacet]
@@ -371,7 +371,7 @@ class Facet(SearchCollector):
 
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> Expression:
 
         if not self.facets:
             raise ValueError("No facets were defined")
@@ -384,12 +384,12 @@ class Facet(SearchCollector):
         }
 
         for facet in self.facets:
-            _statement["facet"]["facets"].update(facet.statement)
+            _statement["facet"]["facets"].update(facet.expression)
 
         if self.operator:
-            _statement["facet"].update({"operator":self.operator.statement})
+            _statement["facet"].update({"operator":self.operator.expression})
         
-        return self.resolve(_statement)
+        return self.express(_statement)
     
     #---------------------------------------------------------
     # Constructors

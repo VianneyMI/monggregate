@@ -60,6 +60,7 @@ See the missing data example.
 
 
 from typing import Any
+from monggregate.base import Expression
 from monggregate.operators.accumulators.accumulator import Accumulator
 
 class First(Accumulator):
@@ -68,7 +69,7 @@ class First(Accumulator):
 
     Attributes
     ------------------------
-        - expression, Expression : Any valid expression
+        - operand, Any : Any valid expression
 
     Online MongoDB documentation:
     ------------------------------
@@ -88,17 +89,17 @@ class First(Accumulator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/first/#mongodb-group-grp.-first)
     """
 
-    expression : Any
+    operand : Any
 
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> Expression:
 
-        return self.resolve({
-            "$first" : self.expression
+        return self.express({
+            "$first" : self.operand
         })
 
-def first(expression:Any)->First:
+def first(operand:Any)->First:
     """Returns a $first operator"""
 
-    return First(expression=expression)
+    return First(operand=operand)

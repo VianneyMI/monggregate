@@ -86,6 +86,7 @@ In the other supported stages:
 """
 
 from typing import Any
+from monggregate.base import Expression
 from monggregate.operators.accumulators.accumulator import Accumulator
 
 class Sum(Accumulator):
@@ -95,7 +96,7 @@ class Sum(Accumulator):
     Attributes
     -----------------------
         - operands, list[Expression] : Any valid list of expressions
-        - operand, Expression : Any valid expression
+        - operand, Any :Any valid expression
         
     Online MongoDB documentation
     ----------------------------
@@ -119,22 +120,22 @@ class Sum(Accumulator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/sum/#mongodb-group-grp.-sum)
     """
 
-    expression : Any
+    operand : Any
 
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> Expression:
 
-        return self.resolve({
-            "$sum" : self.expression
+        return self.express({
+            "$sum" : self.operand
         })
 
 def sum(*args:Any)->Sum:
     """Returns a $sum operator"""
 
     if len(args)>1:
-        output = Sum(expression=list(args))
+        output = Sum(operand=list(args))
     else:
-        output = Sum(expression=args[0])
+        output = Sum(operand=args[0])
 
     return output

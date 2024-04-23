@@ -49,7 +49,7 @@ class ArrayOperator(Operator, ABC):
 class ArrayOnlyOperator(ArrayOperator, ABC):
     """Base class for array operators that work directly on the input array without any other parameters"""
 
-    expression : Any
+    operand : Any
 
 # Type aliases
 # -----------------------------------------

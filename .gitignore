@@ -1,5 +1,6 @@
 venv
 .venv
+.coverage
 .env
 notes.md
 **/*~

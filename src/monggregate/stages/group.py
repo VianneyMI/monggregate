@@ -64,7 +64,7 @@ For more information, see $group Optimization.
 
 """
 from typing import Any
-from monggregate.base import pyd
+from monggregate.base import pyd, Expression
 from monggregate.stages.stage import Stage
 from monggregate.utils import validate_field_path, validate_field_paths
 
@@ -117,10 +117,10 @@ class Group(Stage):
         return query
 
     @property
-    def statement(self) -> dict[str, dict]:
+    def expression(self) -> Expression:
         """Generates set stage statement from arguments"""
 
 
-        return  self.resolve({
+        return  self.express({
             "$group":self.query
         })

@@ -1,6 +1,6 @@
 """Module defining an interface to define the fuzzy search parameters."""
 
-from monggregate.base import BaseModel, pyd
+from monggregate.base import BaseModel, pyd, Expression
 
 class FuzzyOptions(BaseModel):
     """Class defining the fuzzy search parameters."""
@@ -10,7 +10,7 @@ class FuzzyOptions(BaseModel):
     prefix_length : int = pyd.Field(0, alias="prefixLength")
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> Expression:
         
-        return self.resolve(self.dict(by_alias=True))
+        return self.express(self.dict(by_alias=True))
     

@@ -25,6 +25,7 @@ For more information on expressions, see Expressions.
 """
 
 from typing import Any
+from monggregate.base import Expression
 from monggregate.operators.comparison.comparator import Comparator
 
 class GreatherThan(Comparator):
@@ -34,8 +35,8 @@ class GreatherThan(Comparator):
 
     Attributes
     -------------------
-        - left, Expression : Left operand. Can be any valid expression.
-        - right, Expression : Right operand. Can be any valid expression.
+        - left, Any :Left operand. Can be any valid expression.
+        - right, Any :Right operand. Can be any valid expression.
 
     Online MongoDB documentation
     ----------------------------
@@ -57,9 +58,9 @@ class GreatherThan(Comparator):
     """
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> Expression:
 
-        return self.resolve({
+        return self.express({
             "$gt":[self.left, self.right]
         })
 

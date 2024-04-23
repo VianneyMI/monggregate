@@ -49,7 +49,7 @@ If you are using the:
 
 """
 
-from monggregate.base import pyd
+from monggregate.base import pyd, Expression
 from monggregate.stages.stage import Stage
 
 class Sample(Stage):
@@ -72,10 +72,10 @@ class Sample(Stage):
     value : int = pyd.Field(10, gt=0)
 
     @property
-    def statement(self)->dict:
+    def expression(self)->Expression:
         """Generate statement from arguments"""
 
-        return self.resolve({
+        return self.express({
             "$sample" : {
                 "size" : self.value
             }

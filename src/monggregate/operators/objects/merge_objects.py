@@ -42,6 +42,7 @@ in the resulting document, has the value from the last document merged for the f
 """
 
 from typing import Any
+from monggregate.base import Expression
 from monggregate.operators.array.array import ArrayOperator
 
 class MergeObjects(ArrayOperator):
@@ -51,7 +52,7 @@ class MergeObjects(ArrayOperator):
 
     Attribute
     ---------------------
-        - expression, Expression : Any valid expression or list of expression
+        - operand, Any:Any valid expression or list of expression
 
     Online MongoDB documentation
     ----------------------------
@@ -66,16 +67,16 @@ class MergeObjects(ArrayOperator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/mergeObjects/#mongodb-expression-exp.-mergeObjects)
     """
 
-    expression : Any | list[Any]
+    operand : Any | list[Any]
 
 
     @property
-    def statement(self) -> dict:
-        return self.resolve({
-            "$mergeObjects" : self.expression
+    def expression(self) -> Expression:
+        return self.express({
+            "$mergeObjects" : self.operand
         })
 
-def merge_objects(expression:Any)->MergeObjects:
+def merge_objects(operand:Any)->MergeObjects:
     """Returns a $mergeObjects operator"""
 
-    return MergeObjects(expression=expression)
+    return MergeObjects(operand=operand)

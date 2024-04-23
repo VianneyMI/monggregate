@@ -52,6 +52,7 @@ An example empty window is a { documents: [ -1, -1 ] } documents window on the l
 
 
 from typing import Any
+from monggregate.base import Expression
 from monggregate.operators.accumulators.accumulator import Accumulator
 
 class Last(Accumulator):
@@ -60,7 +61,7 @@ class Last(Accumulator):
 
     Attributes
     ------------------------
-        - expression, Expression : Any valid expression
+        - operand, Any:Any valid expression
 
     Online MongoDB documentation
     ----------------------------
@@ -80,18 +81,18 @@ class Last(Accumulator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/last/#mongodb-group-grp.-last)
     """
 
-    expression : Any
+    operand : Any
 
 
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> Expression:
 
-        return self.resolve({
-            "$last" : self.expression
+        return self.express({
+            "$last" : self.operand
         })
 
-def last(expression:Any)->Last:
+def last(operand:Any)->Last:
     """Returns a $last operator"""
 
-    return Last(expression=expression)
+    return Last(operand=operand)

@@ -22,6 +22,7 @@ $concat returns null.
 """
 
 from typing import Any
+from monggregate.base import Expression
 from monggregate.operators.strings.string import StringOperator
 
 class Concat(StringOperator):
@@ -49,17 +50,17 @@ class Concat(StringOperator):
     """
 
 
-    expressions : list[Any]
+    operands : list[Any]
 
     @property
-    def statement(self) -> dict:
-        return self.resolve({
-            "$concat" : self.expressions
+    def expression(self) -> Expression:
+        return self.express({
+            "$concat" : self.operands
         })
     
 def concat(*args:Any)->Concat:
     """Returns an $concat operator"""
 
     return Concat(
-        expressions=list(args)
+        operands=list(args)
     )

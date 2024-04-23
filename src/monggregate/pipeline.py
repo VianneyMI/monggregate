@@ -5,9 +5,8 @@ from warnings import warn
 
 from typing_extensions import Self
 
-from monggregate import _run
 
-from monggregate.base import BaseModel
+from monggregate.base import BaseModel, Expression
 from monggregate.stages import (
     AnyStage,
     BucketAuto,
@@ -22,6 +21,7 @@ from monggregate.stages import (
     Project,
     ReplaceRoot,
     Sample,
+    Stage,
     Search,
     SearchMeta,
     SearchStageMap,
@@ -46,23 +46,16 @@ from monggregate.dollar import ROOT
 
 class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     """
-    MongoDB aggregation pipeline abstraction
+    MongoDB aggregation pipeline abstraction.
 
     Attributes
     -----------------------
-        - collection, str : reference collection for the pipeline.
-                            This is the collection where the aggregation will be done.
-                            However some stages in the pipeline might work with additional
-                            collections (e.g. lookup stage)
+     stages : list[Stage]
+        the list of Stages that the pipeline is made of.
+        Similarly to the pipeline itself. This package constructs
+        abstraction for MongoDB aggregation framework pipeline stages.
 
-        - stages, list[Stage] : the list of Stages that the pipeline is made of.
-                                Similarly to the pipeline itself. This package constructs
-                                abstraction for MongoDB aggregation framework pipeline stages.
 
-        - on_call, OnCallEnum : pipeline instances are callable. This defines the behavior of the instance
-                                when called. See OnCallEnum above. Defaults to export
-
-        - -db, Database : pymongo database instance. Can be optionally provided to make a pipeline instance self sufficient
 
     Usage
     -----------------------
@@ -83,39 +76,29 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         >>> db["listingsAndReviews"].aggregate(pipeline=pipeline()) # pipeline() here is actually equivalent to  pipeline.export()
 
-    Alternatively, your pipeline can be self sufficient and executes itself directly using the following approach:
-
-        >>> pipeline = Pipeline(
-            _db=db,
-            collection="listingsAndReviews",
-            on_call="run"
-        )
-
-        >>> pipeline.match(
-            query = { "room_type": "Entire home/apt"}
-        ).sort_by_count(
-            by =  "bed_type"
-        )
-
-        >>> pipeline() # pipeline() there is actually equivalent to  pipeline.run()
-
 
     """
 
-    # instance of pymongo or motor database to allow pipeline to directly runnable
-    _db : _run.Database | _run.AsyncIOMotorDatabase | _run.MotorDatabase | None = None
-    # name of the collection to run the pipeline on
-    collection : str | None =None
-    # list of stages that compose the pipeline
-    stages : list[AnyStage] = []
+
+    stages : list[AnyStage|Expression] = []
    
     
 
     @property
-    def statement(self)->list[dict]:
+    def expression(self)->list[Expression]:
         """Returns the pipeline statement"""
 
-        return [stage.statement for stage in self.stages]
+        # TODO : Add test on this case <VM, 21/04/2024>
+        # https://github.com/VianneyMI/monggregate/issues/106
+        stages_expressions = []
+
+        for stage in self.stages:
+            if isinstance(stage, Stage):
+                stages_expressions.append(stage.expression)
+            else:
+                stages_expressions.append(stage)
+
+        return stages_expressions
 
 
 
@@ -123,55 +106,6 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     # ------------------------------------------------
     # Pipeline Internal Methods
     #-------------------------------------------------
-    if _run.MOTOR:
-        async def __call__(self)->list[dict[str, Any]]:
-            """Makes a pipeline instance callable and executes the entire pipeline when called"""
-    
-            return await self.run()
-
-        
-        async def run(self)->list[dict[str, Any]]:
-            """Executes the entire pipeline"""
-
-            if self._db is None:
-                raise ValueError("db is not defined. Please indicate which database to run the pipeline on")
-
-            if not self.collection:
-                raise ValueError("collection is not defined. Please indicate which collection to run the pipeline on")
-
-            # TODO : Allow to yield results as they come in <VM, 08/09/2023>
-            cursor = self._db[self.collection].aggregate(pipeline=self.export())
-            array = await cursor.to_list(length=None)
-
-            return array
-        
-    elif _run.PYMONGO:
-        def __call__(self)->list[dict[str, Any]]:
-            """Makes a pipeline instance callable and executes the entire pipeline when called"""
-    
-            return self.run()
-
-        
-        def run(self)->list[dict[str, Any]]:
-            """Executes the entire pipeline"""
-
-            if self._db is None:
-                raise ValueError("_db is not defined. Please indicate which database to run the pipeline on")
-
-            if not self.collection:
-                raise ValueError("collection is not defined. Please indicate which collection to run the pipeline on")
-
-            stages = self.export()
-            array = list(self._db[self.collection].aggregate(pipeline=stages))
-            return array
-    else:
-        def __call__(self)->None:
-            self.run()
-        
-        def run(self)->None:
-            raise NotImplementedError("No database driver found. Please install pymongo or motor")
-
-    
     def export(self)->list[dict]:
         """
         Exports current pipeline to pymongo format.
@@ -181,17 +115,8 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         """
 
-        stages = []
-        for stage in self.stages:
-            stages.append(stage())
+        return self.expression
 
-        return stages
-
-
-    def to_statements(self)->list[dict]:
-        """Alias for export method"""
-
-        return self.export()
 
     # --------------------------------------------------
     # Pipeline List Methods
@@ -202,8 +127,6 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             raise TypeError(f"unsupported operand type(s) for +: 'Pipeline' and '{type(other)}'")
         
         return Pipeline(
-            _db=self._db,
-            collection=self.collection, 
             stages=self.stages + other.stages
             )
     
@@ -322,7 +245,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         )
         return self
 
-    def bucket_auto(self, *, by:Any=None, group_by:Any=None, buckets:int, output:dict=None, granularity:GranularityEnum|None=None)->Self:
+    def bucket_auto(self, *, by:Any=None, group_by:Any=None, buckets:int, output:dict|None=None, granularity:GranularityEnum|None=None)->Self:
         """
         Adds a bucket_auto stage to the current pipeline.
         This stage aggregates documents into buckets automatically computed to statisfy the number of buckets desired
@@ -513,8 +436,8 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         on:str|None=None,
         left_on:str|None=None,
         local_field:str|None=None,
-        right_on:str=None,
-        foreign_field:str=None)->Self:
+        right_on:str|None=None,
+        foreign_field:str|None=None)->Self:
         """
         Adds a lookup stage to the current pipeline.
         Performs a left outer join to a collection in the same database to filter in documents from the "joined" collection for processing. The
@@ -617,8 +540,6 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         if how == "left":
             self.__left_join(right=other, on=on, left_on=left_on, right_on=right_on)
-        elif how == "right":
-            self.__right_join(left=other, on=on, left_on=left_on, right_on=right_on)
         elif how == "inner":
             self.__inner_join(right=other, on=on, left_on=left_on, right_on=right_on)
 
@@ -645,8 +566,8 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         self.stages.append(
             ReplaceRoot(
                 document=MergeObjects(
-                    expression=[ROOT, "$"+join_field]
-                ).statement
+                    operand=[ROOT, "$"+join_field]
+                ).expression
             )
         )
         self.stages.append(
@@ -659,17 +580,6 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         self.__join_common(right=right, on=on, left_on=left_on, right_on=right_on)
     
-    def __right_join(self, left:str, on:str|None, left_on:str, right_on:str|None) -> None:
-        """Implements SQL right join"""
-        
-        warn("This stage will override the collection attribute of the pipeline with left and may lead to strange behaviors if not anticipated.")
-        # TODO : Warns that this will override current pipeline collection by left
-        # TODO : Append collection name in foreign collection documents field names to avoid collision and override of field when promoting sub-documents
-        # Ex : {"a":1, "b":2, "c":{"a":3, "d":0}} after promoting "c" would become {"a":3, "b":2, "d":0} and we want to prevent this
-
-        right = self.collection
-        self.collection = left
-        self.__join_common(right=right, on=on, left_on=left_on, right_on=right_on)
         
     def __inner_join(self, right:str, on:str|None, left_on:str|None, right_on:str|None) -> None:
         """Implements SQL inner join"""
@@ -684,7 +594,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         self.stages.insert(-3, filter_no_match)
 
-    def match(self, query:dict={}, expression:Any=None, **kwargs:Any)->Self:
+    def match(self, query:dict={}, expr:Expression=None, **kwargs:Any)->Self:
         """
         Adds a match stage to the current pipeline.
         Filters the documents to pass only the documents that match the specified condition(s) to the next pipeline stage.
@@ -693,7 +603,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         -------------------
 
             - query, dict : a simple MQL query use to filter the documents.
-            - expression, Expression : an aggregation expression used to filter the documents
+            - operand, Any:an aggregation expression used to filter the documents
     
         NOTE : Use query if you're using a MQL query and expression if you're using aggregation expressions.
 
@@ -711,10 +621,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         query = query | kwargs
         self.stages.append(
-                Match(
-                    query=query, 
-                    expression=expression
-                )
+                Match(query=query, expr=expr)
             )
         return self
 
@@ -1425,7 +1332,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         return self
     
 
-    def unset(self, field:str=None, fields:list[str]|None=None)->Self:
+    def unset(self, field:str|None=None, fields:list[str]|None=None)->Self:
         """
         Adds an unset stage to the current pipeline.
         Removes/excludes fields from documents.

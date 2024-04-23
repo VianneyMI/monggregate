@@ -8,7 +8,7 @@ import pytest
 
 @pytest.mark.skip("Need to authorize the IP address of the machine running the tests.")
 @pytest.mark.e2e
-def test_basic_pipeline_usage():
+def test_basic_pipeline_usage()->None:
     """Tests basic pipeline usage example.
     
     (First code snippet)
@@ -53,7 +53,7 @@ def test_basic_pipeline_usage():
 
 @pytest.mark.skip("Need to authorize the IP address of the machine running the tests.")
 @pytest.mark.e2e
-def test_advanced_usage():
+def test_advanced_usage()->None:
     """Tests more advanced pipeline usage example.
     
     (Second code snippet)
@@ -103,7 +103,7 @@ def test_advanced_usage():
 
 @pytest.mark.skip("Need to authorize the IP address of the machine running the tests.")
 @pytest.mark.e2e
-def test_even_more_advanced_usage():
+def test_even_more_advanced_usage()->None:
     """Tests even more advanced pipeline usage example.
     
     (Third code snippet)
@@ -114,7 +114,7 @@ def test_even_more_advanced_usage():
 
     from dotenv import load_dotenv 
     import pymongo
-    from monggregate import Pipeline, S, Expression
+    from monggregate import Pipeline, S
 
     # Creating connexion string securely
     load_dotenv(verbose=True)
@@ -129,7 +129,7 @@ def test_even_more_advanced_usage():
     db = client["sample_mflix"]
 
     # Using expressions
-    comments_count = Expression.field("comments").size()
+    comments_count = S.size(S.comments)
 
 
     # Creating the pipeline
@@ -142,7 +142,7 @@ def test_even_more_advanced_usage():
     ).add_fields(
         comments_count=comments_count
     ).match(
-        expression=comments_count>2
+        operand=comments_count>2
     ).limit(1)
 
 

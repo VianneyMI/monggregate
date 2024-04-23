@@ -44,7 +44,7 @@ where myCount would be the output field that contains the count. You can specify
 
 """
 
-
+from monggregate.base import Expression
 from monggregate.operators.accumulators.accumulator import Accumulator
 
 class Count(Accumulator):
@@ -70,9 +70,9 @@ class Count(Accumulator):
 
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> Expression:
 
-        return self.resolve({
+        return self.express({
             "$count" : {}
         })
 

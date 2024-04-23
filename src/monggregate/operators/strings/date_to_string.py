@@ -83,7 +83,7 @@ Specifiers          Description                                     Possible Val
 """
 
 from typing import Any
-from monggregate.base import pyd
+from monggregate.base import pyd, Expression
 from monggregate.operators.strings.string import StringOperator
 
 class DateToString(StringOperator):
@@ -126,8 +126,8 @@ class DateToString(StringOperator):
     on_null : Any
 
     @property
-    def statement(self) -> dict:
-        return self.resolve({
+    def expression(self) -> Expression:
+        return self.express({
             "$dateToString" : self.dict(by_alias=True, exclude_none=True)
         })
     

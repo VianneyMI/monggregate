@@ -22,9 +22,9 @@ class TestBooleanOperators:
         # Unit test
         # ---------------------------
         and_operator =  And(
-            expressions=[
-                First(expression=[1, 2, 3, 4]),
-                First(expression=[4, 5, 6, 7])
+            operands=[
+                First(operand=[1, 2, 3, 4]),
+                First(operand=[4, 5, 6, 7])
             ]
         )
 
@@ -32,7 +32,7 @@ class TestBooleanOperators:
 
         # Functional tests
         # --------------------------
-        assert and_operator.statement == and_(First(expression=[1, 2, 3, 4]), First(expression=[4, 5, 6, 7])).statement == {
+        assert and_operator.expression == and_(First(operand=[1, 2, 3, 4]), First(operand=[4, 5, 6, 7])).expression == {
             "$and" : [
                 {
                     "$first" : [1, 2, 3, 4]
@@ -47,7 +47,7 @@ class TestBooleanOperators:
     def test_not(self)->None:
         """Tests the $not operator class and mirror function"""
 
-        not_op = Not(expression=greather_than("$qty", 250))
+        not_op = Not(operand=greather_than("$qty", 250))
 
         # Unit test
         # --------------------
@@ -55,7 +55,7 @@ class TestBooleanOperators:
 
         # Functional test
         # --------------------
-        assert not_op.statement == not_(greather_than("$qty", 250)).statement == {
+        assert not_op.expression == not_(greather_than("$qty", 250)).expression == {
             "$not" : [{"$gt":["$qty", 250]}]
         }
 
@@ -66,9 +66,9 @@ class TestBooleanOperators:
         # Unit test
         # ---------------------------
         or_operator = Or(
-            expressions=[
-                First(expression=[1, 2, 3, 4]),
-                First(expression=[4, 5, 6, 7])
+            operands=[
+                First(operand=[1, 2, 3, 4]),
+                First(operand=[4, 5, 6, 7])
             ]
         )
 
@@ -76,7 +76,7 @@ class TestBooleanOperators:
 
         # Functional tests
         # --------------------------
-        assert or_operator.statement == or_(First(expression=[1, 2, 3, 4]), First(expression=[4, 5, 6, 7])).statement  == {
+        assert or_operator.expression == or_(First(operand=[1, 2, 3, 4]), First(operand=[4, 5, 6, 7])).expression  == {
             "$or" : [
                 {
                     "$first" : [1, 2, 3, 4]

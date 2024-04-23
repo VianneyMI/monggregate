@@ -98,6 +98,7 @@ That is, the operation returns the following:
 """
 
 from typing import Any
+from monggregate.base import Expression
 from monggregate.operators.array.array import ArrayOnlyOperator
 
 class First(ArrayOnlyOperator):
@@ -106,7 +107,7 @@ class First(ArrayOnlyOperator):
 
     Attributes
     -------------------
-        - expression, Expression : Any valid expressions as long as it resolves to an array, null or missing value.
+        - operand, Any:Any valid expressions as long as it resolves to an array, null or missing value.
 
     Online MongoDB documentation
     ----------------------------
@@ -116,14 +117,14 @@ class First(ArrayOnlyOperator):
     """
 
     @property
-    def statement(self) -> dict:
-        return self.resolve({
-            "$first":self.expression
+    def expression(self) -> Expression:
+        return self.express({
+            "$first":self.operand
         })
 
 def first(array:Any)->First:
     """Returns a $first operator"""
 
     return First(
-        expression = array
+        operand = array
     )

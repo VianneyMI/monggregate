@@ -8,6 +8,7 @@ from typing import Literal
 
 from monggregate.base import BaseModel, pyd
 
+# TODO : Check if those are missing an expression property <VM, 21/04/2024>
 class HighlightOptions(BaseModel):
     """Class defining the highlighting parameters."""
 

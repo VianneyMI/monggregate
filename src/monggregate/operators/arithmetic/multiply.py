@@ -22,6 +22,7 @@ For more information on expressions, see Expressions.
 """
 
 from typing import Any
+from monggregate.base import Expression
 from monggregate.operators.arithmetic.arithmetic import ArithmeticOperator
 
 class Multiply(ArithmeticOperator):
@@ -49,17 +50,17 @@ class Multiply(ArithmeticOperator):
     """
 
 
-    expressions : list[Any]
+    operands : list[Any]
 
     @property
-    def statement(self) -> dict:
-        return self.resolve({
-            "$multiply" : self.expressions
+    def expression(self) -> Expression:
+        return self.express({
+            "$multiply" : self.operands
         })
     
 def multiply(*args:Any)->Multiply:
     """Returns a $multiply operator"""
 
     return Multiply(
-        expressions=list(args)
+        operands=list(args)
     )

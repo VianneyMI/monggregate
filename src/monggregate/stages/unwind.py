@@ -66,7 +66,7 @@ preserveNullAndEmptyArrays option.
 
 """
 
-from monggregate.base import pyd
+from monggregate.base import pyd, Expression
 from monggregate.stages.stage import Stage
 from monggregate.utils import validate_field_path
 
@@ -102,7 +102,7 @@ class Unwind(Stage):
     _validates_path_to_array = pyd.validator("path_to_array", allow_reuse=True, pre=True, always=True)(validate_field_path)
 
     @property
-    def statement(self)->dict[str, dict]:
+    def expression(self)->Expression:
         """Generates set stage statement from arguments"""
 
         params = {"path":self.path_to_array}
@@ -113,4 +113,4 @@ class Unwind(Stage):
         if self.always:
             params["preserveNullAndEmptyArrays"] = self.always
 
-        return  self.resolve({"$unwind" : params})
+        return  self.express({"$unwind" : params})
