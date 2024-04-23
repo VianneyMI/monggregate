@@ -74,7 +74,7 @@ class Group(Stage):
 
     Attributes:
     -----------
-        - by,  str | list[str] | set[str] | dict | None : field or group of fields to group by
+        - by (_id),  str | list[str] | set[str] | dict | None : field or group of fields to group by
         - query, dict | None : Computed aggregated values (per group)
     
     Online MongoDB documentation:

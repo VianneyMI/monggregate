@@ -77,7 +77,7 @@ class ReplaceRoot(Stage):
     -----------
 
         - statement, dict : the statement generated during instantiation after parsing the other arguments
-        - path_to_new_root, str|None : the path to the embedded document to be promoted
+        - path_to_new_root (path), str|None : the path to the embedded document to be promoted
         - document, dict|None : document being created and to be set as the new root or expression
     
     Online MongoDB documentation:
