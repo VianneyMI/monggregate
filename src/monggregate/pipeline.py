@@ -238,7 +238,6 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         self.stages.append(
             Bucket(
                 by = by or group_by,
-                #group_by = group_by or by,
                 boundaries = boundaries,
                 default = default,
                 output = output
@@ -295,7 +294,6 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         self.stages.append(
             BucketAuto(
                 by = by or group_by,
-                #group_by = group_by,
                 buckets = buckets,
                 output = output,
                 granularity = granularity
@@ -361,9 +359,9 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         self.stages.append(
                 Unwind(
-                    path=path,
+                    path_to_array=path_to_array or path,
                     include_array_index=include_array_index,
-                    always=always
+                    always=always or preserve_null_and_empty_arrays
                     )
             )
         return self
@@ -376,7 +374,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         
         Arguments:
         ------------------------
-            - by,  str | list[str] | set[str] | dict | None : field or group of fields to group by
+            - by (_id),  str | list[str] | set[str] | dict | None : field or group of fields to group by
             - query, dict | None : Computed aggregated values (per group)
 
         Online MongoDB documentation:
@@ -398,7 +396,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         self.stages.append(
                 Group(
-                    by=by,
+                    by=by or _id,
                     query=query
                 )
             )
@@ -491,9 +489,9 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             Lookup(
                 right = right,
                 on = on,
-                left_on = left_on,
-                right_on = right_on,
-                name =name
+                left_on = left_on or local_field, 
+                right_on = right_on or foreign_field,
+                name = name
             )
         )
         return self
@@ -596,7 +594,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         self.stages.insert(-3, filter_no_match)
 
-    def match(self, query:dict={}, operand:Any=None, **kwargs:Any)->Self:
+    def match(self, query:dict={}, expr:Expression=None, **kwargs:Any)->Self:
         """
         Adds a match stage to the current pipeline.
         Filters the documents to pass only the documents that match the specified condition(s) to the next pipeline stage.
@@ -623,7 +621,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         query = query | kwargs
         self.stages.append(
-                Match(query=query, expr=operand)
+                Match(query=query, expr=expr)
             )
         return self
 
@@ -707,7 +705,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         -------------------------------------
 
             - statement, dict : the statement generated during instantiation after parsing the other arguments
-            - path_to_new_root, str|None : the path to the embedded document to be promoted
+            - path_to_new_root (path), str|None : the path to the embedded document to be promoted
             - document, dict|None : document being created and to be set as the new root or expression
 
         Online MongoDB documentation:
@@ -724,7 +722,10 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         """
 
         self.stages.append(
-                ReplaceRoot(path=path, document=document)
+                ReplaceRoot(
+                    path=path or path_to_new_root, 
+                    document=document
+                )
             )
         return self
 
@@ -736,7 +737,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         -------------------------------------
 
             - statement, dict : the statement generated during instantiation after parsing the other arguments
-            - path_to_new_root, str|None : the path to the embedded document to be promoted
+            - path_to_new_root (path), str|None : the path to the embedded document to be promoted
             - document, dict|None : document being created and to be set as the new root or expression
 
         Online MongoDB documentation:
@@ -753,7 +754,10 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         """
 
         self.stages.append(
-                ReplaceRoot(path=path, document=document)
+                ReplaceRoot(
+                    path=path or path_to_new_root, 
+                    document=document
+                )
             )
         return self
 
@@ -1286,7 +1290,9 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         """
 
         self.stages.append(
-            UnionWith(collection=collection, pipeline=pipeline)
+            UnionWith(
+                collection=collection or coll, 
+                pipeline=pipeline)
         )
 
         return self
