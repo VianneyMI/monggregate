@@ -16,7 +16,7 @@ from typing_extensions import Self
 try:
     import pydantic.v1 as pyd
 except ModuleNotFoundError:
-    import pydantic as pyd
+    import pydantic as pyd # type: ignore[no-redef]
 
     
 from humps.main import camelize

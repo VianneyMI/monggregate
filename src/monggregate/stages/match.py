@@ -49,10 +49,10 @@ Restrictions
 
 from typing import Any
 
-from monggregate.base import pyd, Expression as _Expression
+from monggregate.base import pyd, Expression
 from monggregate.stages.stage import Stage
 from monggregate.operators.operator import Operator
-from monggregate.expressions import Expression
+#from monggregate.expressions import Expression
 
 class Match(Stage):
     """
@@ -79,25 +79,27 @@ class Match(Stage):
     """
 
     query : dict = {} #| None
-    operand : Any | None = None
+    expr : Expression | None = None
 
-    @pyd.validator("operand", pre=True, always=True)
-    def validate_operand(cls, operand:Any)-> Any:
+    @pyd.validator("expr", pre=True, always=True)
+    def validate_operand(cls, expr:Any)-> Any:
         
-        c1 = isinstance(operand, dict) # expression is "expressed/resolved" already
-        c2 = isinstance(operand, Expression) # expression is an expression object
-        c3 = isinstance(operand, Operator) # expression is an operator object
+        c1 = isinstance(expr, dict) # expression is "expressed/resolved" already
+        c2 = isinstance(expr, Operator) # expression is an operator object
 
-        if operand and not (c1 or c2 or c3):
+        if expr and not (c1 or c2 ):
             raise ValueError("The expression argument must be a valid expression, operator or a dict.")
         
-        return operand
+        if isinstance(expr, dict) and "$expr" not in expr:
+            expr = {"$expr":expr}
+        
+        return expr
 
     @property
-    def expression(self) -> _Expression:
+    def expression(self) -> Expression:
 
-        if self.operand:
-            _statement = self.express({"$match":{"$expr":self.operand}})
+        if self.expr:
+            _statement = self.express({"$match":{"$expr":self.expr}})
             
         else:
             _statement =  self.express({"$match":self.query})

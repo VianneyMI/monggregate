@@ -623,7 +623,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         query = query | kwargs
         self.stages.append(
-                Match(query=query, operand=operand)
+                Match(query=query, expr=operand)
             )
         return self
 
@@ -1326,7 +1326,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         return self
     
 
-    def unset(self, field:str=None, fields:list[str]|None=None)->Self:
+    def unset(self, field:str|None=None, fields:list[str]|None=None)->Self:
         """
         Adds an unset stage to the current pipeline.
         Removes/excludes fields from documents.
