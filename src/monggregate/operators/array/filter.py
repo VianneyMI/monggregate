@@ -48,7 +48,7 @@ from monggregate.operators.array.array import ArrayOperator
 
 class Filter(ArrayOperator):
     """
-    Abstraction of MongoDB $filter expression which selects a subset of an 
+    Abstraction of MongoDB $filter operator which selects a subset of an 
     array to return based on the specified condition.
 
 

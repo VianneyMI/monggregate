@@ -32,7 +32,7 @@ from typing import Any
 
 class ObjectToArray(ArrayOperator):
     """
-    Abstraction of MongoDB $arrayToObject expression which converts a 
+    Abstraction of MongoDB $arrayToObject operator which converts a 
     document to an array.
 
     Attributes
@@ -57,7 +57,7 @@ class ObjectToArray(ArrayOperator):
 
     For more information on expressions, see Expressions.
 
-    [Source]{https://www.mongodb.com/docs/manual/reference/operator/aggregation/objectToArray/#mongodb-expression-exp.-objectToArray}
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/objectToArray/#mongodb-expression-exp.-objectToArray)
     """
 
     expression : Any

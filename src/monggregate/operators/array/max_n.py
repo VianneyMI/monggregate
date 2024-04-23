@@ -50,7 +50,7 @@ from monggregate.operators.array.array import ArrayOperator
 
 class MaxN(ArrayOperator):
     """
-    Abstraction of MongoDB $maxN expression which returns the n largest 
+    Abstraction of MongoDB $maxN operator which returns the n largest 
     values in an array.
 
     Attributes

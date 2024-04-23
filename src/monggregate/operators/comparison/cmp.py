@@ -32,7 +32,7 @@ from monggregate.operators.comparison.comparator import Comparator
 
 class Compare(Comparator):
     """
-    Abstraction of MongoDB $cmp expression which compares two values and 
+    Abstraction of MongoDB $cmp operator which compares two values and 
     returns -1 if the first value is less than the second, 1 if the first
     value is greater than the second and 0 if the two values are equivalent.
 
@@ -59,7 +59,7 @@ class Compare(Comparator):
 
     For more information on expressions, see Expressions.
     
-    [Source]{https://www.mongodb.com/docs/manual/reference/operator/aggregation/cmp/#mongodb-expression-exp.-cmp}    
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/cmp/#mongodb-expression-exp.-cmp)
     """
 
     @property

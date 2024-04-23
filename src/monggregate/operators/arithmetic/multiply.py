@@ -26,7 +26,7 @@ from monggregate.operators.arithmetic.arithmetic import ArithmeticOperator
 
 class Multiply(ArithmeticOperator):
     """
-    Abstraction of MongoDB $multiply expression which multiplies numbers 
+    Abstraction of MongoDB $multiply operator which multiplies numbers 
     together and returns the result.
 
     Attributes

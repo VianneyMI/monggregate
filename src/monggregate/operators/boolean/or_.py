@@ -30,7 +30,7 @@ from monggregate.operators.boolean.boolean import BooleanOperator
 
 class Or(BooleanOperator):
     """
-    Abstraction of MongoDB $or expression evaluates one or more expressions and returns true if any of the expressions are true.
+    Abstraction of MongoDB $or operator evaluates one or more expressions and returns true if any of the expressions are true.
 
     Attributes
     -------------------
@@ -48,7 +48,7 @@ class Or(BooleanOperator):
 
     For more information on expressions, see Expressions.
     
-    [Source]{https://www.mongodb.com/docs/manual/reference/operator/aggregation/or/#mongodb-expression-exp.-or}
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/or/#mongodb-expression-exp.-or)
 
     """
 

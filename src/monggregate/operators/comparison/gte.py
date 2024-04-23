@@ -27,7 +27,7 @@ from monggregate.operators.comparison.comparator import Comparator
 
 class GreatherThanOrEqual(Comparator):
     """
-    Abstraction of MongoDB $gte expression which compares two values and 
+    Abstraction of MongoDB $gte operator which compares two values and 
     returns true when the first value is greater than or equivalent to the 
     second value and false otherwise.
 
@@ -52,7 +52,7 @@ class GreatherThanOrEqual(Comparator):
 
     For more information on expressions, see Expressions.
     
-    [Source]{https://www.mongodb.com/docs/manual/reference/operator/aggregation/gte/#mongodb-expression-exp.-gte
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/gte/#mongodb-expression-exp.-gt)
     """
 
     @property

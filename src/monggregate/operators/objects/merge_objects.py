@@ -46,7 +46,7 @@ from monggregate.operators.array.array import ArrayOperator
 
 class MergeObjects(ArrayOperator):
     """
-    Abstraction of MongoDB $arrayToObject expression which combines 
+    Abstraction of MongoDB $arrayToObject operator which combines 
     multiple documents into a single document.
 
     Attribute
@@ -63,7 +63,7 @@ class MergeObjects(ArrayOperator):
         * $bucketAuto
         * $group
 
-    [Source]{https://www.mongodb.com/docs/manual/reference/operator/aggregation/mergeObjects/#mongodb-expression-exp.-mergeObjects}
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/mergeObjects/#mongodb-expression-exp.-mergeObjects)
     """
 
     expression : Any | list[Any]

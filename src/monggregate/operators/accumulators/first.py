@@ -64,7 +64,7 @@ from monggregate.operators.accumulators.accumulator import Accumulator
 
 class First(Accumulator):
     """
-    Abstration of MongoDB $first expression.
+    Abstration of MongoDB $first operator.
 
     Attributes
     ------------------------

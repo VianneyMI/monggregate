@@ -81,7 +81,7 @@ from monggregate.operators.strings.string import StringOperator
 
 class DateFromString(StringOperator):
     """
-    Abstraction of MongoDB $concat expression which converts a date/time string to a date object.
+    Abstraction of MongoDB $concat operator which converts a date/time string to a date object.
 
     Attributes
     -------------------
@@ -107,7 +107,7 @@ class DateFromString(StringOperator):
                     } 
             }
                 
-    [Source]{https://docs.mongodb.com/manual/reference/operator/aggregation/dateFromString/#mongodb-expression-exp.-dateFromString}
+    [Source](https://docs.mongodb.com/manual/reference/operator/aggregation/dateFromString/#mongodb-expression-exp.-dateFromString)
     """
 
 

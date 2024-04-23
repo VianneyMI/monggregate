@@ -81,7 +81,7 @@ from monggregate.operators.accumulators.accumulator import Accumulator
 
 class Min(Accumulator):
     """
-    Abstraction of MongoDB $min expression.
+    Abstraction of MongoDB $min operator.
 
     Attributes
     ----------------------
@@ -93,7 +93,7 @@ class Min(Accumulator):
     Returns the minimum value.
     $min compares both value and type, using the specified BSON comparison order for values of different types.
 
-        * $min is available in these stages:
+    $min is available in these stages:
         * $addFields (Available starting in MongoDB 3.4)
         * $bucket
         * $bucketAuto

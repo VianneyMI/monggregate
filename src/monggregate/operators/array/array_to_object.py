@@ -53,7 +53,7 @@ from monggregate.operators.array.array import ArrayOperator
 
 class ArrayToObject(ArrayOperator):
     """
-    Abstraction of MongoDB $arrayToObject expression which converts an array into a single document.
+    Abstraction of MongoDB $arrayToObject operator which converts an array into a single document.
 
     Attributes
     ----------------------
@@ -69,7 +69,7 @@ class ArrayToObject(ArrayOperator):
 
         >>> [ [ "item", "abc123"], [ "qty", 25 ] ]
 
-    - OR -
+    OR
 
         * An array of documents that contains two fields, k and v where:
 
@@ -79,7 +79,7 @@ class ArrayToObject(ArrayOperator):
 
         >>> [ { "k": "item", "v": "abc123"}, { "k": "qty", "v": 25 } ]
 
-    $arrayToObjecthas the following syntax:
+    $arrayToObject has the following syntax:
 
         >>> { $arrayToObject: <expression> }
 

@@ -44,7 +44,7 @@ from monggregate.operators.arithmetic.arithmetic import ArithmeticOperator
 
 class Pow(ArithmeticOperator):
     """
-    Abstraction of MongoDB $pow expression which raises a number to the specified exponent.
+    Abstraction of MongoDB $pow operator which raises a number to the specified exponent.
 
     Attributes
     -------------------

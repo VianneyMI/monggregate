@@ -88,7 +88,7 @@ from monggregate.operators.array.array import ArrayOperator
 
 class SortArray(ArrayOperator):
     """
-    Abstraction of MongoDB $sortArray expression which sorts an array based 
+    Abstraction of MongoDB $sortArray operator which sorts an array based 
     on its elements.
 
     Attributes

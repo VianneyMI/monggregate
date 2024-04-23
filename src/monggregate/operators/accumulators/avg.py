@@ -13,8 +13,7 @@ Changed in version 5.0.
 $avg
 Returns the average value of the numeric values.
 $avg ignores non-numeric values.
-
-    * $avg is available in these stages:
+$avg is available in these stages:
     * $addFields (Available starting in MongoDB 3.4)
     * $bucket
     * $bucketAuto
@@ -85,8 +84,7 @@ class Average(Accumulator):
     -----------------------------
     Returns the average value of the numeric values.
     $avg ignores non-numeric values.
-
-        * $avg is available in these stages:
+    $avg is available in these stages:
         * $addFields (Available starting in MongoDB 3.4)
         * $bucket
         * $bucketAuto

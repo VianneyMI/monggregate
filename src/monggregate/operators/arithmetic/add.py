@@ -25,7 +25,7 @@ from monggregate.operators.arithmetic.arithmetic import ArithmeticOperator
 
 class Add(ArithmeticOperator):
     """
-    Abstraction of MongoDB $add expression which adds numbers together of adds numbers and a date.
+    Abstraction of MongoDB $add operator which adds numbers together of adds numbers and a date.
 
     Attributes
     -------------------

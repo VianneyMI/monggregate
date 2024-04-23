@@ -30,7 +30,7 @@ from monggregate.operators.array.array import ArrayOnlyOperator
 
 class IsArray(ArrayOnlyOperator):
     """
-    Abstraction of MongoDB $isArray expression which determines if the operand is an array.
+    Abstraction of MongoDB $isArray operator which determines if the operand is an array.
 
     Attributes
     -------------------------

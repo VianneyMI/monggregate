@@ -106,7 +106,7 @@ from monggregate.operators.array.array import ArrayOnlyOperator
 
 class Last(ArrayOnlyOperator):
     """
-    Abstraction of MongoDB $last expression which returns the last element 
+    Abstraction of MongoDB $last operator which returns the last element 
     in an array.
 
     Attributes

@@ -31,7 +31,7 @@ from monggregate.operators.boolean.boolean import BooleanOperator
 
 class Not(BooleanOperator):
     """
-    Abstraction of MongoDB $or expression which evaluates a boolean and returns the opposite boolean value.
+    Abstraction of MongoDB $or operator which evaluates a boolean and returns the opposite boolean value.
 
     Attributes
     -------------------
@@ -47,7 +47,7 @@ class Not(BooleanOperator):
         >>> { $not: [ <expression> ] }
 
     For more information on expressions, see Expressions.
-    [Source]{https://www.mongodb.com/docs/manual/reference/operator/aggregation/not/#mongodb-expression-exp.-not}
+    [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/not/#mongodb-expression-exp.-not)
 
     """
 

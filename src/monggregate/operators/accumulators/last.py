@@ -56,7 +56,7 @@ from monggregate.operators.accumulators.accumulator import Accumulator
 
 class Last(Accumulator):
     """
-    Abstraction of MongoDB $last expression.
+    Abstraction of MongoDB $last operator.
 
     Attributes
     ------------------------

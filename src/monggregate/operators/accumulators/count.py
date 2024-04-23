@@ -49,7 +49,7 @@ from monggregate.operators.accumulators.accumulator import Accumulator
 
 class Count(Accumulator):
     """
-    Abstration of MongoDB $count expression that returns the number of documents in a group.
+    Abstration of MongoDB $count operator that returns the number of documents in a group.
 
     Online MongoDB documentation:
     -----------------------------

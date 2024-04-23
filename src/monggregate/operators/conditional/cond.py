@@ -37,7 +37,7 @@ from monggregate.operators.conditional.conditional import ConditionalOperator
 
 class Cond(ConditionalOperator):
     """
-    Abstraction of MongoDB $cond expression which evaluates a boolean 
+    Abstraction of MongoDB $cond operator which evaluates a boolean 
     expression to return one of the two specified return expressions.
 
     Attributes
@@ -75,7 +75,7 @@ class Cond(ConditionalOperator):
     The arguments can be any valid expression. 
     For more information on expressions, see Expressions.      
     
-    [Source]{https://docs.mongodb.com/manual/reference/operator/aggregation/cond/#mongodb-expression-exp.-cond}
+    [Source](https://docs.mongodb.com/manual/reference/operator/aggregation/cond/#mongodb-expression-exp.-cond)
     """
 
     # Syntax 2

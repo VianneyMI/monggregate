@@ -48,7 +48,7 @@ from monggregate.operators.conditional.conditional import ConditionalOperator
 
 class IfNull(ConditionalOperator):
     """
-    Abstraction of MongoDB $cond expression which evaluates input expressions 
+    Abstraction of MongoDB $cond operator which evaluates input expressions 
     for null values and returns the first non-null input expression value 
     found or a replacement expression value if all input expressions 
     evaluate to null.
@@ -68,7 +68,7 @@ class IfNull(ConditionalOperator):
 
     $ifNull treats undefined values and missing fields as null.
     
-    [Source]{https://docs.mongodb.com/manual/reference/operator/aggregation/ifNull/#mongodb-expression-exp.-ifNull}
+    [Source](https://docs.mongodb.com/manual/reference/operator/aggregation/ifNull/#mongodb-expression-exp.-ifNull)
     """
 
 
