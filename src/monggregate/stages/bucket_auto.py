@@ -38,6 +38,8 @@ class BucketAuto(Stage):
     by : str|list[str]|set[str]
         An expression to group documents. To specify a field path prefix 
         the field name with a dollar sign $ and enclose it in quotes.
+    group_by : str|list[str]|set[str]
+        Alias for `by`.
     buckets : int
         Number of buckets desired.
     output : dict
