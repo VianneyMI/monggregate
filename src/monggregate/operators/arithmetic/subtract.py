@@ -37,6 +37,7 @@ Starting in MongoDB 5.0, the result will have the same type as the input except 
 """
 
 from typing import Any
+from monggregate.base import Expression
 from monggregate.operators.arithmetic.arithmetic import ArithmeticOperator
 
 class Subtract(ArithmeticOperator):
@@ -73,8 +74,8 @@ class Subtract(ArithmeticOperator):
     right: Any
 
     @property
-    def statement(self) -> dict:
-        return self.resolve({
+    def expression(self) -> Expression:
+        return self.express({
             "$substract" : [self.left, self.right]
         })
     

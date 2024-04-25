@@ -27,8 +27,10 @@ For more information on expressions, see Expressions.
 
 """
 
-from monggregate.operators.array.array import ArrayOperator
 from typing import Any
+
+from monggregate.base import Expression
+from monggregate.operators.array.array import ArrayOperator
 
 class ObjectToArray(ArrayOperator):
     """
@@ -37,7 +39,7 @@ class ObjectToArray(ArrayOperator):
 
     Attributes
     -------------------
-        - expression, Expression : Any valid expression that resolves to an object
+        - operand, Any:Any valid expression that resolves to an object
 
     Online MongoDB documentation
     ----------------------------
@@ -60,15 +62,15 @@ class ObjectToArray(ArrayOperator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/objectToArray/#mongodb-expression-exp.-objectToArray)
     """
 
-    expression : Any
+    operand : Any
 
     @property
-    def statement(self) -> dict:
-        return self.resolve({
-            "$objectToArray" : self.expression
+    def expression(self) -> Expression:
+        return self.express({
+            "$objectToArray" : self.operand
         })
 
-def object_to_array(expression:Any)->ObjectToArray:
+def object_to_array(operand:Any)->ObjectToArray:
     """Returns a $objectToArray operator"""
 
-    return ObjectToArray(expression=expression)
+    return ObjectToArray(operand=operand)

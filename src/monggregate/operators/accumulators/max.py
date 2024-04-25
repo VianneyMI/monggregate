@@ -77,6 +77,7 @@ $max does not traverse into the array but instead treats the array as a non-nume
 
 
 from typing import Any
+from monggregate.base import Expression
 from monggregate.operators.accumulators.accumulator import Accumulator
 
 class Max(Accumulator):
@@ -85,7 +86,7 @@ class Max(Accumulator):
 
     Attributes
     ---------------------
-        - expression, Expression : Any valid expression
+        - operand, Any:Any valid expression
 
     Online MongoDB documentation
     ----------------------------
@@ -109,18 +110,18 @@ class Max(Accumulator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/max/#mongodb-group-grp.-max)
     """
 
-    expression : Any
+    operand : Any
 
 
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> Expression:
 
-        return self.resolve({
-            "$max" : self.expression
+        return self.express({
+            "$max" : self.operand
         })
 
-def max(expression:Any)->Max:
+def max(operand:Any)->Max:
     """Returns a $last operator"""
 
-    return Max(expression=expression)
+    return Max(operand=operand)

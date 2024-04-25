@@ -10,7 +10,7 @@ def test_dollar_getattr()->None:
     assert S.age == "$age"
     assert S.address == "$address"
   
-    assert S.and_(True, True) == And(expressions=[True, True])
+    assert S.and_(True, True) == And(operands=[True, True])
 
 def test_singletons()->None:
     """Tests that Dollar and DollarDollar are singletons"""
@@ -23,9 +23,9 @@ def test_singletons()->None:
 def test_simple_expressions()->None:
     """Tests some simple expressions"""
 
-    assert S.sum(1).statement == {"$sum": 1}
+    assert S.sum(1).expression == {"$sum": 1}
 
-    assert S.type_("number").statement == {"$type": "number"}
+    assert S.type_("number").expression == {"$type": "number"}
 
     #S.avg(S.multiply(S.price, S.quantity)).statement == {"$avg": [{"$multiply": ["$price", "$quantity"]}]}
 

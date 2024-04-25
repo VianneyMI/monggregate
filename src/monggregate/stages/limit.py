@@ -2,7 +2,7 @@
 Module defining an interface to MongoDB `$limit` stage operation in aggregation pipeline.
 """
 
-from monggregate.base import pyd
+from monggregate.base import pyd, Expression    
 from monggregate.stages.stage import Stage
 
 class Limit(Stage):
@@ -31,8 +31,8 @@ class Limit(Stage):
     value : int = pyd.Field(gt=0)
 
     @property
-    def statement(self)->dict:
+    def expression(self)->Expression:
 
-        return self.resolve({
+        return self.express({
             "$limit" : self.value
         })

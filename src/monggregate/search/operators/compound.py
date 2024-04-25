@@ -61,7 +61,7 @@ from typing import Any, Literal, Callable
 
 from typing_extensions import Self
 
-from monggregate.base import pyd
+from monggregate.base import Expression
 from monggregate.search.operators.operator import SearchOperator, OperatorLiteral
 from monggregate.search.operators.clause import (
     Clause,
@@ -111,7 +111,7 @@ class Compound(SearchOperator):
     minimum_should_match : int = 0
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> Expression:
 
         clauses = {}
         if self.must:
@@ -124,7 +124,7 @@ class Compound(SearchOperator):
         if self.filter:
             clauses["filter"] = self.filter
 
-        return self.resolve({
+        return self.express({
                 "compound":clauses
             })
 
@@ -217,7 +217,7 @@ class Compound(SearchOperator):
             path=path,
             value=value,
             score=score
-        ).statement
+        ).expression
 
         self._register_clause(type, _equals)
 

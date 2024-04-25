@@ -2,7 +2,7 @@
 Module defining an interface to MongoDB `$lookup` stage operation in aggregation pipeline.
 """
 
-from monggregate.base import pyd
+from monggregate.base import pyd, Expression
 from monggregate.stages.stage import Stage
 from monggregate.utils import StrEnum
 
@@ -152,7 +152,7 @@ class Lookup(Stage):
         return type_
 
     @property
-    def statement(self)->dict:
+    def expression(self)->Expression:
         """Generates statement from attributes"""
 
 
@@ -188,4 +188,4 @@ class Lookup(Stage):
                 }
             }
 
-        return self.resolve(statement)
+        return self.express(statement)

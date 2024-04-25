@@ -125,7 +125,7 @@ $projectstage. See Array Indexes are Unsupported.
 # NOTE : Would be nice and useful to have something keywords arguments based to generate the projection <VM, 16/09/2022>
 # (on top[on the side] of the below)
 
-from monggregate.base import pyd
+from monggregate.base import pyd, Expression
 from monggregate.stages.stage import Stage
 from monggregate.utils import to_unique_list
 
@@ -257,7 +257,7 @@ class Project(Stage):
 
 
     @property
-    def statement(self)->dict[str, dict]:
+    def expression(self)->Expression:
         """Generates statement from other attributes"""
 
-        return self.resolve({"$project":self.projection})
+        return self.express({"$project":self.projection})

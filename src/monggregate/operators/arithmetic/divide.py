@@ -23,6 +23,7 @@ The arguments can be any valid expression as long as they resolve to numbers. Fo
 """
 
 from typing import Any
+from monggregate.base import Expression
 from monggregate.operators.arithmetic.arithmetic import ArithmeticOperator
 
 class Divide(ArithmeticOperator):
@@ -57,8 +58,8 @@ class Divide(ArithmeticOperator):
     denominator : Any
 
     @property
-    def statement(self) -> dict:
-        return self.resolve({
+    def expression(self) -> Expression:
+        return self.express({
             "$divide" : [self.numerator, self.denominator]
         })
     

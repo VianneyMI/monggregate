@@ -63,6 +63,7 @@ facet           The result to a facet query is a mapping of the defined facet na
 
 """
 
+from monggregate.base import Expression
 from monggregate.stages.search.base import SearchBase
 
 
@@ -105,7 +106,7 @@ class SearchMeta(SearchBase):
     """
 
     @property
-    def statement(self) -> dict[str, dict]:
+    def expression(self) -> Expression:
     
         config = {
                 "index":self.index,
@@ -118,11 +119,11 @@ class SearchMeta(SearchBase):
         method = self.collector or self.operator
 
     
-        config.update(method.statement)
+        config.update(method.expression)
 
         _statement = {
             "$searchMeta":config
         }
      
-        return self.resolve(_statement)
+        return self.express(_statement)
     

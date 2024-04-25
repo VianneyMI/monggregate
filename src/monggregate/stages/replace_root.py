@@ -65,7 +65,7 @@ Or, you can use $ifNullexpression to specify some other document to be root; for
 
 """
 
-from monggregate.base import pyd
+from monggregate.base import pyd, Expression
 from monggregate.stages.stage import Stage
 from monggregate.utils import validate_field_path
 
@@ -77,7 +77,7 @@ class ReplaceRoot(Stage):
     -----------
 
         - statement, dict : the statement generated during instantiation after parsing the other arguments
-        - path_to_new_root, str|None : the path to the embedded document to be promoted
+        - path_to_new_root (path), str|None : the path to the embedded document to be promoted
         - document, dict|None : document being created and to be set as the new root or expression
     
     Online MongoDB documentation:
@@ -103,7 +103,7 @@ class ReplaceRoot(Stage):
     _validates_path_to_new_root = pyd.validator("path_to_new_root", allow_reuse=True, pre=True, always=True)(validate_field_path)
 
     @property
-    def statement(self)->dict:
+    def expression(self)->Expression:
         """Generate statements from argument"""
 
         if self.path_to_new_root:
@@ -112,4 +112,4 @@ class ReplaceRoot(Stage):
             expression = self.document
 
     
-        return  self.resolve({"$replaceRoot":{"newRoot":expression}})
+        return  self.express({"$replaceRoot":{"newRoot":expression}})

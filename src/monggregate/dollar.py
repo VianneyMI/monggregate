@@ -131,10 +131,10 @@ class Dollar(Singleton):
     # Accumulators
     # -------------------------------
     @classmethod
-    def avg(cls, expression:Any)->accumulators.Avg:
+    def avg(cls, operand:Any)->accumulators.Avg:
         """Returns the $avg operator"""
         
-        return accumulators.avg(expression)
+        return accumulators.avg(operand)
     
     @classmethod
     def count(cls)->accumulators.Count:
@@ -143,40 +143,40 @@ class Dollar(Singleton):
         return accumulators.count()
     
     @classmethod
-    def first(cls, expression:Any)->accumulators.First:
+    def first(cls, operand:Any)->accumulators.First:
         """Returns the $first operator"""
         
-        return accumulators.first(expression)
+        return accumulators.first(operand)
     
     @classmethod
-    def last(cls, expression:Any)->accumulators.Last:
+    def last(cls, operand:Any)->accumulators.Last:
         """Returns the $last operator"""
         
-        return accumulators.last(expression)
+        return accumulators.last(operand)
     
     @classmethod
-    def max(cls, expression:Any)->accumulators.Max:
+    def max(cls, operand:Any)->accumulators.Max:
         """Returns the $max operator"""
         
-        return accumulators.max(expression)
+        return accumulators.max(operand)
     
     @classmethod
-    def min(cls, expression:Any)->accumulators.Min:
+    def min(cls, operand:Any)->accumulators.Min:
         """Returns the $min operator"""
         
-        return accumulators.min(expression)
+        return accumulators.min(operand)
     
     @classmethod
-    def push(cls, expression:Any)->accumulators.Push:
+    def push(cls, operand:Any)->accumulators.Push:
         """Returns the $push operator"""
         
-        return accumulators.push(expression)
+        return accumulators.push(operand)
     
     @classmethod
-    def sum(cls, expression:Any)->accumulators.Sum:
+    def sum(cls, operand:Any)->accumulators.Sum:
         """Returns the $sum operator"""
         
-        return accumulators.sum(expression)
+        return accumulators.sum(operand)
     
     #--------------------------------
     # Arithmetic
@@ -188,10 +188,10 @@ class Dollar(Singleton):
         return arithmetic.add(*args)
     
     # @classmethod
-    # def ceil(cls, expression:Any)->arithmetic.Ceil:
+    # def ceil(cls, operand:Any)->arithmetic.Ceil:
     #     """Returns the $ceil operator"""
 
-    #     return arithmetic.ceil(expression)
+    #     return arithmetic.ceil(operand)
     
     @classmethod
     def divide(cls, *args:Any)->arithmetic.Divide:
@@ -200,23 +200,23 @@ class Dollar(Singleton):
         return arithmetic.divide(*args)
     
     # @classmethod
-    # def exp(cls, expression:Any)->arithmetic.Exp:
+    # def exp(cls, operand:Any)->arithmetic.Exp:
     #     """Returns the $exp operator"""
 
-    #     return arithmetic.exp(expression)
+    #     return arithmetic.exp(operand)
     
     # @classmethod
-    # def floor(cls, expression:Any)->arithmetic.Floor:
+    # def floor(cls, operand:Any)->arithmetic.Floor:
     #     """Returns the $floor operator"""
 
-    #     return arithmetic.floor(expression)
+    #     return arithmetic.floor(operand)
     
 
     # @classmethod
-    # def ln(cls, expression:Any)->arithmetic.Ln:
+    # def ln(cls, operand:Any)->arithmetic.Ln:
     #     """Returns the $ln operator"""
 
-    #     return arithmetic.ln(expression)
+    #     return arithmetic.ln(operand)
     
 
     # @classmethod
@@ -227,10 +227,10 @@ class Dollar(Singleton):
     
 
     # @classmethod
-    # def log10(cls, expression:Any)->arithmetic.Log10:
+    # def log10(cls, operand:Any)->arithmetic.Log10:
     #     """Returns the $log10 operator"""
 
-    #     return arithmetic.log10(expression)
+    #     return arithmetic.log10(operand)
     
 
     # @classmethod
@@ -257,17 +257,17 @@ class Dollar(Singleton):
     # Array
     # -------------------------------
     @classmethod
-    def array_to_object(cls, expression:Any)->array.ArrayToObject:
+    def array_to_object(cls, operand:Any)->array.ArrayToObject:
         """Returns the $arrayToObject operator"""
 
-        return array.array_to_object(expression)
+        return array.array_to_object(operand)
     
     # TODO : Workout aliases <VM, 10/08/2023>
     @classmethod
-    def filter(cls, expression:Any,*, let:str, query:Any, limit:int|None=None)->array.Filter:
+    def filter(cls, operand:Any,*, let:str, query:Any, limit:int|None=None)->array.Filter:
         """Returns the $filter operator"""
 
-        return array.filter(expression, let, query, limit)
+        return array.filter(operand, let, query, limit)
     
     @classmethod
     def in_(cls, left:Any, right:Any)->array.In:
@@ -276,36 +276,36 @@ class Dollar(Singleton):
         return array.in_(left, right)
     
     @classmethod
-    def is_array(cls, expression:Any)->array.IsArray:
+    def is_array(cls, operand:Any)->array.IsArray:
         """Returns the $isArray operator"""
 
-        return array.is_array(expression)
+        return array.is_array(operand)
     
     @classmethod
-    def max_n(cls, expression:Any, n:int=1)->array.MaxN:
+    def max_n(cls, operand:Any, n:int=1)->array.MaxN:
         """Returns the $max operator"""
 
-        return array.max_n(expression, n)
+        return array.max_n(operand, n)
     
     @classmethod
-    def min_n(cls, expression:Any, n:int=1)->array.MinN:
+    def min_n(cls, operand:Any, n:int=1)->array.MinN:
         """Returns the $min operator"""
 
-        return array.min_n(expression, n)
+        return array.min_n(operand, n)
     
     @classmethod
-    def size(cls, expression:Any)->array.Size:
+    def size(cls, operand:Any)->array.Size:
         """Returns the $size operator"""
 
-        return array.size(expression)
+        return array.size(operand)
     
     # TODO : Check if the type of the sort_spec is correct <VM, 10/08/2023>
     # or can it be an expression that needs to evaluate to a dict[str, 1,-1]
     @classmethod
-    def sort_array(cls, expression:Any, sort_spec:dict[str, Literal[1,-1]])->array.SortArray:
+    def sort_array(cls, operand:Any, sort_spec:dict[str, Literal[1,-1]])->array.SortArray:
         """Returns the $sort operator"""
 
-        return array.sort_array(expression, sort_spec)
+        return array.sort_array(operand, sort_spec)
 
     #--------------------------------
     # Comparison
@@ -362,10 +362,10 @@ class Dollar(Singleton):
         return conditional.cond(if_, then, else_)
     
     @classmethod
-    def if_null(cls, expression:Any, replacement:Any)->conditional.IfNull:
+    def if_null(cls, operand:Any, replacement:Any)->conditional.IfNull:
         """Returns the $ifNull operator"""
 
-        return conditional.if_null(expression, replacement)
+        return conditional.if_null(operand, replacement)
     
     @classmethod
     def switch(cls, branches:dict[Any, Any], default:Any)->conditional.Switch:
@@ -377,10 +377,10 @@ class Dollar(Singleton):
     # Date
     # -------------------------------
     @classmethod
-    def millisecond(cls, expression:Any, timezone:Any)->date.Millisecond:
+    def millisecond(cls, operand:Any, timezone:Any)->date.Millisecond:
         """Returns the $millisecond operator"""
 
-        return date.millisecond(expression, timezone)
+        return date.millisecond(operand, timezone)
    
     
     #--------------------------------
@@ -409,14 +409,14 @@ class Dollar(Singleton):
     @classmethod
     def date_to_string(
         cls, 
-        expression:Any, 
+        operand:Any, 
         format:Any=None, 
         timezone:Any=None,
         on_null:Any=None
         )->strings.DateToString:
         """Returns the $dateToString operator"""
 
-        return strings.date_to_string(expression, format, timezone, on_null)
+        return strings.date_to_string(operand, format, timezone, on_null)
     
     #--------------------------------
     # Objects
@@ -428,10 +428,10 @@ class Dollar(Singleton):
         return objects.merge_objects(*args)
     
     @classmethod
-    def object_to_array(cls, expression:Any)->objects.ObjectToArray:
+    def object_to_array(cls, operand:Any)->objects.ObjectToArray:
         """Returns the $objectToArray operator"""
 
-        return objects.object_to_array(expression)
+        return objects.object_to_array(operand)
 
     #--------------------------------
     # Boolean
@@ -449,19 +449,19 @@ class Dollar(Singleton):
         return boolean.or_(*args)
     
     @classmethod
-    def not_(cls, expression:Any)->boolean.Not:
+    def not_(cls, operand:Any)->boolean.Not:
         """Returns the $not operator"""
 
-        return boolean.not_(expression)
+        return boolean.not_(operand)
     
     #--------------------------------
     # Type
     # -------------------------------
     @classmethod
-    def type_(cls, expression:Any)->type_.Type_:
+    def type_(cls, operand:Any)->type_.Type_:
         """Returns the $type operator"""
 
-        return type_.type_(expression)
+        return type_.type_(operand)
 
 
 class DollarDollar(Singleton):

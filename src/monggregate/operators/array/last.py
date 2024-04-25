@@ -102,6 +102,7 @@ That is, the operation returns the following:
 """
 
 from typing import Any
+from monggregate.base import Expression
 from monggregate.operators.array.array import ArrayOnlyOperator
 
 class Last(ArrayOnlyOperator):
@@ -111,7 +112,7 @@ class Last(ArrayOnlyOperator):
 
     Attributes
     -----------------------------
-        - expression, Expression : Any valid expression
+        - operand, Any:Any valid expression
 
     Online MongoDB documentation
     ----------------------------
@@ -126,14 +127,14 @@ class Last(ArrayOnlyOperator):
     """
 
     @property
-    def statement(self) -> dict:
-        return self.resolve({
-            "$last":self.expression
+    def expression(self) -> Expression:
+        return self.express({
+            "$last":self.operand
         })
 
 def last(array:Any)->Last:
     """Returns a $last operator"""
 
     return Last(
-        expression = array
+        operand = array
     )

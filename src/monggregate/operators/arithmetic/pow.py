@@ -40,6 +40,7 @@ If either argument resolves to NaN, $pow returns NaN.
 """
 
 from typing import Any
+from monggregate.base import Expression
 from monggregate.operators.arithmetic.arithmetic import ArithmeticOperator
 
 class Pow(ArithmeticOperator):
@@ -73,8 +74,8 @@ class Pow(ArithmeticOperator):
     exponent : Any
 
     @property
-    def statement(self) -> dict:
-        return self.resolve({
+    def expression(self) -> Expression:
+        return self.express({
             "$pow" : [self.number, self.exponent]
         })
     

@@ -49,10 +49,10 @@ Restrictions
 
 from typing import Any
 
-from monggregate.base import pyd
+from monggregate.base import pyd, Expression
 from monggregate.stages.stage import Stage
 from monggregate.operators.operator import Operator
-from monggregate.expressions import Expression
+#from monggregate.expressions import Expression
 
 class Match(Stage):
     """
@@ -62,7 +62,7 @@ class Match(Stage):
     -----------
 
         - query, dict : a simple MQL query use to filter the documents.
-        - expression, Expression : an aggregation expression used to filter the documents
+        - operand, Any:an aggregation expression used to filter the documents
     
     NOTE : Use query if you're using a MQL query and expression if you're using aggregation expressions.
     
@@ -79,27 +79,29 @@ class Match(Stage):
     """
 
     query : dict = {} #| None
-    expression : Any | None = None
+    expr : Expression | None = None
 
-    @pyd.validator("expression", pre=True, always=True)
-    def validate_expression(cls, expression)-> Any:
+    @pyd.validator("expr", pre=True, always=True)
+    def validate_operand(cls, expr:Any)-> Any:
         
-        c1 = isinstance(expression, dict) # expression is "expressed/resolved" already
-        c2 = isinstance(expression, Expression) # expression is an expression object
-        c3 = isinstance(expression, Operator) # expression is an operator object
+        c1 = isinstance(expr, dict) # expression is "expressed/resolved" already
+        c2 = isinstance(expr, Operator) # expression is an operator object
 
-        if expression and not (c1 or c2 or c3):
+        if expr and not (c1 or c2 ):
             raise ValueError("The expression argument must be a valid expression, operator or a dict.")
         
-        return expression
+        if isinstance(expr, dict) and "$expr" not in expr:
+            expr = {"$expr":expr}
+        
+        return expr
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> Expression:
 
-        if self.expression:
-            _statement = self.resolve({"$match":{"$expr":self.expression}})
+        if self.expr:
+            _statement = self.express({"$match":{"$expr":self.expr}})
             
         else:
-            _statement =  self.resolve({"$match":self.query})
+            _statement =  self.express({"$match":self.query})
 
         return _statement

@@ -34,6 +34,7 @@ See example : https://www.mongodb.com/docs/manual/reference/operator/aggregation
 
 """
 
+from monggregate.base import Expression
 from monggregate.stages.stage import Stage
 
 class Set(Stage):
@@ -55,7 +56,7 @@ class Set(Stage):
     document : dict = {} #| None
 
     @property
-    def statement(self)->dict[str, dict]:
+    def expression(self)->Expression:
         """Generates set stage statement from arguments"""
 
-        return  self.resolve({"$set":self.document})
+        return  self.express({"$set":self.document})

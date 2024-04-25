@@ -3,7 +3,7 @@ Module defining an interface to MongoDB `$bucketAuto` stage operation in aggrega
 """
 
 from typing import Any
-from monggregate.base import pyd
+from monggregate.base import pyd, Expression
 from monggregate.stages.stage import Stage
 from monggregate.fields import FieldName
 from monggregate.operators.accumulators.accumulator import AccumulatorExpression
@@ -113,11 +113,11 @@ class BucketAuto(Stage):
     # Output
     #-----------------------------------------------------------------------------
     @property
-    def statement(self) -> dict:
+    def expression(self) -> Expression:
 
       # NOTE : maybe it would be better to use _to_unique_list here
       # or to further validate by.
-      return   self.resolve({
+      return   self.express({
             "$bucketAuto" : {
                 "groupBy" : self.by,
                 "buckets" : self.buckets,

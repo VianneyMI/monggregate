@@ -61,7 +61,7 @@ class TestStages:
 
         with pytest.raises(TypeError):
             # Checking that Stage cannot be instantiated
-            stage = Stage(statement={})  # pylint: disable=abstract-class-instantiated
+            stage = Stage(expression={})  # pylint: disable=abstract-class-instantiated
 
 
     def test_bucket_auto(self, state:State)->None:
@@ -553,10 +553,10 @@ class TestStagesFunctional(TestStages):
     def test_bucket_auto_statement(self, state:State)->None:
         """Tests the BucketAuto class statement and its mirror function"""
 
-        assert state["bucket_auto"].statement == Pipeline().bucket_auto(
+        assert state["bucket_auto"].expression == Pipeline().bucket_auto(
             by = "test",
             buckets = 10
-        )[-1].statement == {
+        )[-1].expression == {
             "$bucketAuto" : {
                 "groupBy" : "$test",
                 "buckets" : 10,
@@ -571,9 +571,9 @@ class TestStagesFunctional(TestStages):
         """
 
         bucket = state["bucket"]
-        assert bucket.statement == Pipeline().bucket(
+        assert bucket.expression == Pipeline().bucket(
             by = "income",
-            boundaries = [25000, 40000, 60000, 100000])[-1].statement == {
+            boundaries = [25000, 40000, 60000, 100000])[-1].expression == {
             "$bucket" : {
                 "groupBy" : "$income",
                 "boundaries" : [25000, 40000, 60000, 100000],
@@ -586,7 +586,7 @@ class TestStagesFunctional(TestStages):
         """Tests the Count class statement and its mirror function"""
 
         count = state["count"]
-        assert count.statement == Pipeline().count(name="count")[0].statement == {
+        assert count.expression == Pipeline().count(name="count")[0].expression == {
             "$count" : "count"
         }
 
@@ -594,11 +594,11 @@ class TestStagesFunctional(TestStages):
         """Tests the Group class statement and its mirror function"""
 
         group = state["group"]
-        assert group.statement == Pipeline().group(
+        assert group.expression == Pipeline().group(
             query = {
                 "_id" :"count"
             }
-        )[0].statement == {
+        )[0].expression == {
             "$group" : {
                 "_id" :"count"
             }
@@ -608,7 +608,7 @@ class TestStagesFunctional(TestStages):
         """Tests the Limit class statement and its mirror function"""
 
         limit = state["limit"]
-        assert limit.statement == Pipeline().limit(10)[0].statement == {
+        assert limit.expression == Pipeline().limit(10)[0].expression == {
             "$limit" : 10
         }
 
@@ -616,12 +616,12 @@ class TestStagesFunctional(TestStages):
         """Tests the Limit class statement and its mirror function"""
 
         lookup = state["lookup"]
-        assert lookup.statement == Pipeline().lookup(
+        assert lookup.expression == Pipeline().lookup(
             right = "other_collection",
             left_on = "_id",
             right_on = "foreign_key",
             name = "matches"
-        )[0].statement == {
+        )[0].expression == {
                 "$lookup" :{
                 "from" : "other_collection",
                 "localField" : "_id",
@@ -634,11 +634,11 @@ class TestStagesFunctional(TestStages):
         """Tests the Match class and its mirror function"""
 
         match = state["match"]
-        assert match.statement == Pipeline().match(
+        assert match.expression == Pipeline().match(
             query = {
                 "_id":"12345"
             }
-        )[0].statement == {
+        )[0].expression == {
             "$match" : {
                 "_id" : "12345"
             }
@@ -648,7 +648,7 @@ class TestStagesFunctional(TestStages):
         """Tests the Out class and its mirror function"""
 
         out = state["out"]
-        assert out.statement == Pipeline().out("my_collection")[0].statement == {
+        assert out.expression == Pipeline().out("my_collection")[0].expression == {
             "$out" : "my_collection"
         }
 
@@ -656,9 +656,9 @@ class TestStagesFunctional(TestStages):
         """Tests the Project class and its mirror function"""
 
         project = state["project"]
-        assert project.statement == Pipeline().project(
+        assert project.expression == Pipeline().project(
             exclude = "_id"
-        )[0].statement == {
+        )[0].expression == {
             "$project" : {
                 "_id" : 0
             }
@@ -668,9 +668,9 @@ class TestStagesFunctional(TestStages):
         """Tests the ReplaceRoot class and its mirror function"""
 
         replace_root = state["replace_root"]
-        assert replace_root.statement == Pipeline().replace_root(
+        assert replace_root.expression == Pipeline().replace_root(
             "myarray.mydocument"
-        )[0].statement == {
+        )[0].expression == {
             "$replaceRoot" : {
                 "newRoot" : "$myarray.mydocument"
             }
@@ -680,7 +680,7 @@ class TestStagesFunctional(TestStages):
         """Tests the Sample class and its mirror function"""
 
         sample = state["sample"]
-        assert sample.statement == Pipeline().sample(3)[0].statement == {
+        assert sample.expression == Pipeline().sample(3)[0].expression == {
             "$sample" : {
                 "size" : 3
             }
@@ -690,12 +690,12 @@ class TestStagesFunctional(TestStages):
         """Tests the Set class and its mirror function"""
 
         set = state["set"]
-        assert set.statement == Pipeline().set(
+        assert set.expression == Pipeline().set(
             {
                 "field1":"value1",
                 "fieldN":"valueN"
             }
-        )[0].statement == {
+        )[0].expression == {
             "$set" : {
                 "field1":"value1",
                 "fieldN":"valueN"
@@ -706,7 +706,7 @@ class TestStagesFunctional(TestStages):
         """Tests the Skip class and its mirror function"""
 
         skip = state["skip"]
-        assert skip.statement == Pipeline().skip(10)[0].statement == {
+        assert skip.expression == Pipeline().skip(10)[0].expression == {
             "$skip" : 10
         }
 
@@ -715,9 +715,9 @@ class TestStagesFunctional(TestStages):
         """Tests the SortByCount class and its mirror function"""
 
         sort_by_count = state["sort_by_count"]
-        assert sort_by_count.statement == Pipeline().sort_by_count(
+        assert sort_by_count.expression == Pipeline().sort_by_count(
             by = "name"
-        )[0].statement == {
+        )[0].expression == {
             "$sortByCount" : "$name"
         }
 
@@ -725,7 +725,7 @@ class TestStagesFunctional(TestStages):
         """Tests the Sort class and its mirror function"""
 
         sort = state["sort"]
-        assert sort.statement == Pipeline().sort(field1=1, fieldN=-1)[0].statement == {
+        assert sort.expression == Pipeline().sort(field1=1, fieldN=-1)[0].expression == {
             "$sort" : {
                 "field1" : 1,
                 "fieldN" : -1
@@ -736,7 +736,7 @@ class TestStagesFunctional(TestStages):
         """Tests the Unwind class and its mirror function"""
 
         unwind = state["unwind"]
-        assert unwind.statement == Pipeline().unwind("xyz")[0].statement == {
+        assert unwind.expression == Pipeline().unwind("xyz")[0].expression == {
             "$unwind" : {
                 "path" : "$xyz"
             }

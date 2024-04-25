@@ -49,6 +49,7 @@ If the name of a field repeats in the array,
 """
 
 from typing import Any
+from monggregate.base import Expression
 from monggregate.operators.array.array import ArrayOperator
 
 class ArrayToObject(ArrayOperator):
@@ -57,7 +58,7 @@ class ArrayToObject(ArrayOperator):
 
     Attributes
     ----------------------
-        - expression, Expression : Any valid expression that resolves to an array of two-element arrays
+        - operand, Any:Any valid expression that resolves to an array of two-element arrays
                                    or array if documents that contains "k" and "v" fields.
 
     Online MongoDB documentation
@@ -88,16 +89,16 @@ class ArrayToObject(ArrayOperator):
     [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/arrayToObject/#mongodb-expression-exp.-arrayToObject)
     """
 
-    expression : Any
+    operand : Any
 
 
     @property
-    def statement(self) -> dict:
-        return self.resolve({
-            "$arrayToObject" : self.expression
+    def expression(self) -> Expression:
+        return self.express({
+            "$arrayToObject" : self.operand
         })
 
-def array_to_object(expression:Any)->ArrayToObject:
+def array_to_object(operand:Any)->ArrayToObject:
     """Returns a $arrayToObject operator"""
 
-    return ArrayToObject(expression=expression)
+    return ArrayToObject(operand=operand)

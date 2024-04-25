@@ -4,7 +4,7 @@ Module definining an interface to MongoDB `$bucket` stage operation in aggregati
 
 from typing import Any
 
-from monggregate.base import pyd
+from monggregate.base import pyd, Expression
 
 from monggregate.stages.stage import Stage
 from monggregate.fields import FieldName
@@ -77,11 +77,11 @@ class Bucket(Stage):
     _validate_by = pyd.validator("by", pre=True, always=True, allow_reuse=True)(validate_field_path) # re-used pyd.validators
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> Expression:
 
         # Generates statement
         #--------------------------------------
-        return self.resolve({
+        return self.express({
             "$bucket" : {
                 "groupBy" : self.by,
                 "boundaries" :self.boundaries,

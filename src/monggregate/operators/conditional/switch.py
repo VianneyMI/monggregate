@@ -52,6 +52,7 @@ The following conditions cause $switch to fail with an error:
 """
 
 from typing import Any
+from monggregate.base import Expression
 from monggregate.operators.conditional.conditional import ConditionalOperator
 
 # TODO : Define branch <VM, 14/08/2023>
@@ -100,8 +101,8 @@ class Switch(ConditionalOperator):
     default : Any|None
 
     @property
-    def statement(self) -> dict:
-        return self.resolve({
+    def expression(self) -> Expression:
+        return self.express({
             "$switch" : {
                 "branches" : self.branches,
                 "default" : self.default

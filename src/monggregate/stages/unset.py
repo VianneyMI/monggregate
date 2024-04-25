@@ -47,6 +47,7 @@ or
 
 """
 
+from monggregate.base import Expression
 from monggregate.stages.stage import Stage
 from monggregate.fields import FieldName
 
@@ -71,7 +72,7 @@ class Unset(Stage):
     fields: list[FieldName] | None
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> Expression:
 
         if self.field:
             _statement = {
@@ -82,4 +83,4 @@ class Unset(Stage):
                 "$unset": self.fields
             }
 
-        return self.resolve(_statement)
+        return self.express(_statement)

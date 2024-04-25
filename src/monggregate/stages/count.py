@@ -2,6 +2,7 @@
 Module defining an interface to MongoDB `$count` stage operation in aggregation pipeline.
 """
 
+from monggregate.base import Expression
 from monggregate.stages.stage import Stage
 from monggregate.fields import FieldName
 
@@ -35,7 +36,7 @@ class Count(Stage):
     name: FieldName
 
     @property
-    def statement(self) -> dict:
-        return self.resolve({
+    def expression(self) -> Expression:
+        return self.express({
             "$count": self.name
         })

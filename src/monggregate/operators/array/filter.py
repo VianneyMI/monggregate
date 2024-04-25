@@ -43,7 +43,7 @@ $filter has the following syntax:
 """
 
 from typing import Any
-from monggregate.base import pyd
+from monggregate.base import pyd, Expression
 from monggregate.operators.array.array import ArrayOperator
 
 class Filter(ArrayOperator):
@@ -54,8 +54,8 @@ class Filter(ArrayOperator):
 
     Attributes
     --------------------------------
-        - expression / input, Expression :  An expression that resolves to an array
-        - query / cond, Expression : An expressions that resolves to a boolean value used to determine
+        - expression / input, Any : An expression that resolves to an array
+        - query / cond, Any :An expressions that resolves to a boolean value used to determine
                                      if an element should be included in the output array. The expression
                                      references each element of the input array individually with the variable
                                      name specified in as.
@@ -104,27 +104,27 @@ class Filter(ArrayOperator):
     
     """
 
-    expression : Any =  pyd.Field(alias="input")
+    operand : Any =  pyd.Field(alias="input")
     query : Any = pyd.Field(alias="cond")
     let : str | None = pyd.Field("this", alias="as")
     limit : int | None = pyd.Field(None, ge=1) # NOTE : limit can actually be an expression but constraints are  invalid with any type
 
     @property
-    def statement(self) -> dict:
-        return self.resolve({
+    def expression(self) -> Expression:
+        return self.express({
             "$filter":{
-               "input" : self.expression,
+               "input" : self.operand,
                "cond" : self.query,
                "as" : self.let,
                "limit" : self.limit
             }
         })
 
-def filter(expression:Any, let:str, query:Any, limit:int|None=None)->Filter: 
+def filter(operand:Any, let:str, query:Any, limit:int|None=None)->Filter: 
     """Returns a $filter operator"""
 
     return Filter(
-        expression = expression,
+        operand=operand,
         query = query,
         let = let,
         limit = limit

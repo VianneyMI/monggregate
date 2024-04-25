@@ -9,7 +9,7 @@ try:
     from typing import Self
 except ImportError:
     from typing_extensions import Self
-from monggregate.base import pyd, BaseModel
+from monggregate.base import pyd, BaseModel, Expression
 from monggregate.stages.stage import Stage
 from monggregate.search.collectors import Facet
 from monggregate.search.operators import (
@@ -63,7 +63,7 @@ class SearchConfig(BaseModel):
     score_details : bool  = False
 
     @property
-    def statement(self):
+    def expression(self)->Expression:
         """Returns the statement of the stage"""
 
         raise NotImplementedError("statement property must be implemented in subclasses")
@@ -141,7 +141,7 @@ class SearchBase(Stage, SearchConfig):
         return value
     
     @property
-    def statement(self):
+    def expression(self)->Expression:
         """Returns the statement of the stage"""
 
         raise NotImplementedError("statement property must be implemented in subclasses")

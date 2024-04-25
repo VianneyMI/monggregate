@@ -87,7 +87,7 @@ $type returns the string "missing".
 """
 
 from typing import Any
-from monggregate.base import BaseModel
+from monggregate.base import BaseModel, Expression
 
 class Type_(BaseModel):
     """
@@ -111,19 +111,19 @@ class Type_(BaseModel):
     [Source](https://docs.mongodb.com/manual/reference/operator/aggregation/type/#mongodb-expression-exp.-type)
     """
 
-    expression:Any
+    operand : Any
 
     @property
-    def statement(self)->dict:
+    def expression(self)->Expression:
 
-        return self.resolve({
-            "$type":self.expression
+        return self.express({
+            "$type":self.operand
         })
     
 
-def type_(expression:Any)->Type_:
+def type_(operand:Any)->Type_:
     """Returns a $type operator"""
 
     return Type_(
-        expression=expression
+        operand = operand
     )

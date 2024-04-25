@@ -170,7 +170,7 @@ $merge              The $unionWith pipeline cannot include the $merge stage.
 """
 
 from typing import Any
-from monggregate.base import pyd
+from monggregate.base import pyd, Expression
 from monggregate.base import BaseModel
 from monggregate.stages.stage import Stage
 
@@ -204,12 +204,12 @@ class UnionWith(Stage):
 
         output = pipeline
         if isinstance(pipeline, BaseModel):
-            output =  pipeline.statement
+            output =  pipeline.expression
 
         return output
 
     @property
-    def statement(self) -> dict[str, dict]:
+    def expression(self) -> Expression:
         """Generates $unionWith statement"""
 
         if self.pipeline:
@@ -222,4 +222,4 @@ class UnionWith(Stage):
         else:
             statement = {"$unionWith": self.collection}
 
-        return self.resolve(statement)
+        return self.express(statement)

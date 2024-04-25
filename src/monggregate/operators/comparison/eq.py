@@ -27,6 +27,7 @@ The arguments can be any valid expression. For more information on expressions, 
 """
 
 from typing import Any
+from monggregate.base import Expression
 from monggregate.operators.comparison.comparator import Comparator
 
 class Equal(Comparator):
@@ -36,8 +37,8 @@ class Equal(Comparator):
 
     Attributes
     -------------------
-        - left, Expression : Left operand. Can be any valid expression.
-        - right, Expression : Right operand. Can be any valid expression.
+        - left, Any :Left operand. Can be any valid expression.
+        - right, Any :Right operand. Can be any valid expression.
 
     Online MongoDB documentation
     ----------------------------
@@ -61,9 +62,9 @@ class Equal(Comparator):
     """
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> Expression:
 
-        return self.resolve({
+        return self.express({
             "$eq":[self.left, self.right]
         })
 

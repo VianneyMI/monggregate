@@ -31,6 +31,7 @@ or if the second argument does not resolve to an array.
 """
 
 from typing import Any
+from monggregate.base import Expression
 from monggregate.operators.array.array import ArrayOperator
 
 class In(ArrayOperator):
@@ -40,8 +41,8 @@ class In(ArrayOperator):
 
     Attributes
     ------------------------------
-        - left, Expression : Any valid expression (to be looked for in right)
-        - right, Expression : Any valid expression that resolves to an array (containing left or not).
+        - left, Any :Any valid expression (to be looked for in right)
+        - right, Any :Any valid expression that resolves to an array (containing left or not).
 
     Online MongoDB documentation
     ----------------------------
@@ -65,8 +66,8 @@ class In(ArrayOperator):
 
 
     @property
-    def statement(self) -> dict:
-        return self.resolve({
+    def expression(self) -> Expression:
+        return self.express({
             "$in":[self.left, self.right]
         })
 

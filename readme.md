@@ -127,7 +127,7 @@ import os
 
 from dotenv import load_dotenv 
 import pymongo
-from monggregate import Pipeline, S, Expression
+from monggregate import Pipeline, S
 
 # Creating connexion string securely
 load_dotenv(verbose=True)
@@ -142,8 +142,7 @@ client = pymongo.MongoClient(MONGODB_URI)
 db = client["sample_mflix"]
 
 # Using expressions
-comments_count = Expression.field("comments").size()
-
+comments_count = S.size(S.comments)
 
 # Creating the pipeline
 pipeline = Pipeline()

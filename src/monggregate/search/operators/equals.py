@@ -69,6 +69,7 @@ A document that matches one search clause receives a score of 1, while a documen
 """
 
 from datetime import datetime
+from monggregate.base import Expression
 from monggregate.search.operators.operator import SearchOperator
 
 class Equals(SearchOperator, smart_union=True):
@@ -96,9 +97,9 @@ class Equals(SearchOperator, smart_union=True):
     score : dict|None
 
     @property
-    def statement(self) -> dict:
+    def expression(self) -> Expression:
             
-            return self.resolve({
+            return self.express({
                 "equals":{
                     "path": self.path,
                     "value": self.value,

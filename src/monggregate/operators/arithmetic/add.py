@@ -21,6 +21,7 @@ as long as they resolve to either all numbers or to numbers and a date. For more
 """
 
 from typing import Any
+from monggregate.base import Expression
 from monggregate.operators.arithmetic.arithmetic import ArithmeticOperator
 
 class Add(ArithmeticOperator):
@@ -50,17 +51,17 @@ class Add(ArithmeticOperator):
     """
 
 
-    expressions : list[Any]
+    operands : list[Any]
 
     @property
-    def statement(self) -> dict:
-        return self.resolve({
-            "$add" : self.expressions
+    def expression(self) -> Expression:
+        return self.express({
+            "$add" : self.operands
         })
     
 def add(*args:Any)->Add:
     """Returns a $add operator"""
 
     return Add(
-        expressions=list(args)
+        operands=list(args)
     )

@@ -62,6 +62,7 @@ See the following for more information on each:
 """
 
 #from pydantic import pyd.Field
+from monggregate.base import Expression
 from monggregate.stages.stage import Stage
 
 class Skip(Stage):
@@ -89,9 +90,9 @@ class Skip(Stage):
     value : int # Add gt 0 constraint ? check behavior with 0
 
     @property
-    def statement(self)->dict:
+    def expression(self)->Expression:
         """Generate statement from arguments"""
 
-        return self.resolve({
+        return self.express({
             "$skip" : self.value
         })

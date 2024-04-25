@@ -32,7 +32,7 @@ class TestBooleanOperators:
 
         # Functional test
         # -------------------
-        assert cmp_op.statement == cmp("$qty", 250).statement == {
+        assert cmp_op.expression == cmp("$qty", 250).expression == {
             "$cmp" : ["$qty", 250]
         }
 
@@ -50,7 +50,7 @@ class TestBooleanOperators:
 
         # Functional test
         # -------------------
-        assert eq_op.statement == eq("$qty", 250).statement == {
+        assert eq_op.expression == eq("$qty", 250).expression == {
             "$eq" : ["$qty", 250]
         }
 
@@ -68,7 +68,7 @@ class TestBooleanOperators:
 
         # Functional test
         # -------------------
-        assert gt_op.statement == gt("$qty", 250).statement == {
+        assert gt_op.expression == gt("$qty", 250).expression == {
             "$gt" : ["$qty", 250]
         }
 
@@ -86,7 +86,7 @@ class TestBooleanOperators:
 
         # Functional test
         # -------------------
-        assert gte_op.statement == gte("$qty", 250).statement == {
+        assert gte_op.expression == gte("$qty", 250).expression == {
             "$gte" : ["$qty", 250]
         }
 
@@ -104,7 +104,7 @@ class TestBooleanOperators:
 
         # Functional test
         # -------------------
-        assert lt_op.statement == lt("$qty", 250).statement == {
+        assert lt_op.expression == lt("$qty", 250).expression == {
             "$lt" : ["$qty", 250]
         }
 
@@ -122,7 +122,7 @@ class TestBooleanOperators:
 
         # Functional test
         # -------------------
-        assert lte_op.statement == lte("$qty", 250).statement == {
+        assert lte_op.expression == lte("$qty", 250).expression == {
             "$lte" : ["$qty", 250]
         }
 
@@ -140,6 +140,6 @@ class TestBooleanOperators:
 
         # Functional test
         # -------------------
-        assert ne_op.statement == ne("$qty", 250).statement == {
+        assert ne_op.expression == ne("$qty", 250).expression == {
             "$ne" : ["$qty", 250]
         }
