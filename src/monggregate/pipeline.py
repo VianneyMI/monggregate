@@ -49,20 +49,10 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
     Parameters
     ----------
-    collection : str
-        reference collection for the pipeline.
-        This is the collection where the aggregation will be done.
-        However some stages in the pipeline might work with additional
-        collections (e.g. lookup stage)
     stages : list[Stage]
         the list of Stages that the pipeline is made of.
         Similarly to the pipeline itself. This package constructs
         abstraction for MongoDB aggregation framework pipeline stages.
-    on_call : str
-        pipeline instances are callable. This defines the behavior of the instance
-        when called. See OnCallEnum above. Defaults to export
-    db : pymongo.database
-        pymongo database instance. Can be optionally provided to make a pipeline instance self sufficient
 
     Examples
     --------
@@ -88,8 +78,6 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
     stages : list[AnyStage|Expression] = []
    
-    
-
     @property
     def expression(self)->list[Expression]:
         """Returns the pipeline statement"""
@@ -274,7 +262,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
                     by:str|list[str]|set[str]=None,
                     group_by:str|list[str]|set[str]=None,
                     buckets:int,
-                    output:dict=None,
+                    output:dict|None=None,
                     granularity:GranularityEnum|None=None
                     )->Self:
         """
