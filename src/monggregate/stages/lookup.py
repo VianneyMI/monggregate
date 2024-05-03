@@ -25,6 +25,8 @@ class Lookup(Stage):
         Foreign collection.
     from : str
         Alias for `right`.
+    on : str | None
+        Field to join both collections on.
     left_on : str | None
         Field of the current collection to join on.
     local_field : str | None

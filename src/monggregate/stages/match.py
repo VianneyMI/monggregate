@@ -82,7 +82,7 @@ class Match(Stage):
     expr : Expression | None = None
 
     @pyd.validator("expr", pre=True, always=True)
-    def validate_operand(cls, expr:Any)-> Any:
+    def validate_expr(cls, expr:Any)-> Any:
         
         c1 = isinstance(expr, dict) # expression is "expressed/resolved" already
         c2 = isinstance(expr, Operator) # expression is an operator object

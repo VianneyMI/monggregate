@@ -165,7 +165,6 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         Parameters
         ----------
-        statement : dict
         document : dict
             new fields to be added
 
@@ -371,13 +370,18 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         Parameters
         ----------
-        path (path_to_array): str
-            Path to an array field
-        include_array_index : str
-            Name of a new field to hold the array index of the element
+        path : str | None
+            Path to an array field.
+        path_to_array : str | None
+            Alias for `path`.
+        include_array_index : str | None
+            Name of a new field to hold the array index of the element.
             NOTE : The name cannot start with a dollar sign
-        always (preserve_null_and_empty_index):  bool
-            Whether to output documents for input documents where the path does not resolve to a valid array. Defaults to False
+        always :  bool
+            Whether to output documents for input documents where the path
+            does not resolve to a valid array. Defaults to False.
+        preserve_null_and_empty_index : bool
+            Alias for `always`.
 
         Online MongoDB documentation
         ----------------------------
@@ -389,7 +393,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         self.stages.append(
                 Unwind(
-                    path_to_array=path_to_array or path,
+                    path=path or path_to_array,
                     include_array_index=include_array_index,
                     always=always or preserve_null_and_empty_arrays
                     )
@@ -406,6 +410,8 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         ----------
         by : str | list[str] | set[str] | dict | None
             Field or group of fields to group by.
+        _id : str | list[str] | set[str] | dict | None
+            Alias for `by`.
         query :  dict | None
             Computed aggregated values (per group).
 
@@ -478,10 +484,12 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         
         Parameters
         ----------
-        right : str
+        name : str
+            Name of the field containing the matches from the foreign collection.
+        right : str | None
             Foreign collection.
-        from : str
-            Alias for `right` (official MongoDB name).
+        on : str | None
+            Field to join both collections on.
         left_on : str | None
             Field of the current collection to join on.
         local_field : str | None 
@@ -494,8 +502,6 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             Variables to be used in the inner pipeline
         pipeline : list[dict] | None
             Pipeline to run on the foreign collection.
-        name : str
-            Name of the field containing the matches from the foreign collection.
         as : str
             Alias for `name`.
 
@@ -564,18 +570,20 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         ----------
         other : str
             Collection to join.
-        how : type of join to be performed
-            'left' preserve the left collection.
-            'right' preserve the right collection.
-            'inner' returns only documents from the left collection that match
+        how : {'left', 'right', 'inner'}
+            Type of join to be performed. 'left' preserve the left 
+            collection. 'right' preserve the right collection. 'inner' 
+            returns only documents from the left collection that match 
             documents from the right collection.
-
-            - on, str|None=None: key to use to perform the join, 
-                                 if the key name is the same in both collections
-            - left_on, str|None=None: key to use on the left collection to perform the join.
-                                     Must be use with right_on.
-            - right_on, str|None=None: key to use on the right collection to perform the join
-                                      Must be use with left_on. 
+        on : str | None
+            Key to use to perform the join, if the key name is the same 
+            in both collections.
+        left_on : str|None
+            Key to use on the left collection to perform the join.
+            Must be use with right_on.
+        right_on : str|None
+            Key to use on the right collection to perform the join. 
+            Must be use with left_on. 
         """
 
         # NOTE : Currently chose to implement a real SQL join, that is we chose to promote the matches in the local collection, the matches of the foreign collection
@@ -649,16 +657,17 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         Adds a match stage to the current pipeline.
         Filters the documents to pass only the documents that match the specified condition(s) to the next pipeline stage.
 
-        Arguments:
-        -------------------
-
-            - query, dict : a simple MQL query use to filter the documents.
-            - operand, Any:an aggregation expression used to filter the documents
+        Parameters
+        ----------
+        query : dict
+            A simple MQL query use to filter the documents.
+        expr : Any
+            An aggregation expression used to filter the documents
     
         NOTE : Use query if you're using a MQL query and expression if you're using aggregation expressions.
 
-        Online MongoDB documentation:
-        -----------------------------
+        Online MongoDB documentation
+        ----------------------------
         Filters the documents to pass only the documents that match the specified condition(s) to the next pipeline stage.
         
         `$match` takes a document that specifies the query conditions. The query syntax is identical to the read operation query syntax; i.e.
@@ -682,10 +691,12 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         Parameters
         ----------
-        db : str|None
-            Name of the db to output the collection. Defaults to the current collection.
-        collection : str
+        collection : str | None
             Name of the output collection
+        coll : str | None
+            Alias for `collection`
+        db : str | None
+            Name of the db to output the collection. Defaults to the current collection.
 
         Online MongoDB documentation:
         -----------------------------
@@ -697,7 +708,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         
         [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/out/#mongodb-pipeline-pipe.-out)
         """
-
+ 
         self.stages.append(
             Out(
                 collection=collection or coll,
@@ -718,14 +729,14 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         Parameters
         ----------
+        include : str | set[str] | list[str] | dict | bool | None
+            Fields to be kept.
+        exclude : str | set[str] | list[str] | dict | bool | None
+            Fields to be excluded.
+        fields : str | set[str] | list[str] | None
+            Fields  to be kept or excluded (depending on include/exclude parameters when those are booleans).
         projection : dict | None
             Projection to be applied.
-        fields : ProjectionArgs | None
-            Fields  to be kept or excluded (depending on include/exclude parameters when those are booleans).
-        include : ProjectionArgs| dict | bool | None
-            Fields to be kept.
-        exclude : ProjectionArgs | dict | bool | None
-            Fields to be excluded.
 
         Online MongoDB documentation:
         -----------------------------
@@ -750,7 +761,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             )
         return self
 
-    def replace_root(self, path:str|None=None, path_to_new_root:str|None=None, *,document:dict|None=None)->Self:
+    def replace_root(self, path:str|None=None, path_to_new_root:str|None=None, *, document:dict|None=None)->Self:
         """
         Adds a replace_root stage to the current pipeline.
         Replaces the input document with the specified document.
@@ -759,11 +770,12 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         
         Parameters
         ----------
-        statement : dict
-            The statement generated during instantiation after parsing the other arguments
-        path_to_new_root (path) : str|None
+        
+        path : str | None
             The path to the embedded document to be promoted.
-        document : dict|None
+        path_to_new_root : str|None
+            Alias for `path`            
+        document : dict | None
             Document being created and to be set as the new root or expression.
 
         Online MongoDB documentation:
@@ -793,11 +805,12 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         Parameters
         ----------
-        statement : dict
-            The statement generated during instantiation after parsing the other arguments.
-        path_to_new_root (path) : str|None
+        
+        path : str | None
             The path to the embedded document to be promoted.
-        document : dict|None
+        path_to_new_root : str | None
+            Alias for `path`.
+        document : dict | None
             Document being created and to be set as the new root or expression.
 
         Online MongoDB documentation:
@@ -828,8 +841,6 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         Parameters
         ----------
-        statement : dict
-            The statement generated after instantiation.
         value : int
             Positive integer representing the number of documents to be randomly picked. Defaults to 10.
 
@@ -874,16 +885,25 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         Parameters
         ----------
-        path : str|list[str]|None
+        path : str | list[str] | None
             Field to search in.
-        query : str|list[str]|None
+        query : str | list[str] | None
             Text to search for.
+        operator_name : {"autocomplete","compound","equals","exists", "facet","more_like_this","range","regex","text", "wildcard"} | None
+            Name of the operator to search with. Use the compound operator to run a 
+            compound (i.e query with multiple operators).
+        collector_name : "facet" | None
+            Name of the collector to use with the query.
+        facet_type : {'string', 'number', 'date}
+            The type of the faceted fields
+        clause_type : {"must", "mustNot", "should", "filter"}
+            The type of clause in case of a query with multiple operators. 
         index : str
             Name of the index to use for the search. Defaults to default.
-        count : CountOptions|None
+        count : CountOptions | None
             Document that specifies the count options for retrieving
             a count of the results.
-        highlight : HighlightOptions|None
+        highlight : HighlightOptions | None
             Document that specifies the highlight options for displaying 
             search terms in their original context.
         return_stored_source : bool
@@ -895,24 +915,21 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             Indicates whether to retrieve the detailed breakdown of the score for 
             the documents in the results. Defaults to False. To view the details,
             you must use the `$meta` expression in the `$project` stage.
-        operator_name : str
-            Name of the operator to search with. Use the compound operator to run a 
-            compound (i.e query with multiple operators).
         kwargs :  Any
             Operators specific options. Includes (non-exhaustive):
-                - fuzzy, FuzzyOptions (controls fuzzy matching options)
-                - score, dict (controls scoring options)
-                - value, numeric|bool|date (for filtering)
-                - allow_analyzed_field, bool (controls index scanning)
-                - synonyms
-                - like, dict|list[dict] (allow looking for similar documents).
+            - fuzzy, FuzzyOptions (controls fuzzy matching options)
+            - score, dict (controls scoring options)
+            - value, numeric|bool|date (for filtering)
+            - allow_analyzed_field, bool (controls index scanning)
+            - synonyms
+            - like, dict|list[dict] (allow looking for similar documents).
         
         Online MongoDB documentation:
         -----------------------------
         The search stage performs a full-text search on the specified field or fields 
         which must be covered by an Atlas Search index.
 
-        [Source](https://www.mongodb.com/docs/atlas/atlas-search/query-syntax/#mongodb-pipeline-pipe.-search)
+        [Source](https://www.mongodb.com/docs/atlas/atlas-search/aggregation-stages/search/)
         """
 
         if not collector_name and not operator_name:
@@ -1009,17 +1026,19 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             Indicates whether to retrieve the detailed breakdown of the score for 
             the documents in the results. Defaults to False. To view the details,
             you must use the `$meta` expression in the `$project` stage.
-        operator_name : str
+        operator_name : {"autocomplete","compound","equals","exists", "facet","more_like_this","range","regex","text", "wildcard"}
             Name of the operator to search with. Use the compound operator to run a 
             compound (i.e query with multiple operators).
+        collector_name : "facet" | None
+            Name of the collector to use with the query.
         kwargs :  Any
             Operators specific options. Includes (non-exhaustive):
-                - fuzzy, FuzzyOptions (controls fuzzy matching options)
-                - score, dict (controls scoring options)
-                - value, numeric|bool|date (for filtering)
-                - allow_analyzed_field, bool (controls index scanning)
-                - synonyms
-                - like, dict|list[dict] (allow looking for similar documents).
+            - fuzzy, FuzzyOptions (controls fuzzy matching options)
+            - score, dict (controls scoring options)
+            - value, numeric|bool|date (for filtering)
+            - allow_analyzed_field, bool (controls index scanning)
+            - synonyms
+            - like, dict|list[dict] (allow looking for similar documents).
         """
         
         if not collector_name and not operator_name:
@@ -1214,7 +1233,6 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         Parameters
         ----------
-        statement : dict
         document : dict
             New fields to be added.
 
@@ -1238,8 +1256,6 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         Parameters
         ----------
-        statement : dict
-            The statement generated after instantiation.
         value : int
             Positive integer representing the number of documents to be skipped.
 
@@ -1272,8 +1288,6 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         
         Parameters
         ----------
-        statement : dict
-            The statement generated after instantiation.
         query : dict
             Fields-sort order mapping. 1 for ascending order, -1 for 
             descending order. Defaults to {} if not provided, the
@@ -1326,8 +1340,6 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         Parameters
         ----------
-        _statement : dict
-            The statement generated during the validation process.
         by : str
             The key to group, sort and count on.
 
@@ -1393,11 +1405,11 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         Parameters
         ----------
-        path_to_array : str
+        path : str | None
             Path to an array field.
-        path : str
-            Alias for `path_to_array`.
-        include_array_index :  str
+        path_to_array : str | None
+            Alias for `path`.
+        include_array_index :  str | None
             Name of a new field to hold the array index of the element
             NOTE : The name cannot start with a dollar sign
         always : bool
@@ -1430,9 +1442,9 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         
         Parameters
         ----------
-        field : str|None
+        field : str | None
             Field to be removed.
-        fields : list[str]|None
+        fields : list[str] | None
             List of fields to be removed.
         
         Online MongoDB documentation:
