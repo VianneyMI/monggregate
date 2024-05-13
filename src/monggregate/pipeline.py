@@ -161,7 +161,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
     def add_fields(self, document:dict={}, **kwargs:Any)->Self:
         """
-        Adds an add_fields stage to the current pipeline.
+        Adds an `add_fields` stage to the current pipeline.
 
         Parameters
         ----------
@@ -170,9 +170,9 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         Online MongoDB documentation
         ----------------------------
-        Adds new fields to documents. set outputs documents that contain all existing fields from the inputs documents and newly added fields. Both stages are equivalent to a project stage that explicitly specifies all existing fields in the inputs documents and adds the new fields.
+        Adds new fields to documents. `$addFields` outputs documents that contain all existing fields from the inputs documents and newly added fields. The `$addFields` stage is equivalent to a `$project` stage that explicitly specifies all existing fields in the inputs documents and adds the new fields.
         
-        [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/set/#mongodb-pipeline-pipe.-set)
+        [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/addFields)
         """
 
         document = document | kwargs
@@ -190,11 +190,16 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
                output:dict|None=None
                )->Self:
         """
-        Adds a bucket stage to the current pipeline. This stage aggregates
+        Adds a `bucket` stage to the current pipeline. This stage aggregates
         documents into buckets specified by the boundaries argument.
 
         Parameters
         ----------
+        boundaries : list
+            An array of values that specify the boundaries for each bucket.
+            Each adjacent pair of values acts as the inclusive lower boundary
+            and the exclusive upper boundary for the bucket.
+            NOTE : You must specify at least two boundaries.
         by : str or list[str] or set[str], optional
             field or fields to group the documents unless a default is provided,
             each input document must resolve the groupBy field path or
@@ -202,11 +207,6 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             specified by the boundaries.
         group_by : str or list[str] or set[str], optional
             Alias for the parameter `by`.
-        boundaries : list
-            An array of values that specify the boundaries for each bucket.
-            Each adjacent pair of values acts as the inclusive lower boundary
-            and the exclusive upper boundary for the bucket.
-            NOTE : You must specify at least two boundaries.
         default : Any, optional
             A literal that specifies the `_id` (group name) of an additional
             bucket that contains all documents whoe groupBy expression result
@@ -243,7 +243,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         option specifies the fields included in each output document. `$bucket`
         only produces output documents for buckets that contain at least one input document.                           
         
-        [Source](https://www.mongodb.com/docs/manual/meta/aggregation-quick-reference/)
+        [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/bucket)
         """
         
         self.stages.append(
@@ -265,9 +265,9 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
                     granularity:GranularityEnum|None=None
                     )->Self:
         """
-        Adds a bucket_auto stage to the current pipeline.
+        Adds a `bucket_auto` stage to the current pipeline.
         This stage aggregates documents into buckets automatically computed
-        to statisfy the number of buckets desired and provided as an input.
+        to satisfy the number of buckets desired and provided as an input.
 
         Parameters
         ----------
@@ -312,7 +312,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
                 * The `_id.max` field specifies the upper bound for the bucket. This bound is exclusive for all buckets except the final bucket in the series, where it is inclusive.
 
-            * A count field that contains the number of documents in the bucket. The count field is included by default when the output document is not specified.
+            * A `count` field that contains the number of documents in the bucket. The `count` field is included by default when the output document is not specified.
         
         [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/bucketAuto/)
         """
@@ -330,7 +330,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
     def count(self, name:str)->Self:
         """
-        Adds a count stage to the current pipeline.
+        Adds a `count` stage to the current pipeline.
         Passes a document to the next stage that contains a count of the number of documents input to the stage.
 
         Parameters
@@ -350,7 +350,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         <string> is the name of the output field which has the count as its value.
         <string> must be a non-empty string, must not start with $ and must not contain the . character.
         
-        [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/count/#mongodb-pipeline-pipe.-count)
+        [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/count)
         """
 
         self.stages.append(
@@ -366,7 +366,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
                 always:bool=False, 
                 preserve_null_and_empty_arrays:bool=False)->Self:
         """
-        Adds a unwind stage to the current pipeline.
+        Adds a `unwind` stage to the current pipeline.
 
         Parameters
         ----------
@@ -388,7 +388,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         Deconstructs an array field from the input documents to output a document for each element.
         Each output document is the input document with the value of the array field replaced by the element.
         
-        [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/unwind/#mongodb-pipeline-pipe.-unwind)
+        [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/unwind)
         """
 
         self.stages.append(
@@ -402,7 +402,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
     def group(self, *,  by:Any|None=None, _id:Any|None=None, query:dict={})->Self:
         """
-        Adds a group stage to the current pipeline.
+        Adds a `group` stage to the current pipeline.
         The group stage separates documents into groups according to a "group key". The output is one document for each unique group key.
         The output documents can also contain additional fields that are set using accumulator expressions.
         
@@ -429,7 +429,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         NOTE : The group stage does not order its output documents.
 
-        [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/group/#mongodb-pipeline-pipe.-group)
+        [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/group/)
         """
 
         self.stages.append(
@@ -442,14 +442,13 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
     def limit(self, value:int)->Self:
         """
-        Adds a limit stage to the current pipeline.
+        Adds a `limit` stage to the current pipeline.
         Limits the number of documents passed to the next stage in the pipeline.
 
         Parameters
         ----------
         value : int
-            the actual limit to apply. Limits the number of documents returned by the stage to
-            the provided value.
+            the actual limit to apply. Limits the number of documents returned by the stage to the provided value.
 
         Online MongoDB documentation:
         -----------------------------
@@ -460,7 +459,7 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         NOTE : Starting in MongoDB 5.0, the `$limit` pipeline aggregation has a 64-bit integer limit. Values
         passed to the pipeline which exceed this limit will return a invalid argument error.
 
-        [Source](https://www.mongodb.com/docs/v7.0/reference/operator/aggregation/limit/#-limit--aggregation-)
+        [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/limit/)
         """
 
         self.stages.append(
@@ -891,11 +890,12 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             Text to search for.
         operator_name : {"autocomplete","compound","equals","exists", "facet","more_like_this","range","regex","text", "wildcard"} | None
             Name of the operator to search with. Use the compound operator to run a 
-            compound (i.e query with multiple operators).
+            compound search (i.e query with multiple operators).
         collector_name : "facet" | None
-            Name of the collector to use with the query.
+            Name of the collector to use with the query. Value must be 
+            `facet` in case of a faceted search, `None` otherwise.
         facet_type : {'string', 'number', 'date}
-            The type of the faceted fields
+            The type of the faceted fields in case of a faceted search.
         clause_type : {"must", "mustNot", "should", "filter"}
             The type of clause in case of a query with multiple operators. 
         index : str
@@ -1009,6 +1009,16 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             Field to search in.
         query : str|list[str]|None
             Text to search for.
+        operator_name : {"autocomplete","compound","equals","exists", "facet","more_like_this","range","regex","text", "wildcard"}
+            Name of the operator to search with. Use the compound operator to run a 
+            compound search (i.e query with multiple operators).
+        collector_name : "facet" | None
+            Name of the collector to use with the query. Value must be 
+            `facet` in case of a faceted search, `None` otherwise.
+        facet_type : {'string', 'number', 'date}
+            The type of the faceted fields in case of a faceted search.
+        clause_type : {"must", "mustNot", "should", "filter"}
+            The type of clause in case of a query with multiple operators. 
         index : str
             Name of the index to use for the search. Defaults to default.
         count : CountOptions|None
@@ -1026,11 +1036,6 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
             Indicates whether to retrieve the detailed breakdown of the score for 
             the documents in the results. Defaults to False. To view the details,
             you must use the `$meta` expression in the `$project` stage.
-        operator_name : {"autocomplete","compound","equals","exists", "facet","more_like_this","range","regex","text", "wildcard"}
-            Name of the operator to search with. Use the compound operator to run a 
-            compound (i.e query with multiple operators).
-        collector_name : "facet" | None
-            Name of the collector to use with the query.
         kwargs :  Any
             Operators specific options. Includes (non-exhaustive):
             - fuzzy, FuzzyOptions (controls fuzzy matching options)
@@ -1252,7 +1257,9 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     def skip(self, value:int)->Self:
         """
         Adds a skip stage to the current pipeline.
-        Skips over the specified number of documents that pass into the stage and passes the remaining documents to the next stage in the pipeline.
+        Skips over the specified number of documents that pass into the 
+        stage and passes the remaining documents to the next stage in the 
+        pipeline.
 
         Parameters
         ----------
@@ -1261,7 +1268,9 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         Online MongoDB documentation:
         -----------------------------
-        Skips over the specified number of documents that pass into the stage and passes the remaining documents to the next stage in the pipeline.
+        Skips over the specified number of documents that pass into the 
+        stage and passes the remaining documents to the next stage in the 
+        pipeline.
         
         `$skip` takes a positive integer that specifies the maximum number of documents to skip.
 
@@ -1283,23 +1292,28 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         query : dict[str, Literal[1, -1]] = {},
         **kwargs:Any)->Self:
         """
-        Adds a sort stage to the current pipeline.
-        Sorts all input documents and returns them to the pipeline in sorted order.
+        Adds a sort stage to the current pipeline. Sorts all input documents and
+        returns them to the pipeline in sorted order.
         
         Parameters
         ----------
-        query : dict
-            Fields-sort order mapping. 1 for ascending order, -1 for 
-            descending order. Defaults to {} if not provided, the
-            query will be built from ascending and descending parameters.
-        ascending : set[str] | dict | None
-            Fields to sort on ascending order on.
         descending : set[str] | dict | None
             Fields to sort on descending order on.
+        ascending : set[str] | dict | None
+            Fields to sort on ascending order on.
+        by : list[str] | None
+            Fields to sort on. If sorting on multiple fields, sort order is
+            evaluated from left to right.
+        query : dict
+            Fields-sort order mapping. 1 for ascending order, -1 for descending
+            order. Defaults to {} if not provided, the query will be built from
+            ascending and descending parameters.
 
-        NOTE : When trying to sort on several fields and opposite orders use query rather than using ascending and descending simunateously.
+        NOTE : When trying to sort on several fields and opposite orders use
+        query rather than using ascending and descending simunateously.
 
-        WARNING : If using the ascending and descending parameters at the same time, the generated query will have the following form:
+        WARNING : If using the ascending and descending parameters at the same
+        time, the generated query will have the following form:
 
             >>> query = {
                 "ascending_field1" : 1,
@@ -1312,7 +1326,8 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         Online MongoDB documentation:
         -----------------------------
-        Sorts all input documents and returns them to the pipeline in sorted order.
+        Sorts all input documents and returns them to the pipeline in sorted
+        order.
         
         [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/sort/#mongodb-pipeline-pipe.-sort)
         """
@@ -1331,10 +1346,14 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     def sort_by_count(self, by:str)->Self:
         """
         Adds a sort_by_count stage to the current pipeline.
-        Groups incoming documents based on the value of a specified expression, then computes the count of documents in each distinct group.
+        Groups incoming documents based on the value of a specified 
+        expression, then computes the count of documents in each distinct 
+        group.
 
-        Each output document contains two fields: an `_id` field containing the distinct grouping value,
-        and a count field containing the number of documents belonging to that grouping or category.
+        Each output document contains two fields: an `_id` field 
+        containing the distinct grouping value, and a count field 
+        containing the number of documents belonging to that grouping or 
+        category.
 
         The documents are sorted by count in descending order.
 
@@ -1345,10 +1364,13 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         Online MongoDB documentation:
         -----------------------------
-        Groups incoming documents based on the value of a specified expression, then computes the count of documents in each distinct group.
+        Groups incoming documents based on the value of a specified 
+        expression, then computes the count of documents in each distinct 
+        group.
 
-        Each output document contains two fields: an `_id` field containing the distinct grouping value,
-        and a count field containing the number of documents belonging to that grouping or category.
+        Each output document contains two fields: an `_id` field containing the
+        distinct grouping value, and a count field containing the number of
+        documents belonging to that grouping or category.
 
         The documents are sorted by count in descending order.
 
@@ -1362,15 +1384,19 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
     
     def union_with(self, collection:str, coll:str, pipeline:list[dict]|None=None)->Self:
         """
-        Adds a union_with stage to the current pipeline.
-        Performs a union of two collections. unionWith combines pipeline results from two collections into a single result set. The stage outputs the combined result set (including duplicates) to the next stage.
+        Adds a union_with stage to the current pipeline. Performs a union of two
+        collections. unionWith combines pipeline results from two collections
+        into a single result set. The stage outputs the combined result set
+        (including duplicates) to the next stage.
 
-        The order in which the combined result set documents are output is unspecified.
+        The order in which the combined result set documents are output is
+        unspecified.
         
         Parameters
         ----------
         collection : str
-            The collection or view whose pipeline results you wish to include in the result set.
+            The collection or view whose pipeline results you wish to include in
+            the result set.
         coll : str
             Alias for `collection`. 
         pipeline : list[dict] | Pipeline | None
@@ -1378,10 +1404,12 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
 
         Online MongoDB documentation:
         -----------------------------
-        Performs a union of two collections.
-        unionWith combines pipeline results from two collections into a single result set. The stage outputs the combined result set (including duplicates) to the next stage.
+        Performs a union of two collections. unionWith combines pipeline results
+        from two collections into a single result set. The stage outputs the
+        combined result set (including duplicates) to the next stage.
 
-        The order in which the combined result set documents are output is unspecified.
+        The order in which the combined result set documents are output is
+        unspecified.
         
         [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/unionWith/#mongodb-pipeline-pipe.-unionWith)
         """
@@ -1410,17 +1438,19 @@ class Pipeline(BaseModel): # pylint: disable=too-many-public-methods
         path_to_array : str | None
             Alias for `path`.
         include_array_index :  str | None
-            Name of a new field to hold the array index of the element
-            NOTE : The name cannot start with a dollar sign
+            Name of a new field to hold the array index of the element.
+            NOTE : The name cannot start with a dollar sign.
         always : bool
-            Whether to output documents for input documents where the path does not resolve to a valid array. Defaults to False
+            Whether to output documents for input documents where the path does
+            not resolve to a valid array. Defaults to False.
         preserve_null_and_empty_index : bool
-            Alias for `always`
+            Alias for `always`.
 
         Online MongoDB documentation:
         -----------------------------
-        Deconstructs an array field from the input documents to output a document for each element.
-        Each output document is the input document with the value of the array field replaced by the element.
+        Deconstructs an array field from the input documents to output a
+        document for each element. Each output document is the input document
+        with the value of the array field replaced by the element.
         
         [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/unwind/#mongodb-pipeline-pipe.-unwind)
         """
