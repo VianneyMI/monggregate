@@ -38,6 +38,7 @@ plugins:
       python:
         options:
           docstring_style: numpy
+          filters: ["!^_"]
 
 
 # Using the Material theme for styling

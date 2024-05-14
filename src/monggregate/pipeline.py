@@ -285,7 +285,6 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
                         ...
                         count: { $sum: 1 }
                         }
-
         granularity : monggregate.stages.GranularityEnum, optional
             A string that specifies the preferred number series to use to
             ensure that the calculated boundary edges end on preferred round
