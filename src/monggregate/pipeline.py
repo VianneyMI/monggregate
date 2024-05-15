@@ -1014,6 +1014,11 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
             - allow_analyzed_field, bool (controls index scanning)
             - synonyms
             - like, dict|list[dict] (allow looking for similar documents).
+
+        Online MongoDB documentation
+        ----------------------------
+        The `$searchMeta` stage returns different types of metadata result documents.
+        
         """
 
         if not collector_name and not operator_name:
