@@ -469,8 +469,6 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
     ) -> Self:
         """
         Adds a `lookup` stage to the current pipeline.
-        Performs a left outer join to a collection in the same database to filter in documents from the "joined" collection for processing. The
-        `lookup` stage adds a new array field to each input document. The new array field contains the matching documents from the "joined" collection. The `lookup` stage passes these reshaped documents to the next stage.
 
         Parameters
         ----------
