@@ -89,3 +89,52 @@ class Bucket(Stage):
                 "output" : self.output
             }
         })
+
+    
+"""
+Online MongoDB documentation:
+--------------------------------------------------------------------------------------------------------------------
+
+Last Updated (in this package) : 18/09/2022
+Source :  https://www.mongodb.com/docs/manual/meta/aggregation-quick-reference/
+
+Definition
+--------------------
+
+Categorizes incoming documents into groups, called buckets, based on a specified expression and bucket boundaries and outputs a document per each bucket. Each output document contains an _id field whose value specifies the inclusive lower bound of the bucket. The
+output option specifies the fields included in each output document.
+
+$bucket only produces output documents for buckets that contain at least one input document.
+
+Considerations
+--------------------
+The $bucket stage has a limit of 100 megabytes of RAM. By default, if the stage exceeds this limit,
+$bucket returns an error. To allow more space for stage processing, use the allowDiskUse option to enable aggregation pipeline stages to write data to temporary files.
+
+Syntax
+--------------------
+{
+  $bucket: {
+      groupBy: <expression>,
+      boundaries: [ <lowerbound1>, <lowerbound2>, ... ],
+      default: <literal>,
+      output: {
+         <output1>: { <$accumulator expression> },
+         ...
+         <outputN>: { <$accumulator expression> }
+      }
+   }
+}
+
+Behavior
+-------------------
+$bucket requires at least one of the following conditions to be met or the operation throws an error:
+
+    * Each input document resolves the groupBy expression to a value within one of the bucket ranges specified by
+boundaries, or
+
+    * A default value is specified to bucket documents whose groupBy values are outside of the boundaries or of a different BSON type than the values in boundaries.
+
+If the groupBy expression resolves to an array or a document, $bucket arranges the input documents into buckets using the comparison logic from
+$sort.
+"""

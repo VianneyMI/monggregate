@@ -127,3 +127,85 @@ class BucketAuto(Stage):
                 "granularity" : self.granularity.value if self.granularity else None
             }
         })
+    
+    """
+Module definining an interface to MongoDB $bucketAuto stage operation in aggrgation pipeline
+
+Online MongoDB documentation:
+--------------------------------------------------------------------------------------------------------------------
+
+Last Updated (in this package) : 16/09/2022
+Source :  https://www.mongodb.com/docs/manual/reference/operator/aggregation/bucketAuto/
+
+
+Definition
+---------------------
+Categorizes incoming documents into a specific number of groups, called buckets, based on a specified expression.
+Bucket boundaries are automatically determined in an attempt to evenly distribute the documents into the specified number of buckets.
+
+Each bucket is represented as a document in the output. The document for each bucket contains:
+
+    * An _id object that specifies the bounds of the bucket.
+
+        * The _id.min field specifies the inclusive lower bound for the bucket.
+
+        * The _id.max field specifies the upper bound for the bucket. This bound is exclusive for all buckets except the final bucket in the series, where it is inclusive.
+
+    * A count field that contains the number of documents in the bucket. The count field is included by default when the output document is not specified.
+
+The $bucketAuto stage has the following form:
+
+    >>> {
+            $bucketAuto: {
+                groupBy: <expression>,
+                buckets: <number>,
+                output: {
+                    <output1>: { <$accumulator expression> },
+                    ...
+                }
+                granularity: <string>
+            }
+        }
+
+Considerations
+------------------------
+The $bucketAuto stage has a limit of 100 megabytes of RAM. By default, if the stage exceeds this limit,
+$bucketAuto returns an error. To allow more space for stage processing, use the allowDiskUse option to enable aggregation pipeline stages to write data to temporary files.
+
+Behavior
+-----------------------
+There may be less than the specified number of buckets if:
+
+    * The number of input documents is less than the specified number of buckets.
+
+    * The number of unique values of the groupBy expression is less than the specified number of buckets.
+
+    * The granularity has fewer intervals than the number of buckets.
+
+    * The granularity is not fine enough to evenly distribute documents into the specified number of buckets.
+
+If the groupBy expression refers to an array or document, the values are arranged using the same ordering as in
+$sort before determining the bucket boundaries.
+
+The even distribution of documents across buckets depends on the cardinality, or the number of unique values, of the groupBy field.
+If the cardinality is not high enough, the $bucketAuto stage may not evenly distribute the results across buckets.
+
+Granularity
+-----------------
+
+The $bucketAuto accepts an optional granularity parameter which ensures that the boundaries of all buckets adhere to a specified
+preferred number series.
+Using a preferred number series provides more control on where the bucket boundaries are set among the range of values in the groupBy expression.
+They may also be used to help logarithmically and evenly set bucket boundaries when the range of the groupBy expression scales exponentially.
+
+Renard Series
+
+The Renard number series are sets of numbers derived by taking either the 5 th, 10 th, 20 th, 40 th, or 80 th root of 10,
+then including various powers of the root that equate to values between 1.0 to 10.0 (10.3 in the case of R80).
+
+Set granularity to R5, R10, R20, R40, or R80 to restrict bucket boundaries to values in the series.
+The values of the series are multiplied by a power of 10 when the groupBy values are outside of the 1.0 to 10.0 (10.3 for R80) range.
+
+
+
+"""
