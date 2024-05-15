@@ -56,10 +56,13 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
 
     Examples
     --------
+    The following examples use the [example using MongoDB AirBnB demo dataset](https://www.mongodb.com/docs/atlas/sample-data/sample-airbnb/#std-label-sample-airbnb).
+
+
     You can instantiate a pipeline instance as follow:
 
         >>> pipeline = Pipeline(collection="listingsAndReviews") # collection is the only mandatory attribute 
-                                                                # [example using MongoDB AirBnB demo dataset](https://www.mongodb.com/docs/atlas/sample-data/sample-airbnb/#std-label-sample-airbnb)
+    
     and then add stages to the pipeline by calling its wrapper stages method as shown below:
 
         >>> pipeline.match(
@@ -79,7 +82,7 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
 
     @property
     def expression(self) -> list[Expression]:
-        """Returns the pipeline statement"""
+        """Returns the pipeline statement."""
 
         # TODO : Add test on this case <VM, 21/04/2024>
         # https://github.com/VianneyMI/monggregate/issues/106
@@ -111,7 +114,7 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
     # Pipeline List Methods
     # ---------------------------------------------------
     def __add__(self, other: Self) -> Self:
-        """Concatenates two pipelines together"""
+        """Concatenates two pipelines together."""
         if not isinstance(other, Pipeline):
             raise TypeError(
                 f"unsupported operand type(s) for +: 'Pipeline' and '{type(other)}'"
@@ -137,15 +140,15 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
         return len(self.stages)
 
     def append(self, stage: AnyStage) -> None:
-        """Appends a stage to the pipeline"""
+        """Appends a stage to the pipeline."""
         self.stages.append(stage)
 
     def insert(self, index: int, stage: AnyStage) -> None:
-        """Inserts a stage in the pipeline"""
+        """Inserts a stage in the pipeline."""
         self.stages.insert(index, stage)
 
     def extend(self, stages: list[AnyStage]) -> None:
-        """Extends the pipeline with a list of stages"""
+        """Extends the pipeline with a list of stages."""
         self.stages.extend(stages)
 
     # ---------------------------------------------------
@@ -211,7 +214,7 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
             be of a different type than the entries in boundaries.
         output : dict, optional
             A document that specifies the fields to include in the output documents in addition to
-            the `_id` field. To specify the field to include you must use accumulator expressions
+            the `_id` field. To specify the field to include you must use accumulator expressions:
 
                 >>> {"outputField1" : {"accumulator":"expression1}}
                     ....
@@ -220,7 +223,7 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
             If you do not specify an output document, the operation returns a count field containing
             the number of documents in each bucket.
             If you specify and output document, only the fields specified in the document are returned; i.e.
-            the count field is not returned unless it is explicitly included in the output document
+            the count field is not returned unless it is explicitly included in the output document.
 
         Returns
         -------
@@ -267,7 +270,7 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
         ----------
         by : str or list[str] or set[str], optional
             An expression to group documents. To specify a field path prefix
-            the field name with a dollar sign $ and enclose it in quotes.
+            the field name with a dollar sign `$` and enclose it in quotes.
         group_by : str or list[str] or set[str], optional
             Alias for the parameter `by`.
         buckets : int
@@ -289,7 +292,7 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
             A string that specifies the preferred number series to use to
             ensure that the calculated boundary edges end on preferred round
             numbers of their powers of 10. Available only if the all groupBy
-            values are numeric and none of them are NaN. [Source](https://en.wikipedia.org/wiki/Preferred_number)
+            values are numeric and none of them are NaN. See [here](https://en.wikipedia.org/wiki/Preferred_number) for a definition of the preferred number.
 
 
         Online MongoDB documentation
@@ -299,13 +302,13 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
 
         Each bucket is represented as a document in the output. The document for each bucket contains:
 
-            * An `_id` object that specifies the bounds of the bucket.
+        * An `_id` object that specifies the bounds of the bucket.
 
-                * The `_id.min` field specifies the inclusive lower bound for the bucket.
+            * The `_id.min` field specifies the inclusive lower bound for the bucket.
 
-                * The `_id.max` field specifies the upper bound for the bucket. This bound is exclusive for all buckets except the final bucket in the series, where it is inclusive.
+            * The `_id.max` field specifies the upper bound for the bucket. This bound is exclusive for all buckets except the final bucket in the series, where it is inclusive.
 
-            * A `count` field that contains the number of documents in the bucket. The `count` field is included by default when the output document is not specified.
+        * A `count` field that contains the number of documents in the bucket. The `count` field is included by default when the output document is not specified.
 
         [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/bucketAuto/)
         """
@@ -339,8 +342,8 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
 
             >>> {"$count":"string"}
 
-        <string> is the name of the output field which has the count as its value.
-        <string> must be a non-empty string, must not start with $ and must not contain the . character.
+        `string` is the name of the output field which has the count as its value.
+        `string` must be a non-empty string, must not start with `$` and must not contain the `.` character.
 
         [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/count)
         """
@@ -498,7 +501,7 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
             Pipeline to run on the foreign collection.
 
 
-        NOTE (`pipeline` and `let` attributes) : To reference variables in pipeline stages, use the "$$<variable>" syntax.
+        NOTE (`pipeline` and `let` attributes) : To reference variables in pipeline stages, use the `$$<variable>` syntax.
 
         The `let` variables can be accessed by the stages in the pipeline, including additional `$lookup` stages nested in the pipeline.
 
@@ -521,7 +524,7 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
         -----------------------------
         Performs a left outer join to a collection in the same database to
         filter in documents from the "joined" collection for processing. The
-        lookup stage adds a new array field to each input document. The new
+        `$lookup` stage adds a new array field to each input document. The new
         array field contains the matching documents from the "joined" collection. The `$lookup` stage passes these reshaped documents to the next stage.
 
         Starting in MongoDB 5.1, `$lookup` works across sharded collections.
@@ -691,7 +694,7 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
 
         Online MongoDB documentation:
         -----------------------------
-        Takes the documents returned by the aggregation pipeline and writes them to a specified collection. The `out` stage must be the last stage in the pipeline. The out operator lets the aggregation framework return result sets of any size.
+        Takes the documents returned by the aggregation pipeline and writes them to a specified collection. The `out` stage must be the last stage in the pipeline. The `out` operator lets the aggregation framework return result sets of any size.
 
         WARNING : `out` replaces the specified collection if it exists.
         See [Replace Existing Collection](https://www.mongodb.com/docs/manual/reference/operator/aggregation/out/#std-label-replace-existing-collection) for details.
@@ -773,7 +776,7 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
         You can promote an existing embedded document to the top level, or create a new document for promotion
         (see [example](https://www.mongodb.com/docs/manual/reference/operator/aggregation/replaceRoot/#std-label-new-replacement-doc)).
 
-        The replacement document can be any valid expression that resolves to a document. The stage errors and fails if <replacementDocument> is not a document. For more information on expressions, see Expressions.
+        The replacement document can be any valid expression that resolves to a document. The stage errors and fails if <replacementDocument> is not a document. For more information on expressions, see [Expressions](https://www.mongodb.com/docs/manual/reference/operator/aggregation/#std-label-aggregation-expressions).
 
         [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/replaceRoot/#mongodb-pipeline-pipe.-replaceRoot)
         """
@@ -809,7 +812,7 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
         You can promote an existing embedded document to the top level, or create a new document for promotion
         (see [example](https://www.mongodb.com/docs/manual/reference/operator/aggregation/replaceRoot/#std-label-new-replacement-doc)).
 
-        The replacement document can be any valid expression that resolves to a document. The stage errors and fails if `<replacementDocument>` is not a document. For more information on expressions, see Expressions.
+        The replacement document can be any valid expression that resolves to a document. The stage errors and fails if `<replacementDocument>` is not a document. For more information on expressions, see [Expressions](https://www.mongodb.com/docs/manual/reference/operator/aggregation/#std-label-aggregation-expressions).
 
         [Source](https://www.mongodb.com/docs/manual/reference/operator/aggregation/replaceRoot/#mongodb-pipeline-pipe.-replaceRoot)
         """
