@@ -186,8 +186,7 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
         output: dict | None = None,
     ) -> Self:
         """
-        Adds a `bucket` stage to the current pipeline. This stage aggregates
-        documents into buckets specified by the boundaries argument.
+        Adds a `bucket` stage to the current pipeline.
 
         Parameters
         ----------
@@ -263,8 +262,6 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
     ) -> Self:
         """
         Adds a `bucket_auto` stage to the current pipeline.
-        This stage aggregates documents into buckets automatically computed
-        to satisfy the number of buckets desired and provided as an input.
 
         Parameters
         ----------
@@ -326,7 +323,6 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
     def count(self, name: str) -> Self:
         """
         Adds a `count` stage to the current pipeline.
-        Passes a document to the next stage that contains a count of the number of documents input to the stage.
 
         Parameters
         ----------
@@ -404,8 +400,6 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
     ) -> Self:
         """
         Adds a `group` stage to the current pipeline.
-        The group stage separates documents into groups according to a "group key". The output is one document for each unique group key.
-        The output documents can also contain additional fields that are set using accumulator expressions.
 
         Parameters
         ----------
@@ -439,7 +433,6 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
     def limit(self, value: int) -> Self:
         """
         Adds a `limit` stage to the current pipeline.
-        Limits the number of documents passed to the next stage in the pipeline.
 
         Parameters
         ----------
@@ -645,7 +638,6 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
     def match(self, query: dict = {}, expr: Expression = None, **kwargs: Any) -> Self:
         """
         Adds a `match` stage to the current pipeline.
-        Filters the documents to pass only the documents that match the specified condition(s) to the next pipeline stage.
 
         Parameters
         ----------
@@ -681,7 +673,6 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
     ) -> Self:
         """
         Adds an `out` stage to the current pipeline.
-        Takes the documents returned by the aggregation pipeline and writes them to a specified collection. Starting in MongoDB 4.4, you can specify the output database.
 
         Parameters
         ----------
@@ -716,7 +707,6 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
     ) -> Self:
         """
         Adds a `project` stage to the current pipeline.
-        Passes along the documents with the requested fields to the next stage in the pipeline. The specified fields can be existing fields from the input documents or newly computed fields.
 
         Parameters
         ----------
@@ -757,8 +747,6 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
     ) -> Self:
         """
         Adds a `replace_root` stage to the current pipeline.
-        Replaces the input document with the specified document.
-        The operation replaces all existing fields in the input document, including the `_id` field. You can promote an existing embedded document to the top level, or create a new document for promotion.
 
         Parameters
         ----------
@@ -825,7 +813,6 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
     def sample(self, value: int) -> Self:
         """
         Adds a `sample` stage to the current pipeline.
-        Randomly selects the specified number of documents from the input documents.
 
         Parameters
         ----------
@@ -865,7 +852,6 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
     ) -> Self:
         """
         Adds a `search` stage to the current pipeline.
-        The `search` stage performs a full-text search on the specified field or fields which must be covered by an Atlas Search index.
 
         NOTE : if used, `search` has to be the first stage of the pipeline
 
@@ -984,8 +970,7 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
     ) -> Self:
         """
         Adds a `search_meta` stage to the current pipeline.
-        The `search_meta` stage returns different types of metadata result documents.
-
+    
         NOTE : if used, `search_meta` has to be the first stage of the pipeline
 
         Parameters
@@ -1224,8 +1209,6 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
     def set(self, document: dict = {}, **kwargs: Any) -> Self:
         """
         Adds a `set` stage to the current pipeline.
-        Adds new fields to documents. `$set` outputs documents that contain all existing fields from the inputs documents and newly added fields.
-        Both stages are equivalent to a `$project` stage that explicitly specifies all existing fields in the inputs documents and adds the new fields.
 
         Parameters
         ----------
@@ -1246,9 +1229,6 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
     def skip(self, value: int) -> Self:
         """
         Adds a `skip` stage to the current pipeline.
-        Skips over the specified number of documents that pass into the
-        stage and passes the remaining documents to the next stage in the
-        pipeline.
 
         Parameters
         ----------
@@ -1282,7 +1262,7 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
         **kwargs: Any,
     ) -> Self:
         """
-        Adds a `sort` stage to the current pipeline. Sorts all input documents and returns them to the pipeline in sorted order.
+        Adds a `sort` stage to the current pipeline.
 
         Parameters
         ----------
@@ -1329,9 +1309,6 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
     def sort_by_count(self, by: str) -> Self:
         """
         Adds a `sort_by_count` stage to the current pipeline.
-        Groups incoming documents based on the value of a specified
-        expression, then computes the count of documents in each distinct
-        group and sorts them by count in descending order.
 
         Parameters
         ----------
@@ -1360,7 +1337,7 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
         self, collection: str, coll: str, pipeline: list[dict] | None = None
     ) -> Self:
         """
-        Adds a `union_with` stage to the current pipeline. Performs a union of two collections.
+        Adds a `union_with` stage to the current pipeline.
 
         Parameters
         ----------
@@ -1433,7 +1410,6 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
     def unset(self, field: str | None = None, fields: list[str] | None = None) -> Self:
         """
         Adds an `unset` stage to the current pipeline.
-        Removes/excludes fields from documents.
 
         Parameters
         ----------
