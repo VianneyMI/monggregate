@@ -211,7 +211,7 @@ class Pipeline(BaseModel):  # pylint: disable=too-many-public-methods
             must be less than the lowest boundary or greather than or
             equal to the highest boundary value. The default value can
             be of a different type than the entries in boundaries.
-        output : dict, optional
+        output : dict | None, optional
             A document that specifies the fields to include in the output documents in addition to
             the `_id` field. To specify the field to include you must use accumulator expressions:
 

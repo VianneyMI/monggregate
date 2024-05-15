@@ -1,5 +1,7 @@
 """
 Module definining an interface to MongoDB `$bucket` stage operation in aggregation pipeline.
+
+Last Updated (in this package) : 18/09/2022
 """
 
 from typing import Any
@@ -17,11 +19,13 @@ class Bucket(Stage):
 
     Parameters
     ----------
-    by : str|list[str]|set[str]
+    by : str | list[str] | set[str]
         Field or fields to group the documents unless a default is 
         provided, each input document must resolve the groupBy field path 
         or expression to a value that falls within one of the ranges
         specified by the boundaries.
+    group_by : str | list[str] | set[str], optional
+            Alias for the parameter `by`.
     boundaries : list
         An array of values that specify the boundaries for each bucket.
         Each adjacent pair of values acts as the inclusive lower boundary

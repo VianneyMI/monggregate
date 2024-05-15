@@ -1,5 +1,7 @@
 """
 Module defining an interface to MongoDB `$bucketAuto` stage operation in aggregation pipeline.
+
+Last Updated (in this package) : 16/09/2022
 """
 
 from typing import Any
