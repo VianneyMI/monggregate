@@ -1,6 +1,12 @@
-:::monggregate.stages.lookup
-  options:
-    annotations_path: source
-  selection:
-    docstring_style: numpy
+::: monggregate.stages.lookup
+    options:
+      annotations_path: source
+      members:
+      - Lookup
+      filters:
+      - "!expression"
+      - "!on_alias"
+      - "!set_type"
+    selection:
+      docstring_style: numpy
     
