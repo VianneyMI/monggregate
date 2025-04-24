@@ -82,7 +82,7 @@ from monggregate import Pipeline, S
 
 # Creating connexion string securely
 load_dotenv(verbose=True)
-MONGODB_URI = os.environ["MONGODB_URI"] s
+MONGODB_URI = os.environ["MONGODB_URI"]
 
 # Connect to your MongoDB cluster:
 client = pymongo.MongoClient(MONGODB_URI)
