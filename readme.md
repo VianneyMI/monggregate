@@ -1,7 +1,7 @@
 ## **Overview**
 
 Monggregate is a library that aims at simplifying usage of MongoDB aggregation pipelines in Python.
-It is based on MongoDB official Python driver, pymongo and on [pydantic](https://pydantic-docs.helpmanual.io/).
+It's a lightweight QueryBuilder for MongoDB aggregation pipelines based on [pydantic](https://docs.pydantic.dev/latest/) and compatible with all mongodb drivers and ODMs.
 
 ### Features
 
@@ -10,14 +10,13 @@ It is based on MongoDB official Python driver, pymongo and on [pydantic](https:/
 - Integrates all the MongoDB documentation and allows you to quickly refer to it without having to navigate to the website.
 - Enables autocompletion on the various MongoDB features.
 - Offers a pandas-style way to chain operations on data.
+- Mimics the syntax of your favorite tools like pandas
 
-## **Requirements**
 
-This package requires python > 3.10, pydantic > 1.8.0
 
 ## **Installation**
 
-The repo is now available on PyPI:
+The package is available on PyPI:
 
 ```shell
 pip install monggregate
@@ -40,9 +39,8 @@ from monggregate import Pipeline, S
 # Creating connexion string securely
 # You need to create a .env file with your password
 load_dotenv(verbose=True)
-PWD = os.environ["MONGODB_PASSWORD"] 
+MONGODB_URI = os.environ["MONGODB_URI"] 
 
-MONGODB_URI = f"mongodb+srv://dev:{PWD}@myserver.xciie.mongodb.net/?retryWrites=true&w=majority"
 
 # Connect to your MongoDB cluster:
 client = pymongo.MongoClient(MONGODB_URI)
@@ -85,8 +83,7 @@ from monggregate import Pipeline, S
 
 # Creating connexion string securely
 load_dotenv(verbose=True)
-PWD = os.environ["MONGODB_PASSWORD"]
-MONGODB_URI = f"mongodb+srv://dev:{PWD}@myserver.xciie.mongodb.net/?retryWrites=true&w=majority"
+MONGODB_URI = os.environ["MONGODB_URI"] 
 
 
 # Connect to your MongoDB cluster:
@@ -131,9 +128,7 @@ from monggregate import Pipeline, S
 
 # Creating connexion string securely
 load_dotenv(verbose=True)
-PWD = os.environ["MONGODB_PASSWORD"]
-MONGODB_URI = f"mongodb+srv://dev:{PWD}@myserver.xciie.mongodb.net/?retryWrites=true&w=majority"
-
+MONGODB_URI = os.environ["MONGODB_URI"] 
 
 # Connect to your MongoDB cluster:
 client = pymongo.MongoClient(MONGODB_URI)
