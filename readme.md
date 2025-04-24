@@ -13,7 +13,6 @@ It's a lightweight QueryBuilder for MongoDB aggregation pipelines based on [pyda
 - Mimics the syntax of your favorite tools like pandas
 
 
-
 ## **Installation**
 
 The package is available on PyPI:
@@ -84,7 +83,6 @@ from monggregate import Pipeline, S
 # Creating connexion string securely
 load_dotenv(verbose=True)
 MONGODB_URI = os.environ["MONGODB_URI"] 
-
 
 # Connect to your MongoDB cluster:
 client = pymongo.MongoClient(MONGODB_URI)
