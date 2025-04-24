@@ -1,5 +1,9 @@
 # pyproject.toml
 
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "monggregate"
 version = "0.21.0"
@@ -15,12 +19,18 @@ classifiers = [
     "Intended Audience :: Developers",
     "Operating System :: OS Independent"
 ]
-requires-python = ">=3.10"
+keywords = ["nosql", "mongo", "aggregation", "pymongo", "pandas", "pydantic"]
 dependencies = [
-    "pydantic>=2.6.0",
-    "pyhumps>=3.0",
-    "typing-extensions>=4.0",
+    "pydantic >= 1.8.0",
+    "pyhumps >= 3.0.2",
+    "typing_extensions >= 4.0.1"
 ]
+requires-python = ">=3.10"
+
+
+[project.optional-dependencies]
+mongo = ["pymongo >= 3.0.0"]
+dev = ["bumpver", "pytest", "mypy", "pylint"]
 
 [project.urls]
 Homepage = "https://github.com/VianneyMI/monggregate"
