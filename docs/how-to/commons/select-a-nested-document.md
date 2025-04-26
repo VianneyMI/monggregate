@@ -1,28 +1,26 @@
-This guide will show you how to select and return nested documents directly.
+This guide shows how to extract and work with nested documents in MongoDB.
 
-This is a common use case that one can face when working with a collection where relations are materialized by embedded documents.
+## When to Use This
 
-We will use the `listingsAndReviews` collection from the `sample_airbnb` database.
+This approach is useful when working with collections that embed related documents instead of using separate collections. Common examples include:
 
-This collection represents AirBnB listings. 
-The `reviews` do not have their own collection, they are embedded in a `reviews` field in the `listingsAndReviews` collection.
+- Comments embedded in blog posts
+- Reviews embedded in product listings
+- Address details embedded in user profiles
 
-## **What Do We Want to Achieve ?**
+## Example: Finding Reviews by a Specific Reviewer
 
-We want to select all the reviews of a given reviewer.
+We'll use the `listingsAndReviews` collection from the `sample_airbnb` database, where reviews are embedded within listing documents.
 
-## **How ?**
+### The Pipeline Approach
 
-This can be achieved by combining three stages:
+To extract all reviews by a specific reviewer, we'll use three stages:
 
-* `$unwind` to deconstruct the `reviews` array
-* `$replaceRoot` to promote the `reviews` field to the root of the document
-* `$match` to select the documents that match the given reviewer
-
-Thus the following pipeline will return all the reviews of the reviewer with the `reviewer_id:2961855`:
+1. `$unwind`: Deconstruct the `reviews` array into individual documents
+2. `$replaceRoot`: Promote each review to become the root document
+3. `$match`: Filter for the specific reviewer
 
 ```python
-
 # /!\    /!\    /!\
 # Imports
 # and boilerplate code
@@ -48,7 +46,9 @@ cursor = db["listingsAndReviews"].aggregate(pipeline=pipeline.export())
 documents = list(cursor)
 ```
 
-`documents[0]` should output:
+### Sample Result
+
+The first document in our results:
 
 ```python
 {
@@ -59,13 +59,65 @@ documents = list(cursor)
     'reviewer_name': 'Uge',
     'comments': 'Our stay at Alfredo’s place was amazing. \n\nThe place is spacious, very clean, comfortable, decorated with good taste, and has everything one may need. I really liked his apartment. \n\nIt is very well located, the restaurants and bars around are great and in an easy 30 minute walk you are downtown or in old Montreal. Very pleasant area to be outside and felt very safe. \n\nAlfredo always answered my messages within 5 minutes and was incredibly helpful and generous. \n\nI highly recommend this place. Thank you Alfredo!'
 }
-```	
-## **Generalization**
+```
 
-This section aims at helping you adapt the above example to your own use case.
+## Adapting to Other Scenarios
 
-First, the `unwind` stage above is not required in case of a one-to-one embedding relation.<br> 
-For example, each listing has an `address` field that contains the address of the listing. In this case, you can directly use the `address` field in the `replace_root` stage.<br>
-You do not need an `unwind` stage there because the `address` field is not an array.
+### One-to-One Relationships
 
-Second, the documents could be more deeply nested. In that case, you would need to repeat the above steps for each level of nesting. 
+For non-array nested fields like `address`, skip the `unwind` stage:
+
+```python
+# Extract address documents from listings
+pipeline = Pipeline()
+pipeline.replace_root(
+    "address"
+).match(
+    country="United States"
+)
+
+cursor = db["listingsAndReviews"].aggregate(pipeline=pipeline.export())
+addresses = list(cursor)
+```
+
+### Deep Nesting
+
+For deeply nested structures, chain multiple operations:
+
+```python
+# Access amenities.details.highlights (hypothetical nested structure)
+pipeline = Pipeline()
+pipeline.unwind(
+    "amenities"
+).replace_root(
+    "amenities.details"
+).unwind(
+    "highlights"
+).replace_root(
+    "highlights"
+).match(
+    featured=True
+)
+
+cursor = db["listingsAndReviews"].aggregate(pipeline=pipeline.export())
+```
+
+### Preserving Context
+
+To keep information from the parent document:
+
+```python
+# Keep listing name while working with reviews
+pipeline = Pipeline()
+pipeline.project({
+    "listing_name": 1, 
+    "review": "$reviews"
+}).unwind(
+    "review"
+).match(
+    "review.reviewer_id": "2961855"
+)
+
+# Result includes both the review and the listing name
+cursor = db["listingsAndReviews"].aggregate(pipeline=pipeline.export())
+```
