@@ -12,7 +12,7 @@ Every stage in MongoDB's aggregation framework has an equivalent class and metho
 
 Creating a pipeline is straightforward:
 
-```python
+```python title="Basic Pipeline"
 from monggregate import Pipeline
 
 # Initialize an empty pipeline
@@ -24,7 +24,7 @@ pipeline.match(title="A Star Is Born")
 
 Each method returns the pipeline instance, enabling method chaining to build complex pipelines with a clean, readable syntax:
 
-```python
+```python title="Method Chaining"
 from monggregate import Pipeline
 
 # Build a multi-stage pipeline
@@ -45,7 +45,7 @@ pipeline.match(
 
 Monggregate provides a simple way to export your pipeline to a format compatible with your MongoDB driver or ODM of choice:
 
-```python
+```python title="Executing a Pipeline"
 import pymongo
 from monggregate import Pipeline
 
@@ -76,7 +76,7 @@ print(results)
 
 For more complex scenarios or when you need to reuse stages, you can work directly with stage classes:
 
-```python
+```python title="Working with Stage Classes"
 import pymongo
 from monggregate import Pipeline, stages
 
@@ -109,7 +109,7 @@ This approach offers advantages:
 
 Here's a more comprehensive example that analyzes movies by genre:
 
-```python
+```python title="Analysis Pipeline"
 import pymongo
 from monggregate import Pipeline, S
 
@@ -147,7 +147,7 @@ for genre in results:
 
 > 📚 The `Pipeline` class implements Python's list interface, allowing you to manipulate stages programmatically:
 
-```python
+```python title="Pipeline Manipulation"
 # Check pipeline length
 print(len(pipeline))  # Returns number of stages
 
