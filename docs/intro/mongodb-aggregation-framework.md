@@ -19,7 +19,7 @@ The aggregation framework allows you to categorize data, group documents, calcul
 It can be used to apply complex transformations to your data, and enrich existing documents with additional information.
 The main "functions" are `$addFields`, `$densify`, `$fill`, `$replaceWith`, `$merge`, `$out`.
 
-You can see examples of this in [Create or update a collection](../how-to/commons/create-or-update-a-collection.md).
+You can see examples of this in [Create or update a collection](../how-to/create-or-update-a-collection.md).
 
 ### 🔗 **Join-like Operations**
 
@@ -28,7 +28,7 @@ Another important feature is the ability to perform join-like operations on your
 The frameworks exposes several functions to combine data from multiple collections. You can combine collections horizontally or vertically
 respectively with the `$lookup` and `$unionWith` stages.
 
-> 🔍 See [Merge collections](../how-to/commons/combine-collections.md) for some examples.
+> 🔍 See [Merge collections](../how-to/combine-collections.md) for some examples.
 
 ### ⏱️ **Time Series Analysis**
 
