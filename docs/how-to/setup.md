@@ -3,7 +3,8 @@ This guide will show you how to setup an Atlas Cluster and download sample data 
 ## **Instructions**
 
 **1.** The first step is to **create an Atlas account** (if you do not have one already). You can do it [here](https://www.mongodb.com/cloud/atlas/register).<br>
-Simply fill the form and click on "Create your Atlas account". You can even sign up with Google.
+Simply fill the form and click on "Create your Atlas account". 
+Alternatively, you can sign up with Google.
 
 **2.** Once your account is created, you will to **create a free tier cluster**. Click on "Build a Database" and follow the steps.<br>
 Select the M0 free cluster.<br> 
@@ -31,6 +32,6 @@ You should now see the following databases when clicking on "Browse Collections"
 
 ## **References**
 
-* [This video](https://www.youtube.com/watch?v=rPqRyYJmx2g&t=278s) shows the above steps.
-* [This guide]() briefly encompasses the above steps and goes a step further by showing you how to connect to your database in python with pymongo.
+* [This video](https://www.youtube.com/watch?v=jXgJyuBeb_o) shows the above steps.
+* [This guide](https://www.mongodb.com/docs/languages/python/pymongo-driver/current/get-started/#std-label-pymongo-get-started) briefly encompasses the above steps and goes a step further by showing you how to connect to your database in python with pymongo.
 

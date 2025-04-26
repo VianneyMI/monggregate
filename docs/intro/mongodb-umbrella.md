@@ -1,4 +1,4 @@
-# 🚀 MongoDB Ecosystem Overview
+# 🌐 MongoDB Ecosystem Overview
 
 MongoDB has evolved into one of the most comprehensive database management systems in the market. While it's primarily known as a document-oriented NoSQL database, it offers a rich ecosystem of features and services for modern data management.
 
@@ -6,11 +6,11 @@ MongoDB has evolved into one of the most comprehensive database management syste
 
 ### **MQL (MongoDB Query Language)**
 
-**MQL** is MongoDB's native query language, using a JSON-like syntax to interact with your data. It enables:
+**MQL** is **M**ongoDB's native **Q**uery **L**anguage, using a JSON-like syntax to interact with your data. It enables:
 
 - 🔄 **CRUD Operations**: Create, Read, Update, and Delete documents
 - 🛠️ **Flexible Querying**: Rich query capabilities with support for complex conditions
-- 🔌 **Driver Integration**: Works seamlessly with official drivers and ODMs
+- 🔌 **Driver Integration**: Works seamlessly with official and non-officialdrivers and ODMs
 
 > 💡 **Note**: While MQL is powerful, this documentation focuses on the aggregation framework. For detailed MQL documentation, visit [MongoDB's official documentation](https://www.mongodb.com/docs/manual/crud/).
 
@@ -33,9 +33,10 @@ While MongoDB provides the framework, building aggregation pipelines can be comp
 
 [Atlas Search](https://www.mongodb.com/docs/atlas/atlas-search/atlas-search-overview/) is MongoDB's integrated full-text search solution, powered by Apache Lucene. It's particularly relevant because:
 
-- 🔗 Seamlessly integrates with the aggregation framework
-- 🎯 Can be used within aggregation pipelines
-- 🔍 Provides powerful text search capabilities
+- 🔗 **Integration**: Seamlessly integrates with the aggregation framework
+- 🔍 **Keyword Search**: Provides powerful text search capabilities
+- 🧮 **Vector Search**: AI-powered semantic search enabling similarity matching, natural language processing, and embedding-based queries for next-generation applications
+
 
 > 📖 **Learn More**: Check out the [search tutorial](../tutorial/search.md) for details on using Atlas Search with `monggregate`.
 
@@ -44,7 +45,7 @@ While MongoDB provides the framework, building aggregation pipelines can be comp
 MongoDB continues to evolve with features like:
 
 - 📈 **Time Series Collections**: Optimized for time-series data
-- 🧠 **Vector Search**: For AI-powered applications
 - 🔄 **Change Streams**: Real-time data change notifications
+- 🔒 **Encryption**: At-rest, in-transit anre more importantly in-use queryable encryption.
 
-> ℹ️ **Note**: While these features are powerful, they're currently outside the scope of `monggregate`. Our focus remains on making the aggregation framework more accessible and developer-friendly.
+> ℹ️ **Note**: While these features are powerful, they're currently outside the scope of `monggregate`. `monggregate` focuses on making the aggregation framework more accessible and developer-friendly.
