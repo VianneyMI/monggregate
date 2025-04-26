@@ -2,28 +2,30 @@
 :root > * {
   /* Python syntax highlighting */
   --md-code-hl-keyword-color: #a278ff; /* purple for keywords */
-  --md-code-hl-function-color: #ffdf00; /* yellow for functions and methods */
+  --md-code-hl-function-color: #f9d423; /* bright yellow for functions and methods */
   --md-code-hl-string-color: #ff9749; /* orange for strings and docstrings */
-  --md-code-hl-constant-color: #76c1ff; /* blue for variables */
-  --md-code-hl-name-color: #7bd88f; /* light green for imported classes */
-  --md-code-hl-operator-color: #fff; /* white for operators */
-  --md-code-hl-punctuation-color: #fff; /* white for punctuation */
+  --md-code-hl-constant-color: #4a90e2; /* darker blue for constants */
+  --md-code-hl-name-color: #4ec9b0; /* different green for imported classes */
+  --md-code-hl-operator-color: #666666; /* even darker equal sign */
+  --md-code-hl-punctuation-color: #ffb347; /* amber/orange-yellow for parentheses and punctuation */
   --md-code-hl-comment-color: #3a824d; /* dark green for comments */
-  --md-code-hl-generic-color: #76c1ff; /* blue for generic */
-  --md-code-hl-variable-color: #76c1ff; /* blue for variables */
+  --md-code-hl-generic-color: #4a90e2; /* darker blue for generic */
+  --md-code-hl-variable-color: #569cd6; /* different blue for variables */
   
   /* Additional customization for specific syntax elements */
-  --md-code-hl-special-color: #7bd88f; /* light green for special elements */
-  --md-code-hl-number-color: #ffdf00; /* yellow for numbers */
+  --md-code-hl-special-color: #4ec9b0; /* same green for special elements */
+  --md-code-hl-number-color: #56d364; /* green variation for numbers */
 }
 
 /* Additional specific class overrides for more precise control */
-.highlight .n { color: #76c1ff; } /* variables */
-.highlight .nn { color: #7bd88f; } /* module names */
-.highlight .nc { color: #7bd88f; } /* class names */
-.highlight .nf { color: #ffdf00; } /* function names */
+.highlight .n { color: #569cd6; } /* variables - different blue */
+.highlight .nn { color: #4ec9b0; } /* module names - different green */
+.highlight .nc { color: #4ec9b0; } /* class names - different green */
+.highlight .nf { color: #f9d423; } /* function names - bright yellow */
 .highlight .s, .highlight .sd { color: #ff9749; } /* strings and docstrings */
 .highlight .c, .highlight .c1, .highlight .cm { color: #3a824d; } /* comments */
 .highlight .k, .highlight .kd, .highlight .kn { color: #a278ff; } /* keywords */
 .highlight .kc { color: #a278ff; } /* keyword constants */
-.highlight .o { color: #fff; } /* operators */ 
+.highlight .o { color: #666666; } /* operators - even darker */
+.highlight .p { color: #ffb347; } /* parentheses and punctuation - amber/orange-yellow */
+.highlight .mi, .highlight .mf, .highlight .m { color: #56d364; } /* numerical values - green variation */ 
