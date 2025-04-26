@@ -1,8 +1,8 @@
-# 🌐 MongoDB Ecosystem Overview
+# 🌐 **MongoDB Ecosystem Overview**
 
 MongoDB has evolved into one of the most comprehensive database management systems in the market. While it's primarily known as a document-oriented NoSQL database, it offers a rich ecosystem of features and services for modern data management.
 
-## 📋 Core Components
+## 📋 **Core Components**
 
 ### **MQL (MongoDB Query Language)**
 
@@ -40,7 +40,7 @@ While MongoDB provides the framework, building aggregation pipelines can be comp
 
 > 📖 **Learn More**: Check out the [search tutorial](../tutorial/search.md) for details on using Atlas Search with `monggregate`.
 
-## 🌟 Additional MongoDB Capabilities
+## 🌟 **Additional MongoDB Capabilities**
 
 MongoDB continues to evolve with features like:
 

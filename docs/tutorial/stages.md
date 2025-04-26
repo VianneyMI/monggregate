@@ -1,4 +1,4 @@
-Stages are the building blocks of aggregation pipelines.
+**Stages** are the building blocks of aggregation pipelines.
 
 We saw in the [previous page](pipeline.md) two methods to compose stages to effectively build a pipeline:
 
@@ -111,8 +111,3 @@ You might have noticed in the grouping example how we tell Monggregate to perfor
 In the example, we used the `$sum` and `$push` operators.
 
 For more information about operators, check the [next page](operators.md).
-
-## **Come Back Later**
-
-At this stage of the tutorial, you should already have enough to play around with the aggregation framework and start building your own pipelines.
-If you read everything in this documentation, you might want to check out the [operators page](operators.md) later on.

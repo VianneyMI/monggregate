@@ -1,131 +1,161 @@
-The aggregation framework provide advanced search functionalities through the `$search` and `$searchMeta` stages.
+# Atlas Search in Monggregate
 
-Note: the `$search` and `$searchMeta` stages are only available with MongoDB Atlas.
+MongoDB's aggregation framework provides powerful search capabilities through the `$search` and `$searchMeta` stages, available exclusively with MongoDB Atlas. Monggregate makes these advanced search features accessible through an intuitive Python interface.
 
-## **Atlas Search**
+## What is Atlas Search?
 
-Atlas Search offers similar features than other search engines like ElasticSearch or Algolia.
-Such features include:
+Atlas Search integrates full-text search capabilities directly into your MongoDB database, providing functionality similar to dedicated search engines like Elasticsearch or Algolia:
 
-- Full-text search
-- Fuzzy search
-- Autocompletion
-- Highlighting
-- Faceting
-- Geospatial search
-- Relevance scoring
-- Query analytics
+- **Full-text search** with language-aware text analysis
+- **Fuzzy matching** to handle typos and misspellings
+- **Autocomplete** suggestions for partial queries
+- **Relevance scoring** to rank results by importance
+- **Highlighting** to emphasize matching terms
+- **Faceting** for categorizing and filtering results
+- **Geospatial search** for location-based queries
+- **Vector search** for semantic similarity and AI applications
 
-You can see a more detailled list of features [here](https://www.mongodb.com/docs/atlas/atlas-search/atlas-search-overview/).
+For a complete feature list, see the [Atlas Search documentation](https://www.mongodb.com/docs/atlas/atlas-search/atlas-search-overview/).
 
-## **Using Atlas Search through monggregate**
+## Basic Search Queries
 
-Like for the other stages `monggregate` defines a class and a `pipeline` method for the search stages.
-However, there is a slight difference with the other stages. The search stages are themselves very similar to pipelines.
-You will better grasp this concept in one [the below sections](#search-pipelines).
-
-The search stages define their own set of operators called **search operators**.
-Below an non-exhaustive list of the search operators:
-
-* Autocomplete
-* Compound
-* Text
-* Regex 
-
-Like for the other stages the search stages can be enhanced with one or several operators. Unlike the other stages, it is required to use at least one operator with the search stages.
-The operators listed previously are some of most commonly used operators. 
-
-The `text` operator is the central operator that allows to perform full-text search. It takes in an optional fuzzy parameter which allows to perform fuzzy search.
-
-The `autocomplete` operator allows to perform autocompletion. 
-
-The `compound` operator allows to combine several search operators together while giving each of them a different weight or role thanks to the clause types `filter`, `must`, `mustNot` and `should`. 
-
-* `filter` clauses define text that must be present in the documents matching the query.
-* `must` clauses are similar to `filter` clauses, but they also affect the relevance score of the documents.
-* `mustNot` clauses define text that must not be present in the documents matching the query.
-* `should` clauses define text that may be present in the documents matching the query. They also affect the relevance score of the documents. A minimum number of `should` clauses matches can be defined through the `minimumShouldMatch` parameter.
-
-The `facet` collector (sort of operator) allows to perform faceting on the results of the search. It is a very powerful feature and common feature in good search experiences.
-
-Again, the search features are so vast, that they could have their own package, but fortunately for you, they have been included in `monggregate`.
-
-How do you build search queries with `monggregate`? Let's see that in the next section.
-In the next sections, we will only talk about the `$search` stage, but everything applies to the `$searchMeta` stage as well.
-
-## **Basic Search**
-
-The `Search` class the and the `search` method have default parameters so that it is easy to quickly get started. 
-
-Building your search request is as simple as, the following code:
+Creating a basic search query with Monggregate is straightforward:
 
 ```python
+from monggregate import Pipeline
 
+pipeline = Pipeline()
 pipeline.search(
-        path="description"
-        query="apple", 
-    )
-
+    path="description",  # Field to search in
+    query="apple"        # Search term
+)
 ```
 
-By default, the search will be performed on the `text` operator.
+By default, Monggregate uses the `text` operator for search queries. This query will find all documents containing "apple" in the description field.
 
-You can also enhance your the search experience by making a fuzzy search, just by adding the `fuzzy` parameter:
+### Adding Fuzzy Matching
 
+To handle typos and minor spelling variations, add fuzzy matching:
 
 ```python
-
+from monggregate import Pipeline
 from monggregate.search.commons import FuzzyOptions
 
+pipeline = Pipeline()
 pipeline.search(
-        path="description"
-        query="apple", 
-        fuzzy=FuzzyOptions(
-            max_edits=2
-        )
+    path="description",
+    query="apple",
+    fuzzy=FuzzyOptions(
+        max_edits=2  # Allow up to 2 character edits
     )
-
+)
 ```
 
-You can build even richer search queries by adding more operators to your search stage as shown in the next section.
+This query will match terms like "appl", "appel", or "aple" in addition to "apple".
 
-## **Search Pipelines**
+## Advanced Search with Operators
 
+Atlas Search provides several specialized operators for different search needs:
 
-The search stages can be composed of multiple search operators, thus defining a compound search.
-As such, unlike for other stages, calling the `search` method on a `pipeline` object several times will not add a new `search` stage every time. Instead, every call will complete the previous `search` stage by appending a new clause or a new facet.
+### Text Search
 
-NOTE: The `$search` stage has to be the first stage of the pipeline.
-
-As an example, the following code:
 ```python
+pipeline = Pipeline()
 pipeline.search(
-        index="fruits", 
-        operator_name="compound"
-    ).search( 
-        clause_type="must", 
-        query="varieties", 
-        path="description"
-    ).search(
-        clause_type="mustNot",
-        query="apples",
-        path="description"
-    )
+    operator_name="text",  # Explicitly specify text operator
+    path="plot",
+    query="space adventure",
+    fuzzy=FuzzyOptions(max_edits=1)
+)
 ```
-will generate the following pipeline:
+
+### Autocomplete
+
+```python
+pipeline = Pipeline()
+pipeline.search(
+    operator_name="autocomplete",
+    path="title",
+    query="star w",      # Will match "Star Wars"
+    fuzzy=FuzzyOptions(max_edits=1)
+)
+```
+
+### Regex Search
+
+```python
+pipeline = Pipeline()
+pipeline.search(
+    operator_name="regex",
+    path="email",
+    query="^john\\.[a-z]+@example\\.com$"  # Match specific email pattern
+)
+```
+
+## Compound Search Queries
+
+The real power of Atlas Search emerges with compound queries that combine multiple search conditions. The `compound` operator supports four types of clauses:
+
+- **must**: Documents MUST match these conditions AND they affect relevance score
+- **filter**: Documents MUST match these conditions but they DON'T affect relevance score
+- **should**: Documents SHOULD match these conditions and they affect relevance score
+- **mustNot**: Documents MUST NOT match these conditions
+
+### Building Compound Queries
+
+Monggregate provides a unique "search pipeline" approach for building compound queries:
+
+```python
+pipeline = Pipeline()
+# Initialize a compound search
+pipeline.search(
+    index="movies",           # Search index name
+    operator_name="compound"
+).search(                     # Add a "must" clause
+    clause_type="must", 
+    query="adventure",
+    path="genres"
+).search(                     # Add a "should" clause
+    clause_type="should",
+    query="space",
+    path="plot"
+).search(                     # Add a "mustNot" clause
+    clause_type="mustNot",
+    query="horror",
+    path="genres"
+)
+```
+
+This query will:
+1. REQUIRE documents to have "adventure" in the genres field
+2. PREFER documents with "space" in the plot (boosting relevance score)
+3. EXCLUDE documents with "horror" in the genres field
+
+The resulting MongoDB aggregation will look like:
+
 ```json
 [
     {
         "$search": {
-            "index": "fruits",
+            "index": "movies",
             "compound": {
                 "must": {
-                    "query": "varieties",
-                    "path": "description"
+                    "text": {
+                        "query": "adventure",
+                        "path": "genres"
+                    }
+                },
+                "should": {
+                    "text": {
+                        "query": "space",
+                        "path": "plot"
+                    }
                 },
                 "mustNot": {
-                    "query": "apples",
-                    "path": "description"
+                    "text": {
+                        "query": "horror",
+                        "path": "genres"
+                    }
                 }
             }
         }
@@ -133,45 +163,99 @@ will generate the following pipeline:
 ]
 ```
 
-This example was copied from a past version* of MongoDB official doc and has just been adapted to `monggregate` syntax.
-Let's review what is going on here.
+## Faceted Search with searchMeta
 
-The first search call, initializes a `$search` stage with an "empty" `compound` operator.
-The second search call, completes the `compound` operator by adding a `text` operator in a `must` clause.
-The third search call, appends a `text` operator in a `mustNot` clause to the `compound` operator.
-
-At the end, the generated query will return documents containing the word "varieties" in the "description" field, but not containing the word "apples" in the "description" field.
-
-*Unfortunately, the current version of the doc does not provide such example anymore. It is planned that we update this page to use the movies collection instead.
-
-## **Faceted Search**
-
-Unlike previous sections, this section will be illustrated with the `search_meta` method instead of the `search` method, as it is a bit more relevant in the context of faceted search.
-
-`monggregate` eases the process of building faceted search queries.
-
-You can initialize a faceted search query as follows:
+Faceted search allows users to filter and navigate search results by categories or attributes. Use the `search_meta` stage to implement faceting:
 
 ```python
 pipeline = Pipeline()
+# Initialize a faceted search
 pipeline.search_meta(
-    index="fruits",
-    collector_name="facet",
-
+    index="movies",
+    collector_name="facet"
+).search_meta(               # Add string facet on genres
+    facet_type="string",
+    path="genres",
+    num_buckets=10           # Return top 10 genres
+).search_meta(               # Add numeric facet on year
+    facet_type="number",
+    path="year",
+    boundaries=[1970, 1980, 1990, 2000, 2010, 2020]
 )
 ```
 
-Then, you can add facets to your search query as follows:
+This creates a faceted search that:
+1. Groups movies by genre, showing the top 10 most common genres
+2. Splits movies into date ranges (pre-1970, 1970s, 1980s, etc.)
+
+### Combining Search and Facets
+
+You can combine regular search with faceting to create powerful filtered search experiences:
 
 ```python
+pipeline = Pipeline()
+# First define search criteria
 pipeline.search_meta(
+    index="movies",
+    operator_name="text",
+    path="plot",
+    query="space"
+# Then add faceting
+).search_meta(
+    collector_name="facet"
+).search_meta(
     facet_type="string",
-    path="category",
+    path="genres"
 )
 ```
 
-The first code sample initializes the faceted search but it is not usable as such. It is required to add at least one facet to the search query.
+This will search for "space" in movie plots, then return facet counts showing which genres are most common in the results.
 
-The second code sample adds a facet to the search query. The facet is of type `string` and will be performed on the `category` field.
+## Complete Search Example
 
-After initializing the faceted search, you can add as many facets as you want to your search query and you can also add other search operators to your search query (in the order that you want) such that the facets will be performed on the results of the search.
+Here's a comprehensive example that combines multiple search features:
+
+```python
+# Create search pipeline
+pipeline = Pipeline()
+pipeline.search(
+    index="default",
+    operator_name="compound"
+).search(
+    # Movies must be from the 2000s
+    clause_type="filter",
+    operator_name="range",
+    path="year",
+    gte=2000,
+    lte=2009
+).search(
+    # Movies should contain "future" in plot
+    clause_type="should",
+    operator_name="text",
+    path="plot",
+    query="future",
+    score={"boost": {"value": 3}}  # Boost relevance
+).search(
+    # Movies should contain "technology" in plot
+    clause_type="should",
+    operator_name="text",
+    path="plot",
+    query="technology"
+).limit(10).project(
+    title=1,
+    year=1,
+    plot=1,
+    score={"$meta": "searchScore"}  # Include relevance score
+)
+
+# Execute the pipeline
+results = list(db.movies.aggregate(pipeline.export()))
+for movie in results:
+    print(f"{movie['title']} ({movie['year']}) - Score: {movie['score']:.2f}")
+```
+
+## Next Steps
+
+- Learn about [vector search capabilities](vector-search.md) for semantic search and AI applications
+- Explore the full range of [MongoDB operators](operators.md) for additional data manipulation
+- Understand how to build complex [aggregation pipelines](pipeline.md) combining search with other stages

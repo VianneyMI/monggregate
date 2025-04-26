@@ -45,3 +45,7 @@ push = false
 dev = [
     "pytest>=8.3.5",
 ]
+doc = [
+    "mkdocs==1.5.2",
+    "mkdocs-material==9.2.7",
+]
