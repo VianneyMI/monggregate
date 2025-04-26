@@ -108,6 +108,8 @@ pipeline.lookup(
 ```
 > 🔍 The arguments names (`by` and `value` respectively) for the `sort` and `limit` stages are omitted.
 
+> 💡 **Note**: Just as the `Pipeline` class provides methods for all stages, the `S` (Dollar) object provides methods for all MongoDB operators. They serve similar roles in different contexts - `Pipeline` for constructing aggregation sequences, and `S` for building expressions with operators. For more details on the `S` object, see the [Operators documentation](operators.md).
+
 ## 🛠️ **Operators**
 
 You might have noticed in the grouping example how we tell Monggregate to perform operations on the groups.

@@ -2,7 +2,7 @@ site_name: Monggregate Documentation
 site_url: https://vianneymi.github.io/monggregate/
 nav:
   - Home: index.md
-  - Intro:
+  - Intro: 
     - MongoDB Umbrella: intro/mongodb-umbrella.md
     - MongoDB Aggregation Framework: intro/mongodb-aggregation-framework.md
     - Why use Monggregate ?: intro/why-use-monggregate.md
@@ -18,6 +18,8 @@ nav:
     - Select a nested document: how-to/select-a-nested-document.md
     - Create or Update a collection: how-to/create-or-update-a-collection.md
     - Combine collections: how-to/combine-collections.md
+  # - Reference:
+  #   - Dollar and DollarDollar: reference/dollar.md
   - Contributing: contributing.md
   #- API Reference: api.md
   - Changelog: changelog.md
