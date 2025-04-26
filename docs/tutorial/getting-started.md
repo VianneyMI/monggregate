@@ -1,10 +1,10 @@
-# Getting Started with Monggregate
+# 🚀 **Getting Started with Monggregate**
 
-## Overview
+## 📋 **Overview**
 
 Monggregate is a Python library designed to simplify working with MongoDB aggregation pipelines. It provides an object-oriented interface that lets you focus on data transformation requirements rather than MongoDB syntax.
 
-## Installation
+## 📥 **Installation**
 
 Monggregate is available on PyPI:
 
@@ -12,23 +12,23 @@ Monggregate is available on PyPI:
 pip install monggregate
 ```
 
-## Requirements
+## ✅ **Requirements**
 
 - Python 3.10 or higher
 - Dependencies: `pydantic`, `pyhumps`, and `typing-extensions`
 - A MongoDB driver for executing the query builder (e.g., `pymongo`)
 
-For a complete list of requirements, see the [requirements files in the repository](https://github.com/VianneyMI/monggregate/blob/main/requirements).
+> 📚 For a complete list of requirements, see the [requirements files in the repository](https://github.com/VianneyMI/monggregate/blob/main/requirements).
 
-## Basic Concepts
+## 🧩 **Basic Concepts**
 
 Monggregate's primary components:
 
-- **Pipeline**: The main class used to build and chain MongoDB aggregation operations
-- **Stages**: Individual operations like `match`, `group`, `sort`, etc.
-- **Operators**: MongoDB operators implemented with intuitive Python syntax
+- 📚 **Pipeline**: The main class used to build and chain MongoDB aggregation operations
+- 🔄 **Stages**: Individual operations like `match`, `group`, `sort`, etc.
+- 🛠️ **Operators**: MongoDB operators implemented with intuitive Python syntax
 
-## Quick Start Example
+## ⚡ **Quick Start Example**
 
 Here's a simple example to get you started:
 
@@ -56,9 +56,9 @@ results = list(db["products"].aggregate(pipeline.export()))
 print(results)
 ```
 
-## Using the Pipeline Builder
+## 🔧 **Using the Pipeline Builder**
 
-The recommended way to use Monggregate is through the `Pipeline` class:
+> 💡 The recommended way to use Monggregate is through the `Pipeline` class.
 
 ```python
 from monggregate import Pipeline
@@ -76,7 +76,7 @@ When you type `pipeline.` in your IDE, you'll see all available aggregation stag
 
 ![autocompletion](../img/demo_autocompletion.png)
 
-## Advanced Usage
+## 🌟 **Advanced Usage**
 
 Monggregate supports advanced MongoDB features like expressions and operators:
 
@@ -95,9 +95,9 @@ pipeline.match(
 )
 ```
 
-## Next Steps
+## 🔜 **Next Steps**
 
-- Learn more about [building pipelines](pipeline.md)
-- Explore available [aggregation stages](stages.md)
-- Discover how to use [MongoDB operators](operators.md)
-- Try [vector search capabilities](vector-search.md)
+- 📚 Learn more about [building pipelines](pipeline.md)
+- 🔄 Explore available [aggregation stages](stages.md)
+- 🛠️ Discover how to use [MongoDB operators](operators.md)
+- 🔍 Try [vector search capabilities](vector-search.md)

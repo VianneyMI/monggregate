@@ -12,6 +12,7 @@ nav:
     - Stages: tutorial/stages.md
     - Operators: tutorial/operators.md
     - Search: tutorial/search.md
+    - Vector Search: tutorial/vector-search.md
   - How-To:
     - Get Data: how-to/setup.md
     - Common Pipelines Use Cases: 

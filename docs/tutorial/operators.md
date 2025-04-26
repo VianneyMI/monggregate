@@ -1,18 +1,18 @@
-# **MongoDB Operators in Monggregate**
+# 🛠️ **MongoDB Operators in Monggregate**
 
 MongoDB operators are the building blocks of aggregation stages, providing powerful data transformation capabilities. Monggregate makes these operators accessible through an intuitive Python interface.
 
-## **Understanding Operators**
+## 🧠 **Understanding Operators**
 
-### **Relationship with Stages**
+### 🔄 **Relationship with Stages**
 
-Operators and stages work together in a MongoDB aggregation pipeline:
+> 💡 Operators and stages work together in a MongoDB aggregation pipeline.
 
 - **Optional but powerful**: Some stages (like `Match`) can function without operators, while others (like `Group`) require operators to be useful
 - **Parallel usage**: Unlike stages which are executed sequentially, multiple operators can be used simultaneously within a single stage
 - **Different syntax**: Operators in aggregation pipelines often have different syntax than their MongoDB Query Language (MQL) counterparts
 
-### **Example: Operators in Action**
+### 📊 **Example: Operators in Action**
 
 Consider this simple example that counts and collects movie titles by year:
 
@@ -29,7 +29,7 @@ pipeline.group(
 )
 ```
 
-## **Using Operators in Monggregate**
+## 🚀 **Using Operators in Monggregate**
 
 Monggregate provides two ways to access operators:
 
@@ -49,9 +49,9 @@ Monggregate provides two ways to access operators:
    push_operator = S.push("$title")
    ```
 
-The `S` shortcut is particularly convenient as it provides access to all operators through a single import.
+> 🔍 The `S` shortcut is particularly convenient as it provides access to all operators through a single import.
 
-## **Operator Compatibility**
+## 🔗 **Operator Compatibility**
 
 Each operator is designed to work with specific stages. Monggregate's documentation includes compatibility information for each operator.
 
@@ -61,7 +61,7 @@ For example, the `$mergeObjects` operator can only be used in these stages:
 - `$group`
 - `$replaceRoot`
 
-## **Advanced Example: Multiple Operators**
+## 🌟 **Advanced Example: Multiple Operators**
 
 This example demonstrates using multiple operators together to analyze movie data:
 
@@ -90,9 +90,9 @@ pipeline.match(
 )
 ```
 
-## **Complex Example: Using Expressions**
+## 🧩 **Complex Example: Using Expressions**
 
-Operators can be combined to create complex expressions:
+> 📘 Operators can be combined to create complex expressions.
 
 ```python
 from monggregate import Pipeline, S
@@ -117,11 +117,11 @@ pipeline.lookup(
 )
 ```
 
-## **Available Operators**
+## 📋 **Available Operators**
 
 Monggregate supports all major MongoDB operators, organized by category:
 
-### **Accumulators**
+### 📊 **Accumulators**
 - `$avg` - Calculate average value
 - `$count` - Count documents
 - `$first` - Return first value in a group
@@ -131,14 +131,14 @@ Monggregate supports all major MongoDB operators, organized by category:
 - `$push` - Append values to an array
 - `$sum` - Calculate sum
 
-### **Arithmetic**
+### 🧮 **Arithmetic**
 - `$add` - Addition
 - `$divide` - Division
 - `$multiply` - Multiplication
 - `$pow` - Exponentiation
 - `$subtract` - Subtraction
 
-### **Array**
+### 📝 **Array**
 - `$arrayToObject` - Convert array to object
 - `$filter` - Filter array elements
 - `$first` - Return first array element
@@ -150,12 +150,12 @@ Monggregate supports all major MongoDB operators, organized by category:
 - `$size` - Get array length
 - `$sortArray` - Sort array elements
 
-### **Boolean**
+### ⚖️ **Boolean**
 - `$and` - Logical AND
 - `$not` - Logical NOT
 - `$or` - Logical OR
 
-### **Comparison**
+### 🔍 **Comparison**
 - `$cmp` - Compare values
 - `$eq` - Equal to
 - `$gt` - Greater than
@@ -164,31 +164,31 @@ Monggregate supports all major MongoDB operators, organized by category:
 - `$lte` - Less than or equal to
 - `$ne` - Not equal to
 
-### **Conditional**
+### 🔀 **Conditional**
 - `$cond` - Conditional expression
 - `$ifNull` - Replace null values
 - `$switch` - Switch statement
 
-### **Date**
+### 📅 **Date**
 - `$millisecond` - Extract milliseconds
 - `$dateFromString` - Convert string to date
 - `$dateToString` - Convert date to string
 
-### **Object**
+### 🧱 **Object**
 - `$mergeObjects` - Combine multiple documents
 - `$objectToArray` - Convert object to array
 
-### **String**
+### 📝 **String**
 - `$concat` - Concatenate strings
 - `$dateFromString` - Parse date from string
 - `$dateToString` - Format date as string
 
-### **Search**
-For search-specific operators, see the [Search documentation](search.md).
+### 🔍 **Search**
+> 📚 For search-specific operators, see the [Search documentation](search.md).
 
-## **MQL vs. Aggregation Pipeline Syntax**
+## 🔄 **MQL vs. Aggregation Pipeline Syntax**
 
-Some operators have different syntax in MQL queries versus aggregation pipelines:
+> ℹ️ Some operators have different syntax in MQL queries versus aggregation pipelines.
 
 ### **Example: Greater Than or Equal (`$gte`)**
 
