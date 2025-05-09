@@ -7,6 +7,16 @@ from monggregate.utils import (
 )
 
 
+def test_str_enum():
+    """Test that StrEnum returns the correct value."""
+
+    class TestEnum(StrEnum):
+        VALUE = "value"
+
+    assert TestEnum.VALUE == "value"
+    assert str(TestEnum.VALUE) == "value"
+
+
 def test_to_unique_list():
     """Test that to_unique_list converts inputs to a list of unique values."""
     # Test with a string
@@ -36,3 +46,25 @@ def test_validate_field_path():
 
     # None value
     assert validate_field_path(None) is None
+
+
+def test_validate_field_paths():
+    """Test that validate_field_paths converts inputs to a list of unique values."""
+    # Test with a list
+    assert validate_field_paths(["field1", "field2", "field1"]) == [
+        "$field1",
+        "$field2",
+        "$field1",
+    ]
+
+    # Test with a set
+    assert validate_field_paths({"field1", "field2"}) == [
+        "$field1",
+        "$field2",
+    ]
+
+    # Test sorting with set
+    assert validate_field_paths({"field2", "field1"}) == [
+        "$field1",
+        "$field2",
+    ]
