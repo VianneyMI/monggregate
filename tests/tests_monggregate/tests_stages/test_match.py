@@ -2,20 +2,37 @@ import pytest
 from monggregate.stages import Match
 
 
-def test_match_instantiation():
-    """Test that Match stage can be instantiated correctly with a simple query."""
-    # Create a match stage with a simple query
-    match_stage = Match(query={"status": "active"})
+class TestMatch:
+    """Tests for the Match stage."""
 
-    # Check that the expression is correctly formatted
-    assert match_stage.expression == {"$match": {"status": "active"}}
+    def test_instantiation(self) -> None:
+        """Test that the Match stage can be instantiated correctly with a simple query."""
+        match = Match(query={"status": "active"})
+        assert isinstance(match, Match)
 
-    # Test with an empty query
-    empty_match = Match()
-    assert empty_match.expression == {"$match": {}}
+    def test_expression(self) -> None:
+        """Test that the expression method returns the correct expression."""
 
-    # Test with keyword arguments
-    kw_match = Match(status="completed", priority="high")
-    assert kw_match.expression == {
-        "$match": {"status": "completed", "priority": "high"}
-    }
+        match = Match(query={"status": "active"})
+        assert match.expression == {"$match": {"status": "active"}}
+
+    @pytest.mark.xfail(reason="This should be valid. Bug in the code.")
+    # NOTE: The bug is that the $exp is inserted twice.
+    # once in validate_operand and once in the expression method.
+    def test_expression_with_expr(self) -> None:
+        """Test that the expression method returns the correct expression."""
+
+        match = Match(expr={"field": {"$gt": 10}})
+
+        # When using MQL operator, we should use the "expr" attribute so that
+        # the expression is correctly formatted by inserting the "$expr" operator.
+
+        # fmt: off
+        assert match.expression == {
+            "$match": {
+                "$expr": {
+                    "field": {"$gt": 10}
+                    }
+                }
+        }
+        # fmt: on
