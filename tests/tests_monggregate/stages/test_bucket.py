@@ -1,54 +1,71 @@
+"""Tests for the Bucket stage."""
+
 import pytest
 from monggregate.stages import Bucket
 
 
-def test_bucket_instantiation():
-    """Test that Bucket stage can be instantiated correctly."""
-    # Test with basic configuration
-    bucket_stage = Bucket(by="$price", boundaries=[0, 100, 200, 300, 400])
+class TestBucket:
+    """Tests for the Bucket stage."""
 
-    expected_expression = {
-        "$bucket": {
-            "groupBy": "$price",
-            "boundaries": [0, 100, 200, 300, 400],
-            "default": None,
-            "output": None,
+    def test_instantiation(self) -> None:
+        """Test that Bucket stage can be instantiated correctly."""
+        # Test with basic configuration
+        bucket_stage = Bucket(by="$price", boundaries=[0, 100, 200, 300, 400])
+        assert isinstance(bucket_stage, Bucket)
+
+    def test_expression(self) -> None:
+        """Test that the expression method returns the correct expression."""
+
+        bucket_stage = Bucket(by="$price", boundaries=[0, 100, 200, 300, 400])
+        # fmt: off
+        expected_expression = {
+            "$bucket": {
+                "groupBy": "$price",
+                "boundaries": [0, 100, 200, 300, 400],
+                "default": None,
+                "output": None,
+            }
         }
-    }
 
-    assert bucket_stage.expression == expected_expression
+        assert bucket_stage.expression == expected_expression
 
-    # Test with default value
-    bucket_stage2 = Bucket(
-        by="$age", boundaries=[20, 30, 40, 50, 60, 70], default="other"
-    )
+    def test_with_default(self) -> None:
+        """Test that the default parameter is validated."""
 
-    expected_expression2 = {
-        "$bucket": {
-            "groupBy": "$age",
-            "boundaries": [20, 30, 40, 50, 60, 70],
-            "default": "other",
-            "output": None,
+        # Test with default value
+        bucket_stage = Bucket(
+            by="$age", boundaries=[20, 30, 40, 50, 60, 70], default="other"
+        )
+
+        expected_expression = {
+            "$bucket": {
+                "groupBy": "$age",
+                "boundaries": [20, 30, 40, 50, 60, 70],
+                "default": "other",
+                "output": None,
+            }
         }
-    }
 
-    assert bucket_stage2.expression == expected_expression2
+        assert bucket_stage.expression == expected_expression
 
-    # Test with custom output
-    bucket_stage3 = Bucket(
-        by="$score",
-        boundaries=[0, 50, 70, 90, 100],
-        default="outlier",
-        output={"count": {"$sum": 1}, "avg_score": {"$avg": "$score"}},
-    )
+    def test_with_custom_output(self) -> None:
+        """Test that the output parameter is validated."""
 
-    expected_expression3 = {
-        "$bucket": {
-            "groupBy": "$score",
-            "boundaries": [0, 50, 70, 90, 100],
-            "default": "outlier",
-            "output": {"count": {"$sum": 1}, "avg_score": {"$avg": "$score"}},
+        # Test with custom output
+        bucket_stage = Bucket(
+            by="$score",
+            boundaries=[0, 50, 70, 90, 100],
+            default="outlier",
+            output={"count": {"$sum": 1}, "avg_score": {"$avg": "$score"}},
+        )
+
+        expected_expression = {
+            "$bucket": {
+                "groupBy": "$score",
+                "boundaries": [0, 50, 70, 90, 100],
+                "default": "outlier",
+                "output": {"count": {"$sum": 1}, "avg_score": {"$avg": "$score"}},
+            }
         }
-    }
 
-    assert bucket_stage3.expression == expected_expression3
+        assert bucket_stage.expression == expected_expression

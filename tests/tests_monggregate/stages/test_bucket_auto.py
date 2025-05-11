@@ -7,7 +7,7 @@ from monggregate.stages.bucket_auto import GranularityEnum
 class TestBucketAuto:
     """Tests for the BucketAuto stage."""
 
-    def test_instantiation(self):
+    def test_instantiation(self) -> None:
         """Test that the BucketAuto stage can be instantiated."""
         stage = BucketAuto(
             group_by="field",
@@ -15,7 +15,7 @@ class TestBucketAuto:
         )
         assert isinstance(stage, BucketAuto)
 
-    def test_expression(self):
+    def test_expression(self) -> None:
         """Test that the expression method returns the correct expression."""
 
         stage = BucketAuto(group_by="field", buckets=10)
@@ -30,7 +30,7 @@ class TestBucketAuto:
         }
         # fmt: on
 
-    def test_with_output(self):
+    def test_with_output(self) -> None:
         """Test that the output parameter is validated."""
 
         stage = BucketAuto(group_by="field", buckets=10, output={"count": {"$sum": 1}})
@@ -43,7 +43,7 @@ class TestBucketAuto:
             }
         }
 
-    def test_with_granularity(self):
+    def test_with_granularity(self) -> None:
         """Test that the granularity parameter is validated."""
 
         stage = BucketAuto(group_by="field", buckets=10, granularity="R10")
