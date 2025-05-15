@@ -28,7 +28,7 @@ The $unset stage has the following syntax:
 # Considerations
 # -------------------------------
 
-$unset and $project 
+$unset and $project
 
 The $unset is an alias for the $project stage that removes/excludes fields:
 
@@ -51,6 +51,7 @@ from monggregate.base import Expression
 from monggregate.stages.stage import Stage
 from monggregate.fields import FieldName
 
+
 class Unset(Stage):
     """
     Abstration of MongoDB $unset statement that removes/exludes fields from documents.
@@ -64,23 +65,20 @@ class Unset(Stage):
     Online MongoDB documentation:
     -----------------------------
     Removes/excludes fields from documents.
-    
+
     Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/unset/#definition
     """
 
     field: FieldName | None
     fields: list[FieldName] | None
 
+    # NOTE: What happens if we pass both field and fields?
+
     @property
     def expression(self) -> Expression:
-
         if self.field:
-            _statement = {
-                "$unset": self.field
-            }
+            _statement = {"$unset": self.field}
         else:
-            _statement = {
-                "$unset": self.fields
-            }
+            _statement = {"$unset": self.fields}
 
         return self.express(_statement)
