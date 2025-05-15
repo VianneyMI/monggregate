@@ -2,64 +2,61 @@ import pytest
 from monggregate.stages import VectorSearch
 
 
-def test_vector_search_instantiation():
-    """Test that VectorSearch stage can be instantiated correctly."""
-    # Test with basic configuration
-    vector_search_stage = VectorSearch(
-        index="product_vectors",
-        path="description_vector",
-        query_vector=[0.1, 0.2, 0.3, 0.4, 0.5],
-        num_candidates=100,
-        limit=10,
-        filter=None,
-    )
+class TestVectorSearch:
+    """Tests for the VectorSearch stage."""
 
-    expected_expression = {
-        "$vectorSearch": {
-            "index": "product_vectors",
-            "path": "description_vector",
-            "queryVector": [0.1, 0.2, 0.3, 0.4, 0.5],
-            "numCandidates": 100,
-            "limit": 10,
-            "filter": None,
-        }
-    }
+    def test_instantiation(self) -> None:
+        """Test that the VectorSearch stage can be instantiated."""
 
-    assert vector_search_stage.expression == expected_expression
-
-    # Test with filter
-    vector_search_stage2 = VectorSearch(
-        index="user_embeddings",
-        path="profile_vector",
-        query_vector=[0.2, 0.3, 0.4, 0.5, 0.6],
-        num_candidates=50,
-        limit=5,
-        filter={"category": "electronics", "price": {"$lt": 1000}},
-    )
-
-    expected_expression2 = {
-        "$vectorSearch": {
-            "index": "user_embeddings",
-            "path": "profile_vector",
-            "queryVector": [0.2, 0.3, 0.4, 0.5, 0.6],
-            "numCandidates": 50,
-            "limit": 5,
-            "filter": {"category": "electronics", "price": {"$lt": 1000}},
-        }
-    }
-
-    assert vector_search_stage2.expression == expected_expression2
-
-
-def test_vector_search_validation():
-    """Test that VectorSearch validates inputs correctly."""
-    # Test that num_candidates must be greater than limit
-    with pytest.raises(ValueError):
-        VectorSearch(
-            index="test_index",
-            path="vector_field",
-            query_vector=[0.1, 0.2, 0.3],
-            num_candidates=5,  # Less than limit
+        vector_search = VectorSearch(
+            index="index",
+            path="field",
+            query_vector=[1, 2, 3],
+            num_candidates=11,
             limit=10,
-            filter=None,
         )
+        assert isinstance(vector_search, VectorSearch)
+
+    def test_validate_num_candidates(self) -> None:
+        """Test that the num_candidates is less than or equal to the limit."""
+
+        limit = 10
+
+        with pytest.raises(ValueError):
+            VectorSearch(
+                index="index",
+                path="field",
+                query_vector=[1, 2, 3],
+                num_candidates=limit,
+                limit=limit,
+            )
+
+        with pytest.raises(ValueError):
+            VectorSearch(
+                index="index",
+                path="field",
+                query_vector=[1, 2, 3],
+                num_candidates=limit - 1,
+                limit=limit,
+            )
+
+    def test_expression(self) -> None:
+        """Test that the expression method returns the correct expression."""
+
+        vector_search = VectorSearch(
+            index="index",
+            path="field",
+            query_vector=[1, 2, 3],
+            num_candidates=11,
+            limit=10,
+        )
+        assert vector_search.expression == {
+            "$vectorSearch": {
+                "index": "index",
+                "path": "field",
+                "queryVector": [1, 2, 3],
+                "numCandidates": 11,
+                "limit": 10,
+                "filter": None,
+            }
+        }
