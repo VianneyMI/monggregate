@@ -1,3 +1,4 @@
+import pytest
 from monggregate import Pipeline
 
 
