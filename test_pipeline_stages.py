@@ -1,6 +1,4 @@
-import pytest
 from monggregate import Pipeline
-
 
 pipeline = Pipeline()
 pipeline.lookup(
@@ -18,7 +16,7 @@ pipeline.lookup(
     right_on = "movie_id",
     name = "related_comments" 
 ).sort(
-    "movie_count"
+    by="movie_count"
 ).limit(
     10
 )
