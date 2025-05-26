@@ -9,7 +9,7 @@ from monggregate import Pipeline
 from pymongo import MongoClient
 
 client = MongoClient()
-db = client
+db = client["importer la base de données"]
 # The reviewer_id whose reviews we want to retrieve
 reviewer_id = "2961855"
 
