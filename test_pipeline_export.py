@@ -8,8 +8,11 @@
 from monggregate import Pipeline
 from pymongo import MongoClient
 
-client = MongoClient()
-db = client["importer la base de données"]
+client = MongoClient(MONGODB_URI)
+db = client["sample_mflix"]
+cursor = db["listingsAndReviews"].aggregate(pipeline=pipeline.export())
+documents = list(cursor)
+
 # The reviewer_id whose reviews we want to retrieve
 reviewer_id = "2961855"
 
@@ -22,6 +25,8 @@ pipeline.unwind(
     ).match(
         reviewer_id=reviewer_id
     )
+
+
 
 # Executing the pipeline
 cursor = db["listingsAndReviews"].aggregate(pipeline=pipeline.export())

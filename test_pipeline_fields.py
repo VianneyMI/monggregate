@@ -7,8 +7,8 @@
 from monggregate import Pipeline
 from pymongo import MongoClient
 
-client = MongoClient()
-db = client["importer la base de données"]
+client = pymongo.MongoClient(MONGODB_URI)
+db = client["sample_mflix"] 
 
 # Useful variables
 new_field = "review_ids"
