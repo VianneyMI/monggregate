@@ -2,7 +2,7 @@ site_name: Monggregate Documentation
 site_url: https://vianneymi.github.io/monggregate/
 nav:
   - Home: index.md
-  - Intro:
+  - Intro: 
     - MongoDB Umbrella: intro/mongodb-umbrella.md
     - MongoDB Aggregation Framework: intro/mongodb-aggregation-framework.md
     - Why use Monggregate ?: intro/why-use-monggregate.md
@@ -12,13 +12,14 @@ nav:
     - Stages: tutorial/stages.md
     - Operators: tutorial/operators.md
     - Search: tutorial/search.md
+    - Vector Search: tutorial/vector-search.md
   - How-To:
     - Get Data: how-to/setup.md
-    - Common Pipelines Use Cases: 
-      - Home: how-to/commons/home.md
-      - Select a nested document: how-to/commons/select-a-nested-document.md
-      - Create or Update a collection: how-to/commons/create-or-update-a-collection.md
-      - Combine collections: how-to/commons/combine-collections.md
+    - Select a nested document: how-to/select-a-nested-document.md
+    - Create or Update a collection: how-to/create-or-update-a-collection.md
+    - Combine collections: how-to/combine-collections.md
+  # - Reference:
+  #   - Dollar and DollarDollar: reference/dollar.md
   - Contributing: contributing.md
   #- API Reference: api.md
   - Changelog: changelog.md
@@ -33,13 +34,38 @@ theme:
   name: material
   logo: img/logo.png
   favicon: img/logo.png
-  # Material Options for syntax highlighting
+  palette:
+    primary: indigo
+    accent: indigo
+  features:
+    - content.code.annotate
+    - content.code.copy
+
+# Syntax highlighting and other extensions
 markdown_extensions:
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span
       pygments_lang_class: true
+      linenums: true
+      use_pygments: true
+
   - pymdownx.inlinehilite
   - pymdownx.snippets
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - pymdownx.details
+  - attr_list
+  - md_in_html
+
+# Add custom CSS for syntax highlighting
+extra_css:
+  - stylesheets/extra.css
+
 

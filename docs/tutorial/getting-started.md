@@ -1,44 +1,103 @@
-## **Installing Monggregate**
+# 🚀 **Getting Started with Monggregate**
 
-`monggregate` is available on PyPI:
+## 📋 **Overview**
+
+Monggregate is a Python library designed to simplify working with MongoDB aggregation pipelines. It provides an object-oriented interface that lets you focus on data transformation requirements rather than MongoDB syntax.
+
+## 📥 **Installation**
+
+Monggregate is available on PyPI:
 
 ```shell
 pip install monggregate
 ```
-## **Requirements**
 
-It requires python > 3.10 and has a few required dependencies such as `pydantic`, `pyhumps` and `typing-extensions`.
+## ✅ **Requirements**
 
-In order to execute the useful query builder in the library, you will need a MongoDB driver.
+- Python 3.10 or higher
+- Dependencies: `pydantic`, `pyhumps`, and `typing-extensions`
+- A MongoDB driver for executing the query builder (e.g., `pymongo`)
 
-For more details about the requirements, see the requirements files [in the repo](https://github.com/VianneyMI/monggregate/blob/main/requirements). 
+> 📚 For a complete list of requirements, see the [requirements files in the repository](https://github.com/VianneyMI/monggregate/blob/main/requirements).
 
-## **First Steps**
+## 🧩 **Basic Concepts**
 
-There are several ways you may use Monggregate.
+Monggregate's primary components:
 
-You can use the stages individually and build your pipeline step by step or you can use the `Pipeline` class to build your pipeline. That's actually the way I recommend you to use it.
+- 📚 **Pipeline**: The main class used to build and chain MongoDB aggregation operations
+- 🔄 **Stages**: Individual operations like `match`, `group`, `sort`, etc.
+- 🛠️ **Operators**: MongoDB operators implemented with intuitive Python syntax
 
-In that case, your first steps will look like this:
+## ⚡ **Quick Start Example**
+
+Here's a simple example to get you started:
 
 ```python
-
+import pymongo
 from monggregate import Pipeline
 
+# Connect to MongoDB
+client = pymongo.MongoClient("<insert-your-connection-string>")
+db = client["sample_database"]
+
+# Create a pipeline
 pipeline = Pipeline()
+
+# Build your pipeline with chained operations
+pipeline.match(
+    category="electronics"
+).sort(
+    by="price", 
+    descending=True
+).limit(5)
+
+# Execute the pipeline
+results = list(db["products"].aggregate(pipeline.export()))
+print(results)
 ```
 
-Now when writing,
+## 🔧 **Using the Pipeline Builder**
+
+> 💡 The recommended way to use Monggregate is through the `Pipeline` class.
 
 ```python
+from monggregate import Pipeline
 
-pipeline.
+# Initialize an empty pipeline
+pipeline = Pipeline()
+
+# Build your pipeline with autocomplete assistance
+pipeline.match(...)
+        .group(...)
+        .sort(...)
 ```
 
-your IDE will show you the available stages.
-
-You should see something like this.
+When you type `pipeline.` in your IDE, you'll see all available aggregation stages through autocompletion:
 
 ![autocompletion](../img/demo_autocompletion.png)
 
-In the [next page](pipeline.md), we will see in more details how to use the `Pipeline` class.
+## 🌟 **Advanced Usage**
+
+Monggregate supports advanced MongoDB features like expressions and operators:
+
+```python
+from monggregate import Pipeline, S
+
+pipeline = Pipeline()
+pipeline.match(
+    year=S.type_("number")  # Using operators
+).group(
+    by="year",
+    query={
+        "count": S.sum(1),
+        "titles": S.push("$title")
+    }
+)
+```
+
+## 🔜 **Next Steps**
+
+- 📚 Learn more about [building pipelines](pipeline.md)
+- 🔄 Explore available [aggregation stages](stages.md)
+- 🛠️ Discover how to use [MongoDB operators](operators.md)
+- 🔍 Try [vector search capabilities](vector-search.md)

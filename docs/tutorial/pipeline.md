@@ -1,71 +1,61 @@
+# 🔄 **MongoDB Aggregation Pipelines**
 
-Pipelines are a key concept in the aggregation framework.
-Therefore, the  `Pipeline` class is also a central class in the package<include link to api reference later on>, as it is used to build and execute pipelines.
+Pipelines are a fundamental concept in MongoDB's aggregation framework, providing a powerful way to process and transform data. The `Pipeline` class in Monggregate is designed to make building and executing these pipelines intuitive and efficient.
 
-## **Building a pipeline**
+## 🏗️ **Building a Pipeline**
 
-<include link to api reference later on>
-The `Pipeline` class includes a method for each stage of the aggregation framework.<br>
-Each stage of the aggregation framework also has its own class in the package.
-And each `Stage` class has a mirror method in the `Pipeline`. For more information, see the [stages page](stages.md).
+> 💡 The `Pipeline` class is the core of Monggregate, offering methods that correspond to each MongoDB aggregation stage.
 
-For example, the `Match` stage has a `match` method in the `Pipeline` class that can be typed as `pipeline.match()` like in the code snippet below.
+Every stage in MongoDB's aggregation framework has an equivalent class and method in Monggregate.
 
-```python
+### 🔰 **Basic Pipeline Construction**
+
+Creating a pipeline is straightforward:
+
+```python title="Basic Pipeline"
 from monggregate import Pipeline
 
+# Initialize an empty pipeline
 pipeline = Pipeline()
 
+# Add a Match stage to filter documents
 pipeline.match(title="A Star Is Born")
 ```
 
-The last line of code will add a `Match` stage instance to the pipeline and return the pipeline instance.
+Each method returns the pipeline instance, enabling method chaining to build complex pipelines with a clean, readable syntax:
 
-That way, you can chain the stages together to build your pipeline.
-
-```python
+```python title="Method Chaining"
 from monggregate import Pipeline
 
+# Build a multi-stage pipeline
 pipeline = Pipeline()
-
-# The below pipeline will return (when executed) 
-# the most recent movie with the title "A Star is Born"
 pipeline.match(
     title="A Star Is Born"
 ).sort(
-    by="year"
+    by="year",
+    descending=True
 ).limit(
     value=1
 )
-```	
+```
 
-## **Executing A Pipeline**
+> 📘 This pipeline will filter for movies titled "A Star Is Born", sort them by year in descending order, and return only the first result (the most recent movie with that title).
 
-So far, we have built our pipeline object. But what do we do with it?
+## ⚡ **Executing a Pipeline**
 
-`monggregate` offers a **bilateral** integration with the tool of your choice to execute the pipeline.
+Monggregate provides a simple way to export your pipeline to a format compatible with your MongoDB driver or ODM of choice:
 
-Bilateral because you can either integrate your pipeline to your tool or your tool to into the pipeline.
-In the following examples, I'll use `pymongo` because at the end of the day, `motor`, `beanie` and, `mongoengine` all use `pymongo` under the hood.
-
-### **Passing Your Pipeline to Your Tool**
-
-The `Pipeline` class has an `export` method that returns a list of dictionaries of raw MongoDB aggregation language, which is the format expected by `pymongo`.
-
-```python
-
+```python title="Executing a Pipeline"
 import pymongo
-from monggregate import Pipeline, S
+from monggregate import Pipeline
 
-# Setup your pymongo connexion
-MONGODB_URI = f"insert_your_own_uri"
+# Connect to MongoDB
+MONGODB_URI = "<insert-your-connection-string>"
 client = pymongo.MongoClient(MONGODB_URI)
 db = client["sample_mflix"]
 
-# Create your pipeline
+# Create and build your pipeline
 pipeline = Pipeline()
-
-# Build your pipeline
 pipeline.match(
     title="A Star Is Born"
 ).sort(
@@ -74,112 +64,110 @@ pipeline.match(
     value=1
 )
 
-# Execute your pipeline
-curosr = db["movies"].aggregate(pipeline.export())
-
-results = list(curosr)
-print(results)
-```
-### **Passing Your Tool to Your Pipeline**
-
-The pipeline class also has `run` method, a `_db` and a `collection` attributes that you can set that make your pipelines callable and runnable by being aware of your database connection.<br>
-Thus, you could write the above example like this:
-
-```python
-import pymongo
-from monggregate import Pipeline, S
-
-# Setup your pymongo connexion
-MONGODB_URI = f"insert_your_own_uri"
-client = pymongo.MongoClient(MONGODB_URI)
-db = client["sample_mflix"]
-
-# Create your database aware pipeline
-pipeline = Pipeline(_db=db, collection="movies") 
-
-# Build your pipeline
-# (This does not change)
-pipeline.match(
-    title="A Star Is Born"
-).sort(
-    by="year"
-).limit(
-    value=1
-)
-
-# Execute your pipeline
-# (The execution is simpler)
-results = pipeline.run()
+# Execute the pipeline
+cursor = db["movies"].aggregate(pipeline.export())
+results = list(cursor)
 print(results)
 ```
 
-It also has a `__call__` method, so you could replace the last two lines with:
+> 🔍 The `export()` method converts your Monggregate pipeline into the standard MongoDB format (a list of stage dictionaries) that any MongoDB driver can execute.
 
-```python
-results = pipeline()
-print(results)
-```
+## 🔄 **Alternative: Using Stage Classes Directly**
 
-### **How to Choose a Method?**
+For more complex scenarios or when you need to reuse stages, you can work directly with stage classes:
 
-It is up to you to choose the method that suits you the best.<br> 
-I personnaly use the first method for now.
-There are plans to replace the `_db` attribute by a `uri` attribute and make the database connection happen under the hood, but it is not implemented yet. When it is added into the second method, it will become more appealing.
-
-## **An Alternative to Build Pipelines**
-
-Another way to build your pipeline is to access the stages classes directly. All the stages are accessible in the `monggregate.stages` namespace.
-As such, you could write the above example like this:
-
-```python
-
+```python title="Working with Stage Classes"
 import pymongo
 from monggregate import Pipeline, stages
 
-
-# Setup your pymongo connexion
-MONGODB_URI = f"insert_your_own_uri"
+# Connect to MongoDB
+MONGODB_URI = "mongodb://localhost:27017"
 client = pymongo.MongoClient(MONGODB_URI)
 db = client["sample_mflix"]
 
-# Prepare your stages
+# Create individual stage instances
 match_stage = stages.Match(query={"title": "A Star Is Born"})
 sort_stage = stages.Sort(by="year")
 limit_stage = stages.Limit(value=1)
-stages = [match_stage, sort_stage, limit_stage]
 
-# Create your pipeline ready to be executed
-pipeline = Pipeline(stages=stages)
+# Combine stages into a pipeline
+pipeline_stages = [match_stage, sort_stage, limit_stage]
+pipeline = Pipeline(stages=pipeline_stages)
 
-# Execute your pipeline
-curosr = db["movies"].aggregate(pipeline.export())
-
-results = list(curosr)
+# Execute the pipeline
+cursor = db["movies"].aggregate(pipeline.export())
+results = list(cursor)
 print(results)
-
 ```
-Once again, it is a question of preferences.<br>
-This approach might be more readable for some people, but it is also more verbose.<br>
 
-However, there are still a couple of other advantages with this approach:
+This approach offers advantages:
+- 🔄 Stages can be reused across multiple pipelines
+- 🔀 Stages can be easily reordered or modified
+- 🧩 Complex stage configurations can be built separately
 
-* You can reuse the stages in multiple pipelines
-* You can easily reorder the stages
+## 🌟 **Complex Example: Analysis Pipeline**
 
-The second point is particularly relevant given the utilities function in the `Pipeline` class.
+Here's a more comprehensive example that analyzes movies by genre:
 
-## **Pipeline Utilities**
+```python title="Analysis Pipeline"
+import pymongo
+from monggregate import Pipeline, S
 
-The `Pipeline` class has a few utilities methods to help you build your pipeline.
+# Connect to MongoDB
+client = pymongo.MongoClient("mongodb://localhost:27017")
+db = client["sample_mflix"]
 
-Indeed it implements most of the python list methods, so you do not have to access the stages attribute to perform list operations.
+# Build an analysis pipeline
+pipeline = Pipeline()
+pipeline.match(
+    year={"$gte": 2000}  # Movies from 2000 onwards
+).unwind(
+    path="genres"  # Split documents by genre
+).group(
+    by="genres",  # Group by genre
+    query={
+        "count": S.sum(1),  # Count movies per genre
+        "avg_imdb": S.avg("$imdb.rating"),  # Average IMDB rating
+        "titles": S.push("$title")  # Collect titles
+    }
+).match(
+    count=S.gt(10)  # Only include genres with >10 movies
+).sort(
+    by="avg_imdb",
+    descending=True
+)
 
-In the examples above, `len(pipeline)` would return `3`.
+# Execute the pipeline
+results = list(db["movies"].aggregate(pipeline.export()))
+for genre in results:
+    print(f"{genre['_id']}: {genre['count']} movies, {genre['avg_imdb']:.2f} avg rating")
+```
 
-You could also, for example, append a stage to the pipeline like this:
+## 🛠️ **Pipeline Manipulation**
 
-```python
+> 📚 The `Pipeline` class implements Python's list interface, allowing you to manipulate stages programmatically:
+
+```python title="Pipeline Manipulation"
+# Check pipeline length
+print(len(pipeline))  # Returns number of stages
+
+# Add a stage to the end
 pipeline.append(stages.Project(title=1, year=1))
+
+# Add multiple stages
+pipeline.extend([
+    stages.Skip(10),
+    stages.Limit(5)
+])
+
+# Insert a stage at a specific position
+pipeline.insert(0, stages.Match(year=2020))
 ```
 
-You also have access to the `append`, `extend`, `insert`,  methods directly on the `pipeline` object. <TODO: implement pop remove and reverse>
+This makes pipelines highly flexible and enables dynamic pipeline construction based on conditions or user input.
+
+## 🔜 **Next Steps**
+
+- 🔄 Learn about available [aggregation stages](stages.md)
+- 🛠️ Explore [MongoDB operators](operators.md) for advanced data manipulation
+- 🔍 Discover [vector search capabilities](vector-search.md) for similarity queries

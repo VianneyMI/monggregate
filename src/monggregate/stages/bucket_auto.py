@@ -87,6 +87,7 @@ from monggregate.fields import FieldName
 from monggregate.operators.accumulators.accumulator import AccumulatorExpression
 from monggregate.utils import StrEnum, validate_field_path
 
+
 class GranularityEnum(StrEnum):
     """Supported values of granularity are"""
 
@@ -103,6 +104,7 @@ class GranularityEnum(StrEnum):
     E96 = "E96"
     E192 = "E192"
     POWERSOF2 = "POWERSOF2"
+
 
 class BucketAuto(Stage):
     """
@@ -145,34 +147,41 @@ class BucketAuto(Stage):
             * The _id.max field specifies the upper bound for the bucket. This bound is exclusive for all buckets except the final bucket in the series, where it is inclusive.
 
         * A count field that contains the number of documents in the bucket. The count field is included by default when the output document is not specified.
-    
+
     Source :  https://www.mongodb.com/docs/manual/reference/operator/aggregation/bucketAuto/
     """
 
     # Attributes
     # ----------------------------------------------------------------------------
-    by : Any = pyd.Field(...,alias="group_by") # probably should restrict type to field_paths an operator expressions
-    buckets : int = pyd.Field(..., gt=0)
-    output : dict[FieldName, AccumulatorExpression] | None = None# Accumulator Expressions #TODO : Define type and use it here
-    granularity : GranularityEnum | None = None
-
+    by: Any = pyd.Field(
+        ..., alias="group_by"
+    )  # probably should restrict type to field_paths an operator expressions
+    # TODO: When moving to pydantic v2, define two aliases for by (group_by and groupBy)
+    buckets: int = pyd.Field(..., gt=0)
+    output: dict[FieldName, AccumulatorExpression] | None = (
+        None  # Accumulator Expressions #TODO : Define type and use it here
+    )
+    granularity: GranularityEnum | None = None
 
     # Validators
     # ----------------------------------------------------------------------------
-    _validate_by = pyd.validator("by", pre=True, always=True, allow_reuse=True)(validate_field_path) # re-used pyd.validators
+    _validate_by = pyd.validator("by", pre=True, always=True, allow_reuse=True)(
+        validate_field_path
+    )  # re-used pyd.validators
 
     # Output
-    #-----------------------------------------------------------------------------
+    # -----------------------------------------------------------------------------
     @property
     def expression(self) -> Expression:
-
-      # NOTE : maybe it would be better to use _to_unique_list here
-      # or to further validate by.
-      return   self.express({
-            "$bucketAuto" : {
-                "groupBy" : self.by,
-                "buckets" : self.buckets,
-                "output" : self.output,
-                "granularity" : self.granularity.value if self.granularity else None
+        # NOTE : maybe it would be better to use _to_unique_list here
+        # or to further validate by.
+        return self.express(
+            {
+                "$bucketAuto": {
+                    "groupBy": self.by,
+                    "buckets": self.buckets,
+                    "output": self.output,
+                    "granularity": self.granularity.value if self.granularity else None,
+                }
             }
-        })
+        )

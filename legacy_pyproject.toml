@@ -1,0 +1,52 @@
+# pyproject.toml
+
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "monggregate"
+version = "0.21.0"
+description = "MongoDB aggregation pipelines made easy. Joins, grouping, counting and much more..."
+readme = "README.md"
+authors = [{ name = "Vianney Mixtur", email = "vianney.mixtur@outlook.fr" }]
+license = { file = "LICENSE" }
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent"
+]
+keywords = ["nosql", "mongo", "aggregation", "pymongo", "pandas", "pydantic"]
+dependencies = [
+    "pydantic >= 1.8.0",
+    "pyhumps >= 3.0.2",
+    "typing_extensions >= 4.0.1"
+]
+requires-python = ">=3.10"
+
+
+[project.optional-dependencies]
+mongo = ["pymongo >= 3.0.0"]
+dev = ["bumpver", "pytest", "mypy", "pylint"]
+
+[project.urls]
+Homepage = "https://github.com/VianneyMI/monggregate"
+documentation = "https://vianneymi.github.io/monggregate/"
+
+[tool.bumpver]
+current_version = "0.21.0"
+version_pattern = "MAJOR.MINOR.PATCH[PYTAGNUM]"
+commit_message = "bump version {old_version} -> {new_version}"
+commit = true
+tag = true
+push = false
+
+[tool.bumpver.file_patterns]
+"pyproject.toml" = [
+    'current_version = "{version}"',
+    'version = "{version}"'
+]
+"src/monggregate/__init__.py" = ['__version__ = "{version}"']

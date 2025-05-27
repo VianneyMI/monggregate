@@ -1,1 +1,0 @@
-The next pages, will show you some of the common use cases I faced and that led me to use the aggregation framework.

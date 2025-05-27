@@ -249,12 +249,14 @@ from monggregate.base import pyd, Expression
 from monggregate.stages.stage import Stage
 from monggregate.utils import StrEnum
 
+
 class LookupTypeEnum(StrEnum):
     """Enumeration of possible types of lookups"""
 
     SIMPLE = "simple"
     UNCORRELATED = "uncorrelated"
     CORRELATED = "correlated"
+
 
 class Lookup(Stage):
     """
@@ -302,39 +304,40 @@ class Lookup(Stage):
     Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/lookup/#mongodb-pipeline-pipe.-lookup
     """
 
-    right : str | None = pyd.Field(None, alias = "from")
-    on : str | None #  shortcut for when left_on is the same than right_on
-    left_on : str | None = pyd.Field(None,alias = "local_field")
-    right_on : str | None = pyd.Field(None, alias = "foreign_field")
-    name : str = pyd.Field(...,alias = "as") # | None
+    right: str | None = pyd.Field(None, alias="from")
+    on: str | None  #  shortcut for when left_on is the same than right_on
+    left_on: str | None = pyd.Field(None, alias="local_field")
+    right_on: str | None = pyd.Field(None, alias="foreign_field")
+    name: str = pyd.Field(..., alias="as")  # | None
+    # TODO: Add "matches" as default name
 
     # Subquery fields
     # ---------------------
-    let : dict | None # the let variables can be accessed by the stages in the pipeline including additional $lookup stages
-                      # nested in
-    pipeline : list[dict] | None
+    let: (
+        dict | None
+    )  # the let variables can be accessed by the stages in the pipeline including additional $lookup stages
+    # nested in
+    pipeline: list[dict] | None
 
-    type_ : LookupTypeEnum = pyd.Field("simple", exclude=True)
-        # internal variable to know the type of join (simple, correlated, uncorrelated)
+    type_: LookupTypeEnum = pyd.Field("simple", exclude=True)
+    # internal variable to know the type of join (simple, correlated, uncorrelated)
 
     @pyd.validator("left_on", "right_on", pre=True, always=True)
     @classmethod
-    def on_alias(cls, value:str, values:dict[str, str])->str:
+    def on_alias(cls, value: str, values: dict[str, str]) -> str:
         """Automatically fills left_on and right_on attributes when on is provided"""
 
-        on = values.get("on") # pylint: disable=invalid-name
+        on = values.get("on")  # pylint: disable=invalid-name
         if on:
             value = on
 
         return value
 
-
     @pyd.validator("type_", pre=True, always=True)
     @classmethod
-    def set_type(cls, value:str, values:dict)->str:
+    def set_type(cls, value: str, values: dict) -> str:
         """Set types dynamically"""
 
-        
         if value:
             pass
             # TODO : Raise a warning if passed
@@ -349,22 +352,16 @@ class Lookup(Stage):
         pipeline = values.get("pipeline")
 
         # Check combination of arguments
-        if right and left_on and right_on\
-            and not (let or pipeline):
-
+        if right and left_on and right_on and not (let or pipeline):
             type_ = "simple"
 
-
-        elif let and left_on and right_on\
-            and pipeline is not None:
-
+        elif let and left_on and right_on and pipeline is not None:
             type_ = "correlated"
 
         elif not let and pipeline is not None:
-                        # in a subquery to select all on the foreign collection
-                        # pipeline can be an empty list which is falsy
-            type_ =  "uncorrelated"
-
+            # in a subquery to select all on the foreign collection
+            # pipeline can be an empty list which is falsy
+            type_ = "uncorrelated"
 
         else:
             # TODO : Inprove this error message
@@ -376,39 +373,38 @@ class Lookup(Stage):
         return type_
 
     @property
-    def expression(self)->Expression:
+    def expression(self) -> Expression:
         """Generates statement from attributes"""
-
 
         # Generate statement:
         # -----------------------------------------------
         if self.type_ == "simple":
             statement = {
-                "$lookup":{
-                    "from":self.right,
-                    "localField":self.left_on,
-                    "foreignField":self.right_on,
-                    "as":self.name
+                "$lookup": {
+                    "from": self.right,
+                    "localField": self.left_on,
+                    "foreignField": self.right_on,
+                    "as": self.name,
                 }
             }
         elif self.type_ == "uncorrelated":
             statement = {
-                "$lookup":{
-                    "from":self.right,
-                    "let":self.let,
-                    "pipeline":self.pipeline,
-                    "as":self.name
+                "$lookup": {
+                    "from": self.right,
+                    "let": self.let,
+                    "pipeline": self.pipeline,
+                    "as": self.name,
                 }
             }
-        else: # should be correlated case
+        else:  # should be correlated case
             statement = {
-                "$lookup":{
-                    "from":self.right,
-                    "localField":self.right_on,
-                    "foreignField":self.right_on,
-                    "let":self.let,
-                    "pipeline":self.pipeline,
-                    "as":self.name
+                "$lookup": {
+                    "from": self.right,
+                    "localField": self.right_on,
+                    "foreignField": self.right_on,
+                    "let": self.let,
+                    "pipeline": self.pipeline,
+                    "as": self.name,
                 }
             }
 

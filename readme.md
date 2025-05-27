@@ -1,34 +1,34 @@
-## **Overview**
+# 📊 **Monggregate**
+
+## 📋 **Overview**
 
 Monggregate is a library that aims at simplifying usage of MongoDB aggregation pipelines in Python.
-It is based on MongoDB official Python driver, pymongo and on [pydantic](https://pydantic-docs.helpmanual.io/).
+It's a lightweight QueryBuilder for MongoDB aggregation pipelines based on [pydantic](https://docs.pydantic.dev/latest/) and compatible with all mongodb drivers and ODMs.
 
-### Features
+### ✨ **Features**
 
-- Provides an Object Oriented Programming (OOP) interface to the aggregation pipeline.
-- Allows you to focus on your requirements rather than MongoDB syntax.
-- Integrates all the MongoDB documentation and allows you to quickly refer to it without having to navigate to the website.
-- Enables autocompletion on the various MongoDB features.
-- Offers a pandas-style way to chain operations on data.
+- 🔄 Provides an Object Oriented Programming (OOP) interface to the aggregation pipeline.
+- 🎯 Allows you to focus on your requirements rather than MongoDB syntax.
+- 📚 Integrates all the MongoDB documentation and allows you to quickly refer to it without having to navigate to the website.
+- 🔍 Enables autocompletion on the various MongoDB features.
+- 🔗 Offers a pandas-style way to chain operations on data.
+- 💻 Mimics the syntax of your favorite tools like pandas
 
-## **Requirements**
 
-This package requires python > 3.10, pydantic > 1.8.0
+## 📥 **Installation**
 
-## **Installation**
-
-The repo is now available on PyPI:
+> 💡 The package is available on PyPI:
 
 ```shell
 pip install monggregate
 ```
 
 
-## **Usage**
+## 🚀 **Usage**
 
-The below examples reference the MongoDB sample_mflix database
+> 📘 The below examples reference the MongoDB sample_mflix database
 
-### Basic Pipeline usage
+### 🔰 **Basic Pipeline usage**
 
 ```python
 import os
@@ -40,9 +40,8 @@ from monggregate import Pipeline, S
 # Creating connexion string securely
 # You need to create a .env file with your password
 load_dotenv(verbose=True)
-PWD = os.environ["MONGODB_PASSWORD"] 
+MONGODB_URI = os.environ["MONGODB_URI"] 
 
-MONGODB_URI = f"mongodb+srv://dev:{PWD}@myserver.xciie.mongodb.net/?retryWrites=true&w=majority"
 
 # Connect to your MongoDB cluster:
 client = pymongo.MongoClient(MONGODB_URI)
@@ -72,7 +71,7 @@ print(results)
 
 
 
-### Advanced Usage, with MongoDB Operators
+### 🌟 **Advanced Usage, with MongoDB Operators**
 
 
 ```python
@@ -85,9 +84,7 @@ from monggregate import Pipeline, S
 
 # Creating connexion string securely
 load_dotenv(verbose=True)
-PWD = os.environ["MONGODB_PASSWORD"]
-MONGODB_URI = f"mongodb+srv://dev:{PWD}@myserver.xciie.mongodb.net/?retryWrites=true&w=majority"
-
+MONGODB_URI = os.environ["MONGODB_URI"]
 
 # Connect to your MongoDB cluster:
 client = pymongo.MongoClient(MONGODB_URI)
@@ -120,7 +117,7 @@ print(results)
 
 ```
 
-### Even More Advanced Usage with Expressions
+### 🔥 **Even More Advanced Usage with Expressions**
 
 ```python
 import os
@@ -131,9 +128,7 @@ from monggregate import Pipeline, S
 
 # Creating connexion string securely
 load_dotenv(verbose=True)
-PWD = os.environ["MONGODB_PASSWORD"]
-MONGODB_URI = f"mongodb+srv://dev:{PWD}@myserver.xciie.mongodb.net/?retryWrites=true&w=majority"
-
+MONGODB_URI = os.environ["MONGODB_URI"] 
 
 # Connect to your MongoDB cluster:
 client = pymongo.MongoClient(MONGODB_URI)
@@ -165,7 +160,7 @@ results = list(cursor)
 print(results)
 ```
 
-## **Going Further**
+## 🔍 **Going Further**
 
-* Check out the [full documentation](https://vianneymi.github.io/monggregate/) for more examples.
-* Check out this [medium article](https://medium.com/@vianney.mixtur_39698/mongo-db-aggregations-pipelines-made-easy-with-monggregate-680b322167d2).
+* 📚 Check out the [full documentation](https://vianneymi.github.io/monggregate/) for more examples.
+* 📝 Check out this [medium article](https://medium.com/@vianney.mixtur_39698/mongo-db-aggregations-pipelines-made-easy-with-monggregate-680b322167d2).

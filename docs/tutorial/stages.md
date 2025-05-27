@@ -1,21 +1,23 @@
-Stages are the building blocks of aggregation pipelines.
+# 🔄 **MongoDB Aggregation Stages**
 
-We saw in the [previous page](pipeline.md) two methods to compose stages to effectively build a pipeline:
+**Stages** are the building blocks of aggregation pipelines.
 
-* Using the pipeline stages methods
-* Using the stages classes directly
+> 📘 We saw in the [previous page](pipeline.md) two methods to compose stages to effectively build a pipeline:
+>
+> * Using the pipeline stages methods
+> * Using the stages classes directly
 
 Repeating what was described previously:
 
-> Each stage of the aggregation framework also has its own class in the package.
-And each `Stage` class has a mirror method in the `Pipeline`.
+> 💡 Each stage of the aggregation framework also has its own class in the package.
+> And each `Stage` class has a mirror method in the `Pipeline`.
 
-There is actually an asterik to this. Monggregate does not yet provide an interface to all of the stages provided by MongoDB.
+There is actually an asterisk to this. Monggregate does not yet provide an interface to all of the stages provided by MongoDB.
 It is a work in progress and the list of available stages will grow over time. If you want to contribute, please refer to the [contributing guide](../contributing.md).
 
 You can see the full list of stages provided by MongoDB [here](https://www.mongodb.com/docs/manual/reference/aggregation-quick-reference/#stages--db.collection.aggregate-).
 
-## **List of Available Stages In Monggregate**
+## 📋 **List of Available Stages In Monggregate**
 
 The following table lists the stages that are currently available in Monggregate:
 
@@ -43,12 +45,13 @@ The following table lists the stages that are currently available in Monggregate
 * `$unset`
 * `$unwind`
 
-## **Usage**
+## 🚀 **Usage**
 
-`monggregate` aims at providing a simple and intuitive interface to the MongoDB aggregation framework.<br>
+> 🎯 `monggregate` aims at providing a simple and intuitive interface to the MongoDB aggregation framework.
+
 Even though, it tries as much as possible to stick by the MongoDB aggregation framework syntax, it also tries to provide alternative ways to reproduce the syntax of other tools that new Mongo users might be more familiar with such as SQL and Pandas.
 
-For example, in the ``$group` stage, the MongoDB aggregation framework expects the grouping field(s) to be provided in the `_id` key. However, `monggregate` allows you to provide the grouping field(s) in the `by` key instead.
+For example, in the `$group` stage, the MongoDB aggregation framework expects the grouping field(s) to be provided in the `_id` key. However, `monggregate` allows you to provide the grouping field(s) in the `by` key instead.
 
 ```python
 pipeline = Pipeline()
@@ -71,8 +74,8 @@ Similarly, `monggregate` pipeline `lookup` method and `Lookup` class provide ali
 | foreignField          | foreign_field             | right_on                     |
 | as                    | as                        | name                         |
 
-Note here that the original names of the arguments were converted to snake_case to follow the Python convention.
-You cannot use the camelCase version of the arguments names here.
+> ℹ️ **Note**: The original names of the arguments were converted to snake_case to follow the Python convention.
+> You cannot use the camelCase version of the arguments names here.
 
 You can therefore use any combination of arguments names from the two rightmost columns above to build your stage.
 
@@ -103,16 +106,13 @@ pipeline.lookup(
     10
 )
 ```
-The arguments names (`by` and `value` respectively) for the `sort` and `limit` stages are ommited.
+> 🔍 The arguments names (`by` and `value` respectively) for the `sort` and `limit` stages are omitted.
 
-## **Operators**
+> 💡 **Note**: Just as the `Pipeline` class provides methods for all stages, the `S` (Dollar) object provides methods for all MongoDB operators. They serve similar roles in different contexts - `Pipeline` for constructing aggregation sequences, and `S` for building expressions with operators. For more details on the `S` object, see the [Operators documentation](operators.md).
+
+## 🛠️ **Operators**
 
 You might have noticed in the grouping example how we tell Monggregate to perform operations on the groups.
 In the example, we used the `$sum` and `$push` operators.
 
-For more information about operators, check the [next page](operators.md).
-
-## **Come Back Later**
-
-At this stage of the tutorial, you should already have enough to play around with the aggregation framework and start building your own pipelines.
-If you read everything in this documentation, you might want to check out the [operators page](operators.md) later on.
+> 🔜 For more information about operators, check the [next page](operators.md).
