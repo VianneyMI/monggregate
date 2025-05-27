@@ -15,7 +15,7 @@ class TestGroup:
         """Test that the expression method returns the correct expression."""
 
         group = Group(by="field")
-        assert group.expression == {"$group": {"_id": "field"}}
+        assert group.expression == {"$group": {"_id": "$field"}}
 
     def test_expression_with_query(self) -> None:
         """Test that the query parameter is validated."""
