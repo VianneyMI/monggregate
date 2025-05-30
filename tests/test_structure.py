@@ -24,15 +24,15 @@ import pytest
 from pathlib import Path
 
 
-@pytest.mark.skip(reason="We first need to catch up with the existing codebase.")
-def test_all_modules_have_tests():
-    """
-    Test that every Python module in src/monggregate has a corresponding
+@pytest.mark.xfail(reason="We first need to catch up with the existing codebase.")
+def test_all_modules_have_tests() -> None:
+    """Test that every Python module in src/monggregate has a corresponding
+
     test file in tests/tests_monggregate with the appropriate naming convention.
 
     Conventions:
     - src/monggregate/module.py -> tests/tests_monggregate/test_module.py
-    - src/monggregate/folder/module.py -> tests/tests_monggregate/folder/test_module.py
+    - src/monggregate/subpackage/module.py -> tests/tests_monggregate/test_subpackage/test_module.py
     """
     src_root = Path("src/monggregate")
     test_root = Path("tests/tests_monggregate")
@@ -67,7 +67,6 @@ def test_all_modules_have_tests():
         full_test_path = test_root / expected_test_file
 
         if not full_test_path.exists():
-            src_full_path = src_root / src_file
             test_rel_path = expected_test_file
             missing_tests.append((str(src_file), str(test_rel_path)))
 
