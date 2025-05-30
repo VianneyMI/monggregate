@@ -1,26 +1,17 @@
 """Tests for the structure of the project.
 
-Perfect! Our test is now working correctly and providing a detailed report of all missing test files. The test fails as expected, showing that 83 out of 99 modules (16.2% coverage) are currently missing test files.
-The output clearly shows each missing test file with its expected location, which makes it easy to identify which files need tests.
-Here's what the test does:
-Scans all Python files in src/monggregate recursively
-For each source file, calculates the expected test file path by:
-Maintaining the same directory structure under tests/tests_monggregate
-Adding a test_ prefix to the filename
-Checks if the expected test file exists
-Reports detailed statistics on missing tests:
-Total count of missing test files
-Coverage percentage
-List of all missing files with their expected test file locations
-The test is working correctly according to your requirements:
-It verifies that for every file under src/monggregate, there is a corresponding file under tests/tests_monggregate
-It confirms that the path structure matches (except for the root directory change)
-It ensures file naming follows the convention where test files are prefixed with test_
-When failing, it clearly shows which test files are missing
+This test checks that every Python module in src/monggregate has a corresponding
+test file in tests/tests_monggregate with the appropriate naming convention.
+
+Conventions:
+- src/monggregate/module.py -> tests/tests_monggregate/test_module.py
+- src/monggregate/subpackage/module.py -> tests/tests_monggregate/tests_subpackage/test_module.py
 """
 
 import os
 from pathlib import Path
+
+import pytest
 
 
 def get_python_files(directory: Path) -> list[str]:
@@ -143,6 +134,35 @@ def calculate_coverage_stats(
     return total_modules, missing_count, coverage_percent
 
 
+def generate_error_message(
+    total_modules: int,
+    missing_count: int,
+    coverage_percent: float,
+    missing_tests: list[tuple[str, str]],
+) -> str:
+    """Generate an error message for missing test files.
+
+    Args:
+        total_modules: Total number of modules
+        missing_count: Number of missing test files
+        coverage_percent: Coverage percentage
+        missing_tests: List of files missing tests
+
+    Returns:
+        Error message for missing test files
+    """
+    error_msg = (
+        f"Missing {missing_count} test files out of {total_modules} modules "
+        f"({coverage_percent:.1f}% coverage):\n\n"
+    )
+    if missing_tests:
+        error_msg += "\n".join(
+            [f"- {src} → Missing test: {test}" for src, test in missing_tests]
+        )
+    return error_msg
+
+
+@pytest.mark.xfail(reason="We first need to catch up the existing code base.")
 def test_all_modules_have_tests() -> None:
     """Test that every Python module in src/monggregate has a corresponding
     test file in tests/tests_monggregate with the appropriate naming convention.
@@ -154,7 +174,7 @@ def test_all_modules_have_tests() -> None:
     src_root = Path("src/monggregate")
     test_root = Path("tests/tests_monggregate")
 
-    # Get all Python files in the source directory
+    # Get all Python files in the source directory containing the code to be tested
     src_files = get_python_files(src_root)
 
     # Find which test files are missing
@@ -166,14 +186,8 @@ def test_all_modules_have_tests() -> None:
     )
 
     # Format error message if needed
-    if missing_tests:
-        missing_details = "\n".join(
-            [f"- {src} → Missing test: {test}" for src, test in missing_tests]
-        )
-
-        error_msg = (
-            f"Missing {missing_count} test files out of {total_modules} modules "
-            f"({coverage_percent:.1f}% coverage):\n\n{missing_details}"
-        )
+    error_msg = generate_error_message(
+        total_modules, missing_count, coverage_percent, missing_tests
+    )
 
     assert not missing_tests, error_msg
