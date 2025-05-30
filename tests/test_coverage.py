@@ -56,8 +56,11 @@ def test_all_modules_have_tests() -> None:
         # Transform the source path to the expected test path
         src_path = Path(src_file)
 
-        # Keep the same directory structure beneath tests/tests_monggregate
-        expected_test_dir = src_path.parent
+        # Add 'tests_' prefix to each directory in the path
+        path_parts = []
+        for part in src_path.parent.parts:
+            path_parts.append(f"tests_{part}" if part else part)
+        expected_test_dir = Path(*path_parts)
 
         # Add the "test_" prefix to the filename
         filename = f"test_{src_path.name}"
