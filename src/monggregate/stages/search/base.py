@@ -6,10 +6,8 @@ Internal module that contains the base class for search stages.
 from datetime import datetime
 from typing import Any, Callable, Literal
 
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
+
+from typing_extensions import Self
 from monggregate.base import pyd, BaseModel, Expression
 from monggregate.stages.stage import Stage
 from monggregate.search.collectors import Facet
