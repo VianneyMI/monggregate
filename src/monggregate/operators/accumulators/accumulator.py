@@ -16,7 +16,7 @@ from monggregate.utils import StrEnum
 class AccumulatorEnum(StrEnum):
     """Enumeration of available accumulators"""
 
-    ACCUMULATOR ="$accumulator"
+    ACCUMULATOR = "$accumulator"
     ADD_TO_SET = "$addToSet"
     AVG = "$avg"
     BOTTOM = "$bottom"
@@ -37,10 +37,12 @@ class AccumulatorEnum(StrEnum):
     TOP = "$top"
     TOP_N = "$topN"
 
+
 # Classes
 # -----------------------------------------
 class Accumulator(Operator, ABC):
     """Base class for accumulators"""
+
 
 # Type aliases
 # -----------------------------------------
