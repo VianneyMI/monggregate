@@ -1,7 +1,5 @@
 """Tests for `monggregate.operators.accumulators.avg` module."""
 
-import pytest
-
 from monggregate.operators.accumulators.avg import Average
 
 
