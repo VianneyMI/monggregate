@@ -2,6 +2,22 @@
 
 from monggregate.operators.date.millisecond import Millisecond
 
+def test_millisecond_expression():
+    # Setup
+    operand = "$date"
+    timezone = "America/New_York"
+    expected_expression = {
+        "$millisecond": {"date": operand, "timezone": timezone}
+    }
+
+    # Act
+    millisecond_op = Millisecond(operand=operand, timezone=timezone)
+    result_expression = millisecond_op.expression
+
+    # Assert
+    assert result_expression == expected_expression
+
+
 
 class TestMillisecond:
     """Tests for `Millisecond` class."""
