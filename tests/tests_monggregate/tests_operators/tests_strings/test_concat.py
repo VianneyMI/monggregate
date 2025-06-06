@@ -2,6 +2,18 @@
 
 from monggregate.operators.strings.concat import Concat
 
+def test_concat_expression():
+    # Setup
+    operands = ["$firstName", " ", "$lastName"]
+    expected_expression = {"$concat": ["$firstName", " ", "$lastName"]}
+
+    # Act
+    concat_op = Concat(operands=operands)
+    result_expression = concat_op.expression
+
+    # Assert
+    assert result_expression == expected_expression
+
 
 class TestConcat:
     """Tests for `Concat` class."""
