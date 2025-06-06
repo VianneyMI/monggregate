@@ -2,6 +2,18 @@
 
 from monggregate.operators.array.array_to_object import ArrayToObject
 
+def test_array_to_object_expression():
+    # Setup
+    operand = [ { "k": "item", "v": "abc123"}, { "k": "qty", "v": 25 } ]
+    expected_expression = { "$arrayToObject": operand }
+
+    # Act
+    array_to_object_op = ArrayToObject(operand=operand)
+    result_expression = array_to_object_op.expression
+
+    # Assert
+    assert result_expression == expected_expression
+
 
 class TestArrayToObject:
     """Tests for `ArrayToObject` class."""
