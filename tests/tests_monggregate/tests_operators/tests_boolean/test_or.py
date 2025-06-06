@@ -2,6 +2,20 @@
 
 from monggregate.operators.boolean.or_ import Or
 
+from monggregate.operators.boolean.or_ import Or
+
+def test_or_expression():
+    # Setup
+    operands = [{"$gt": 5}, {"$eq": "active"}]
+    expected_expression = {"$or": operands}
+
+    # Act
+    or_op = Or(operands=operands)
+    result_expression = or_op.expression
+
+    # Assert
+    assert result_expression == expected_expression
+
 
 class TestOr:
     """Tests for `Or` class."""
