@@ -2,6 +2,19 @@
 
 from monggregate.operators.comparison.ne import NotEqual
 
+def test_not_equal_expression():
+    # Setup
+    left = "$field"
+    right = 10
+    expected_expression = {"$ne": [left, right]}
+
+    # Act
+    ne_op = NotEqual(left=left, right=right)
+    result_expression = ne_op.expression
+
+    # Assert
+    assert result_expression == expected_expression
+
 
 class TestNotEqual:
     """Tests for `NotEqual` class."""

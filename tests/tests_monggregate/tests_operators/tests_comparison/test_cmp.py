@@ -2,6 +2,19 @@
 
 from monggregate.operators.comparison.cmp import Compare
 
+def test_compare_expression():
+    # Setup
+    left = "$field"
+    right = 10
+    expected_expression = {"$cmp": [left, right]}
+
+    # Act
+    cmp_op = Compare(left=left, right=right)
+    result_expression = cmp_op.expression
+
+    # Assert
+    assert result_expression == expected_expression
+
 
 class TestCompare:
     """Tests for `Compare` class."""
