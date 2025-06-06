@@ -2,6 +2,18 @@
 
 from monggregate.operators.objects.merge_objects import MergeObjects
 
+def test_merge_objects_expression():
+    # Setup
+    operand = [{"field1": 1}, {"field2": 2}]
+    expected_expression = {"$mergeObjects": operand}
+
+    # Act
+    merge_objects_op = MergeObjects(operand=operand)
+    result_expression = merge_objects_op.expression
+
+    # Assert
+    assert result_expression == expected_expression
+
 
 class TestMergeObjects:
     """Tests for `MergeObjects` class."""
