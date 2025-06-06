@@ -2,6 +2,18 @@
 
 from monggregate.operators.arithmetic.multiply import Multiply
 
+def test_multiply_expression():
+    # Setup
+    operands = [2, 3, 4]
+    expected_expression = {"$multiply": operands}
+
+    # Act
+    multiply_op = Multiply(operands=operands)
+    result_expression = multiply_op.expression
+
+    # Assert
+    assert result_expression == expected_expression
+
 
 class TestMultiply:
     """Tests for `Multiply` class."""

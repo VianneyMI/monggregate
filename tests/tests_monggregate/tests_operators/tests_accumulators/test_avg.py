@@ -1,7 +1,19 @@
 """Tests for `monggregate.operators.accumulators.avg` module."""
 
-from monggregate.operators.accumulators.avg import Average
+from monggregate.operators.accumulators.avg import Average, avg
 
+def test_avg_expression():
+    # Setup
+    expected_expression = {
+        "$avg": None
+    }
+
+    # Act
+    avg_op = Average()            
+    result_expression = avg_op.expression
+
+    # Assert
+    assert result_expression == expected_expression
 
 class TestAverage:
     """Tests for `Average` class."""

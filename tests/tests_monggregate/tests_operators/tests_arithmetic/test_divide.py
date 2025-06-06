@@ -2,6 +2,19 @@
 
 from monggregate.operators.arithmetic.divide import Divide
 
+def test_divide_expression():
+    # Setup
+    numerator = 10
+    denominator = 2
+    expected_expression = {"$divide": [numerator, denominator]}
+
+    # Act
+    divide_op = Divide(numerator=numerator, denominator=denominator)
+    result_expression = divide_op.expression
+
+    # Assert
+    assert result_expression == expected_expression
+
 
 class TestDivide:
     """Tests for `Divide` class."""
