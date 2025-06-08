@@ -2,6 +2,21 @@
 
 from monggregate.operators.comparison.lt import LowerThan
 
+from monggregate.operators.comparison.lt import LowerThan
+
+def test_lower_than_expression():
+    # Setup
+    left = "$field"
+    right = 10
+    expected_expression = {"$lt": [left, right]}
+
+    # Act
+    lt_op = LowerThan(left=left, right=right)
+    result_expression = lt_op.expression
+
+    # Assert
+    assert result_expression == expected_expression
+
 
 class TestLowerThan:
     """Tests for `LowerThan` class."""

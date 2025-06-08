@@ -2,6 +2,18 @@
 
 from monggregate.operators.type_.type_ import Type_
 
+def test_type_expression():
+    # Setup
+    operand = "$field"
+    expected_expression = {"$type": "$field"}
+
+    # Act
+    type_op = Type_(operand=operand)
+    result_expression = type_op.expression
+
+    # Assert
+    assert result_expression == expected_expression
+
 
 class TestType:
     """Tests for `Type_` class."""

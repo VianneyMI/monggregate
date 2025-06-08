@@ -2,6 +2,19 @@
 
 from monggregate.operators.comparison.eq import Equal
 
+def test_equal_expression():
+    # Setup
+    left = "$field"
+    right = 10
+    expected_expression = {"$eq": [left, right]}
+
+    # Act
+    equal_op = Equal(left=left, right=right)
+    result_expression = equal_op.expression
+
+    # Assert
+    assert result_expression == expected_expression
+
 
 class TestEqual:
     """Tests for `Equal` class."""

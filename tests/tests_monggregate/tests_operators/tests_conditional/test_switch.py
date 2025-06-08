@@ -2,6 +2,27 @@
 
 from monggregate.operators.conditional.switch import Switch
 
+def test_switch_expression():
+    # Setup
+    branches = [
+        {"case": {"$eq": ["$grade", "A"]}, "then": "Type A"},
+        {"case": {"$eq": ["$grade", "B"]}, "then": "Type B"},
+    ]
+    default = "Unknown Type"
+    expected_expression = {
+        "$switch": {
+            "branches": branches,
+            "default": default
+        }
+    }
+
+    # Act
+    switch_op = Switch(branches=branches, default=default)
+    result_expression = switch_op.expression
+
+    # Assert
+    assert result_expression == expected_expression
+
 
 class TestSwitch:
     """Tests for `Switch` class."""

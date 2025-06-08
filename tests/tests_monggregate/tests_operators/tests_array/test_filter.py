@@ -2,6 +2,28 @@
 
 from monggregate.operators.array.filter import Filter
 
+def test_filter_expression():
+    # Setup
+    operand = [1, 2, 3, 4, 5]
+    let = "num"
+    query = {"$gt": ["$$num", 5]}
+    limit = None
+    expected_expression = {
+        "$filter": {
+            "input": operand,
+            "cond": query,
+            "as": let,
+            "limit": limit
+        }
+    }
+
+    # Act
+    filter_op = Filter(operand=operand, query=query, let=let, limit=limit)
+    result_expression = filter_op.expression
+
+    # Assert
+    assert result_expression == expected_expression
+
 
 class TestFilter:
     """Tests for `Filter` class."""

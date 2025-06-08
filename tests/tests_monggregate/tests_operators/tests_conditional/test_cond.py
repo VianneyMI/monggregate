@@ -2,6 +2,26 @@
 
 from monggregate.operators.conditional.cond import Cond
 
+def test_cond_expression():
+    # Setup
+    if_ = {"$gt": ["$age", 18]}
+    then_ = "Passed"
+    else_ = "Failed"
+    expected_expression = {
+        "$cond": {
+            "if": if_,
+            "then": then_,
+            "else": else_
+        }
+    }
+
+    # Act
+    cond_op = Cond(if_=if_, then_=then_, else_=else_)
+    result_expression = cond_op.expression
+
+    # Assert
+    assert result_expression == expected_expression
+
 
 class TestCond:
     """Tests for `Cond` class."""

@@ -2,6 +2,24 @@
 
 from monggregate.operators.array.sort_array import SortArray
 
+def test_sort_array_expression():
+    # Setup
+    array = [{"score": 10}, {"score": 20}, {"score": 30}]
+    sort_by = {"score": 1}
+    expected_expression = {
+        "$sortArray": {
+            "input": array,
+            "sortBy": sort_by
+        }
+    }
+
+    # Act
+    sort_op = SortArray(operand=array, by=sort_by)
+    result_expression = sort_op.expression
+
+    # Assert
+    assert result_expression == expected_expression
+
 
 class TestSortArray:
     """Tests for `SortArray` class."""

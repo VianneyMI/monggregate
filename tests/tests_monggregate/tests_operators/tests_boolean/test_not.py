@@ -2,6 +2,18 @@
 
 from monggregate.operators.boolean.not_ import Not
 
+def test_not_expression():
+    # Setup
+    operand = {"$eq": ["inactive"]}
+    expected_expression = {"$not": [operand]}
+
+    # Act
+    not_op = Not(operand=operand)
+    result_expression = not_op.expression
+
+    # Assert
+    assert result_expression == expected_expression
+
 
 class TestNot:
     """Tests for `Not` class."""

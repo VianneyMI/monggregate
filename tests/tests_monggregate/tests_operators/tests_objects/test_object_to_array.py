@@ -2,6 +2,18 @@
 
 from monggregate.operators.objects.object_to_array import ObjectToArray
 
+def test_object_to_array_expression():
+    # Setup
+    operand = "$document"
+    expected_expression = {"$objectToArray": "$document"}
+
+    # Act
+    object_to_array_op = ObjectToArray(operand=operand)
+    result_expression = object_to_array_op.expression
+
+    # Assert
+    assert result_expression == expected_expression
+
 
 class TestObjectToArray:
     """Tests for `ObjectToArray` class."""

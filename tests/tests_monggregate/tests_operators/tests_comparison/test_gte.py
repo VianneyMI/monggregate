@@ -2,6 +2,21 @@
 
 from monggregate.operators.comparison.gte import GreatherThanOrEqual
 
+from monggregate.operators.comparison.gte import GreatherThanOrEqual
+
+def test_greather_than_or_equal_expression():
+    # Setup
+    left = "$field"
+    right = 10
+    expected_expression = {"$gte": [left, right]}
+
+    # Act
+    gte_op = GreatherThanOrEqual(left=left, right=right)
+    result_expression = gte_op.expression
+
+    # Assert
+    assert result_expression == expected_expression
+
 
 class TestGreatherThanOrEqual:
     """Tests for `GreatherThanOrEqual` class."""

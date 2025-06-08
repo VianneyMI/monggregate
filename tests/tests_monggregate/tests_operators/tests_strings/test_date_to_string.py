@@ -2,6 +2,33 @@
 
 from monggregate.operators.strings.date_to_string import DateToString
 
+def test_date_to_string_expression_full():
+    # Setup
+    date = "$date"
+    format_ = "%Y-%m-%d"
+    timezone = "America/New_York"
+    on_null = "No date available"
+    expected_expression = {
+        "$dateToString": {
+            "date": "$date",
+            "format": "%Y-%m-%d",
+            "timezone": "America/New_York",
+            "onNull": "No date available",
+        }
+    }
+
+    # Act
+    date_to_string_op = DateToString(
+        date=date,
+        format_=format_,
+        timezone=timezone,
+        on_null=on_null,
+    )
+    result_expression = date_to_string_op.expression
+
+    # Assert
+    assert result_expression == expected_expression
+
 
 class TestDateToString:
     """Tests for `DateToString` class."""

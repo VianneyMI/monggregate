@@ -2,6 +2,19 @@
 
 from monggregate.operators.comparison.gt import GreatherThan
 
+def test_greather_than_expression():
+    # Setup
+    left = "$field"
+    right = 10
+    expected_expression = {"$gt": [left, right]}
+
+    # Act
+    gt_op = GreatherThan(left=left, right=right)
+    result_expression = gt_op.expression
+
+    # Assert
+    assert result_expression == expected_expression
+
 
 class TestGreatherThan:
     """Tests for `GreatherThan` class."""
@@ -15,3 +28,4 @@ class TestGreatherThan:
         """Test that `GreatherThan` class returns the correct expression."""
         gt_op = GreatherThan(left="$field", right=10)
         assert gt_op.expression == {"$gt": ["$field", 10]}
+        

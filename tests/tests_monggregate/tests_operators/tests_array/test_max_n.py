@@ -2,6 +2,24 @@
 
 from monggregate.operators.array.max_n import MaxN
 
+def test_maxn_expression():
+    # Setup
+    operand = [1, 2, 3]
+    limit = 3
+    expected_expression = {
+        "$maxN": {
+            "n": limit,
+            "input": operand
+        }
+    }
+
+    # Act
+    max_n_op = MaxN(operand=operand, limit=limit)
+    result_expression = max_n_op.expression
+
+    # Assert
+    assert result_expression == expected_expression
+
 
 class TestMaxN:
     """Tests for `MaxN` class."""

@@ -1,6 +1,18 @@
 """Tests for `monggregate.operators.accumulators.sum` module."""
 
-from monggregate.operators.accumulators.sum import Sum
+import pytest
+from monggregate.operators.accumulators.sum import Sum, sum
+
+def test_sum_operand():
+    # Setup
+    operand = "$amount"
+
+    # Act
+    result_op = {"$sum": operand}
+    expected_expression = {"$sum": "$amount"}
+
+    # Assert
+    assert result_op == expected_expression
 
 
 class TestSum:

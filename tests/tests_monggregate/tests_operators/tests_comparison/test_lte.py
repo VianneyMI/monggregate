@@ -2,6 +2,19 @@
 
 from monggregate.operators.comparison.lte import LowerThanOrEqual
 
+def test_lower_than_or_equal_expression():
+    # Setup
+    left = "$field"
+    right = 10
+    expected_expression = {"$lte": [left, right]}
+
+    # Act
+    lte_op = LowerThanOrEqual(left=left, right=right)
+    result_expression = lte_op.expression
+
+    # Assert
+    assert result_expression == expected_expression
+
 
 class TestLowerThanOrEqual:
     """Tests for `LowerThanOrEqual` class."""
