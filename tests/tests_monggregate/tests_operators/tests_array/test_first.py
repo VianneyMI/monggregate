@@ -9,7 +9,7 @@ def test_first_expression() -> None:
     expected_expression = {"$first": array}
 
     # Act
-    first_op = first(operand=array)
+    first_op = first(array=array)
     result_expression = first_op.expression
 
     # Assert
