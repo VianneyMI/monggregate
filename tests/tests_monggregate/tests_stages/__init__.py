@@ -1,1 +1,1 @@
-"""Tests for the monggregate.stages package."""
+"""Tests for `monggregate.stages` subpackage."""

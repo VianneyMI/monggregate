@@ -1,16 +1,15 @@
 """Tests for `monggregate.operators.array.first` module."""
 
-from monggregate.operators.array.first import First
+from monggregate.operators.array.first import First, first
 
-from monggregate.operators.array.first import First
 
-def test_first_expression():
+def test_first_expression() -> None:
     # Setup
     array = [10, 20, 30]
     expected_expression = {"$first": array}
 
     # Act
-    first_op = First(operand=array)
+    first_op = first(operand=array)
     result_expression = first_op.expression
 
     # Assert
