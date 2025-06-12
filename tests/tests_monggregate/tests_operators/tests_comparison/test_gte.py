@@ -2,8 +2,6 @@
 
 from monggregate.operators.comparison.gte import GreatherThanOrEqual
 
-from monggregate.operators.comparison.gte import GreatherThanOrEqual
-
 def test_greather_than_or_equal_expression():
     # Setup
     left = "$field"

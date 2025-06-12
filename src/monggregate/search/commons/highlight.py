@@ -8,23 +8,41 @@ from typing import Literal
 
 from monggregate.base import BaseModel, pyd
 
-# TODO : Check if those are missing an expression property <VM, 21/04/2024>
+
 class HighlightOptions(BaseModel):
     """Class defining the highlighting parameters."""
 
-    path : str
-    max_chars_to_examine : int = pyd.Field(500000, alias="maxCharsToExamine")
-    max_num_passages : int = pyd.Field(5, alias="maxNumPassages")
+    path: str
+    max_chars_to_examine: int = pyd.Field(500000, alias="maxCharsToExamine")
+    max_num_passages: int = pyd.Field(5, alias="maxNumPassages")
+
+    @property
+    def expression(self) -> str:
+        """Return the expression for the highlighting."""
+
+        return self.model_dump(by_alias=True)
+
 
 class HighlightText(BaseModel):
     """Highlighted text."""
 
-    value : str
-    type : Literal["hit", "text"]
+    value: str
+    type: Literal["hit", "text"]
+
+    @property
+    def expression(self) -> str:
+        """Return the expression for the highlighting."""
+        return self.model_dump(by_alias=True)
+
 
 class HightlightOutput(BaseModel):
     """Class defining the highlights appear in a search query results."""
 
-    path : str
-    texts : list[HighlightText]
-    score : float
+    path: str
+    texts: list[HighlightText]
+    score: float
+
+    @property
+    def expression(self) -> str:
+        """Return the expression for the highlighting."""
+        return self.model_dump(by_alias=True)

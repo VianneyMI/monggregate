@@ -1,0 +1,1 @@
+"""Tests for `monggregate.search.collectors`"""

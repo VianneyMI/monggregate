@@ -2,8 +2,6 @@
 
 from monggregate.operators.comparison.lt import LowerThan
 
-from monggregate.operators.comparison.lt import LowerThan
-
 def test_lower_than_expression():
     # Setup
     left = "$field"
