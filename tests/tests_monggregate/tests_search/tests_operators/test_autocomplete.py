@@ -1,53 +1,40 @@
-from monggregate.search.operators.autocomplete import Autocomplete, TokenOrderEnum
+import pytest
+from monggregate.search.operators.autocomplete import Autocomplete
+from monggregate.search.commons import FuzzyOptions
 
 def test_autocomplete_expression():
     # Setup
-    query = "some_query"
-    path = "some_field"
+    query = "test"
+    path = "field"
+    fuzzy_options = FuzzyOptions(maxEdits=1, prefixLength=1, maxExpansions=10)
+
+    autocomplete = Autocomplete(
+        query=query,
+        path=path,
+        token_order="any",
+        fuzzy=fuzzy_options,
+        score={"boost": 2}
+    )
+
     expected_expression = {
         "autocomplete": {
             "query": query,
             "path": path,
             "tokenOrder": "any",
-            "fuzzy": None,
-            "score": None
+            "fuzzy": {
+                "maxEdits": 1,
+                "prefixLength": 1,
+                "maxExpansions": 10
+            },
+            "score": {"boost": 2}
         }
     }
 
     # Act
-    autocomplete_op = Autocomplete(query=query, path=path)
-    result_expression = autocomplete_op.expression
-
+    actual_expression = autocomplete.expression
 
     # Assert
-    assert result_expression == expected_expression
-
-
-class TestAutocomplete:
-    """Tests for `Autocomplete` class."""
-
-    def test_instantiation(self) -> None:
-        """Test that `Autocomplete` class can be instantiated."""
-        query = "some_query"
-        path = "some_field"
-        auto = Autocomplete(query=query, path=path)
-        assert isinstance(auto, Autocomplete)
-
-    def test_expression_basic(self) -> None:
-        """Test basic expression output of `Autocomplete` class."""
-        query = "some_query"
-        path = "some_field"
-        auto = Autocomplete(query=query, path=path)
-        assert auto.expression == {
-            "autocomplete": {
-                "query": query,
-                "path": path,
-                "tokenOrder": "any",
-                "fuzzy": None,
-                "score": None
-            }
-        }
-
+    assert actual_expression == expected_expression
 
 
 
