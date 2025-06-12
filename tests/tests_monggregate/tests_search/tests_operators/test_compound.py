@@ -1,7 +1,11 @@
-import pytest
+"""Tests for `monggregate.search.operators.compound` module."""
+
 from monggregate.search.operators.compound import Compound
 
-def test_compound_expression_with_must_equals():
+
+def test_compound_expression_with_must_equals() -> None:
+    """Tests that the compound expression is correct when using the must equals operator."""
+
     # Setup
     compound = Compound()
     path = "field"
@@ -10,14 +14,7 @@ def test_compound_expression_with_must_equals():
 
     expected_expression = {
         "compound": {
-            "must": [
-                {
-                    "equals": {
-                        "path": path,
-                        "value": value
-                    }
-                }
-            ]
+            "must": [{"equals": {"path": path, "score": None, "value": value}}]
         }
     }
 
