@@ -35,7 +35,3 @@ def test_autocomplete_expression():
 
     # Assert
     assert actual_expression == expected_expression
-
-
-
-# TODO
