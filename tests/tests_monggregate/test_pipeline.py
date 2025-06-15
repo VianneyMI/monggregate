@@ -5,7 +5,7 @@ from monggregate.pipeline import Pipeline, Match, Project
 class TestPipeline:
     """Test the Pipeline class."""
 
-    def test_instantiation(self):
+    def test_instantiation(self) -> None:
         """Test that Pipeline class can be instantiated correctly."""
         pipeline = Pipeline()
 
@@ -18,7 +18,7 @@ class TestPipeline:
         # Check that the pipeline's expression property returns an empty list
         assert pipeline.expression == []
 
-    def test___add__(self):
+    def test___add__(self) -> None:
         """Test the __add__ method of the Pipeline class."""
 
         pipeline1 = Pipeline()
@@ -42,7 +42,7 @@ class TestPipeline:
             "$project": {"name": 1, "age": 1}
         }
 
-    def test___add_order_should_matter(self):
+    def test___add_order_should_matter(self) -> None:
         """Test that the order of addition matters."""
         pipeline1 = Pipeline()
         pipeline2 = Pipeline()
@@ -55,7 +55,7 @@ class TestPipeline:
 
         assert combined_pipeline.export() != reversed_combined_pipeline.export()
 
-    def test___add__with_non_pipeline_object(self):
+    def test___add__with_non_pipeline_object(self) -> None:
         """Test the __add__ method of the Pipeline class with a non-Pipeline object."""
         pipeline = Pipeline()
         pipeline.match(query={"name": "John"})
@@ -63,7 +63,7 @@ class TestPipeline:
         with pytest.raises(TypeError):
             pipeline + Project(fields=["name", "age"], include=True)
 
-    def test___getitem__(self):
+    def test___getitem__(self) -> None:
         """Test the __getitem__ method of the Pipeline class."""
         pipeline = Pipeline()
         pipeline.match(query={"name": "John"})
@@ -71,7 +71,7 @@ class TestPipeline:
 
         assert pipeline[0].expression == {"$match": {"name": "John"}}
 
-    def test__getitem__index_out_of_range(self):
+    def test__getitem__index_out_of_range(self) -> None:
         """Test the __getitem__ method of the Pipeline class with edge cases."""
 
         pipeline = Pipeline()
@@ -82,7 +82,7 @@ class TestPipeline:
         with pytest.raises(IndexError):
             pipeline[2]
 
-    def test__setitem__(self):
+    def test__setitem__(self) -> None:
         """Test the __setitem__ method of the Pipeline class."""
 
         index = 0
@@ -95,7 +95,7 @@ class TestPipeline:
 
         assert isinstance(pipeline[index], Project)
 
-    def test__setitem__index_out_of_range(self):
+    def test__setitem__index_out_of_range(self) -> None:
         """Test the __setitem__ method of the Pipeline class with edge cases."""
 
         index = 2
@@ -106,7 +106,7 @@ class TestPipeline:
         with pytest.raises(IndexError):
             pipeline[index] = Project(fields=["name", "age"], include=True)
 
-    def test__delitem__(self):
+    def test__delitem__(self) -> None:
         """Test the __delitem__ method of the Pipeline class."""
         pipeline = Pipeline()
         pipeline.unwind(path="name")
@@ -115,7 +115,7 @@ class TestPipeline:
         del pipeline[0]
         assert pipeline.export() == [{"$match": {"name": "John"}}]
 
-    def test__len__(self):
+    def test__len__(self) -> None:
         """Test the __len__ method of the Pipeline class."""
 
         pipeline = Pipeline()
@@ -124,7 +124,7 @@ class TestPipeline:
 
         assert len(pipeline) == 2
 
-    def test_append(self):
+    def test_append(self) -> None:
         """Test the append method of the Pipeline class."""
 
         pipeline = Pipeline()
@@ -136,7 +136,7 @@ class TestPipeline:
         assert len(pipeline) == 3
         assert isinstance(pipeline[2], Project)
 
-    def test_insert(self):
+    def test_insert(self) -> None:
         """Test the insert method of the Pipeline class."""
 
         pipeline = Pipeline()
@@ -147,7 +147,7 @@ class TestPipeline:
 
         assert len(pipeline) == 3
 
-    def test_extend(self):
+    def test_extend(self) -> None:
         """Test the extend method of the Pipeline class."""
 
         pipeline = Pipeline()
@@ -163,3 +163,37 @@ class TestPipeline:
     # Add tests for stages methods below
     #
     # ......
+
+
+def test_pipeline_with_stages_and_raw_expressions() -> None:
+    """Test that the Pipeline class can be instantiated with stages and raw expressions."""
+
+    pipeline = Pipeline()
+    pipeline.match(query={"name": "John"})
+
+    assert pipeline.export() == [{"$match": {"name": "John"}}]
+
+    pipeline.append(
+        {
+            "$redact": {
+                "$cond": {
+                    "if": {"$eq": ["$name", "John"]},
+                    "then": "$$DESCEND",
+                    "else": "$$PRUNE",
+                }
+            }
+        },
+    )
+
+    assert pipeline.export() == [
+        {"$match": {"name": "John"}},
+        {
+            "$redact": {
+                "$cond": {
+                    "if": {"$eq": ["$name", "John"]},
+                    "then": "$$DESCEND",
+                    "else": "$$PRUNE",
+                }
+            }
+        },
+    ]

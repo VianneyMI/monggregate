@@ -72,6 +72,21 @@ class BaseModel(pyd.BaseModel, ABC):
         alias_generator = camelize
 
 
+class ExpressionWrapper(BaseModel):
+    """Wrapper for an expression.
+
+    To be used for Stage, Operator or other MongoDB object that hasn't been interfaced yet in `monggregate`.
+    """
+
+    _expression: Expression
+
+    @property
+    def expression(self) -> Expression:
+        """Expression property"""
+
+        return self.expression
+
+
 def isbasemodel(instance: Any) -> TypeGuard[BaseModel]:
     """Returns true if instance is an instance of BaseModel"""
 
