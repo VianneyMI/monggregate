@@ -82,24 +82,20 @@ def express(obj: Any) -> dict | list[dict]:
     """Resolves an expression encapsulated in an object from a class inheriting from BaseModel"""
 
     if isbasemodel(obj):
+        # If it's a BaseModel instance, get its expression
         output: dict | list = obj.expression
-    elif isinstance(obj, list) and any(map(isbasemodel, obj)):
+    elif isinstance(obj, list):
+        # Always process lists recursively - they might contain nested BaseModel instances
         output = []
         for element in obj:
-            if isinstance(element, BaseModel):
-                output.append(
-                    element.expression
-                )  # probably should call express(element)
-            else:
-                output.append(element)
+            output.append(express(element))
     elif isinstance(obj, dict):
+        # Always process dictionaries recursively - they might contain nested BaseModel instances
         output = {}
         for key, value in obj.items():
-            if isinstance(value, BaseModel):
-                output[key] = value.expression  # probably should call express(value)
-            else:
-                output[key] = express(value)
+            output[key] = express(value)
     else:
+        # For primitive types (int, str, bool, None, etc.), return as-is
         output = obj
 
     return output

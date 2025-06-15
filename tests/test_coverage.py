@@ -162,7 +162,6 @@ def generate_error_message(
     return error_msg
 
 
-# @pytest.mark.xfail(reason="We first need to catch up the existing code base.")
 def test_all_modules_have_tests() -> None:
     """Test that every Python module in src/monggregate has a corresponding
     test file in tests/tests_monggregate with the appropriate naming convention.
