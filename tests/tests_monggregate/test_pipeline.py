@@ -1,5 +1,27 @@
 import pytest
-from monggregate.pipeline import Pipeline, Match, Project
+from monggregate.pipeline import Pipeline
+from monggregate.stages import (
+    AddFields,
+    Bucket,
+    BucketAuto,
+    Count,
+    Group,
+    Limit,
+    Lookup,
+    Match,
+    Out,
+    Project,
+    ReplaceRoot,
+    Sample,
+    Set,
+    Skip,
+    SortByCount,
+    Sort,
+    UnionWith,
+    Unset,
+    Unwind,
+    VectorSearch,
+)
 
 
 class TestPipeline:
@@ -160,9 +182,70 @@ class TestPipeline:
     # Stages
     # ---------------------------------------------------
 
-    # Add tests for stages methods below
-    #
-    # ......
+    @pytest.mark.xfail(
+        reason="""AddFields is implemented as a simple alias for Set stage,
+                        which is correct, but it should be done in a different way here.
+                        Indeed right now, the symbol is set to $set rather than $addFields.
+                       
+                       """
+    )
+    class TestAddFields:
+        """Test the `add_fields` method of the Pipeline class."""
+
+        def test_with_document(self) -> None:
+            """Test the `add_fields` method of the Pipeline class with a document."""
+
+            expected_first_stage = AddFields(document={"name": "John", "age": 30})
+
+            pipeline = Pipeline()
+            pipeline.add_fields(document={"name": "John", "age": 30})
+
+            assert pipeline[0] == expected_first_stage
+            assert pipeline.export() == [{"$addFields": {"name": "John", "age": 30}}]
+
+        def test_with_kwargs(self) -> None:
+            """Test the `add_fields` method of the Pipeline class with kwargs."""
+
+            pipeline = Pipeline()
+            pipeline.add_fields(name="John", age=30)
+
+            assert pipeline.export() == [{"$addFields": {"name": "John", "age": 30}}]
+
+    class TestBucket:
+        """Test the `bucket` method of the Pipeline class."""
+
+        # TODO : Implement several tests with different parameters
+        #
+        #
+        #
+        #
+        #
+        #
+
+    class TestBucketAuto:
+        """Test the `bucket_auto` method of the Pipeline class."""
+
+        # TODO : Implement several tests with different parameters
+        #
+        #
+        #
+        #
+        #
+        #
+
+    class TestCount:
+        """Test the `count` method of the Pipeline class."""
+
+        def test_with_name(self) -> None:
+            """Test the `count` method of the Pipeline class with a name."""
+
+            expected_first_stage = Count(name="a_field")
+
+            pipeline = Pipeline()
+            pipeline.count(name="a_field")
+
+            assert pipeline[0] == expected_first_stage
+            assert pipeline.export() == [{"$count": "a_field"}]
 
 
 def test_pipeline_with_stages_and_raw_expressions() -> None:
