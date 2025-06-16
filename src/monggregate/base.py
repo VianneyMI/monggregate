@@ -4,6 +4,7 @@ Module defining the base classes of the package.
 All the classes of the package inherit from one of the classes defined in this module.
 """
 
+
 # Standard Library imports
 # ----------------------------
 from abc import ABC, abstractmethod
