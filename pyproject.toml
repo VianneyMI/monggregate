@@ -41,6 +41,13 @@ push = false
 ]
 "src/monggregate/__init__.py" = ['__version__ = "{version}"']
 
+[tool.setuptools]
+packages = ["monggregate", "tests"]
+
+[tool.setuptools.package-dir]
+monggregate = "src/monggregate"
+tests = "tests"
+
 [dependency-groups]
 dev = [
     "pytest>=8.3.5",
