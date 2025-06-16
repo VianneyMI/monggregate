@@ -1,0 +1,124 @@
+[
+  {
+    "_id": "10006546",
+    "listing_url": "https://www.airbnb.com/rooms/10006546",
+    "name": "Ribeira Charming Duplex",
+    "summary": "Fantastic duplex apartment with three bedrooms, located in the historic center.",
+    "space": "Privileged views of the Douro River and Ribeira square, our apartment ...",
+    "description": "Fantastic duplex apartment with three bedrooms, located in the historic center...",
+    "neighborhood_overview": "In the neighborhood of the river, you can find several restaurants as ...",
+    "notes": "Lose yourself in the narrow streets and staircases zone, have lunch in...",
+    "transit": "Transport: • Metro station and S. Bento railway 5min; • Bus stop a 50 ...",
+    "access": "We are always available to help guests. The house is fully available t...",
+    "interaction": "Cot - 10 € / night Dog - € 7,5 / night",
+    "house_rules": "Make the house your home...",
+    "property_type": "House",
+    "room_type": "Entire home/apt",
+    "bed_type": "Real Bed",
+    "minimum_nights": "2",
+    "maximum_nights": "30",
+    "cancellation_policy": "moderate",
+    "last_scraped": "2019-02-16T05:00:00.000+00:00",
+    "calendar_last_scraped": "2019-02-16T05:00:00.000+00:00",
+    "first_review": "2016-01-03T05:00:00.000+00:00",
+    "last_review": "2019-01-20T05:00:00.000+00:00",
+    "accommodates": 8,
+    "bedrooms": 3,
+    "beds": 5,
+    "reviews": [
+      {
+        "_id": {
+          "$oid": "5a9427648b0beebeb69579f5"
+        },
+        "listing_id": "10006546",
+        "reviewer_name": "John Smith",
+        "reviewer_id": "12345678",
+        "comments": "Amazing place with fantastic views! The duplex is spacious and well-located.",
+        "date": {
+          "$date": "2018-12-15T00:00:00.000Z"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "5a9427648b0beebeb69579f6"
+        },
+        "listing_id": "10006546",
+        "reviewer_name": "Maria Silva",
+        "reviewer_id": "87654321",
+        "comments": "Perfect location in Ribeira. Highly recommend for couples and families.",
+        "date": {
+          "$date": "2019-01-10T00:00:00.000Z"
+        }
+      }
+    ]
+  },
+  {
+    "_id": "10009999",
+    "listing_url": "https://www.airbnb.com/rooms/10009999",
+    "name": "Horto flat with small garden",
+    "summary": "One bedroom + sofa-bed in quiet and bucolic neighbourhood right next t...",
+    "space": "Lovely one bedroom + sofa-bed in the living room, perfect for two but ...",
+    "description": "One bedroom + sofa-bed in quiet and bucolic neighbourhood right next t...",
+    "neighborhood_overview": "This charming ground floor flat is located in Horto, a quiet and bucol...",
+    "notes": "There´s a table in the living room now, that does not show in the phot...",
+    "transit": "Easy access to transport (bus, taxi, car) and easy free parking around...",
+    "access": "",
+    "interaction": "I´ll be happy to help you with any doubts, tips or any other informati...",
+    "house_rules": "I just hope the guests treat the space as they´re own, with respect to...",
+    "property_type": "Apartment",
+    "room_type": "Entire home/apt",
+    "bed_type": "Real Bed",
+    "minimum_nights": "2",
+    "maximum_nights": "1125",
+    "cancellation_policy": "flexible",
+    "last_scraped": "2019-02-11T05:00:00.000+00:00",
+    "calendar_last_scraped": "2019-02-11T05:00:00.000+00:00",
+    "accommodates": 4,
+    "bedrooms": 1,
+    "beds": 2,
+    "number_of_reviews": 0,
+    "bathrooms": 1.0,
+    "reviews": []
+  },
+  {
+    "_id": "1001265",
+    "listing_url": "https://www.airbnb.com/rooms/1001265",
+    "name": "Ocean View Waikiki Marina w/prkg",
+    "summary": "A short distance from Honolulu's billion dollar mall, and the same dis...",
+    "space": "Great studio located on Ala Moana across the street from Yacht Harbor ...",
+    "description": "A short distance from Honolulu's billion dollar mall, and the same dis...",
+    "neighborhood_overview": "You can breath ocean as well as aloha.",
+    "notes": "",
+    "transit": "Honolulu does have a very good air conditioned bus system.",
+    "access": "Pool, hot tub and tennis",
+    "interaction": "We try our best at creating, simple responsive management which never ...",
+    "house_rules": "The general welfare and well being of all the community.",
+    "property_type": "Condominium",
+    "room_type": "Entire home/apt",
+    "bed_type": "Real Bed",
+    "minimum_nights": "3",
+    "maximum_nights": "365",
+    "cancellation_policy": "strict_14_with_grace_period",
+    "last_scraped": "2019-03-06T05:00:00.000+00:00",
+    "calendar_last_scraped": "2019-03-06T05:00:00.000+00:00",
+    "first_review": "2013-05-24T04:00:00.000+00:00",
+    "last_review": "2019-02-07T05:00:00.000+00:00",
+    "accommodates": 2,
+    "bedrooms": 1,
+    "beds": 1,
+    "reviews": [
+      {
+        "_id": {
+          "$oid": "5a9427648b0beebeb69579f7"
+        },
+        "listing_id": "1001265",
+        "reviewer_name": "Sarah Johnson",
+        "reviewer_id": "11223344",
+        "comments": "Great location near the marina. The ocean view is stunning!",
+        "date": {
+          "$date": "2018-11-20T00:00:00.000Z"
+        }
+      }
+    ]
+  }
+]
