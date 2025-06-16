@@ -18,13 +18,6 @@ class TestStringOperator:
 class TestStringOperatorEnum:
     """Tests for the `StringOperatorEnum` class."""
 
-    @pytest.mark.xfail(
-        reason="""Some operators are not following the naming convention.
-        Ex: CONCAT_WS
-        
-        Need to review the generate_enum_member_name function.
-        """
-    )
     def test_naming_convention(self) -> None:
         """Test that the naming convention is correct."""
         mismatches = []
