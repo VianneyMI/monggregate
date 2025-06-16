@@ -106,9 +106,6 @@ class TestExpress:
         }
         # fmt: on
 
-    # @pytest.mark.xfail(
-    #     reason="This comes from an issue in the recursion of the express function."
-    # )
     def test_with_nested_basemodel_instances(self) -> None:
         """Test that express function works correctly for a nested BaseModel object."""
 
