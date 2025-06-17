@@ -26,6 +26,9 @@
     
       <link rel="stylesheet" href="../assets/stylesheets/main.046329b4.min.css">
       
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.85d0ee34.min.css">
+      
       
 
 
@@ -43,6 +46,8 @@
       
     
     
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -53,11 +58,14 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
   
     
-    
-      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -65,7 +73,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#release-notes" class="md-skip">
+        <a href="#changelog" class="md-skip">
           Skip to content
         </a>
       
@@ -106,6 +114,8 @@
         </div>
       </div>
     </div>
+    
+      
     
     
     
@@ -436,6 +446,26 @@
 
               
             
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/vector-search/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Vector Search
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -502,62 +532,8 @@
   
   
   
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
-        
-          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Common Pipelines Use Cases
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_2">
-            <span class="md-nav__icon md-icon"></span>
-            Common Pipelines Use Cases
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
     <li class="md-nav__item">
-      <a href="../how-to/commons/home/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Home
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../how-to/commons/select-a-nested-document/" class="md-nav__link">
+      <a href="../how-to/select-a-nested-document/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -577,7 +553,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../how-to/commons/create-or-update-a-collection/" class="md-nav__link">
+      <a href="../how-to/create-or-update-a-collection/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -597,7 +573,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../how-to/commons/combine-collections/" class="md-nav__link">
+      <a href="../how-to/combine-collections.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -606,14 +582,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -697,225 +665,107 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#0180" class="md-nav__link">
-    0.18.0
+  <a href="#0210-2024-04-17" class="md-nav__link">
+    🚀 0.21.0 - 2024-04-17
   </a>
-  
-    <nav class="md-nav" aria-label="0.18.0">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#fixes" class="md-nav__link">
-    Fixes
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#new-features" class="md-nav__link">
-    New Features
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#refactoring" class="md-nav__link">
-    Refactoring
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#docs" class="md-nav__link">
-    Docs
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#0170" class="md-nav__link">
-    0.17.0
+  <a href="#0210b1-2024-04-17" class="md-nav__link">
+    🧪 0.21.0b1 - 2024-04-17
   </a>
-  
-    <nav class="md-nav" aria-label="0.17.0">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#docs_1" class="md-nav__link">
-    Docs
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#0162" class="md-nav__link">
-    0.16.2
+  <a href="#0210b0-2024-01-30" class="md-nav__link">
+    🧪 0.21.0b0 - 2024-01-30
   </a>
-  
-    <nav class="md-nav" aria-label="0.16.2">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#fixes_1" class="md-nav__link">
-    Fixes
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#0161" class="md-nav__link">
-    0.16.1
+  <a href="#0200-2024-01-27" class="md-nav__link">
+    🚀 0.20.0 - 2024-01-27
   </a>
-  
-    <nav class="md-nav" aria-label="0.16.1">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#fixes_2" class="md-nav__link">
-    Fixes
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#0160" class="md-nav__link">
-    0.16.0
+  <a href="#0191-2023-12-28" class="md-nav__link">
+    🚀 0.19.1 - 2023-12-28
   </a>
-  
-    <nav class="md-nav" aria-label="0.16.0">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#new-features_1" class="md-nav__link">
-    New Features
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#refactoring_1" class="md-nav__link">
-    Refactoring
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#breaking-changes" class="md-nav__link">
-    Breaking Changes
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#documentation" class="md-nav__link">
-    Documentation
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#0150" class="md-nav__link">
-    0.15.0
+  <a href="#0190-2023-12-20" class="md-nav__link">
+    🚀 0.19.0 - 2023-12-20
   </a>
-  
-    <nav class="md-nav" aria-label="0.15.0">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#fixes_3" class="md-nav__link">
-    Fixes
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#0141" class="md-nav__link">
-    0.14.1
+  <a href="#0180-2023-11-12" class="md-nav__link">
+    🚀 0.18.0 - 2023-11-12
   </a>
-  
-    <nav class="md-nav" aria-label="0.14.1">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#fixes_4" class="md-nav__link">
-    Fixes
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#refactoring_2" class="md-nav__link">
-    Refactoring
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#0140" class="md-nav__link">
-    0.14.0
-  </a>
-  
-    <nav class="md-nav" aria-label="0.14.0">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#upgrades" class="md-nav__link">
-    Upgrades
+  <a href="#0170-2023-10-26" class="md-nav__link">
+    🚀 0.17.0 - 2023-10-26
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#refactoring_3" class="md-nav__link">
-    Refactoring
+      
+        <li class="md-nav__item">
+  <a href="#0162-2023-09-17" class="md-nav__link">
+    🚀 0.16.2 - 2023-09-17
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#documentation_1" class="md-nav__link">
-    Documentation
+      
+        <li class="md-nav__item">
+  <a href="#0161-2023-09-08" class="md-nav__link">
+    🚀 0.16.1 - 2023-09-08
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#0160-2023-08-29" class="md-nav__link">
+    🚀 0.16.0 - 2023-08-29
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0150-2023-08-09" class="md-nav__link">
+    🚀 0.15.0 - 2023-08-09
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0141-2023-08-06" class="md-nav__link">
+    🚀 0.14.1 - 2023-08-06
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0140-2023-07-23" class="md-nav__link">
+    🚀 0.14.0 - 2023-07-23
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-about-previous-versions" class="md-nav__link">
+    What about previous versions?
+  </a>
   
 </li>
       
@@ -954,225 +804,107 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#0180" class="md-nav__link">
-    0.18.0
+  <a href="#0210-2024-04-17" class="md-nav__link">
+    🚀 0.21.0 - 2024-04-17
   </a>
-  
-    <nav class="md-nav" aria-label="0.18.0">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#fixes" class="md-nav__link">
-    Fixes
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#new-features" class="md-nav__link">
-    New Features
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#refactoring" class="md-nav__link">
-    Refactoring
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#docs" class="md-nav__link">
-    Docs
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#0170" class="md-nav__link">
-    0.17.0
+  <a href="#0210b1-2024-04-17" class="md-nav__link">
+    🧪 0.21.0b1 - 2024-04-17
   </a>
-  
-    <nav class="md-nav" aria-label="0.17.0">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#docs_1" class="md-nav__link">
-    Docs
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#0162" class="md-nav__link">
-    0.16.2
+  <a href="#0210b0-2024-01-30" class="md-nav__link">
+    🧪 0.21.0b0 - 2024-01-30
   </a>
-  
-    <nav class="md-nav" aria-label="0.16.2">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#fixes_1" class="md-nav__link">
-    Fixes
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#0161" class="md-nav__link">
-    0.16.1
+  <a href="#0200-2024-01-27" class="md-nav__link">
+    🚀 0.20.0 - 2024-01-27
   </a>
-  
-    <nav class="md-nav" aria-label="0.16.1">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#fixes_2" class="md-nav__link">
-    Fixes
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#0160" class="md-nav__link">
-    0.16.0
+  <a href="#0191-2023-12-28" class="md-nav__link">
+    🚀 0.19.1 - 2023-12-28
   </a>
-  
-    <nav class="md-nav" aria-label="0.16.0">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#new-features_1" class="md-nav__link">
-    New Features
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#refactoring_1" class="md-nav__link">
-    Refactoring
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#breaking-changes" class="md-nav__link">
-    Breaking Changes
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#documentation" class="md-nav__link">
-    Documentation
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#0150" class="md-nav__link">
-    0.15.0
+  <a href="#0190-2023-12-20" class="md-nav__link">
+    🚀 0.19.0 - 2023-12-20
   </a>
-  
-    <nav class="md-nav" aria-label="0.15.0">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#fixes_3" class="md-nav__link">
-    Fixes
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#0141" class="md-nav__link">
-    0.14.1
+  <a href="#0180-2023-11-12" class="md-nav__link">
+    🚀 0.18.0 - 2023-11-12
   </a>
-  
-    <nav class="md-nav" aria-label="0.14.1">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#fixes_4" class="md-nav__link">
-    Fixes
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#refactoring_2" class="md-nav__link">
-    Refactoring
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#0140" class="md-nav__link">
-    0.14.0
-  </a>
-  
-    <nav class="md-nav" aria-label="0.14.0">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#upgrades" class="md-nav__link">
-    Upgrades
+  <a href="#0170-2023-10-26" class="md-nav__link">
+    🚀 0.17.0 - 2023-10-26
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#refactoring_3" class="md-nav__link">
-    Refactoring
+      
+        <li class="md-nav__item">
+  <a href="#0162-2023-09-17" class="md-nav__link">
+    🚀 0.16.2 - 2023-09-17
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#documentation_1" class="md-nav__link">
-    Documentation
+      
+        <li class="md-nav__item">
+  <a href="#0161-2023-09-08" class="md-nav__link">
+    🚀 0.16.1 - 2023-09-08
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#0160-2023-08-29" class="md-nav__link">
+    🚀 0.16.0 - 2023-08-29
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0150-2023-08-09" class="md-nav__link">
+    🚀 0.15.0 - 2023-08-09
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0141-2023-08-06" class="md-nav__link">
+    🚀 0.14.1 - 2023-08-06
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0140-2023-07-23" class="md-nav__link">
+    🚀 0.14.0 - 2023-07-23
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-about-previous-versions" class="md-nav__link">
+    What about previous versions?
+  </a>
   
 </li>
       
@@ -1191,105 +923,202 @@
                   
 
 
-<h1 id="release-notes">Release Notes</h1>
-<h2 id="0180">0.18.0</h2>
-<h3 id="fixes">Fixes</h3>
+<h1 id="changelog">Changelog</h1>
+<p>All notable changes to this project will be documented in this file.</p>
+<hr />
+<h2 id="0210-2024-04-17">🚀 <a href="https://github.com/monggregate/monggregate/releases/tag/v0.21.0">0.21.0</a> - 2024-04-17</h2>
+<details>
+<summary>Details</summary>
+<br>
+Identical to 0.21.0b1.
+</details>
+
+<h2 id="0210b1-2024-04-17">🧪 <a href="https://github.com/monggregate/monggregate/releases/tag/v0.21.0b1">0.21.0b1</a> - 2024-04-17</h2>
+<details>
+<summary>Details</summary>
+<br>
+<h3>📖 Documentation</h3>
+<p>Improved docstrings in stages and operators.</p>
+</details>
+
+<h2 id="0210b0-2024-01-30">🧪 <a href="https://github.com/monggregate/monggregate/releases/tag/v0.21.0b0">0.21.0b0</a> - 2024-01-30</h2>
+<details>
+<summary>Details</summary>
+<br>
+<h3>✨ New Features</h3>
+<p>Implemented <code>VectorSearch</code> pipeline stage.</p>
+</details>
+
+<hr />
+<h2 id="0200-2024-01-27">🚀 <a href="https://github.com/monggregate/monggregate/releases/tag/v0.20.0">0.20.0</a> - 2024-01-27</h2>
+<details>
+<summary>Details</summary>
+<br>
+<h3>🐛 Bug Fixes</h3>
+<p>Fixed bug in <code>Search</code> where some arguments were not properly forwarded to the appropriate operators.</p>
+
+<h3>📖 Documentation</h3>
+<p>Added documentation for <code>search</code> and <code>search_meta</code> pipeline stages.</p>
+</details>
+
+<hr />
+<h2 id="0191-2023-12-28">🚀 <a href="https://github.com/monggregate/monggregate/releases/tag/v0.19.1">0.19.1</a> - 2023-12-28</h2>
+<details>
+<summary>Details</summary>
+<br>
+<h3>🐛 Bug Fixes</h3>
+<p>Fixed build, packaging and release process.</p>
+</details>
+
+<hr />
+<h2 id="0190-2023-12-20">🚀 <a href="https://github.com/monggregate/monggregate/releases/tag/v0.19.0">0.19.0</a> - 2023-12-20</h2>
+<details>
+<summary>Details</summary>
+<br>
+Failed attempt to fix previously broken release.
+</details>
+
+<hr />
+<h2 id="0180-2023-11-12">🚀 <a href="https://github.com/monggregate/monggregate/releases/tag/v0.18.0">0.18.0</a> - 2023-11-12</h2>
+<details>
+<summary>Details</summary>
+<br>
+<blockquote>⚠️ This release is not available on PyPI as it was broken.</blockquote>
+
+<h3>🐛 Bug Fixes</h3>
+<p>Fixed bug preventing use of <code>Compound</code> operator with <code>Search</code> and <code>SearchMeta</code> classes.</p>
+
+<h3>✨ New Features</h3>
 <ul>
-<li>Fixed bug preventing to use <code>Compound</code> operator with <code>Search</code> and <code>SearchMeta</code> classes.</li>
+  <li>Pipelinized <code>Search</code> and <code>SearchMeta</code> classes. Complex expressions can now be built step by step by chaining operators.</li>
+  <li>Updated <code>search</code> method in <code>Pipeline</code> class to ease the use of search stages.</li>
+  <li>Clarified and simplified faceted search.</li>
 </ul>
-<h3 id="new-features">New Features</h3>
+
+<h3>♻️ Refactoring</h3>
 <ul>
-<li>Pipelinized <code>Search</code> and <code>SearchMeta</code> classes. That is complex expressions can be built step by step by chaining operators.</li>
-<li>Updated <code>search</code> method in <code>¨Pipeline</code> class to ease the use of the search stages.</li>
-<li>Clarified and simplified faceted search</li>
+  <li>Use operators rather than statement in <code>Compound</code> class.</li>
+  <li>Factorized <code>Search</code> and <code>SearchMeta</code> classes by creating a <code>SearchBase</code> class.</li>
+  <li>Use <code>CountOptions</code> rather than raw dicts.</li>
+  <li>Created <code>AnyStage</code> union type.</li>
 </ul>
-<h3 id="refactoring">Refactoring</h3>
+
+<h3>📖 Documentation</h3>
+<p>Spelling and grammar fixes.</p>
+</details>
+
+<hr />
+<h2 id="0170-2023-10-26">🚀 <a href="https://github.com/monggregate/monggregate/releases/tag/v0.17.0">0.17.0</a> - 2023-10-26</h2>
+<details>
+<summary>Details</summary>
+<br>
+<h3>📖 Documentation</h3>
+<p>First version of the documentation 🍾!</p>
+</details>
+
+<hr />
+<h2 id="0162-2023-09-17">🚀 <a href="https://github.com/monggregate/monggregate/releases/tag/v0.16.2">0.16.2</a> - 2023-09-17</h2>
+<details>
+<summary>Details</summary>
+<br>
+<h3>🐛 Bug Fixes</h3>
+<p>Allow use of iterables and dicts to group by in <code>Group</code> class and pipeline group function.</p>
+</details>
+
+<hr />
+<h2 id="0161-2023-09-08">🚀 <a href="https://github.com/monggregate/monggregate/releases/tag/v0.16.1">0.16.1</a> - 2023-09-08</h2>
+<details>
+<summary>Details</summary>
+<br>
+<h3>🐛 Bug Fixes</h3>
+<p>Fixed <code>replace_root</code> by passing document argument to <code>ReplaceRoot</code> class.</p>
+</details>
+
+<hr />
+<h2 id="0160-2023-08-29">🚀 <a href="https://github.com/monggregate/monggregate/releases/tag/v0.16.0">0.16.0</a> - 2023-08-29</h2>
+<details>
+<summary>Details</summary>
+<br>
+<h3>✨ New Features</h3>
 <ul>
-<li>Use operators rather than statement in <code>Compound</code> class</li>
-<li>Factorized <code>Search</code> and <code>SearchMeta</code> classes by creating a <code>SearchBase</code> class</li>
-<li>Use <code>CountOptions</code> rather than raw dicts</li>
-<li>Created <code>AnyStage</code> union type</li>
+  <li>Created <code>S</code> object (represents <code>$</code> sign since it is not a valid variable name in Python) to store all MongoDB operators and to create references to fields.</li>
+  <li>Created <code>SS</code> object (represents <code>$$</code>) to store aggregation variables and references to user variables.</li>
+  <li>Interfaced new operators: <code>add</code>, <code>divide</code>, <code>multiply</code>, <code>pow</code>, <code>subtract</code>, <code>cond</code>, <code>if_null</code>, <code>switch</code>, <code>millisecond</code>, <code>date_from_string</code>, <code>date_to_string</code>, <code>type_</code>.</li>
+  <li>Integrated new operators in <code>Expressions</code> class.</li>
 </ul>
-<h3 id="docs">Docs</h3>
+
+<h3>♻️ Refactoring</h3>
 <ul>
-<li>Spelling and grammar fixes</li>
+  <li>Redefined <code>Expressions</code> completely. Simplified and clarified how they can be used.</li>
+  <li>Removed index module from the root of the package (<code>monggregate.index.py</code> → ∅).</li>
+  <li>Removed expressions subpackage (<code>monggregate.expression</code> → ∅).</li>
+  <li>Moved expressions fields module to the root (<code>monggregate.expressions.fields.py</code> → <code>monggregate.fields.py</code>).</li>
+  <li>Removed expressions aggregation_variables module (<code>monggregate.expression.aggregation_variables.py</code> → ∅).</li>
+  <li>Moved enums to more relevant locations (e.g., <code>OperatorEnum</code> is now in <code>monggregate.operators.py</code>).</li>
 </ul>
-<h2 id="0170">0.17.0</h2>
-<h3 id="docs_1">Docs</h3>
+
+<h3>💥 Breaking Changes</h3>
 <ul>
-<li>First version of the documentation :champagne: !</li>
+  <li>Operators now return Python objects rather than expressions/statements.</li>
+  <blockquote><strong>Note</strong>: The wording might change for clarification purposes.
+  "statement" might be renamed "expression" and "resolve" might be renamed "express".
+  Some argument names in operators might need to be renamed.</blockquote>
+  <li>Expressions subpackage has been restructured with some parts being removed.</li>
 </ul>
-<h2 id="0162">0.16.2</h2>
-<h3 id="fixes_1">Fixes</h3>
+
+<h3>📖 Documentation</h3>
+<p>Updated README to reflect changes in the package, focusing on the recommended usage and clarifying MongoDB operators.</p>
+</details>
+
+<hr />
+<h2 id="0150-2023-08-09">🚀 <a href="https://github.com/monggregate/monggregate/releases/tag/v0.15.0">0.15.0</a> - 2023-08-09</h2>
+<details>
+<summary>Details</summary>
+<br>
+<h3>🐛 Bug Fixes</h3>
 <ul>
-<li>Allow to use iterable and dicts to group by in Group class and pipeline group function</li>
+  <li>Fixed bug in <code>Search.from_operator()</code> classmethod due to recent change in operator type in <code>Search</code> class.</li>
+  <li>Fixed misspelled operators in constructors map in <code>Search</code> class.</li>
+  <li>Fixed missing aliases and missing kwargs reduction in some <code>Search</code> operators.</li>
 </ul>
-<h2 id="0161">0.16.1</h2>
-<h3 id="fixes_2">Fixes</h3>
+</details>
+
+<hr />
+<h2 id="0141-2023-08-06">🚀 <a href="https://github.com/monggregate/monggregate/releases/tag/v0.14.1">0.14.1</a> - 2023-08-06</h2>
+<details>
+<summary>Details</summary>
+<br>
+<h3>🐛 Bug Fixes</h3>
+<p>Fixed autocompletion.</p>
+
+<h3>♻️ Refactoring</h3>
+<p>Import pydantic into <code>base.py</code> and use <code>base.py</code> to access pydantic features.</p>
+</details>
+
+<hr />
+<h2 id="0140-2023-07-23">🚀 <a href="https://github.com/monggregate/monggregate/releases/tag/v0.14.0">0.14.0</a> - 2023-07-23</h2>
+<details>
+<summary>Details</summary>
+<br>
+<h3>⬆️ Upgrades</h3>
+<p>Made package compatible with Pydantic V2.</p>
+
+<h3>♻️ Refactoring</h3>
 <ul>
-<li>Fixed replace_root by passing document argument to ReplaceRoot class</li>
+  <li>Used an import trick to still use Pydantic V1 even in environments using Pydantic V2.</li>
+  <li>Centralized pydantic import into <code>base.py</code> to avoid having to use import trick in multiple files.</li>
 </ul>
-<h2 id="0160">0.16.0</h2>
-<h3 id="new-features_1">New Features</h3>
+
+<h3>📖 Documentation</h3>
 <ul>
-<li>Created S object (represents $ sign since it is not a valid variable name in python) to store all MongoDB operators and to create references to fields</li>
-<li>Created SS object (represents $$) to store aggregation variables and referenes to user variables</li>
-<li>Interfaced a chunk of new operators(add, divide, multiply, pow, substract, cond, if_null, switch, millisecond, date_from_string, date_to_string, type_)</li>
-<li>Integrated new operators in Expressions class</li>
+  <li>Updated README to better reflect current state of the package.</li>
+  <li>Started a changelog! 🍾</li>
+  <li>Major improvements to documentation.</li>
 </ul>
-<h3 id="refactoring_1">Refactoring</h3>
-<ul>
-<li>Redefined Expressions completely. Simplified and clarified how they can be used when using this package.</li>
-<li>Removed index module that was at the root of the package (monggregate.index.py -&gt; ø) </li>
-<li>Removed expressions subpackage (monggregate.expression -&gt; ø)</li>
-<li>Moved expressions fields module to the root of the package (monggregate.expressions.fields.py -&gt; monggregate.fields.py)</li>
-<li>Removed expressions aggregation_variables module (monggregate.expression.aggregation_variables.py -&gt; ø)</li>
-<li>Moved the enums that were defined in index to a more relevant place. Ex OperatorEnum is now in monggregate.operators.py</li>
-</ul>
-<h3 id="breaking-changes">Breaking Changes</h3>
-<ul>
-<li>Operators now return python objects rather than expressions/statements. 
-  NOTE: The wording might change for clarification purposes.
-        statement might be renamed expression and resolve might renamed express
-        To do so, some arguments might need to be renamed in the operators</li>
-<li>Expressions subpackage has been exploded and some parts have been deleted</li>
-</ul>
-<h3 id="documentation">Documentation</h3>
-<ul>
-<li>Updated readme to reflect changes in the packge. Readme now focuses on the recommended way to use the package and clarifies how to use MongoDB operators.</li>
-</ul>
-<h2 id="0150">0.15.0</h2>
-<h3 id="fixes_3">Fixes</h3>
-<ul>
-<li>Fixed bug in <code>Search.from_operator()</code> classmethod due to recent change in operator type in <code>Search</code> class</li>
-<li>Fixed misspelled operators in constructors map in <code>Search</code> class</li>
-<li>Fixed missing aliases and missing kwargs reduction in some <code>Search</code> operators</li>
-</ul>
-<h2 id="0141">0.14.1</h2>
-<h3 id="fixes_4">Fixes</h3>
-<ul>
-<li>Fixed autocompletion</li>
-</ul>
-<h3 id="refactoring_2">Refactoring</h3>
-<ul>
-<li>Import pydantic into base.py and using base.py to access pydantic features</li>
-</ul>
-<h2 id="0140">0.14.0</h2>
-<h3 id="upgrades">Upgrades</h3>
-<ul>
-<li>Make package compatible with pydantic V2</li>
-</ul>
-<h3 id="refactoring_3">Refactoring</h3>
-<ul>
-<li>Use an import trick to still use pydantic V1 even on environments using pydantic V2</li>
-<li>Centralized pydantic import into base.py in order to avoid having to use import trick on multiple files</li>
-</ul>
-<h3 id="documentation_1">Documentation</h3>
-<ul>
-<li>Updated readme to better reflect current state of the pacakge.</li>
-<li>Started a changelog ! :champagne:</li>
-<li>Major change in the doc </li>
-</ul>
+</details>
+
+<h2 id="what-about-previous-versions">What about previous versions?</h2>
+<p>Prior to 0.14.0, the changelog was not kept.</p>
 
 
 
@@ -1327,7 +1156,7 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.annotate", "content.code.copy"], "search": "../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../assets/javascripts/bundle.dff1b7c8.min.js"></script>

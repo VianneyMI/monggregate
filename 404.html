@@ -22,6 +22,9 @@
     
       <link rel="stylesheet" href="/monggregate/assets/stylesheets/main.046329b4.min.css">
       
+        
+        <link rel="stylesheet" href="/monggregate/assets/stylesheets/palette.85d0ee34.min.css">
+      
       
 
 
@@ -39,6 +42,8 @@
       
     
     
+      <link rel="stylesheet" href="/monggregate/stylesheets/extra.css">
+    
     <script>__md_scope=new URL("/monggregate/",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -49,11 +54,14 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
   
     
-    
-      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -97,6 +105,8 @@
         </div>
       </div>
     </div>
+    
+      
     
     
     
@@ -427,6 +437,26 @@
 
               
             
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/monggregate/tutorial/vector-search/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Vector Search
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -493,62 +523,8 @@
   
   
   
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
-        
-          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Common Pipelines Use Cases
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_2">
-            <span class="md-nav__icon md-icon"></span>
-            Common Pipelines Use Cases
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
     <li class="md-nav__item">
-      <a href="/monggregate/how-to/commons/home/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Home
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="/monggregate/how-to/commons/select-a-nested-document/" class="md-nav__link">
+      <a href="/monggregate/how-to/select-a-nested-document/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -568,7 +544,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/monggregate/how-to/commons/create-or-update-a-collection/" class="md-nav__link">
+      <a href="/monggregate/how-to/create-or-update-a-collection/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -588,7 +564,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/monggregate/how-to/commons/combine-collections/" class="md-nav__link">
+      <a href="/monggregate/how-to/combine-collections.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -597,14 +573,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -716,7 +684,7 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "/monggregate/", "features": [], "search": "/monggregate/assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "/monggregate/", "features": ["content.code.annotate", "content.code.copy"], "search": "/monggregate/assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="/monggregate/assets/javascripts/bundle.dff1b7c8.min.js"></script>

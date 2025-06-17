@@ -28,6 +28,9 @@
     
       <link rel="stylesheet" href="../../assets/stylesheets/main.046329b4.min.css">
       
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.85d0ee34.min.css">
+      
       
 
 
@@ -45,6 +48,8 @@
       
     
     
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -55,11 +60,14 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
   
     
-    
-      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -67,7 +75,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#building-a-pipeline" class="md-skip">
+        <a href="#mongodb-aggregation-pipelines" class="md-skip">
           Skip to content
         </a>
       
@@ -108,6 +116,8 @@
         </div>
       </div>
     </div>
+    
+      
     
     
     
@@ -372,6 +382,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -400,6 +412,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -409,36 +423,15 @@
       
         <li class="md-nav__item">
   <a href="#building-a-pipeline" class="md-nav__link">
-    Building a pipeline
+    🏗️ Building a Pipeline
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#executing-a-pipeline" class="md-nav__link">
-    Executing A Pipeline
-  </a>
-  
-    <nav class="md-nav" aria-label="Executing A Pipeline">
+    <nav class="md-nav" aria-label="🏗️ Building a Pipeline">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#passing-your-pipeline-to-your-tool" class="md-nav__link">
-    Passing Your Pipeline to Your Tool
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#passing-your-tool-to-your-pipeline" class="md-nav__link">
-    Passing Your Tool to Your Pipeline
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#how-to-choose-a-method" class="md-nav__link">
-    How to Choose a Method?
+  <a href="#basic-pipeline-construction" class="md-nav__link">
+    🔰 Basic Pipeline Construction
   </a>
   
 </li>
@@ -449,15 +442,36 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#an-alternative-to-build-pipelines" class="md-nav__link">
-    An Alternative to Build Pipelines
+  <a href="#executing-a-pipeline" class="md-nav__link">
+    ⚡ Executing a Pipeline
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#pipeline-utilities" class="md-nav__link">
-    Pipeline Utilities
+  <a href="#alternative-using-stage-classes-directly" class="md-nav__link">
+    🔄 Alternative: Using Stage Classes Directly
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complex-example-analysis-pipeline" class="md-nav__link">
+    🌟 Complex Example: Analysis Pipeline
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pipeline-manipulation" class="md-nav__link">
+    🛠️ Pipeline Manipulation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    🔜 Next Steps
   </a>
   
 </li>
@@ -522,6 +536,26 @@
   
   <span class="md-ellipsis">
     Search
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vector-search/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Vector Search
   </span>
   
 
@@ -597,62 +631,8 @@
   
   
   
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
-        
-          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Common Pipelines Use Cases
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_2">
-            <span class="md-nav__icon md-icon"></span>
-            Common Pipelines Use Cases
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
     <li class="md-nav__item">
-      <a href="../../how-to/commons/home/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Home
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../how-to/commons/select-a-nested-document/" class="md-nav__link">
+      <a href="../../how-to/select-a-nested-document/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -672,7 +652,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../how-to/commons/create-or-update-a-collection/" class="md-nav__link">
+      <a href="../../how-to/create-or-update-a-collection/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -692,7 +672,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../how-to/commons/combine-collections/" class="md-nav__link">
+      <a href="../../how-to/combine-collections.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -701,14 +681,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -776,6 +748,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -785,36 +759,15 @@
       
         <li class="md-nav__item">
   <a href="#building-a-pipeline" class="md-nav__link">
-    Building a pipeline
+    🏗️ Building a Pipeline
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#executing-a-pipeline" class="md-nav__link">
-    Executing A Pipeline
-  </a>
-  
-    <nav class="md-nav" aria-label="Executing A Pipeline">
+    <nav class="md-nav" aria-label="🏗️ Building a Pipeline">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#passing-your-pipeline-to-your-tool" class="md-nav__link">
-    Passing Your Pipeline to Your Tool
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#passing-your-tool-to-your-pipeline" class="md-nav__link">
-    Passing Your Tool to Your Pipeline
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#how-to-choose-a-method" class="md-nav__link">
-    How to Choose a Method?
+  <a href="#basic-pipeline-construction" class="md-nav__link">
+    🔰 Basic Pipeline Construction
   </a>
   
 </li>
@@ -825,15 +778,36 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#an-alternative-to-build-pipelines" class="md-nav__link">
-    An Alternative to Build Pipelines
+  <a href="#executing-a-pipeline" class="md-nav__link">
+    ⚡ Executing a Pipeline
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#pipeline-utilities" class="md-nav__link">
-    Pipeline Utilities
+  <a href="#alternative-using-stage-classes-directly" class="md-nav__link">
+    🔄 Alternative: Using Stage Classes Directly
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complex-example-analysis-pipeline" class="md-nav__link">
+    🌟 Complex Example: Analysis Pipeline
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pipeline-manipulation" class="md-nav__link">
+    🛠️ Pipeline Manipulation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    🔜 Next Steps
   </a>
   
 </li>
@@ -853,151 +827,257 @@
                   
 
 
-  <h1>Pipelines</h1>
-
-<p>Pipelines are a key concept in the aggregation framework.
-Therefore, the  <code>Pipeline</code> class is also a central class in the package<include link to api reference later on>, as it is used to build and execute pipelines.</p>
-<h2 id="building-a-pipeline"><strong>Building a pipeline</strong></h2>
-<p><include link to api reference later on>
-The <code>Pipeline</code> class includes a method for each stage of the aggregation framework.<br>
-Each stage of the aggregation framework also has its own class in the package.
-And each <code>Stage</code> class has a mirror method in the <code>Pipeline</code>. For more information, see the <a href="../stages/">stages page</a>.</p>
-<p>For example, the <code>Match</code> stage has a <code>match</code> method in the <code>Pipeline</code> class that can be typed as <code>pipeline.match()</code> like in the code snippet below.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">monggregate</span> <span class="kn">import</span> <span class="n">Pipeline</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;A Star Is Born&quot;</span><span class="p">)</span>
-</span></code></pre></div>
-<p>The last line of code will add a <code>Match</code> stage instance to the pipeline and return the pipeline instance.</p>
-<p>That way, you can chain the stages together to build your pipeline.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span> <span class="nn">monggregate</span> <span class="kn">import</span> <span class="n">Pipeline</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1"># The below pipeline will return (when executed) </span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="c1"># the most recent movie with the title &quot;A Star is Born&quot;</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">match</span><span class="p">(</span>
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;A Star Is Born&quot;</span>
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span>
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="n">by</span><span class="o">=</span><span class="s2">&quot;year&quot;</span>
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span>
-</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    <span class="n">value</span><span class="o">=</span><span class="mi">1</span>
-</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="p">)</span>
-</span></code></pre></div>
-<h2 id="executing-a-pipeline"><strong>Executing A Pipeline</strong></h2>
-<p>So far, we have built our pipeline object. But what do we do with it?</p>
-<p><code>monggregate</code> offers a <strong>bilateral</strong> integration with the tool of your choice to execute the pipeline.</p>
-<p>Bilateral because you can either integrate your pipeline to your tool or your tool to into the pipeline.
-In the following examples, I'll use <code>pymongo</code> because at the end of the day, <code>motor</code>, <code>beanie</code> and, <code>mongoengine</code> all use <code>pymongo</code> under the hood.</p>
-<h3 id="passing-your-pipeline-to-your-tool"><strong>Passing Your Pipeline to Your Tool</strong></h3>
-<p>The <code>Pipeline</code> class has an <code>export</code> method that returns a list of dictionaries of raw MongoDB aggregation language, which is the format expected by <code>pymongo</code>.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span> <span class="nn">pymongo</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">from</span> <span class="nn">monggregate</span> <span class="kn">import</span> <span class="n">Pipeline</span><span class="p">,</span> <span class="n">S</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Setup your pymongo connexion</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">MONGODB_URI</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;insert_your_own_uri&quot;</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">client</span> <span class="o">=</span> <span class="n">pymongo</span><span class="o">.</span><span class="n">MongoClient</span><span class="p">(</span><span class="n">MONGODB_URI</span><span class="p">)</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">db</span> <span class="o">=</span> <span class="n">client</span><span class="p">[</span><span class="s2">&quot;sample_mflix&quot;</span><span class="p">]</span>
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="c1"># Create your pipeline</span>
-</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
-</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>
-</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="c1"># Build your pipeline</span>
-</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">match</span><span class="p">(</span>
-</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;A Star Is Born&quot;</span>
-</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span>
-</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>    <span class="n">by</span><span class="o">=</span><span class="s2">&quot;year&quot;</span>
-</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span>
-</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>    <span class="n">value</span><span class="o">=</span><span class="mi">1</span>
-</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="p">)</span>
-</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>
-</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="c1"># Execute your pipeline</span>
-</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="n">curosr</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s2">&quot;movies&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">pipeline</span><span class="o">.</span><span class="n">export</span><span class="p">())</span>
-</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>
-</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="n">results</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">curosr</span><span class="p">)</span>
-</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
-</span></code></pre></div>
-<h3 id="passing-your-tool-to-your-pipeline"><strong>Passing Your Tool to Your Pipeline</strong></h3>
-<p>The pipeline class also has <code>run</code> method, a <code>_db</code> and a <code>collection</code> attributes that you can set that make your pipelines callable and runnable by being aware of your database connection.<br>
-Thus, you could write the above example like this:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span> <span class="nn">pymongo</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">from</span> <span class="nn">monggregate</span> <span class="kn">import</span> <span class="n">Pipeline</span><span class="p">,</span> <span class="n">S</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># Setup your pymongo connexion</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">MONGODB_URI</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;insert_your_own_uri&quot;</span>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="n">client</span> <span class="o">=</span> <span class="n">pymongo</span><span class="o">.</span><span class="n">MongoClient</span><span class="p">(</span><span class="n">MONGODB_URI</span><span class="p">)</span>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="n">db</span> <span class="o">=</span> <span class="n">client</span><span class="p">[</span><span class="s2">&quot;sample_mflix&quot;</span><span class="p">]</span>
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="c1"># Create your database aware pipeline</span>
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">_db</span><span class="o">=</span><span class="n">db</span><span class="p">,</span> <span class="n">collection</span><span class="o">=</span><span class="s2">&quot;movies&quot;</span><span class="p">)</span> 
-</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>
-</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="c1"># Build your pipeline</span>
-</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="c1"># (This does not change)</span>
-</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">match</span><span class="p">(</span>
-</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;A Star Is Born&quot;</span>
-</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span>
-</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>    <span class="n">by</span><span class="o">=</span><span class="s2">&quot;year&quot;</span>
-</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span>
-</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>    <span class="n">value</span><span class="o">=</span><span class="mi">1</span>
-</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="p">)</span>
-</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>
-</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="c1"># Execute your pipeline</span>
-</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="c1"># (The execution is simpler)</span>
-</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="n">results</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
-</span></code></pre></div>
-<p>It also has a <code>__call__</code> method, so you could replace the last two lines with:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">results</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">()</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
-</span></code></pre></div>
-<h3 id="how-to-choose-a-method"><strong>How to Choose a Method?</strong></h3>
-<p>It is up to you to choose the method that suits you the best.<br> 
-I personnaly use the first method for now.
-There are plans to replace the <code>_db</code> attribute by a <code>uri</code> attribute and make the database connection happen under the hood, but it is not implemented yet. When it is added into the second method, it will become more appealing.</p>
-<h2 id="an-alternative-to-build-pipelines"><strong>An Alternative to Build Pipelines</strong></h2>
-<p>Another way to build your pipeline is to access the stages classes directly. All the stages are accessible in the <code>monggregate.stages</code> namespace.
-As such, you could write the above example like this:</p>
-<p><div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">import</span> <span class="nn">pymongo</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kn">from</span> <span class="nn">monggregate</span> <span class="kn">import</span> <span class="n">Pipeline</span><span class="p">,</span> <span class="n">stages</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="c1"># Setup your pymongo connexion</span>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="n">MONGODB_URI</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;insert_your_own_uri&quot;</span>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="n">client</span> <span class="o">=</span> <span class="n">pymongo</span><span class="o">.</span><span class="n">MongoClient</span><span class="p">(</span><span class="n">MONGODB_URI</span><span class="p">)</span>
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="n">db</span> <span class="o">=</span> <span class="n">client</span><span class="p">[</span><span class="s2">&quot;sample_mflix&quot;</span><span class="p">]</span>
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
-</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="c1"># Prepare your stages</span>
-</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="n">match_stage</span> <span class="o">=</span> <span class="n">stages</span><span class="o">.</span><span class="n">Match</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;A Star Is Born&quot;</span><span class="p">})</span>
-</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="n">sort_stage</span> <span class="o">=</span> <span class="n">stages</span><span class="o">.</span><span class="n">Sort</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;year&quot;</span><span class="p">)</span>
-</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="n">limit_stage</span> <span class="o">=</span> <span class="n">stages</span><span class="o">.</span><span class="n">Limit</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="n">stages</span> <span class="o">=</span> <span class="p">[</span><span class="n">match_stage</span><span class="p">,</span> <span class="n">sort_stage</span><span class="p">,</span> <span class="n">limit_stage</span><span class="p">]</span>
-</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>
-</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="c1"># Create your pipeline ready to be executed</span>
-</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">stages</span><span class="o">=</span><span class="n">stages</span><span class="p">)</span>
-</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>
-</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="c1"># Execute your pipeline</span>
-</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="n">curosr</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s2">&quot;movies&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">pipeline</span><span class="o">.</span><span class="n">export</span><span class="p">())</span>
-</span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>
-</span><span id="__span-5-22"><a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="n">results</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">curosr</span><span class="p">)</span>
-</span><span id="__span-5-23"><a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a><span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
-</span></code></pre></div>
-Once again, it is a question of preferences.<br>
-This approach might be more readable for some people, but it is also more verbose.<br></p>
-<p>However, there are still a couple of other advantages with this approach:</p>
+<h1 id="mongodb-aggregation-pipelines">🔄 <strong>MongoDB Aggregation Pipelines</strong></h1>
+<p>Pipelines are a fundamental concept in MongoDB's aggregation framework, providing a powerful way to process and transform data. The <code>Pipeline</code> class in Monggregate is designed to make building and executing these pipelines intuitive and efficient.</p>
+<h2 id="building-a-pipeline">🏗️ <strong>Building a Pipeline</strong></h2>
+<blockquote>
+<p>💡 The <code>Pipeline</code> class is the core of Monggregate, offering methods that correspond to each MongoDB aggregation stage.</p>
+</blockquote>
+<p>Every stage in MongoDB's aggregation framework has an equivalent class and method in Monggregate.</p>
+<h3 id="basic-pipeline-construction">🔰 <strong>Basic Pipeline Construction</strong></h3>
+<p>Creating a pipeline is straightforward:</p>
+<div class="language-python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Basic Pipeline</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span>
+<span class="normal"><a href="#__codelineno-0-5">5</a></span>
+<span class="normal"><a href="#__codelineno-0-6">6</a></span>
+<span class="normal"><a href="#__codelineno-0-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">monggregate</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="c1"># Initialize an empty pipeline</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5"></a>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="c1"># Add a Match stage to filter documents</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;A Star Is Born&quot;</span><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+<p>Each method returns the pipeline instance, enabling method chaining to build complex pipelines with a clean, readable syntax:</p>
+<div class="language-python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Method Chaining</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">monggregate</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="c1"># Build a multi-stage pipeline</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">match</span><span class="p">(</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6"></a>    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;A Star Is Born&quot;</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8"></a>    <span class="n">by</span><span class="o">=</span><span class="s2">&quot;year&quot;</span><span class="p">,</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9"></a>    <span class="n">descending</span><span class="o">=</span><span class="kc">True</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11"></a>    <span class="n">value</span><span class="o">=</span><span class="mi">1</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+<blockquote>
+<p>📘 This pipeline will filter for movies titled "A Star Is Born", sort them by year in descending order, and return only the first result (the most recent movie with that title).</p>
+</blockquote>
+<h2 id="executing-a-pipeline">⚡ <strong>Executing a Pipeline</strong></h2>
+<p>Monggregate provides a simple way to export your pipeline to a format compatible with your MongoDB driver or ODM of choice:</p>
+<div class="language-python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Executing a Pipeline</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span>
+<span class="normal"><a href="#__codelineno-2-14">14</a></span>
+<span class="normal"><a href="#__codelineno-2-15">15</a></span>
+<span class="normal"><a href="#__codelineno-2-16">16</a></span>
+<span class="normal"><a href="#__codelineno-2-17">17</a></span>
+<span class="normal"><a href="#__codelineno-2-18">18</a></span>
+<span class="normal"><a href="#__codelineno-2-19">19</a></span>
+<span class="normal"><a href="#__codelineno-2-20">20</a></span>
+<span class="normal"><a href="#__codelineno-2-21">21</a></span>
+<span class="normal"><a href="#__codelineno-2-22">22</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pymongo</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">monggregate</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="c1"># Connect to MongoDB</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="n">MONGODB_URI</span> <span class="o">=</span> <span class="s2">&quot;&lt;insert-your-connection-string&gt;&quot;</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="n">client</span> <span class="o">=</span> <span class="n">pymongo</span><span class="o">.</span><span class="n">MongoClient</span><span class="p">(</span><span class="n">MONGODB_URI</span><span class="p">)</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="n">db</span> <span class="o">=</span> <span class="n">client</span><span class="p">[</span><span class="s2">&quot;sample_mflix&quot;</span><span class="p">]</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8"></a>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="c1"># Create and build your pipeline</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">match</span><span class="p">(</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12"></a>    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;A Star Is Born&quot;</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14"></a>    <span class="n">by</span><span class="o">=</span><span class="s2">&quot;year&quot;</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16"></a>    <span class="n">value</span><span class="o">=</span><span class="mi">1</span>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="p">)</span>
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18"></a>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19"></a><span class="c1"># Execute the pipeline</span>
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20"></a><span class="n">cursor</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s2">&quot;movies&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">pipeline</span><span class="o">.</span><span class="n">export</span><span class="p">())</span>
+</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21"></a><span class="n">results</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cursor</span><span class="p">)</span>
+</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22"></a><span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+<blockquote>
+<p>🔍 The <code>export()</code> method converts your Monggregate pipeline into the standard MongoDB format (a list of stage dictionaries) that any MongoDB driver can execute.</p>
+</blockquote>
+<h2 id="alternative-using-stage-classes-directly">🔄 <strong>Alternative: Using Stage Classes Directly</strong></h2>
+<p>For more complex scenarios or when you need to reuse stages, you can work directly with stage classes:</p>
+<div class="language-python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Working with Stage Classes</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span>
+<span class="normal"><a href="#__codelineno-3-18">18</a></span>
+<span class="normal"><a href="#__codelineno-3-19">19</a></span>
+<span class="normal"><a href="#__codelineno-3-20">20</a></span>
+<span class="normal"><a href="#__codelineno-3-21">21</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pymongo</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">monggregate</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span><span class="p">,</span> <span class="n">stages</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="c1"># Connect to MongoDB</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="n">MONGODB_URI</span> <span class="o">=</span> <span class="s2">&quot;mongodb://localhost:27017&quot;</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="n">client</span> <span class="o">=</span> <span class="n">pymongo</span><span class="o">.</span><span class="n">MongoClient</span><span class="p">(</span><span class="n">MONGODB_URI</span><span class="p">)</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="n">db</span> <span class="o">=</span> <span class="n">client</span><span class="p">[</span><span class="s2">&quot;sample_mflix&quot;</span><span class="p">]</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8"></a>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="c1"># Create individual stage instances</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="n">match_stage</span> <span class="o">=</span> <span class="n">stages</span><span class="o">.</span><span class="n">Match</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;A Star Is Born&quot;</span><span class="p">})</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="n">sort_stage</span> <span class="o">=</span> <span class="n">stages</span><span class="o">.</span><span class="n">Sort</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;year&quot;</span><span class="p">)</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="n">limit_stage</span> <span class="o">=</span> <span class="n">stages</span><span class="o">.</span><span class="n">Limit</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13"></a>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="c1"># Combine stages into a pipeline</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="n">pipeline_stages</span> <span class="o">=</span> <span class="p">[</span><span class="n">match_stage</span><span class="p">,</span> <span class="n">sort_stage</span><span class="p">,</span> <span class="n">limit_stage</span><span class="p">]</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">stages</span><span class="o">=</span><span class="n">pipeline_stages</span><span class="p">)</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17"></a>
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18"></a><span class="c1"># Execute the pipeline</span>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19"></a><span class="n">cursor</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s2">&quot;movies&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">pipeline</span><span class="o">.</span><span class="n">export</span><span class="p">())</span>
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20"></a><span class="n">results</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cursor</span><span class="p">)</span>
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21"></a><span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+<p>This approach offers advantages:
+- 🔄 Stages can be reused across multiple pipelines
+- 🔀 Stages can be easily reordered or modified
+- 🧩 Complex stage configurations can be built separately</p>
+<h2 id="complex-example-analysis-pipeline">🌟 <strong>Complex Example: Analysis Pipeline</strong></h2>
+<p>Here's a more comprehensive example that analyzes movies by genre:</p>
+<div class="language-python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Analysis Pipeline</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-4-10">10</a></span>
+<span class="normal"><a href="#__codelineno-4-11">11</a></span>
+<span class="normal"><a href="#__codelineno-4-12">12</a></span>
+<span class="normal"><a href="#__codelineno-4-13">13</a></span>
+<span class="normal"><a href="#__codelineno-4-14">14</a></span>
+<span class="normal"><a href="#__codelineno-4-15">15</a></span>
+<span class="normal"><a href="#__codelineno-4-16">16</a></span>
+<span class="normal"><a href="#__codelineno-4-17">17</a></span>
+<span class="normal"><a href="#__codelineno-4-18">18</a></span>
+<span class="normal"><a href="#__codelineno-4-19">19</a></span>
+<span class="normal"><a href="#__codelineno-4-20">20</a></span>
+<span class="normal"><a href="#__codelineno-4-21">21</a></span>
+<span class="normal"><a href="#__codelineno-4-22">22</a></span>
+<span class="normal"><a href="#__codelineno-4-23">23</a></span>
+<span class="normal"><a href="#__codelineno-4-24">24</a></span>
+<span class="normal"><a href="#__codelineno-4-25">25</a></span>
+<span class="normal"><a href="#__codelineno-4-26">26</a></span>
+<span class="normal"><a href="#__codelineno-4-27">27</a></span>
+<span class="normal"><a href="#__codelineno-4-28">28</a></span>
+<span class="normal"><a href="#__codelineno-4-29">29</a></span>
+<span class="normal"><a href="#__codelineno-4-30">30</a></span>
+<span class="normal"><a href="#__codelineno-4-31">31</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pymongo</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">monggregate</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span><span class="p">,</span> <span class="n">S</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="c1"># Connect to MongoDB</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="n">client</span> <span class="o">=</span> <span class="n">pymongo</span><span class="o">.</span><span class="n">MongoClient</span><span class="p">(</span><span class="s2">&quot;mongodb://localhost:27017&quot;</span><span class="p">)</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="n">db</span> <span class="o">=</span> <span class="n">client</span><span class="p">[</span><span class="s2">&quot;sample_mflix&quot;</span><span class="p">]</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7"></a>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="c1"># Build an analysis pipeline</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">match</span><span class="p">(</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11"></a>    <span class="n">year</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;$gte&quot;</span><span class="p">:</span> <span class="mi">2000</span><span class="p">}</span>  <span class="c1"># Movies from 2000 onwards</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12"></a><span class="p">)</span><span class="o">.</span><span class="n">unwind</span><span class="p">(</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13"></a>    <span class="n">path</span><span class="o">=</span><span class="s2">&quot;genres&quot;</span>  <span class="c1"># Split documents by genre</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14"></a><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15"></a>    <span class="n">by</span><span class="o">=</span><span class="s2">&quot;genres&quot;</span><span class="p">,</span>  <span class="c1"># Group by genre</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16"></a>    <span class="n">query</span><span class="o">=</span><span class="p">{</span>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17"></a>        <span class="s2">&quot;count&quot;</span><span class="p">:</span> <span class="n">S</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>  <span class="c1"># Count movies per genre</span>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18"></a>        <span class="s2">&quot;avg_imdb&quot;</span><span class="p">:</span> <span class="n">S</span><span class="o">.</span><span class="n">avg</span><span class="p">(</span><span class="s2">&quot;$imdb.rating&quot;</span><span class="p">),</span>  <span class="c1"># Average IMDB rating</span>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19"></a>        <span class="s2">&quot;titles&quot;</span><span class="p">:</span> <span class="n">S</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="s2">&quot;$title&quot;</span><span class="p">)</span>  <span class="c1"># Collect titles</span>
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20"></a>    <span class="p">}</span>
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21"></a><span class="p">)</span><span class="o">.</span><span class="n">match</span><span class="p">(</span>
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22"></a>    <span class="n">count</span><span class="o">=</span><span class="n">S</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># Only include genres with &gt;10 movies</span>
+</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23"></a><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span>
+</span><span id="__span-4-24"><a id="__codelineno-4-24" name="__codelineno-4-24"></a>    <span class="n">by</span><span class="o">=</span><span class="s2">&quot;avg_imdb&quot;</span><span class="p">,</span>
+</span><span id="__span-4-25"><a id="__codelineno-4-25" name="__codelineno-4-25"></a>    <span class="n">descending</span><span class="o">=</span><span class="kc">True</span>
+</span><span id="__span-4-26"><a id="__codelineno-4-26" name="__codelineno-4-26"></a><span class="p">)</span>
+</span><span id="__span-4-27"><a id="__codelineno-4-27" name="__codelineno-4-27"></a>
+</span><span id="__span-4-28"><a id="__codelineno-4-28" name="__codelineno-4-28"></a><span class="c1"># Execute the pipeline</span>
+</span><span id="__span-4-29"><a id="__codelineno-4-29" name="__codelineno-4-29"></a><span class="n">results</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">db</span><span class="p">[</span><span class="s2">&quot;movies&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">pipeline</span><span class="o">.</span><span class="n">export</span><span class="p">()))</span>
+</span><span id="__span-4-30"><a id="__codelineno-4-30" name="__codelineno-4-30"></a><span class="k">for</span> <span class="n">genre</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+</span><span id="__span-4-31"><a id="__codelineno-4-31" name="__codelineno-4-31"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">genre</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">genre</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> movies, </span><span class="si">{</span><span class="n">genre</span><span class="p">[</span><span class="s1">&#39;avg_imdb&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> avg rating&quot;</span><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+<h2 id="pipeline-manipulation">🛠️ <strong>Pipeline Manipulation</strong></h2>
+<blockquote>
+<p>📚 The <code>Pipeline</code> class implements Python's list interface, allowing you to manipulate stages programmatically:</p>
+</blockquote>
+<div class="language-python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Pipeline Manipulation</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span>
+<span class="normal"><a href="#__codelineno-5-13">13</a></span>
+<span class="normal"><a href="#__codelineno-5-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="c1"># Check pipeline length</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pipeline</span><span class="p">))</span>  <span class="c1"># Returns number of stages</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="c1"># Add a stage to the end</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stages</span><span class="o">.</span><span class="n">Project</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6"></a>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="c1"># Add multiple stages</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9"></a>    <span class="n">stages</span><span class="o">.</span><span class="n">Skip</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10"></a>    <span class="n">stages</span><span class="o">.</span><span class="n">Limit</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11"></a><span class="p">])</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12"></a>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13"></a><span class="c1"># Insert a stage at a specific position</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">stages</span><span class="o">.</span><span class="n">Match</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="mi">2020</span><span class="p">))</span>
+</span></code></pre></div></td></tr></table></div>
+<p>This makes pipelines highly flexible and enables dynamic pipeline construction based on conditions or user input.</p>
+<h2 id="next-steps">🔜 <strong>Next Steps</strong></h2>
 <ul>
-<li>You can reuse the stages in multiple pipelines</li>
-<li>You can easily reorder the stages</li>
+<li>🔄 Learn about available <a href="../stages/">aggregation stages</a></li>
+<li>🛠️ Explore <a href="../operators/">MongoDB operators</a> for advanced data manipulation</li>
+<li>🔍 Discover <a href="../vector-search/">vector search capabilities</a> for similarity queries</li>
 </ul>
-<p>The second point is particularly relevant given the utilities function in the <code>Pipeline</code> class.</p>
-<h2 id="pipeline-utilities"><strong>Pipeline Utilities</strong></h2>
-<p>The <code>Pipeline</code> class has a few utilities methods to help you build your pipeline.</p>
-<p>Indeed it implements most of the python list methods, so you do not have to access the stages attribute to perform list operations.</p>
-<p>In the examples above, <code>len(pipeline)</code> would return <code>3</code>.</p>
-<p>You could also, for example, append a stage to the pipeline like this:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stages</span><span class="o">.</span><span class="n">Project</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-</span></code></pre></div>
-<p>You also have access to the <code>append</code>, <code>extend</code>, <code>insert</code>,  methods directly on the <code>pipeline</code> object. <TODO: implement pop remove and reverse></p>
 
 
 
@@ -1035,7 +1115,7 @@ This approach might be more readable for some people, but it is also more verbos
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy"], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../../assets/javascripts/bundle.dff1b7c8.min.js"></script>

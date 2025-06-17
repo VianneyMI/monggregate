@@ -11,10 +11,6 @@
         <link rel="canonical" href="https://vianneymi.github.io/monggregate/how-to/commons/combine-collections/">
       
       
-        <link rel="prev" href="../create-or-update-a-collection/">
-      
-      
-        <link rel="next" href="../../../contributing/">
       
       
       <link rel="icon" href="../../../img/logo.png">
@@ -22,11 +18,14 @@
     
     
       
-        <title>Combine collections - Monggregate Documentation</title>
+        <title>Combining Collections - Monggregate Documentation</title>
       
     
     
       <link rel="stylesheet" href="../../../assets/stylesheets/main.046329b4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.85d0ee34.min.css">
       
       
 
@@ -45,6 +44,8 @@
       
     
     
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
     <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -55,11 +56,14 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
   
     
-    
-      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -67,7 +71,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#what-do-we-want-to-achieve" class="md-skip">
+        <a href="#combining-collections" class="md-skip">
           Skip to content
         </a>
       
@@ -102,12 +106,14 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Combine collections
+              Combining Collections
             
           </span>
         </div>
       </div>
     </div>
+    
+      
     
     
     
@@ -438,6 +444,26 @@
 
               
             
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorial/vector-search/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Vector Search
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -449,19 +475,17 @@
       
   
   
-    
-  
   
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
         
           <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
             
@@ -474,7 +498,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             How-To
@@ -505,65 +529,9 @@
                 
   
   
-    
-  
-  
-    
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-      
-        
-        
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" checked>
-        
-          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Common Pipelines Use Cases
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_4_2">
-            <span class="md-nav__icon md-icon"></span>
-            Common Pipelines Use Cases
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
   
     <li class="md-nav__item">
-      <a href="../home/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Home
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../select-a-nested-document/" class="md-nav__link">
+      <a href="../../select-a-nested-document/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -583,7 +551,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../create-or-update-a-collection/" class="md-nav__link">
+      <a href="../../create-or-update-a-collection/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -601,27 +569,9 @@
                 
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Combine collections
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../combine-collections.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -630,46 +580,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#what-do-we-want-to-achieve" class="md-nav__link">
-    What do we want to achieve ?
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#how" class="md-nav__link">
-    How ?
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -737,6 +647,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -745,15 +657,43 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-do-we-want-to-achieve" class="md-nav__link">
-    What do we want to achieve ?
+  <a href="#use-case" class="md-nav__link">
+    Use Case
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#how" class="md-nav__link">
-    How ?
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-lookup" class="md-nav__link">
+    Using $lookup
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#result-structure" class="md-nav__link">
+    Result Structure
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additional-options" class="md-nav__link">
+    Additional Options
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-topics" class="md-nav__link">
+    Related Topics
   </a>
   
 </li>
@@ -773,37 +713,52 @@
                   
 
 
-  <h1>Combine collections</h1>
-
-<p>This guide will show you how to merge two collections.
-Keep in mind that merging collections here means embedding documents from one collection into matching documents from another collection.</p>
-<p>In the previous guide, we split the <code>listingsAndReviews</code> collection into two collections: <code>listings</code> and <code>reviews</code>.
-We will use these two collections to show you how to merge collections.</p>
-<h2 id="what-do-we-want-to-achieve"><strong>What do we want to achieve ?</strong></h2>
-<p>We want to get a listing and its associated reviews.</p>
-<h2 id="how"><strong>How ?</strong></h2>
-<p>We will use the <code>$lookup</code> stage that was also presented in the <a href="../../../tutorial/stages/#usage">tutorial</a>.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">#/!\    /!\    /!\</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1"># Imports</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># and boilerplate code</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># to get the db object</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1"># are not included</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1">#/!\    /!\    /!\</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="kn">from</span> <span class="nn">monggregate</span> <span class="kn">import</span> <span class="n">Pipeline</span>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="n">reviews</span> <span class="o">=</span> <span class="s2">&quot;reviews&quot;</span>
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span>
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="n">right</span><span class="o">=</span><span class="n">reviews</span><span class="p">,</span>
-</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="n">left_on</span><span class="o">=</span><span class="n">reviews</span><span class="p">,</span>
-</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    <span class="n">right_on</span><span class="o">=</span><span class="s2">&quot;_id&quot;</span><span class="p">,</span>
-</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    <span class="n">name</span><span class="o">=</span><span class="n">reviews</span>
-</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="p">)</span>
-</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>
-</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="n">db</span><span class="p">[</span><span class="s2">&quot;listings&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="o">.</span><span class="n">export</span><span class="p">())</span>
-</span></code></pre></div>
+<h1 id="combining-collections">Combining Collections</h1>
+<p>This guide demonstrates how to merge data from two collections using MongoDB's aggregation framework.</p>
+<h2 id="use-case">Use Case</h2>
+<p>You need to combine related data from separate collections - in this case, retrieving listings along with their associated reviews.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>This guide uses the collections we created in the previous guide where we split the <code>listingsAndReviews</code> collection into separate <code>listings</code> and <code>reviews</code> collections.</p>
+<h2 id="using-lookup">Using $lookup</h2>
+<p>The <code>$lookup</code> operation performs a left outer join, allowing you to incorporate documents from one collection into matching documents from another.</p>
+<div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">monggregate</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="c1"># Define the pipeline</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6"></a>    <span class="n">right</span><span class="o">=</span><span class="s2">&quot;reviews&quot;</span><span class="p">,</span>         <span class="c1"># Target collection we&#39;re joining with</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7"></a>    <span class="n">left_on</span><span class="o">=</span><span class="s2">&quot;_id&quot;</span><span class="p">,</span>           <span class="c1"># Field in the listings collection</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8"></a>    <span class="n">right_on</span><span class="o">=</span><span class="s2">&quot;listing_id&quot;</span><span class="p">,</span>   <span class="c1"># Field in the reviews collection that matches</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9"></a>    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;reviews&quot;</span>           <span class="c1"># Output field to store the joined data</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="p">)</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11"></a>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="c1"># Execute the pipeline on the listings collection</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="n">results</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s2">&quot;listings&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="o">.</span><span class="n">export</span><span class="p">())</span>
+</span></code></pre></div></td></tr></table></div>
+<h2 id="result-structure">Result Structure</h2>
+<p>After execution, each document from the <code>listings</code> collection will contain a new <code>reviews</code> array field with all matching review documents.</p>
+<h2 id="additional-options">Additional Options</h2>
+<p>For more control over joined data:
+- Use <code>pipeline.project()</code> after lookup to shape the output
+- Add matching conditions with <code>let</code> and <code>pipeline</code> parameters
+- Explore the <code>$unwind</code> stage to process array results</p>
+<h2 id="related-topics">Related Topics</h2>
+<ul>
+<li><a href="select-a-nested-document.md">Selecting Nested Documents</a></li>
+<li><a href="../../../intro/mongodb-aggregation-framework/">MongoDB Aggregation Framework</a></li>
+</ul>
 
 
 
@@ -841,7 +796,7 @@ We will use these two collections to show you how to merge collections.</p>
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.annotate", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../../../assets/javascripts/bundle.dff1b7c8.min.js"></script>

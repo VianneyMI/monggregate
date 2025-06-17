@@ -28,6 +28,9 @@
     
       <link rel="stylesheet" href="../../assets/stylesheets/main.046329b4.min.css">
       
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.85d0ee34.min.css">
+      
       
 
 
@@ -45,6 +48,8 @@
       
     
     
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -55,11 +60,14 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
   
     
-    
-      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -67,7 +75,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#installing-monggregate" class="md-skip">
+        <a href="#getting-started-with-monggregate" class="md-skip">
           Skip to content
         </a>
       
@@ -108,6 +116,8 @@
         </div>
       </div>
     </div>
+    
+      
     
     
     
@@ -352,6 +362,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -380,6 +392,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -388,22 +402,57 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#installing-monggregate" class="md-nav__link">
-    Installing Monggregate
+  <a href="#overview" class="md-nav__link">
+    📋 Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    📥 Installation
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#requirements" class="md-nav__link">
-    Requirements
+    ✅ Requirements
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#first-steps" class="md-nav__link">
-    First Steps
+  <a href="#basic-concepts" class="md-nav__link">
+    🧩 Basic Concepts
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start-example" class="md-nav__link">
+    ⚡ Quick Start Example
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-the-pipeline-builder" class="md-nav__link">
+    🔧 Using the Pipeline Builder
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-usage" class="md-nav__link">
+    🌟 Advanced Usage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    🔜 Next Steps
   </a>
   
 </li>
@@ -497,6 +546,26 @@
 
               
             
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vector-search/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Vector Search
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -563,62 +632,8 @@
   
   
   
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
-        
-          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Common Pipelines Use Cases
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_2">
-            <span class="md-nav__icon md-icon"></span>
-            Common Pipelines Use Cases
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
     <li class="md-nav__item">
-      <a href="../../how-to/commons/home/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Home
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../how-to/commons/select-a-nested-document/" class="md-nav__link">
+      <a href="../../how-to/select-a-nested-document/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -638,7 +653,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../how-to/commons/create-or-update-a-collection/" class="md-nav__link">
+      <a href="../../how-to/create-or-update-a-collection/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -658,7 +673,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../how-to/commons/combine-collections/" class="md-nav__link">
+      <a href="../../how-to/combine-collections.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -667,14 +682,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -742,6 +749,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -750,22 +759,57 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#installing-monggregate" class="md-nav__link">
-    Installing Monggregate
+  <a href="#overview" class="md-nav__link">
+    📋 Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    📥 Installation
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#requirements" class="md-nav__link">
-    Requirements
+    ✅ Requirements
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#first-steps" class="md-nav__link">
-    First Steps
+  <a href="#basic-concepts" class="md-nav__link">
+    🧩 Basic Concepts
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start-example" class="md-nav__link">
+    ⚡ Quick Start Example
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-the-pipeline-builder" class="md-nav__link">
+    🔧 Using the Pipeline Builder
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-usage" class="md-nav__link">
+    🌟 Advanced Usage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    🔜 Next Steps
   </a>
   
 </li>
@@ -785,31 +829,130 @@
                   
 
 
-  <h1>Getting Started</h1>
-
-<h2 id="installing-monggregate"><strong>Installing Monggregate</strong></h2>
-<p><code>monggregate</code> is available on PyPI:</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>monggregate
-</span></code></pre></div>
-<h2 id="requirements"><strong>Requirements</strong></h2>
-<p>It requires python &gt; 3.10 and has a few required dependencies such as <code>pydantic</code>, <code>pyhumps</code> and <code>typing-extensions</code>.</p>
-<p>In order to execute the useful query builder in the library, you will need a MongoDB driver.</p>
-<p>For more details about the requirements, see the requirements files <a href="https://github.com/VianneyMI/monggregate/blob/main/requirements">in the repo</a>. </p>
-<h2 id="first-steps"><strong>First Steps</strong></h2>
-<p>There are several ways you may use Monggregate.</p>
-<p>You can use the stages individually and build your pipeline step by step or you can use the <code>Pipeline</code> class to build your pipeline. That's actually the way I recommend you to use it.</p>
-<p>In that case, your first steps will look like this:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span> <span class="nn">monggregate</span> <span class="kn">import</span> <span class="n">Pipeline</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
-</span></code></pre></div>
-<p>Now when writing,</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">pipeline</span><span class="o">.</span>
-</span></code></pre></div>
-<p>your IDE will show you the available stages.</p>
-<p>You should see something like this.</p>
+<h1 id="getting-started-with-monggregate">🚀 <strong>Getting Started with Monggregate</strong></h1>
+<h2 id="overview">📋 <strong>Overview</strong></h2>
+<p>Monggregate is a Python library designed to simplify working with MongoDB aggregation pipelines. It provides an object-oriented interface that lets you focus on data transformation requirements rather than MongoDB syntax.</p>
+<h2 id="installation">📥 <strong>Installation</strong></h2>
+<p>Monggregate is available on PyPI:</p>
+<div class="language-shell highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>monggregate
+</span></code></pre></div></td></tr></table></div>
+<h2 id="requirements">✅ <strong>Requirements</strong></h2>
+<ul>
+<li>Python 3.10 or higher</li>
+<li>Dependencies: <code>pydantic</code>, <code>pyhumps</code>, and <code>typing-extensions</code></li>
+<li>A MongoDB driver for executing the query builder (e.g., <code>pymongo</code>)</li>
+</ul>
+<blockquote>
+<p>📚 For a complete list of requirements, see the <a href="https://github.com/VianneyMI/monggregate/blob/main/requirements">requirements files in the repository</a>.</p>
+</blockquote>
+<h2 id="basic-concepts">🧩 <strong>Basic Concepts</strong></h2>
+<p>Monggregate's primary components:</p>
+<ul>
+<li>📚 <strong>Pipeline</strong>: The main class used to build and chain MongoDB aggregation operations</li>
+<li>🔄 <strong>Stages</strong>: Individual operations like <code>match</code>, <code>group</code>, <code>sort</code>, etc.</li>
+<li>🛠️ <strong>Operators</strong>: MongoDB operators implemented with intuitive Python syntax</li>
+</ul>
+<h2 id="quick-start-example">⚡ <strong>Quick Start Example</strong></h2>
+<p>Here's a simple example to get you started:</p>
+<div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span>
+<span class="normal"><a href="#__codelineno-1-15">15</a></span>
+<span class="normal"><a href="#__codelineno-1-16">16</a></span>
+<span class="normal"><a href="#__codelineno-1-17">17</a></span>
+<span class="normal"><a href="#__codelineno-1-18">18</a></span>
+<span class="normal"><a href="#__codelineno-1-19">19</a></span>
+<span class="normal"><a href="#__codelineno-1-20">20</a></span>
+<span class="normal"><a href="#__codelineno-1-21">21</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pymongo</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">monggregate</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="c1"># Connect to MongoDB</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="n">client</span> <span class="o">=</span> <span class="n">pymongo</span><span class="o">.</span><span class="n">MongoClient</span><span class="p">(</span><span class="s2">&quot;&lt;insert-your-connection-string&gt;&quot;</span><span class="p">)</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="n">db</span> <span class="o">=</span> <span class="n">client</span><span class="p">[</span><span class="s2">&quot;sample_database&quot;</span><span class="p">]</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7"></a>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="c1"># Create a pipeline</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10"></a>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="c1"># Build your pipeline with chained operations</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">match</span><span class="p">(</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13"></a>    <span class="n">category</span><span class="o">=</span><span class="s2">&quot;electronics&quot;</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15"></a>    <span class="n">by</span><span class="o">=</span><span class="s2">&quot;price&quot;</span><span class="p">,</span> 
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16"></a>    <span class="n">descending</span><span class="o">=</span><span class="kc">True</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18"></a>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19"></a><span class="c1"># Execute the pipeline</span>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20"></a><span class="n">results</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">db</span><span class="p">[</span><span class="s2">&quot;products&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">pipeline</span><span class="o">.</span><span class="n">export</span><span class="p">()))</span>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21"></a><span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+<h2 id="using-the-pipeline-builder">🔧 <strong>Using the Pipeline Builder</strong></h2>
+<blockquote>
+<p>💡 The recommended way to use Monggregate is through the <code>Pipeline</code> class.</p>
+</blockquote>
+<div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span>
+<span class="normal"><a href="#__codelineno-2-4">4</a></span>
+<span class="normal"><a href="#__codelineno-2-5">5</a></span>
+<span class="normal"><a href="#__codelineno-2-6">6</a></span>
+<span class="normal"><a href="#__codelineno-2-7">7</a></span>
+<span class="normal"><a href="#__codelineno-2-8">8</a></span>
+<span class="normal"><a href="#__codelineno-2-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">monggregate</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="c1"># Initialize an empty pipeline</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5"></a>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="c1"># Build your pipeline with autocomplete assistance</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8"></a>        <span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9"></a>        <span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+<p>When you type <code>pipeline.</code> in your IDE, you'll see all available aggregation stages through autocompletion:</p>
 <p><img alt="autocompletion" src="../../img/demo_autocompletion.png" /></p>
-<p>In the <a href="../pipeline/">next page</a>, we will see in more details how to use the <code>Pipeline</code> class.</p>
+<h2 id="advanced-usage">🌟 <strong>Advanced Usage</strong></h2>
+<p>Monggregate supports advanced MongoDB features like expressions and operators:</p>
+<div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">monggregate</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span><span class="p">,</span> <span class="n">S</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">match</span><span class="p">(</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5"></a>    <span class="n">year</span><span class="o">=</span><span class="n">S</span><span class="o">.</span><span class="n">type_</span><span class="p">(</span><span class="s2">&quot;number&quot;</span><span class="p">)</span>  <span class="c1"># Using operators</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7"></a>    <span class="n">by</span><span class="o">=</span><span class="s2">&quot;year&quot;</span><span class="p">,</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8"></a>    <span class="n">query</span><span class="o">=</span><span class="p">{</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9"></a>        <span class="s2">&quot;count&quot;</span><span class="p">:</span> <span class="n">S</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10"></a>        <span class="s2">&quot;titles&quot;</span><span class="p">:</span> <span class="n">S</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="s2">&quot;$title&quot;</span><span class="p">)</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11"></a>    <span class="p">}</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+<h2 id="next-steps">🔜 <strong>Next Steps</strong></h2>
+<ul>
+<li>📚 Learn more about <a href="../pipeline/">building pipelines</a></li>
+<li>🔄 Explore available <a href="../stages/">aggregation stages</a></li>
+<li>🛠️ Discover how to use <a href="../operators/">MongoDB operators</a></li>
+<li>🔍 Try <a href="../vector-search/">vector search capabilities</a></li>
+</ul>
 
 
 
@@ -847,7 +990,7 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy"], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../../assets/javascripts/bundle.dff1b7c8.min.js"></script>

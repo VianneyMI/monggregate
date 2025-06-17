@@ -28,6 +28,9 @@
     
       <link rel="stylesheet" href="../../assets/stylesheets/main.046329b4.min.css">
       
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.85d0ee34.min.css">
+      
       
 
 
@@ -45,6 +48,8 @@
       
     
     
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -55,11 +60,14 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
   
     
-    
-      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -67,7 +75,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#mql" class="md-skip">
+        <a href="#mongodb-ecosystem-overview" class="md-skip">
           Skip to content
         </a>
       
@@ -108,6 +116,8 @@
         </div>
       </div>
     </div>
+    
+      
     
     
     
@@ -251,6 +261,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -279,6 +291,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -287,29 +301,42 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#mql" class="md-nav__link">
-    MQL
+  <a href="#core-components" class="md-nav__link">
+    📋 Core Components
+  </a>
+  
+    <nav class="md-nav" aria-label="📋 Core Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mql-mongodb-query-language" class="md-nav__link">
+    MQL (MongoDB Query Language)
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#aggregation-framework" class="md-nav__link">
-    Aggregation Framework
+    Aggregation Framework 🎯
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#atlas-search" class="md-nav__link">
-    Atlas Search
+    Atlas Search 🔍
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#mongodb-latest-features" class="md-nav__link">
-    MongoDB Latest Features
+  <a href="#additional-mongodb-capabilities" class="md-nav__link">
+    🌟 Additional MongoDB Capabilities
   </a>
   
 </li>
@@ -504,6 +531,26 @@
 
               
             
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/vector-search/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Vector Search
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -570,62 +617,8 @@
   
   
   
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
-        
-          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Common Pipelines Use Cases
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_2">
-            <span class="md-nav__icon md-icon"></span>
-            Common Pipelines Use Cases
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
     <li class="md-nav__item">
-      <a href="../../how-to/commons/home/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Home
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../how-to/commons/select-a-nested-document/" class="md-nav__link">
+      <a href="../../how-to/select-a-nested-document/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -645,7 +638,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../how-to/commons/create-or-update-a-collection/" class="md-nav__link">
+      <a href="../../how-to/create-or-update-a-collection/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -665,7 +658,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../how-to/commons/combine-collections/" class="md-nav__link">
+      <a href="../../how-to/combine-collections.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -674,14 +667,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -749,6 +734,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -757,29 +744,42 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#mql" class="md-nav__link">
-    MQL
+  <a href="#core-components" class="md-nav__link">
+    📋 Core Components
+  </a>
+  
+    <nav class="md-nav" aria-label="📋 Core Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mql-mongodb-query-language" class="md-nav__link">
+    MQL (MongoDB Query Language)
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#aggregation-framework" class="md-nav__link">
-    Aggregation Framework
+    Aggregation Framework 🎯
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#atlas-search" class="md-nav__link">
-    Atlas Search
+    Atlas Search 🔍
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#mongodb-latest-features" class="md-nav__link">
-    MongoDB Latest Features
+  <a href="#additional-mongodb-capabilities" class="md-nav__link">
+    🌟 Additional MongoDB Capabilities
   </a>
   
 </li>
@@ -799,36 +799,54 @@
                   
 
 
-  <h1>MongoDB Umbrella</h1>
-
-<p>MongoDB has developed one of the most complete database management systems in the market.</p>
-<p>Although it is mainly known for being a document-oriented NoSQL database with optional schemas. It has evolved and expanded to offer a wide range of features and services around data management. </p>
-<p>However, here we will focus on the database itself and in particular its query languages.</p>
-<h2 id="mql"><strong>MQL</strong></h2>
-<p><strong>MQL</strong> stands for <strong>M</strong>ongoDB <strong>Q</strong>uery <strong>L</strong>anguage. It is the language used to query MongoDB databases. It is a JSON-based query language that allows you to query documents in a collection.</p>
-<p><strong>MQL</strong> allows you to <a href="https://www.mongodb.com/docs/manual/crud/">perform CRUD operations</a>, that inserts (<strong>C</strong>reate), queries (<strong>R</strong>ead), updates (<strong>U</strong>pdate) and deletes (<strong>D</strong>elete) documents in a collection.</p>
-<p>In the context of an application or web service, <strong>MQL</strong> would typically be used through a driver or an Object Document Mapper (ODM).<br>
-The official MongoDB driver for Python is <a href="https://pymongo.readthedocs.io/en/stable/">PyMongo</a>. It is a low-level driver that allows you to interact with MongoDB databases. And two of the most popular ODM are <a href="https://mongoengine-odm.readthedocs.io/">MongoEngine</a> and <a href="https://beanie-odm.dev/">Beanie</a>.</p>
-<p><strong>MQL</strong> is not the main topic of monggregate nor this documentation, which is about the aggregation framework.</p>
-<h2 id="aggregation-framework"><strong>Aggregation Framework</strong></h2>
-<p><a href="https://www.practical-mongodb-aggregations.com/intro/history.html">Quickly after the release of MongoDB, the MongoDB team realized that the query language was not sufficient to perform complex queries</a>.</p>
-<p>In particular, there was a gap to do analytics on the data like it is easily done in SQL. </p>
-<p>Hence the release of <a href="https://docs.mongodb.com/manual/aggregation/">Aggregation Framework</a> later on. </p>
-<p>As I stated in <a href="https://medium.com/dev-genius/mongo-db-aggregations-pipelines-made-easy-with-monggregate-680b322167d2">my article</a></p>
+<h1 id="mongodb-ecosystem-overview">🌐 <strong>MongoDB Ecosystem Overview</strong></h1>
+<p>MongoDB has evolved into one of the most comprehensive database management systems in the market. While it's primarily known as a document-oriented NoSQL database, it offers a rich ecosystem of features and services for modern data management.</p>
+<h2 id="core-components">📋 <strong>Core Components</strong></h2>
+<h3 id="mql-mongodb-query-language"><strong>MQL (MongoDB Query Language)</strong></h3>
+<p><strong>MQL</strong> is <strong>M</strong>ongoDB's native <strong>Q</strong>uery <strong>L</strong>anguage, using a JSON-like syntax to interact with your data. It enables:</p>
+<ul>
+<li>🔄 <strong>CRUD Operations</strong>: Create, Read, Update, and Delete documents</li>
+<li>🛠️ <strong>Flexible Querying</strong>: Rich query capabilities with support for complex conditions</li>
+<li>🔌 <strong>Driver Integration</strong>: Works seamlessly with official and non-officialdrivers and ODMs</li>
+</ul>
 <blockquote>
-<p>Aggregation pipelines are the tool that allow MongoDB databases to really rival their SQL counterparts.</p>
+<p>💡 <strong>Note</strong>: While MQL is powerful, this documentation focuses on the aggregation framework. For detailed MQL documentation, visit <a href="https://www.mongodb.com/docs/manual/crud/">MongoDB's official documentation</a>.</p>
 </blockquote>
-<p>The pymongo driver nor the ODMs mentioned above offer a way to easily use the aggregation framework. They only let you do your aggregation queries as raw strings.</p>
-<p>This is where <code>monggregate</code> comes in.
-<code>monggregate</code> exposes an Object Oriented Programming (OOP) interface to the aggregation framework that make it easier to build pipelines.</p>
-<p>In the <a href="../mongodb-aggregation-framework/">following page</a>, we will do a deep-dive on the aggregation framework.</p>
-<h2 id="atlas-search"><strong>Atlas Search</strong></h2>
-<p><a href="https://www.mongodb.com/docs/atlas/atlas-search/atlas-search-overview/">Atlas Search </a> is a full-text search service that is fully integrated with MongoDB Atlas. It allows you to perform text search on your data and is based on <a href="https://lucene.apache.org/">Apache Lucene</a>.</p>
-<p>As the aggregation framework is the entry point for Atlas Search, <code>monggregate</code> also offers a way to use it.
-Check out the search page<a href="../../tutorial/search/">here</a> for more details.</p>
-<h2 id="mongodb-latest-features"><strong>MongoDB Latest Features</strong></h2>
-<p>MongoDB also offers capabilities for <strong>time series</strong> collections, semantic and <strong>vector search</strong> and probably much more that may or may not be integrated in monggregate in the future.</p>
-<p>But, as of today, these features are not in the scope of <code>monggregate</code>.</p>
+<h3 id="aggregation-framework"><strong>Aggregation Framework</strong> 🎯</h3>
+<p>The aggregation framework is MongoDB's answer to complex data processing and analytics. It allows you to:</p>
+<ul>
+<li>🔄 Transform and combine documents</li>
+<li>📊 Perform complex calculations</li>
+<li>📈 Generate analytics and reports</li>
+<li>🔍 Process data in multiple stages</li>
+</ul>
+<blockquote>
+<p>🎯 <strong>Why It Matters</strong>: The aggregation framework is what enables MongoDB to compete with traditional SQL databases for complex data operations.</p>
+</blockquote>
+<p>While MongoDB provides the framework, building aggregation pipelines can be complex. This is where <code>monggregate</code> comes in, offering an intuitive OOP interface to make pipeline construction easier.</p>
+<blockquote>
+<p>📚 <strong>Learn More</strong>: Dive deeper into the aggregation framework in the <a href="../mongodb-aggregation-framework/">next section</a>.</p>
+</blockquote>
+<h3 id="atlas-search"><strong>Atlas Search</strong> 🔍</h3>
+<p><a href="https://www.mongodb.com/docs/atlas/atlas-search/atlas-search-overview/">Atlas Search</a> is MongoDB's integrated full-text search solution, powered by Apache Lucene. It's particularly relevant because:</p>
+<ul>
+<li>🔗 <strong>Integration</strong>: Seamlessly integrates with the aggregation framework</li>
+<li>🔍 <strong>Keyword Search</strong>: Provides powerful text search capabilities</li>
+<li>🧮 <strong>Vector Search</strong>: AI-powered semantic search enabling similarity matching, natural language processing, and embedding-based queries for next-generation applications</li>
+</ul>
+<blockquote>
+<p>📖 <strong>Learn More</strong>: Check out the <a href="../../tutorial/search/">search tutorial</a> for details on using Atlas Search with <code>monggregate</code>.</p>
+</blockquote>
+<h2 id="additional-mongodb-capabilities">🌟 <strong>Additional MongoDB Capabilities</strong></h2>
+<p>MongoDB continues to evolve with features like:</p>
+<ul>
+<li>📈 <strong>Time Series Collections</strong>: Optimized for time-series data</li>
+<li>🔄 <strong>Change Streams</strong>: Real-time data change notifications</li>
+<li>🔒 <strong>Encryption</strong>: At-rest, in-transit anre more importantly in-use queryable encryption.</li>
+</ul>
+<blockquote>
+<p>ℹ️ <strong>Note</strong>: While these features are powerful, they're currently outside the scope of <code>monggregate</code>. <code>monggregate</code> focuses on making the aggregation framework more accessible and developer-friendly.</p>
+</blockquote>
 
 
 
@@ -866,7 +884,7 @@ Check out the search page<a href="../../tutorial/search/">here</a> for more deta
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy"], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../../assets/javascripts/bundle.dff1b7c8.min.js"></script>

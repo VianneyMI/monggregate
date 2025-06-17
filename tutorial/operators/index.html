@@ -28,6 +28,9 @@
     
       <link rel="stylesheet" href="../../assets/stylesheets/main.046329b4.min.css">
       
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.85d0ee34.min.css">
+      
       
 
 
@@ -45,6 +48,8 @@
       
     
     
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -55,11 +60,14 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
   
     
-    
-      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -67,7 +75,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#stages-and-operators" class="md-skip">
+        <a href="#mongodb-operators-in-monggregate" class="md-skip">
           Skip to content
         </a>
       
@@ -108,6 +116,8 @@
         </div>
       </div>
     </div>
+    
+      
     
     
     
@@ -412,6 +422,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -440,6 +452,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -448,37 +462,207 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#stages-and-operators" class="md-nav__link">
-    Stages and Operators
+  <a href="#understanding-operators" class="md-nav__link">
+    🧠 Understanding Operators
+  </a>
+  
+    <nav class="md-nav" aria-label="🧠 Understanding Operators">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#relationship-with-stages" class="md-nav__link">
+    🔄 Relationship with Stages
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-operators-in-action" class="md-nav__link">
+    📊 Example: Operators in Action
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-operators-in-monggregate" class="md-nav__link">
+    🚀 Using Operators in Monggregate
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#compatibility" class="md-nav__link">
-    Compatibility
+  <a href="#the-s-and-ss-objects" class="md-nav__link">
+    🔮 The S and SS Objects
+  </a>
+  
+    <nav class="md-nav" aria-label="🔮 The S and SS Objects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-s-object-dollar" class="md-nav__link">
+    💲 The S Object (Dollar)
+  </a>
+  
+    <nav class="md-nav" aria-label="💲 The S Object (Dollar)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-use-s-instead-of-direct-syntax" class="md-nav__link">
+    💪 Why Use S Instead of Direct $ Syntax?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-ss-object-dollardollar" class="md-nav__link">
+    💲💲 The SS Object (DollarDollar)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combining-s-and-ss-in-expressions" class="md-nav__link">
+    🔄 Combining S and SS in Expressions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#operator-compatibility" class="md-nav__link">
+    🔗 Operator Compatibility
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#usage" class="md-nav__link">
-    Usage
+  <a href="#advanced-example-multiple-operators" class="md-nav__link">
+    🌟 Advanced Example: Multiple Operators
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#list-of-available-operators-in-monggregate" class="md-nav__link">
-    List of Available Operators In Monggregate
+  <a href="#complex-example-using-expressions" class="md-nav__link">
+    🧩 Complex Example: Using Expressions
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#disambiguation" class="md-nav__link">
-    Disambiguation
+  <a href="#available-operators" class="md-nav__link">
+    📋 Available Operators
   </a>
+  
+    <nav class="md-nav" aria-label="📋 Available Operators">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#accumulators" class="md-nav__link">
+    📊 Accumulators
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arithmetic" class="md-nav__link">
+    🧮 Arithmetic
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#array" class="md-nav__link">
+    📝 Array
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#boolean" class="md-nav__link">
+    ⚖️ Boolean
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparison" class="md-nav__link">
+    🔍 Comparison
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conditional" class="md-nav__link">
+    🔀 Conditional
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#date" class="md-nav__link">
+    📅 Date
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#object" class="md-nav__link">
+    🧱 Object
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#string" class="md-nav__link">
+    📝 String
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#search" class="md-nav__link">
+    🔍 Search
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mql-vs-aggregation-pipeline-syntax" class="md-nav__link">
+    🔄 MQL vs. Aggregation Pipeline Syntax
+  </a>
+  
+    <nav class="md-nav" aria-label="🔄 MQL vs. Aggregation Pipeline Syntax">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-greater-than-or-equal-gte" class="md-nav__link">
+    Example: Greater Than or Equal ($gte)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -502,6 +686,26 @@
   
   <span class="md-ellipsis">
     Search
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vector-search/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Vector Search
   </span>
   
 
@@ -577,62 +781,8 @@
   
   
   
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
-        
-          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Common Pipelines Use Cases
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_2">
-            <span class="md-nav__icon md-icon"></span>
-            Common Pipelines Use Cases
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
     <li class="md-nav__item">
-      <a href="../../how-to/commons/home/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Home
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../how-to/commons/select-a-nested-document/" class="md-nav__link">
+      <a href="../../how-to/select-a-nested-document/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -652,7 +802,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../how-to/commons/create-or-update-a-collection/" class="md-nav__link">
+      <a href="../../how-to/create-or-update-a-collection/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -672,7 +822,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../how-to/commons/combine-collections/" class="md-nav__link">
+      <a href="../../how-to/combine-collections.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -681,14 +831,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -756,6 +898,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -764,37 +908,207 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#stages-and-operators" class="md-nav__link">
-    Stages and Operators
+  <a href="#understanding-operators" class="md-nav__link">
+    🧠 Understanding Operators
+  </a>
+  
+    <nav class="md-nav" aria-label="🧠 Understanding Operators">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#relationship-with-stages" class="md-nav__link">
+    🔄 Relationship with Stages
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-operators-in-action" class="md-nav__link">
+    📊 Example: Operators in Action
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-operators-in-monggregate" class="md-nav__link">
+    🚀 Using Operators in Monggregate
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#compatibility" class="md-nav__link">
-    Compatibility
+  <a href="#the-s-and-ss-objects" class="md-nav__link">
+    🔮 The S and SS Objects
+  </a>
+  
+    <nav class="md-nav" aria-label="🔮 The S and SS Objects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-s-object-dollar" class="md-nav__link">
+    💲 The S Object (Dollar)
+  </a>
+  
+    <nav class="md-nav" aria-label="💲 The S Object (Dollar)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-use-s-instead-of-direct-syntax" class="md-nav__link">
+    💪 Why Use S Instead of Direct $ Syntax?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-ss-object-dollardollar" class="md-nav__link">
+    💲💲 The SS Object (DollarDollar)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combining-s-and-ss-in-expressions" class="md-nav__link">
+    🔄 Combining S and SS in Expressions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#operator-compatibility" class="md-nav__link">
+    🔗 Operator Compatibility
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#usage" class="md-nav__link">
-    Usage
+  <a href="#advanced-example-multiple-operators" class="md-nav__link">
+    🌟 Advanced Example: Multiple Operators
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#list-of-available-operators-in-monggregate" class="md-nav__link">
-    List of Available Operators In Monggregate
+  <a href="#complex-example-using-expressions" class="md-nav__link">
+    🧩 Complex Example: Using Expressions
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#disambiguation" class="md-nav__link">
-    Disambiguation
+  <a href="#available-operators" class="md-nav__link">
+    📋 Available Operators
   </a>
+  
+    <nav class="md-nav" aria-label="📋 Available Operators">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#accumulators" class="md-nav__link">
+    📊 Accumulators
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arithmetic" class="md-nav__link">
+    🧮 Arithmetic
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#array" class="md-nav__link">
+    📝 Array
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#boolean" class="md-nav__link">
+    ⚖️ Boolean
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparison" class="md-nav__link">
+    🔍 Comparison
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conditional" class="md-nav__link">
+    🔀 Conditional
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#date" class="md-nav__link">
+    📅 Date
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#object" class="md-nav__link">
+    🧱 Object
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#string" class="md-nav__link">
+    📝 String
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#search" class="md-nav__link">
+    🔍 Search
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mql-vs-aggregation-pipeline-syntax" class="md-nav__link">
+    🔄 MQL vs. Aggregation Pipeline Syntax
+  </a>
+  
+    <nav class="md-nav" aria-label="🔄 MQL vs. Aggregation Pipeline Syntax">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-greater-than-or-equal-gte" class="md-nav__link">
+    Example: Greater Than or Equal ($gte)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -813,159 +1127,433 @@
                   
 
 
-  <h1>Operators</h1>
-
-<p>Operators are in a way the building blocks of stages.</p>
-<h2 id="stages-and-operators"><strong>Stages and Operators</strong></h2>
-<p>The relationship between operators and stages is similar to the relationship between stages and pipelines (but not exactly the same!).</p>
-<p>The first main difference is that operators are optional for stages.<br>
-For example, the <code>Match</code> stage can be used without any operator.</p>
-<p>Conversely, some stages do not make a lot of sense if used without any operators.<br>
-For example, the <code>Group</code> stage is not very useful by itself. It is meant to be used with operators to perform the actual aggregation.</p>
-<p>Another difference is that operators are not necessarily used sequantially, they can also be used in parallel.<br>
-For example, the <code>Group</code> stage can be used with the <code>$sum</code> and <code>$push</code> operators at the same time, depending on the requirements.</p>
-<h2 id="compatibility"><strong>Compatibility</strong></h2>
-<p>Some operators are not meant to be used with some stages. Others behave differently depending on the stage they are used in.
-Those compatibility rules are detailed in the documentation of each operator as monggregate documentation integrates a good part of the MongoDB documentation.<br>
-<should I remove the code syntaxing for mergeObjects ? or add it for the below stage -- Need to be consistent across the doc>
-For example the <code>$mergeObjects</code> operator documentation clearly states that it can only be used in the following stages:</p>
+<h1 id="mongodb-operators-in-monggregate">🛠️ <strong>MongoDB Operators in Monggregate</strong></h1>
+<p>MongoDB operators are the building blocks of aggregation stages, providing powerful data transformation capabilities. Monggregate makes these operators accessible through an intuitive Python interface.</p>
+<h2 id="understanding-operators">🧠 <strong>Understanding Operators</strong></h2>
+<h3 id="relationship-with-stages">🔄 <strong>Relationship with Stages</strong></h3>
+<blockquote>
+<p>💡 Operators and stages work together in a MongoDB aggregation pipeline.</p>
+</blockquote>
 <ul>
-<li><code>$bucket</code></li>
-<li><code>$bucketAuto</code></li>
-<li><code>$group</code></li>
-<li><code>$replaceRoot</code></li>
+<li><strong>Optional but powerful</strong>: Some stages (like <code>Match</code>) can function without operators, while others (like <code>Group</code>) require operators to be useful</li>
+<li><strong>Parallel usage</strong>: Unlike stages which are executed sequentially, multiple operators can be used simultaneously within a single stage</li>
+<li><strong>Different syntax</strong>: Operators in aggregation pipelines often have different syntax than their MongoDB Query Language (MQL) counterparts</li>
 </ul>
-<h2 id="usage"><strong>Usage</strong></h2>
-<p>Because of the above considerations, the usage of operators is a bit different than the usage of stages.</p>
-<p>You cannot access the operators through the stages, the same way you can access the stages through the pipeline (eventhough it's on our development roadmap).</p>
-<p>Therefore, you need to import the operators from the <code>monggregate.operators</code> namespace.
-Or you can use the <code>S</code> shortcut to access the operators.<br>
-<code>S</code> is an object that includes all the operators as functions, like the <code>Pipeline</code> class includes all the stages as methods.
-<insert link to documentation></p>
-<p>Thus, the grouping example would become:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">group</span><span class="p">(</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n">by</span><span class="o">=</span><span class="s2">&quot;year&quot;</span><span class="p">,</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">query</span><span class="o">=</span><span class="p">{</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        <span class="s2">&quot;movie_count&quot;</span><span class="p">:</span> <span class="n">S</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        <span class="s2">&quot;movie_titles&quot;</span><span class="p">:</span> <span class="n">S</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">S</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">))</span>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="p">}</span>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="p">)</span>
-</span></code></pre></div>
-<h2 id="list-of-available-operators-in-monggregate"><strong>List of Available Operators In Monggregate</strong></h2>
-<p>Currently, monggregate supports the following operators:</p>
-<ul>
+<h3 id="example-operators-in-action">📊 <strong>Example: Operators in Action</strong></h3>
+<p>Consider this simple example that counts and collects movie titles by year:</p>
+<div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">monggregate</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span><span class="p">,</span> <span class="n">S</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">group</span><span class="p">(</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5"></a>    <span class="n">by</span><span class="o">=</span><span class="s2">&quot;year&quot;</span><span class="p">,</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6"></a>    <span class="n">query</span><span class="o">=</span><span class="p">{</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7"></a>        <span class="s2">&quot;movie_count&quot;</span><span class="p">:</span> <span class="n">S</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>        <span class="c1"># Count movies per year</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8"></a>        <span class="s2">&quot;movie_titles&quot;</span><span class="p">:</span> <span class="n">S</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="s2">&quot;$title&quot;</span><span class="p">)</span> <span class="c1"># Collect all titles for each year</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9"></a>    <span class="p">}</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+<h2 id="using-operators-in-monggregate">🚀 <strong>Using Operators in Monggregate</strong></h2>
+<p>Monggregate provides two ways to access operators:</p>
+<ol>
 <li>
-<p><strong>Accumulators</strong></p>
-<ul>
-<li><code>$avg</code></li>
-<li><code>$count</code></li>
-<li><code>$first</code></li>
-<li><code>$last</code></li>
-<li><code>$max</code></li>
-<li><code>$min</code></li>
-<li><code>$push</code></li>
-<li><code>$sum</code></li>
-</ul>
+<p><strong>Direct import</strong>:
+   <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">monggregate.operators</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sum</span><span class="p">,</span> <span class="n">Push</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="n">sum_operator</span> <span class="o">=</span> <span class="n">Sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="n">push_operator</span> <span class="o">=</span> <span class="n">Push</span><span class="p">(</span><span class="s2">&quot;$title&quot;</span><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div></p>
 </li>
 <li>
-<p><strong>Arithmetic</strong></p>
-<ul>
-<li><code>$add</code></li>
-<li><code>$divide</code></li>
-<li><code>$multiply</code></li>
-<li><code>$pow</code></li>
-<li><code>$subtract</code></li>
-</ul>
+<p><strong>Using the <code>S</code> shortcut</strong> (recommended):
+   <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span>
+<span class="normal"><a href="#__codelineno-2-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">monggregate</span><span class="w"> </span><span class="kn">import</span> <span class="n">S</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="n">sum_operator</span> <span class="o">=</span> <span class="n">S</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="n">push_operator</span> <span class="o">=</span> <span class="n">S</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="s2">&quot;$title&quot;</span><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div></p>
+</li>
+</ol>
+<blockquote>
+<p>🔍 The <code>S</code> shortcut is particularly convenient as it provides access to all operators through a single import.</p>
+</blockquote>
+<h2 id="the-s-and-ss-objects">🔮 <strong>The <code>S</code> and <code>SS</code> Objects</strong></h2>
+<p>Monggregate provides two special singleton objects that abstract MongoDB's dollar sign syntax:</p>
+<h3 id="the-s-object-dollar">💲 <strong>The <code>S</code> Object (Dollar)</strong></h3>
+<blockquote>
+<p>🔑 <strong>Key Concept</strong>: The <code>S</code> singleton directly mirrors MongoDB's <code>$</code> symbol and its dual role in the MongoDB query language.</p>
+</blockquote>
+<p>In MongoDB, the dollar sign (<code>$</code>) has two distinct meanings:
+1. As a <strong>prefix for operators</strong>: <code>{ $sum: 1 }</code>, <code>{ $gt: 10 }</code>
+2. As a <strong>prefix for field references</strong>: <code>"$name"</code>, <code>"$address.city"</code></p>
+<p>The <code>S</code> object faithfully reproduces this dual functionality in Python:</p>
+<ol>
+<li>
+<p><strong>Operator Access</strong>: Methods on <code>S</code> create MongoDB operators:
+   <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span>
+<span class="normal"><a href="#__codelineno-3-3">3</a></span>
+<span class="normal"><a href="#__codelineno-3-4">4</a></span>
+<span class="normal"><a href="#__codelineno-3-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">monggregate</span><span class="w"> </span><span class="kn">import</span> <span class="n">S</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="c1"># Create operators</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="n">sum_op</span> <span class="o">=</span> <span class="n">S</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>                <span class="c1"># Becomes {&quot;$sum&quot;: 1}</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="n">gt_op</span> <span class="o">=</span> <span class="n">S</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="s2">&quot;$price&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>      <span class="c1"># Becomes {&quot;$gt&quot;: [&quot;$price&quot;, 100]}</span>
+</span></code></pre></div></td></tr></table></div></p>
 </li>
 <li>
-<p><strong>Array</strong></p>
-<ul>
-<li><code>$arrayToObject</code></li>
-<li><code>$filter</code></li>
-<li><code>$first</code></li>
-<li><code>$in</code></li>
-<li><code>$isArray</code></li>
-<li><code>$last</code></li>
-<li><code>$max_n</code></li>
-<li><code>$min_n</code></li>
-<li><code>$size</code></li>
-<li><code>$sortArray</code></li>
-</ul>
+<p><strong>Field References</strong>: Attributes of <code>S</code> create field references:
+   <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="c1"># These are equivalent ways to reference the &quot;name&quot; field</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="n">field_ref1</span> <span class="o">=</span> <span class="n">S</span><span class="o">.</span><span class="n">name</span>       <span class="c1"># Becomes &quot;$name&quot;</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="n">field_ref2</span> <span class="o">=</span> <span class="n">S</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>  <span class="c1"># Also becomes &quot;$name&quot;</span>
+</span></code></pre></div></td></tr></table></div></p>
+</li>
+</ol>
+<blockquote>
+<p>💡 This direct mapping to MongoDB's <code>$</code> symbol makes the transition between MongoDB query language and Monggregate's Python interface intuitive and straightforward.</p>
+</blockquote>
+<h4 id="why-use-s-instead-of-direct-syntax">💪 <strong>Why Use <code>S</code> Instead of Direct <code>$</code> Syntax?</strong></h4>
+<p>While you could write MongoDB queries with direct string literals containing <code>$</code> signs, using the <code>S</code> object offers significant advantages:</p>
+<ol>
+<li>
+<p><strong>Type Safety and Validation</strong>:
+   <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span>
+<span class="normal"><a href="#__codelineno-5-3">3</a></span>
+<span class="normal"><a href="#__codelineno-5-4">4</a></span>
+<span class="normal"><a href="#__codelineno-5-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="c1"># With S object - type checked, validated</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="n">S</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="s2">&quot;$age&quot;</span><span class="p">,</span> <span class="mi">18</span><span class="p">)</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="c1"># Direct syntax - no validation, easy to make typos</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="p">{</span><span class="s2">&quot;$gt&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;$age&quot;</span><span class="p">,</span> <span class="mi">18</span><span class="p">]}</span>  <span class="c1"># Could easily mistype as &quot;$gte&quot; or &quot;$gtt&quot;</span>
+</span></code></pre></div></td></tr></table></div></p>
 </li>
 <li>
-<p><strong>Boolean</strong></p>
-<ul>
-<li><code>$and</code></li>
-<li><code>$not</code></li>
-<li><code>$or</code></li>
-</ul>
+<p><strong>Code Completion and Documentation</strong>:</p>
+</li>
+<li>IDEs can provide autocompletion for <code>S.sum()</code>, <code>S.gt()</code>, etc.</li>
+<li>Documentation is accessible via docstrings and tooltips</li>
+<li>
+<p>No need to remember exact MongoDB syntax or consult external documentation</p>
 </li>
 <li>
-<p><strong>Comparison</strong></p>
-<ul>
-<li><code>$cmp</code></li>
-<li><code>$eq</code></li>
-<li><code>$gt</code></li>
-<li><code>$gte</code></li>
-<li><code>$lt</code></li>
-<li><code>$lte</code></li>
-<li><code>$ne</code></li>
-</ul>
+<p><strong>Python-Native Interface</strong>:</p>
+</li>
+<li>Use Python conventions like snake_case methods (<code>S.object_to_array()</code> vs <code>"$objectToArray"</code>)</li>
+<li>
+<p>Operators like <code>$and</code>, <code>$in</code> that conflict with Python keywords are available as <code>S.and_()</code>, <code>S.in_()</code></p>
 </li>
 <li>
-<p><strong>Conditional</strong></p>
-<ul>
-<li><code>$cond</code></li>
-<li><code>$ifNull</code></li>
-<li><code>$switch</code></li>
-</ul>
+<p><strong>Consistent Syntax for Different Contexts</strong>:</p>
+</li>
+<li>MongoDB has different syntaxes for the same operator depending on context (query vs aggregation)</li>
+<li>
+<p><code>S</code> provides a unified interface regardless of where the operator is used</p>
 </li>
 <li>
-<p><strong>Date</strong></p>
-<ul>
-<li><code>$millisecond</code></li>
-</ul>
+<p><strong>Composability and Expressiveness</strong>:
+   <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-6-10">10</a></span>
+<span class="normal"><a href="#__codelineno-6-11">11</a></span>
+<span class="normal"><a href="#__codelineno-6-12">12</a></span>
+<span class="normal"><a href="#__codelineno-6-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="c1"># Complex expressions are more readable with S</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="n">S</span><span class="o">.</span><span class="n">and_</span><span class="p">([</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3"></a>    <span class="n">S</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="s2">&quot;$age&quot;</span><span class="p">,</span> <span class="mi">18</span><span class="p">),</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4"></a>    <span class="n">S</span><span class="o">.</span><span class="n">lt</span><span class="p">(</span><span class="s2">&quot;$age&quot;</span><span class="p">,</span> <span class="mi">65</span><span class="p">),</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5"></a>    <span class="n">S</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="s2">&quot;$status&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;active&quot;</span><span class="p">,</span> <span class="s2">&quot;pending&quot;</span><span class="p">])</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="p">])</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7"></a>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="c1"># Versus direct syntax</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="p">{</span><span class="s2">&quot;$and&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10"></a>    <span class="p">{</span><span class="s2">&quot;$gt&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;$age&quot;</span><span class="p">,</span> <span class="mi">18</span><span class="p">]},</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11"></a>    <span class="p">{</span><span class="s2">&quot;$lt&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;$age&quot;</span><span class="p">,</span> <span class="mi">65</span><span class="p">]},</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12"></a>    <span class="p">{</span><span class="s2">&quot;$in&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;$status&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;active&quot;</span><span class="p">,</span> <span class="s2">&quot;pending&quot;</span><span class="p">]]}</span>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13"></a><span class="p">]}</span>
+</span></code></pre></div></td></tr></table></div></p>
 </li>
 <li>
-<p><strong>Object</strong></p>
-<ul>
-<li><code>$mergeObjects</code></li>
-<li><code>$objectToArray</code></li>
-</ul>
+<p><strong>Reduced Syntax Errors</strong>:</p>
 </li>
-<li>
-<p><strong>Strings</strong></p>
+<li>Proper nesting of operators is handled automatically</li>
+<li>Correct placement of dollar signs is guaranteed</li>
+<li>Parameter count and types are validated</li>
+</ol>
+<blockquote>
+<p>🚀 The <code>S</code> object transforms MongoDB's JSON-based query language into a first-class Python experience, with all the tooling, safety, and convenience that brings.</p>
+</blockquote>
+<h3 id="the-ss-object-dollardollar">💲💲 <strong>The <code>SS</code> Object (DollarDollar)</strong></h3>
+<p>The <code>SS</code> object is an instance of the <code>DollarDollar</code> class that provides access to MongoDB's aggregation variables (prefixed with <code>$$</code>):</p>
+<div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span>
+<span class="normal"><a href="#__codelineno-7-3">3</a></span>
+<span class="normal"><a href="#__codelineno-7-4">4</a></span>
+<span class="normal"><a href="#__codelineno-7-5">5</a></span>
+<span class="normal"><a href="#__codelineno-7-6">6</a></span>
+<span class="normal"><a href="#__codelineno-7-7">7</a></span>
+<span class="normal"><a href="#__codelineno-7-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">monggregate</span><span class="w"> </span><span class="kn">import</span> <span class="n">SS</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2"></a>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="c1"># Access system variables</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="n">root_var</span> <span class="o">=</span> <span class="n">SS</span><span class="o">.</span><span class="n">ROOT</span>        <span class="c1"># Returns &quot;$$ROOT&quot;</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="n">current_var</span> <span class="o">=</span> <span class="n">SS</span><span class="o">.</span><span class="n">CURRENT</span>  <span class="c1"># Returns &quot;$$CURRENT&quot;</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6"></a>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="c1"># Create references to user-defined variables</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="n">product_var</span> <span class="o">=</span> <span class="n">SS</span><span class="o">.</span><span class="n">product_name</span>  <span class="c1"># Returns &quot;$$product_name&quot;</span>
+</span></code></pre></div></td></tr></table></div>
+<blockquote>
+<p>📘 System variables are uppercase constants on the <code>SS</code> object, while custom variables can be accessed via any attribute name.</p>
+</blockquote>
+<h3 id="combining-s-and-ss-in-expressions">🔄 <strong>Combining <code>S</code> and <code>SS</code> in Expressions</strong></h3>
+<p>The real power comes when combining these objects in expressions:</p>
+<div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span>
+<span class="normal"><a href="#__codelineno-8-4">4</a></span>
+<span class="normal"><a href="#__codelineno-8-5">5</a></span>
+<span class="normal"><a href="#__codelineno-8-6">6</a></span>
+<span class="normal"><a href="#__codelineno-8-7">7</a></span>
+<span class="normal"><a href="#__codelineno-8-8">8</a></span>
+<span class="normal"><a href="#__codelineno-8-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">monggregate</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">SS</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2"></a>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">match</span><span class="p">(</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5"></a>    <span class="n">S</span><span class="o">.</span><span class="n">expr</span><span class="p">(</span><span class="n">S</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">S</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">SS</span><span class="o">.</span><span class="n">ROOT</span><span class="p">),</span> <span class="s2">&quot;array&quot;</span><span class="p">))</span>  <span class="c1"># Match if the root document is an array</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6"></a><span class="p">)</span><span class="o">.</span><span class="n">project</span><span class="p">(</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7"></a>    <span class="n">items</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8"></a>    <span class="n">first_item</span><span class="o">=</span><span class="n">S</span><span class="o">.</span><span class="n">arrayElemAt</span><span class="p">(</span><span class="n">SS</span><span class="o">.</span><span class="n">ROOT</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># Get the first element of the root</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9"></a><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+<h2 id="operator-compatibility">🔗 <strong>Operator Compatibility</strong></h2>
+<p>Each operator is designed to work with specific stages. Monggregate's documentation includes compatibility information for each operator.</p>
+<p>For example, the <code>$mergeObjects</code> operator can only be used in these stages:
+- <code>$bucket</code>
+- <code>$bucketAuto</code>
+- <code>$group</code>
+- <code>$replaceRoot</code></p>
+<h2 id="advanced-example-multiple-operators">🌟 <strong>Advanced Example: Multiple Operators</strong></h2>
+<p>This example demonstrates using multiple operators together to analyze movie data:</p>
+<div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-9-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-9-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-9-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-9-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-9-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-9-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-9-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-9-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-9-10">10</a></span>
+<span class="normal"><a href="#__codelineno-9-11">11</a></span>
+<span class="normal"><a href="#__codelineno-9-12">12</a></span>
+<span class="normal"><a href="#__codelineno-9-13">13</a></span>
+<span class="normal"><a href="#__codelineno-9-14">14</a></span>
+<span class="normal"><a href="#__codelineno-9-15">15</a></span>
+<span class="normal"><a href="#__codelineno-9-16">16</a></span>
+<span class="normal"><a href="#__codelineno-9-17">17</a></span>
+<span class="normal"><a href="#__codelineno-9-18">18</a></span>
+<span class="normal"><a href="#__codelineno-9-19">19</a></span>
+<span class="normal"><a href="#__codelineno-9-20">20</a></span>
+<span class="normal"><a href="#__codelineno-9-21">21</a></span>
+<span class="normal"><a href="#__codelineno-9-22">22</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">monggregate</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span><span class="p">,</span> <span class="n">S</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2"></a>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="c1"># Creating the pipeline</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5"></a>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6"></a><span class="c1"># Using multiple operators together</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">match</span><span class="p">(</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8"></a>    <span class="n">year</span><span class="o">=</span><span class="n">S</span><span class="o">.</span><span class="n">type_</span><span class="p">(</span><span class="s2">&quot;number&quot;</span><span class="p">)</span>  <span class="c1"># Filter for documents where year is a number</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9"></a><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10"></a>    <span class="n">by</span><span class="o">=</span><span class="s2">&quot;year&quot;</span><span class="p">,</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11"></a>    <span class="n">query</span><span class="o">=</span><span class="p">{</span>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12"></a>        <span class="s2">&quot;movie_count&quot;</span><span class="p">:</span> <span class="n">S</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>                <span class="c1"># Count movies per year</span>
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13"></a>        <span class="s2">&quot;avg_runtime&quot;</span><span class="p">:</span> <span class="n">S</span><span class="o">.</span><span class="n">avg</span><span class="p">(</span><span class="s2">&quot;$runtime&quot;</span><span class="p">),</span>       <span class="c1"># Calculate average runtime</span>
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14"></a>        <span class="s2">&quot;movie_titles&quot;</span><span class="p">:</span> <span class="n">S</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="s2">&quot;$title&quot;</span><span class="p">),</span>       <span class="c1"># Collect all titles</span>
+</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15"></a>        <span class="s2">&quot;genres&quot;</span><span class="p">:</span> <span class="n">S</span><span class="o">.</span><span class="n">addToSet</span><span class="p">(</span><span class="s2">&quot;$genres&quot;</span><span class="p">)</span>         <span class="c1"># Collect unique genres</span>
+</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16"></a>    <span class="p">}</span>
+</span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17"></a><span class="p">)</span><span class="o">.</span><span class="n">match</span><span class="p">(</span>
+</span><span id="__span-9-18"><a id="__codelineno-9-18" name="__codelineno-9-18"></a>    <span class="n">movie_count</span><span class="o">=</span><span class="n">S</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>                        <span class="c1"># Filter for years with &gt;10 movies</span>
+</span><span id="__span-9-19"><a id="__codelineno-9-19" name="__codelineno-9-19"></a><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span>
+</span><span id="__span-9-20"><a id="__codelineno-9-20" name="__codelineno-9-20"></a>    <span class="n">by</span><span class="o">=</span><span class="s2">&quot;movie_count&quot;</span><span class="p">,</span> 
+</span><span id="__span-9-21"><a id="__codelineno-9-21" name="__codelineno-9-21"></a>    <span class="n">descending</span><span class="o">=</span><span class="kc">True</span>
+</span><span id="__span-9-22"><a id="__codelineno-9-22" name="__codelineno-9-22"></a><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+<h2 id="complex-example-using-expressions">🧩 <strong>Complex Example: Using Expressions</strong></h2>
+<blockquote>
+<p>📘 Operators can be combined to create complex expressions.</p>
+</blockquote>
+<div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-10-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-10-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-10-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-10-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-10-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-10-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-10-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-10-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-10-10">10</a></span>
+<span class="normal"><a href="#__codelineno-10-11">11</a></span>
+<span class="normal"><a href="#__codelineno-10-12">12</a></span>
+<span class="normal"><a href="#__codelineno-10-13">13</a></span>
+<span class="normal"><a href="#__codelineno-10-14">14</a></span>
+<span class="normal"><a href="#__codelineno-10-15">15</a></span>
+<span class="normal"><a href="#__codelineno-10-16">16</a></span>
+<span class="normal"><a href="#__codelineno-10-17">17</a></span>
+<span class="normal"><a href="#__codelineno-10-18">18</a></span>
+<span class="normal"><a href="#__codelineno-10-19">19</a></span>
+<span class="normal"><a href="#__codelineno-10-20">20</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">monggregate</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span><span class="p">,</span> <span class="n">S</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2"></a>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="c1"># Define a complex expression</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="n">comments_count</span> <span class="o">=</span> <span class="n">S</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="s2">&quot;$comments&quot;</span><span class="p">)</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5"></a><span class="n">has_many_comments</span> <span class="o">=</span> <span class="n">S</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="n">comments_count</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6"></a><span class="n">is_recent</span> <span class="o">=</span> <span class="n">S</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="s2">&quot;$year&quot;</span><span class="p">,</span> <span class="mi">2000</span><span class="p">)</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7"></a>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8"></a><span class="c1"># Create pipeline using the expression</span>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span>
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11"></a>    <span class="n">right</span><span class="o">=</span><span class="s2">&quot;comments&quot;</span><span class="p">,</span>
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12"></a>    <span class="n">right_on</span><span class="o">=</span><span class="s2">&quot;movie_id&quot;</span><span class="p">,</span>
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13"></a>    <span class="n">left_on</span><span class="o">=</span><span class="s2">&quot;_id&quot;</span><span class="p">,</span>
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14"></a>    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;comments&quot;</span>
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15"></a><span class="p">)</span><span class="o">.</span><span class="n">add_fields</span><span class="p">(</span>
+</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16"></a>    <span class="n">comments_count</span><span class="o">=</span><span class="n">comments_count</span><span class="p">,</span>
+</span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17"></a>    <span class="n">is_popular</span><span class="o">=</span><span class="n">S</span><span class="o">.</span><span class="n">and_</span><span class="p">([</span><span class="n">has_many_comments</span><span class="p">,</span> <span class="n">is_recent</span><span class="p">])</span>
+</span><span id="__span-10-18"><a id="__codelineno-10-18" name="__codelineno-10-18"></a><span class="p">)</span><span class="o">.</span><span class="n">match</span><span class="p">(</span>
+</span><span id="__span-10-19"><a id="__codelineno-10-19" name="__codelineno-10-19"></a>    <span class="n">is_popular</span><span class="o">=</span><span class="kc">True</span>
+</span><span id="__span-10-20"><a id="__codelineno-10-20" name="__codelineno-10-20"></a><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+<h2 id="available-operators">📋 <strong>Available Operators</strong></h2>
+<p>Monggregate supports all major MongoDB operators, organized by category:</p>
+<h3 id="accumulators">📊 <strong>Accumulators</strong></h3>
 <ul>
-<li><code>$concat</code></li>
-<li><code>$dateFromString</code></li>
-<li><code>$dateToString</code></li>
+<li><code>$avg</code> - Calculate average value</li>
+<li><code>$count</code> - Count documents</li>
+<li><code>$first</code> - Return first value in a group</li>
+<li><code>$last</code> - Return last value in a group</li>
+<li><code>$max</code> - Return maximum value</li>
+<li><code>$min</code> - Return minimum value</li>
+<li><code>$push</code> - Append values to an array</li>
+<li><code>$sum</code> - Calculate sum</li>
 </ul>
-</li>
-<li>
-<p><strong>Search</strong></p>
+<h3 id="arithmetic">🧮 <strong>Arithmetic</strong></h3>
 <ul>
-<li>See <a href="../search/">search page</a></li>
+<li><code>$add</code> - Addition</li>
+<li><code>$divide</code> - Division</li>
+<li><code>$multiply</code> - Multiplication</li>
+<li><code>$pow</code> - Exponentiation</li>
+<li><code>$subtract</code> - Subtraction</li>
 </ul>
-</li>
+<h3 id="array">📝 <strong>Array</strong></h3>
+<ul>
+<li><code>$arrayToObject</code> - Convert array to object</li>
+<li><code>$filter</code> - Filter array elements</li>
+<li><code>$first</code> - Return first array element</li>
+<li><code>$in</code> - Check if value exists in array</li>
+<li><code>$isArray</code> - Check if value is an array</li>
+<li><code>$last</code> - Return last array element</li>
+<li><code>$max_n</code> - Return n maximum values</li>
+<li><code>$min_n</code> - Return n minimum values</li>
+<li><code>$size</code> - Get array length</li>
+<li><code>$sortArray</code> - Sort array elements</li>
 </ul>
-<h2 id="disambiguation"><strong>Disambiguation</strong></h2>
-<p>Some operators have MQL homonyms (i.e. operators with the same name in MongoDB Query Language), that have a slightly different syntax or usage.</p>
-<p><code>$gte</code> is an example of such operator.<br>
-Its syntax is not the same in an aggregation pipeline than in a MQL query.</p>
-<p>In a MQL query, you are going to use it as follows:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="s2">&quot;year&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;$gte&quot;</span><span class="p">:</span> <span class="mi">2010</span><span class="p">}</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="p">}</span>
-</span></code></pre></div>
-<p>In an aggregation pipeline, you are going to use it as follows:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="s2">&quot;$gte&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;$year&quot;</span><span class="p">,</span> <span class="mi">2010</span><span class="p">]</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="p">}</span>
-</span></code></pre></div>
-<p>In other cases, there are aggregation operators that can be used as-is in MQL queries.
-<add examples></p>
+<h3 id="boolean">⚖️ <strong>Boolean</strong></h3>
+<ul>
+<li><code>$and</code> - Logical AND</li>
+<li><code>$not</code> - Logical NOT</li>
+<li><code>$or</code> - Logical OR</li>
+</ul>
+<h3 id="comparison">🔍 <strong>Comparison</strong></h3>
+<ul>
+<li><code>$cmp</code> - Compare values</li>
+<li><code>$eq</code> - Equal to</li>
+<li><code>$gt</code> - Greater than</li>
+<li><code>$gte</code> - Greater than or equal to</li>
+<li><code>$lt</code> - Less than</li>
+<li><code>$lte</code> - Less than or equal to</li>
+<li><code>$ne</code> - Not equal to</li>
+</ul>
+<h3 id="conditional">🔀 <strong>Conditional</strong></h3>
+<ul>
+<li><code>$cond</code> - Conditional expression</li>
+<li><code>$ifNull</code> - Replace null values</li>
+<li><code>$switch</code> - Switch statement</li>
+</ul>
+<h3 id="date">📅 <strong>Date</strong></h3>
+<ul>
+<li><code>$millisecond</code> - Extract milliseconds</li>
+<li><code>$dateFromString</code> - Convert string to date</li>
+<li><code>$dateToString</code> - Convert date to string</li>
+</ul>
+<h3 id="object">🧱 <strong>Object</strong></h3>
+<ul>
+<li><code>$mergeObjects</code> - Combine multiple documents</li>
+<li><code>$objectToArray</code> - Convert object to array</li>
+</ul>
+<h3 id="string">📝 <strong>String</strong></h3>
+<ul>
+<li><code>$concat</code> - Concatenate strings</li>
+<li><code>$dateFromString</code> - Parse date from string</li>
+<li><code>$dateToString</code> - Format date as string</li>
+</ul>
+<h3 id="search">🔍 <strong>Search</strong></h3>
+<blockquote>
+<p>📚 For search-specific operators, see the <a href="../search/">Search documentation</a>.</p>
+</blockquote>
+<h2 id="mql-vs-aggregation-pipeline-syntax">🔄 <strong>MQL vs. Aggregation Pipeline Syntax</strong></h2>
+<blockquote>
+<p>ℹ️ Some operators have different syntax in MQL queries versus aggregation pipelines.</p>
+</blockquote>
+<h3 id="example-greater-than-or-equal-gte"><strong>Example: Greater Than or Equal (<code>$gte</code>)</strong></h3>
+<p>In an MQL query:
+<div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span>
+<span class="normal"><a href="#__codelineno-11-2">2</a></span>
+<span class="normal"><a href="#__codelineno-11-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="p">{</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2"></a>    <span class="s2">&quot;year&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;$gte&quot;</span><span class="p">:</span> <span class="mi">2010</span><span class="p">}</span>  <span class="c1"># Find documents where year &gt;= 2010</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3"></a><span class="p">}</span>
+</span></code></pre></div></td></tr></table></div></p>
+<p>In an aggregation pipeline:
+<div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span>
+<span class="normal"><a href="#__codelineno-12-2">2</a></span>
+<span class="normal"><a href="#__codelineno-12-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="p">{</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2"></a>    <span class="s2">&quot;$gte&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;$year&quot;</span><span class="p">,</span> <span class="mi">2010</span><span class="p">]</span>  <span class="c1"># Compare if year field value &gt;= 2010</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3"></a><span class="p">}</span>
+</span></code></pre></div></td></tr></table></div></p>
+<p>With Monggregate, the syntax is unified and simplified:
+<div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
+<span class="normal"><a href="#__codelineno-13-2">2</a></span>
+<span class="normal"><a href="#__codelineno-13-3">3</a></span>
+<span class="normal"><a href="#__codelineno-13-4">4</a></span>
+<span class="normal"><a href="#__codelineno-13-5">5</a></span>
+<span class="normal"><a href="#__codelineno-13-6">6</a></span>
+<span class="normal"><a href="#__codelineno-13-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">monggregate</span><span class="w"> </span><span class="kn">import</span> <span class="n">S</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2"></a>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3"></a><span class="c1"># In a match stage</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="n">S</span><span class="o">.</span><span class="n">gte</span><span class="p">(</span><span class="mi">2010</span><span class="p">))</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5"></a>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6"></a><span class="c1"># In an expression</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7"></a><span class="n">is_recent</span> <span class="o">=</span> <span class="n">S</span><span class="o">.</span><span class="n">gte</span><span class="p">(</span><span class="s2">&quot;$year&quot;</span><span class="p">,</span> <span class="mi">2010</span><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div></p>
+<p>This consistent interface helps developers avoid the complexity of different syntaxes for the same logical operations.</p>
 
 
 
@@ -1003,7 +1591,7 @@ Its syntax is not the same in an aggregation pipeline than in a MQL query.</p>
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy"], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../../assets/javascripts/bundle.dff1b7c8.min.js"></script>

@@ -28,6 +28,9 @@
     
       <link rel="stylesheet" href="../../assets/stylesheets/main.046329b4.min.css">
       
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.85d0ee34.min.css">
+      
       
 
 
@@ -45,6 +48,8 @@
       
     
     
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -55,11 +60,14 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
   
     
-    
-      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -67,7 +75,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#list-of-available-stages-in-monggregate" class="md-skip">
+        <a href="#mongodb-aggregation-stages" class="md-skip">
           Skip to content
         </a>
       
@@ -108,6 +116,8 @@
         </div>
       </div>
     </div>
+    
+      
     
     
     
@@ -392,6 +402,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -420,6 +432,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -429,28 +443,21 @@
       
         <li class="md-nav__item">
   <a href="#list-of-available-stages-in-monggregate" class="md-nav__link">
-    List of Available Stages In Monggregate
+    📋 List of Available Stages In Monggregate
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#usage" class="md-nav__link">
-    Usage
+    🚀 Usage
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#operators" class="md-nav__link">
-    Operators
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#come-back-later" class="md-nav__link">
-    Come Back Later
+    🛠️ Operators
   </a>
   
 </li>
@@ -495,6 +502,26 @@
   
   <span class="md-ellipsis">
     Search
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vector-search/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Vector Search
   </span>
   
 
@@ -570,62 +597,8 @@
   
   
   
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
-        
-          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Common Pipelines Use Cases
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_2">
-            <span class="md-nav__icon md-icon"></span>
-            Common Pipelines Use Cases
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
     <li class="md-nav__item">
-      <a href="../../how-to/commons/home/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Home
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../how-to/commons/select-a-nested-document/" class="md-nav__link">
+      <a href="../../how-to/select-a-nested-document/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -645,7 +618,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../how-to/commons/create-or-update-a-collection/" class="md-nav__link">
+      <a href="../../how-to/create-or-update-a-collection/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -665,7 +638,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../how-to/commons/combine-collections/" class="md-nav__link">
+      <a href="../../how-to/combine-collections.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -674,14 +647,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -749,6 +714,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -758,28 +725,21 @@
       
         <li class="md-nav__item">
   <a href="#list-of-available-stages-in-monggregate" class="md-nav__link">
-    List of Available Stages In Monggregate
+    📋 List of Available Stages In Monggregate
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#usage" class="md-nav__link">
-    Usage
+    🚀 Usage
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#operators" class="md-nav__link">
-    Operators
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#come-back-later" class="md-nav__link">
-    Come Back Later
+    🛠️ Operators
   </a>
   
 </li>
@@ -799,23 +759,24 @@
                   
 
 
-  <h1>Stages</h1>
-
-<p>Stages are the building blocks of aggregation pipelines.</p>
-<p>We saw in the <a href="../pipeline/">previous page</a> two methods to compose stages to effectively build a pipeline:</p>
+<h1 id="mongodb-aggregation-stages">🔄 <strong>MongoDB Aggregation Stages</strong></h1>
+<p><strong>Stages</strong> are the building blocks of aggregation pipelines.</p>
+<blockquote>
+<p>📘 We saw in the <a href="../pipeline/">previous page</a> two methods to compose stages to effectively build a pipeline:</p>
 <ul>
 <li>Using the pipeline stages methods</li>
 <li>Using the stages classes directly</li>
 </ul>
+</blockquote>
 <p>Repeating what was described previously:</p>
 <blockquote>
-<p>Each stage of the aggregation framework also has its own class in the package.
+<p>💡 Each stage of the aggregation framework also has its own class in the package.
 And each <code>Stage</code> class has a mirror method in the <code>Pipeline</code>.</p>
 </blockquote>
-<p>There is actually an asterik to this. Monggregate does not yet provide an interface to all of the stages provided by MongoDB.
+<p>There is actually an asterisk to this. Monggregate does not yet provide an interface to all of the stages provided by MongoDB.
 It is a work in progress and the list of available stages will grow over time. If you want to contribute, please refer to the <a href="../../contributing/">contributing guide</a>.</p>
 <p>You can see the full list of stages provided by MongoDB <a href="https://www.mongodb.com/docs/manual/reference/aggregation-quick-reference/#stages--db.collection.aggregate-">here</a>.</p>
-<h2 id="list-of-available-stages-in-monggregate"><strong>List of Available Stages In Monggregate</strong></h2>
+<h2 id="list-of-available-stages-in-monggregate">📋 <strong>List of Available Stages In Monggregate</strong></h2>
 <p>The following table lists the stages that are currently available in Monggregate:</p>
 <ul>
 <li><code>$addFields</code></li>
@@ -842,20 +803,30 @@ It is a work in progress and the list of available stages will grow over time. I
 <li><code>$unset</code></li>
 <li><code>$unwind</code></li>
 </ul>
-<h2 id="usage"><strong>Usage</strong></h2>
-<p><code>monggregate</code> aims at providing a simple and intuitive interface to the MongoDB aggregation framework.<br>
-Even though, it tries as much as possible to stick by the MongoDB aggregation framework syntax, it also tries to provide alternative ways to reproduce the syntax of other tools that new Mongo users might be more familiar with such as SQL and Pandas.</p>
-<p>For example, in the <code>`$group</code> stage, the MongoDB aggregation framework expects the grouping field(s) to be provided in the <code>_id</code> key. However, <code>monggregate</code> allows you to provide the grouping field(s) in the <code>by</code> key instead.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">group</span><span class="p">(</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n">by</span><span class="o">=</span><span class="s2">&quot;year&quot;</span><span class="p">,</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">query</span><span class="o">=</span><span class="p">{</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        <span class="s2">&quot;movie_count&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;$sum&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        <span class="s2">&quot;movie_titles&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;$push&quot;</span><span class="p">:</span> <span class="s2">&quot;$title&quot;</span><span class="p">}</span>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="p">}</span>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="p">)</span>
-</span></code></pre></div>
+<h2 id="usage">🚀 <strong>Usage</strong></h2>
+<blockquote>
+<p>🎯 <code>monggregate</code> aims at providing a simple and intuitive interface to the MongoDB aggregation framework.</p>
+</blockquote>
+<p>Even though, it tries as much as possible to stick by the MongoDB aggregation framework syntax, it also tries to provide alternative ways to reproduce the syntax of other tools that new Mongo users might be more familiar with such as SQL and Pandas.</p>
+<p>For example, in the <code>$group</code> stage, the MongoDB aggregation framework expects the grouping field(s) to be provided in the <code>_id</code> key. However, <code>monggregate</code> allows you to provide the grouping field(s) in the <code>by</code> key instead.</p>
+<div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span>
+<span class="normal"><a href="#__codelineno-0-5">5</a></span>
+<span class="normal"><a href="#__codelineno-0-6">6</a></span>
+<span class="normal"><a href="#__codelineno-0-7">7</a></span>
+<span class="normal"><a href="#__codelineno-0-8">8</a></span>
+<span class="normal"><a href="#__codelineno-0-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">group</span><span class="p">(</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4"></a>    <span class="n">by</span><span class="o">=</span><span class="s2">&quot;year&quot;</span><span class="p">,</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5"></a>    <span class="n">query</span><span class="o">=</span><span class="p">{</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6"></a>        <span class="s2">&quot;movie_count&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;$sum&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7"></a>        <span class="s2">&quot;movie_titles&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;$push&quot;</span><span class="p">:</span> <span class="s2">&quot;$title&quot;</span><span class="p">}</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8"></a>    <span class="p">}</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
 <p>Similarly, <code>monggregate</code> pipeline <code>lookup</code> method and <code>Lookup</code> class provide aliases for the orignal MongoDB arguments:</p>
 <table>
 <thead>
@@ -888,40 +859,61 @@ Even though, it tries as much as possible to stick by the MongoDB aggregation fr
 </tr>
 </tbody>
 </table>
-<p>Note here that the original names of the arguments were converted to snake_case to follow the Python convention.
+<blockquote>
+<p>ℹ️ <strong>Note</strong>: The original names of the arguments were converted to snake_case to follow the Python convention.
 You cannot use the camelCase version of the arguments names here.</p>
+</blockquote>
 <p>You can therefore use any combination of arguments names from the two rightmost columns above to build your stage.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="n">right</span> <span class="o">=</span> <span class="s2">&quot;comments&quot;</span><span class="p">,</span> <span class="c1"># collection to join</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="n">left_on</span> <span class="o">=</span> <span class="s2">&quot;_id&quot;</span><span class="p">,</span>  <span class="c1"># primary key</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="n">right_on</span> <span class="o">=</span> <span class="s2">&quot;movie_id&quot;</span><span class="p">,</span> <span class="c1"># foreign key</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="c1"># name of the field that will contain the matching documents</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;related_comments&quot;</span> 
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="p">)</span>
-</span></code></pre></div>
+<div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">4</a></span>
+<span class="normal"><a href="#__codelineno-1-5">5</a></span>
+<span class="normal"><a href="#__codelineno-1-6">6</a></span>
+<span class="normal"><a href="#__codelineno-1-7">7</a></span>
+<span class="normal"><a href="#__codelineno-1-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3"></a>    <span class="n">right</span> <span class="o">=</span> <span class="s2">&quot;comments&quot;</span><span class="p">,</span> <span class="c1"># collection to join</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4"></a>    <span class="n">left_on</span> <span class="o">=</span> <span class="s2">&quot;_id&quot;</span><span class="p">,</span>  <span class="c1"># primary key</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5"></a>    <span class="n">right_on</span> <span class="o">=</span> <span class="s2">&quot;movie_id&quot;</span><span class="p">,</span> <span class="c1"># foreign key</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6"></a>    <span class="c1"># name of the field that will contain the matching documents</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7"></a>    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;related_comments&quot;</span> 
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
 <p>When using the stages methods, you can sometimes omit to name the argument(s).
 We can for example complete the previous example as follows:</p>
-<p><div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="n">right</span> <span class="o">=</span> <span class="s2">&quot;comments&quot;</span><span class="p">,</span> 
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="n">left_on</span> <span class="o">=</span> <span class="s2">&quot;_id&quot;</span><span class="p">,</span> 
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="n">right_on</span> <span class="o">=</span> <span class="s2">&quot;movie_id&quot;</span><span class="p">,</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;related_comments&quot;</span> 
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span>
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    <span class="s2">&quot;movie_count&quot;</span>
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span>
-</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    <span class="mi">10</span>
-</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="p">)</span>
-</span></code></pre></div>
-The arguments names (<code>by</code> and <code>value</code> respectively) for the <code>sort</code> and <code>limit</code> stages are ommited.</p>
-<h2 id="operators"><strong>Operators</strong></h2>
+<div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3"></a>    <span class="n">right</span> <span class="o">=</span> <span class="s2">&quot;comments&quot;</span><span class="p">,</span> 
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4"></a>    <span class="n">left_on</span> <span class="o">=</span> <span class="s2">&quot;_id&quot;</span><span class="p">,</span> 
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5"></a>    <span class="n">right_on</span> <span class="o">=</span> <span class="s2">&quot;movie_id&quot;</span><span class="p">,</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6"></a>    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;related_comments&quot;</span> 
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8"></a>    <span class="s2">&quot;movie_count&quot;</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10"></a>    <span class="mi">10</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+<blockquote>
+<p>🔍 The arguments names (<code>by</code> and <code>value</code> respectively) for the <code>sort</code> and <code>limit</code> stages are omitted.</p>
+<p>💡 <strong>Note</strong>: Just as the <code>Pipeline</code> class provides methods for all stages, the <code>S</code> (Dollar) object provides methods for all MongoDB operators. They serve similar roles in different contexts - <code>Pipeline</code> for constructing aggregation sequences, and <code>S</code> for building expressions with operators. For more details on the <code>S</code> object, see the <a href="../operators/">Operators documentation</a>.</p>
+</blockquote>
+<h2 id="operators">🛠️ <strong>Operators</strong></h2>
 <p>You might have noticed in the grouping example how we tell Monggregate to perform operations on the groups.
 In the example, we used the <code>$sum</code> and <code>$push</code> operators.</p>
-<p>For more information about operators, check the <a href="../operators/">next page</a>.</p>
-<h2 id="come-back-later"><strong>Come Back Later</strong></h2>
-<p>At this stage of the tutorial, you should already have enough to play around with the aggregation framework and start building your own pipelines.
-If you read everything in this documentation, you might want to check out the <a href="../operators/">operators page</a> later on.</p>
+<blockquote>
+<p>🔜 For more information about operators, check the <a href="../operators/">next page</a>.</p>
+</blockquote>
 
 
 
@@ -959,7 +951,7 @@ If you read everything in this documentation, you might want to check out the <a
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy"], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../../assets/javascripts/bundle.dff1b7c8.min.js"></script>
