@@ -1,4 +1,5 @@
-import pytest
+"""Tests for the `monggregate.utils` module."""
+
 from monggregate.utils import (
     to_unique_list,
     validate_field_path,
@@ -7,7 +8,7 @@ from monggregate.utils import (
 )
 
 
-def test_str_enum():
+def test_str_enum() -> None:
     """Test that StrEnum returns the correct value."""
 
     class TestEnum(StrEnum):
@@ -17,7 +18,7 @@ def test_str_enum():
     assert str(TestEnum.VALUE) == "value"
 
 
-def test_to_unique_list():
+def test_to_unique_list() -> None:
     """Test that to_unique_list converts inputs to a list of unique values."""
     # Test with a string
     assert to_unique_list("field") == ["field"]
@@ -36,7 +37,7 @@ def test_to_unique_list():
     assert to_unique_list(non_convertible) is non_convertible
 
 
-def test_validate_field_path():
+def test_validate_field_path() -> None:
     """Test that validate_field_path adds $ prefix to paths when needed."""
     # Path without $ prefix
     assert validate_field_path("field") == "$field"
@@ -48,7 +49,7 @@ def test_validate_field_path():
     assert validate_field_path(None) is None
 
 
-def test_validate_field_paths():
+def test_validate_field_paths() -> None:
     """Test that validate_field_paths converts inputs to a list of unique values."""
     # Test with a list
     assert validate_field_paths(["field1", "field2", "field1"]) == [
