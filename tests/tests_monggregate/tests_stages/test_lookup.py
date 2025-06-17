@@ -70,9 +70,6 @@ class TestLookup:
         }
         # fmt: on
 
-    # NOTE: The bug is that left_on and right_on are required in the code while they should
-    # be optional in that case.
-    # @pytest.mark.xfail(reason="This should be valid. Bug in the code.")
     def test_expression_with_uncorrelated_subquery(self) -> None:
         """Test that the expression method returns the correct expression."""
 
