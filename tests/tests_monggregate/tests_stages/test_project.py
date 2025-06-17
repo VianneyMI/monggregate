@@ -49,10 +49,6 @@ class TestProject:
         project = Project(exclude={"field1": 0, "field2": 0})
         assert project.expression == {"$project": {"field1": 0, "field2": 0}}
 
-    # @pytest.mark.xfail(reason="Bug in the code.")
-    # # NOTE: The issue is that when using booleans, only include is used.
-    # # We should find a mechanism so that include = !exclude and vice versa.
-    # # Or review the logic of the code.
     def test_expression_with_exclude_as_bool(self) -> None:
         """Test that the expression method returns the correct expression with exclude."""
 
@@ -67,10 +63,6 @@ class TestProject:
             "$project": {"field1": 1, "field2": 1, "field3": 0, "field4": 0}
         }
 
-    # @pytest.mark.xfail(reason="Bug in the code.")
-    # # NOTE: The issue is that when using booleans, only include is used.
-    # # We should find a mechanism so that include = !exclude and vice versa.
-    # # Or review the logic of the code.
     def test_expression_with_include_and_exclude_both_as_dict(self) -> None:
         """Test that the expression method returns the correct expression with include and exclude."""
 

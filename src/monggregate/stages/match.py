@@ -52,7 +52,8 @@ from typing import Any
 from monggregate.base import pyd, Expression
 from monggregate.stages.stage import Stage
 from monggregate.operators.operator import Operator
-#from monggregate.expressions import Expression
+# from monggregate.expressions import Expression
+
 
 class Match(Stage):
     """
@@ -63,14 +64,14 @@ class Match(Stage):
 
         - query, dict : a simple MQL query use to filter the documents.
         - operand, Any:an aggregation expression used to filter the documents
-    
+
     NOTE : Use query if you're using a MQL query and expression if you're using aggregation expressions.
-    
-    
+
+
     Online MongoDB documentation:
     -----------------------------
     Filters the documents to pass only the documents that match the specified condition(s) to the next pipeline stage.
-    
+
     $match takes a document that specifies the query conditions. The query syntax is identical to the read operation query syntax; i.e.
     $match does not accept raw aggregation expressions. Instead, use a $expr query expression to include aggregation expression in
     $match
@@ -78,30 +79,30 @@ class Match(Stage):
     Source :  https://www.mongodb.com/docs/manual/reference/operator/aggregation/match/#mongodb-pipeline-pipe.-match
     """
 
-    query : dict = {} #| None
-    expr : Expression | None = None
+    query: dict = {}  # | None
+    expr: Expression | None = None
 
     @pyd.validator("expr", pre=True, always=True)
-    def validate_operand(cls, expr:Any)-> Any:
-        
-        c1 = isinstance(expr, dict) # expression is "expressed/resolved" already
-        c2 = isinstance(expr, Operator) # expression is an operator object
+    def validate_operand(cls, expr: Any) -> Any:
+        c1 = isinstance(expr, dict)  # expression is "expressed/resolved" already
+        c2 = isinstance(expr, Operator)  # expression is an operator object
 
-        if expr and not (c1 or c2 ):
-            raise ValueError("The expression argument must be a valid expression, operator or a dict.")
-        
+        if expr and not (c1 or c2):
+            raise ValueError(
+                "The expression argument must be a valid expression, operator or a dict."
+            )
+
         if isinstance(expr, dict) and "$expr" not in expr:
-            expr = {"$expr":expr}
-        
+            expr = {"$expr": expr}
+
         return expr
 
     @property
     def expression(self) -> Expression:
-
         if self.expr:
-            _statement = self.express({"$match":{"$expr":self.expr}})
-            
+            _statement = self.express({"$match": self.expr})
+
         else:
-            _statement =  self.express({"$match":self.query})
+            _statement = self.express({"$match": self.query})
 
         return _statement
