@@ -58,9 +58,6 @@ class TestSort:
         sort = Sort(ascending=["field1"], descending=["field2"])
         assert sort.expression == {"$sort": {"field1": 1, "field2": -1}}
 
-    @pytest.mark.xfail(
-        reason="Should raise a ValueError/ValidationError but raises a KeyError. "
-    )
     def test_expression_with_ascending_descending_as_bool(self) -> None:
         """Test that the expression method returns the correct expression with ascending and descending."""
 

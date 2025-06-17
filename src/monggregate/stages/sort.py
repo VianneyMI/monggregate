@@ -101,6 +101,7 @@ from monggregate.utils import to_unique_list
 
 SortArgs = str | list[str] | set[str]
 
+
 class Sort(Stage):
     """
     Abstration of MongoDB $sort statement that sorts all input documents and returns them to the pipeline in sorted order.
@@ -130,88 +131,93 @@ class Sort(Stage):
     Online MongoDB documentation:
     -----------------------------
     Sorts all input documents and returns them to the pipeline in sorted order.
-    
+
     Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/sort/#mongodb-pipeline-pipe.-sort
     """
 
-    descending : list[str] | dict | bool | None = None
-    ascending  : list[str] | dict | bool | None = None
-    by : list[str] | None = None
-    query : dict[str, Literal[1, -1]] = {}
+    descending: list[str] | dict | bool | None = None
+    ascending: list[str] | dict | bool | None = None
+    by: list[str] | None = None
+    query: dict[str, Literal[1, -1]] = {}
 
     # NOTE : The below are pyd.validators are very close to what is used for project => CONSIDER factorizing <VM, 27/10/2022>
     @pyd.validator("ascending", "descending", pre=True, always=True)
     @classmethod
-    def parse_ascending_descending(cls, value:SortArgs|dict|bool|None)->list[str]|dict|bool|None:
+    def parse_ascending_descending(
+        cls, value: SortArgs | dict | bool | None
+    ) -> list[str] | dict | bool | None:
         """Parses ascending and descending"""
 
         return to_unique_list(value)
 
-    @pyd.validator("ascending")
+    @pyd.root_validator(pre=True)
     @classmethod
-    def validates_booleans(cls, ascending:list[str]|dict|bool|None, values:dict)->list[str]|bool|None:
+    def validates_booleans(cls, values: dict) -> dict:
         """Validates combination of ascending and descending"""
 
+        ascending = values.get("ascending")
         descending = values.get("descending")
 
         # Preventing to use both ascending and descending as booleans at the same time
         # to avoid conflicting behaviors
         if isinstance(descending, bool) and isinstance(ascending, bool):
-            raise ValueError("Cannot use both ascending and descending as booleans at the same time")
+            raise ValueError(
+                "Cannot use both ascending and descending as booleans at the same time"
+            )
 
         # If neither is set, in case by is set, we set ascending as True by default
         # so that the documents will be sorted by the fields provided in by in ascending order
         elif ascending is None and descending is None:
-            ascending = True
+            values["ascending"] = True
 
         # If descending is provided as a bool, we symetrically compute ascending, so that we only need one of argument
         # in validates_by below
         elif ascending is None and isinstance(descending, bool):
-            ascending = not descending
+            values["ascending"] = not descending
 
         # and reciprocally, if ascending is provided as a bool, we symetrically compute descending.
         # (WARNING: removing this branch breaks the pyd.validator on a functional stand point)
         elif descending is None and isinstance(ascending, bool):
-            descending = not ascending
+            values["descending"] = not ascending
 
         elif isinstance(ascending, list) or isinstance(descending, list):
             pass
 
-
         elif isinstance(ascending, dict) or isinstance(descending, dict):
             pass
-
 
         # if we are in none of the cases above, we raise an error. Hopefully we don't have false positives !
         else:
             raise TypeError(
                 f"Wrong combination of arguments.\
                      Cannot have ascending with type {type(ascending)} and descending with type {type(descending)} at the same time"
-                     )
+            )
 
-        return ascending
-
+        return values
 
     @pyd.validator("by", pre=True)
     @classmethod
-    def validates_by(cls, value:SortArgs|None, values:dict)->list[str]|None:
+    def validates_by(cls, value: SortArgs | None, values: dict) -> list[str] | None:
         """Validates by"""
 
         ascending = values.get("ascending")
         descending = values.get("descending")
 
         if value and not (isinstance(ascending, bool) or isinstance(descending, bool)):
-            raise ValueError("Either ascending or descending must be set and be a boolean when using fields")
+            raise ValueError(
+                "Either ascending or descending must be set and be a boolean when using fields"
+            )
 
         return to_unique_list(value)
 
-
     @pyd.validator("query", pre=True, always=True)
     @classmethod
-    def generates_query(cls, query:dict, values:dict)->dict:
+    def generates_query(cls, query: dict, values: dict) -> dict:
         """Generates query if not provided"""
 
-        def _to_query(query:dict, sort_args:list[str]|dict, direction:bool)->None:
+        def _to_query(
+            query: dict, sort_args: list[str] | dict, direction: bool
+        ) -> None:
             """
             Inserts fields in ascending and descending arguments inside a query
             Ex:
@@ -224,8 +230,8 @@ class Sort(Stage):
             """
 
             _sort_order_map = {
-                True:1, # ascending
-                False:-1 # descending
+                True: 1,  # ascending
+                False: -1,  # descending
             }
 
             if isinstance(sort_args, list):
@@ -234,25 +240,27 @@ class Sort(Stage):
             else:
                 query.update(sort_args)
 
-
         # Retrieving validated fields
         # -----------------------------
-        ascending:list[str]|dict|bool|None = values.get("ascending")
-        descending:list[str]|dict|bool|None = values.get("descending")
-        by:list[str]|None = values.get("by")
-
+        ascending: list[str] | dict | bool | None = values.get("ascending")
+        descending: list[str] | dict | bool | None = values.get("descending")
+        by: list[str] | None = values.get("by")
 
         # Initizaling projection if not provided
         # --------------------------------------
         if not query:
-
             # Case #1 : By is provided
             # ------------------------------
             if by:
                 # validates_by ensures that ascending and descending are either None or booleans when by is provided
                 # None or boolean_value = boolean_value
                 # valdiates_booleans ensures that ascending or descending are not both, booleans at the same time
-                _to_query(query, by,  ascending)
+                # If ascending is None due to validation failure, we should not continue
+                if ascending is None:
+                    raise ValueError(
+                        "Invalid configuration: ascending cannot be None when by is provided"
+                    )
+                _to_query(query, by, ascending)
 
             # Case #2 : by is not provided
             # -------------------------------
@@ -266,7 +274,7 @@ class Sort(Stage):
         return query
 
     @property
-    def expression(self)->Expression:
+    def expression(self) -> Expression:
         """Generates statement from other attributes"""
 
-        return  self.express({"$sort":self.query})
+        return self.express({"$sort": self.query})
