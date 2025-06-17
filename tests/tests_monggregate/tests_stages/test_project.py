@@ -49,10 +49,10 @@ class TestProject:
         project = Project(exclude={"field1": 0, "field2": 0})
         assert project.expression == {"$project": {"field1": 0, "field2": 0}}
 
-    @pytest.mark.xfail(reason="Bug in the code.")
-    # NOTE: The issue is that when using booleans, only include is used.
-    # We should find a mechanism so that include = !exclude and vice versa.
-    # Or review the logic of the code.
+    # @pytest.mark.xfail(reason="Bug in the code.")
+    # # NOTE: The issue is that when using booleans, only include is used.
+    # # We should find a mechanism so that include = !exclude and vice versa.
+    # # Or review the logic of the code.
     def test_expression_with_exclude_as_bool(self) -> None:
         """Test that the expression method returns the correct expression with exclude."""
 
@@ -67,10 +67,10 @@ class TestProject:
             "$project": {"field1": 1, "field2": 1, "field3": 0, "field4": 0}
         }
 
-    @pytest.mark.xfail(reason="Bug in the code.")
-    # NOTE: The issue is that when using booleans, only include is used.
-    # We should find a mechanism so that include = !exclude and vice versa.
-    # Or review the logic of the code.
+    # @pytest.mark.xfail(reason="Bug in the code.")
+    # # NOTE: The issue is that when using booleans, only include is used.
+    # # We should find a mechanism so that include = !exclude and vice versa.
+    # # Or review the logic of the code.
     def test_expression_with_include_and_exclude_both_as_dict(self) -> None:
         """Test that the expression method returns the correct expression with include and exclude."""
 
@@ -88,15 +88,13 @@ class TestProject:
         with pytest.raises(ValueError):
             project = Project(include=True, exclude=True, fields=["field1", "field2"])
 
-    @pytest.mark.xfail(reason="This fails but we might want to forbid this case.")
-    def test_expression_with_include_and_exclude_both_as_bool_and_list_of_strings(
-        self,
-    ) -> None:
-        """Test that the expression method returns the correct expression with include and exclude."""
+    def test_mixed_boolean_and_list_parameters_raises_error(self) -> None:
+        """Test that mixing boolean and list parameters raises an appropriate error."""
 
-        project = Project(
-            include=True, exclude=["field3", "field4"], fields=["field1", "field2"]
-        )
-        assert project.expression == {
-            "$project": {"field1": 1, "field2": 1, "field3": 0, "field4": 0}
-        }
+        with pytest.raises(
+            ValueError,
+            match="Cannot mix boolean include/exclude with list/dict include/exclude",
+        ):
+            Project(
+                include=True, exclude=["field3", "field4"], fields=["field1", "field2"]
+            )
