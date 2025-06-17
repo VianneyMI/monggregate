@@ -355,7 +355,7 @@ class Lookup(Stage):
         if right and left_on and right_on and not (let or pipeline):
             type_ = "simple"
 
-        elif let and left_on and right_on and pipeline is not None:
+        elif let and pipeline is not None:
             type_ = "correlated"
 
         elif not let and pipeline is not None:
@@ -376,33 +376,15 @@ class Lookup(Stage):
     def expression(self) -> Expression:
         """Generates statement from attributes"""
 
-        # Generate statement:
-        # -----------------------------------------------
-        if self.type_ == "simple":
-            statement = {
-                "$lookup": {
-                    "from": self.right,
-                    "localField": self.left_on,
-                    "foreignField": self.right_on,
-                    "as": self.name,
-                }
+        statement = {
+            "$lookup": {
+                "from": self.right,
+                "localField": self.left_on,
+                "foreignField": self.right_on,
+                "let": self.let,
+                "pipeline": self.pipeline,
+                "as": self.name,
             }
-        elif self.type_ == "uncorrelated":
-            statement = {
-                "$lookup": {
-                    "from": self.right,
-                    "let": self.let,
-                    "pipeline": self.pipeline,
-                    "as": self.name,
-                }
-            }
-        else:  # should be correlated case
-            statement = {
-                "$lookup": {
-                    "from": self.right,
-                    "pipeline": self.pipeline,
-                    "as": self.name,
-                }
-            }
+        }
 
         return self.express(statement)

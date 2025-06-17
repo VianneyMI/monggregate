@@ -33,6 +33,8 @@ class TestLookup:
                 "localField": "foreign_field_id",
                 "foreignField": "_id",
                 "as": "foreign_documents",
+                "let": None,
+                "pipeline": None,
             }
         }
         # fmt: on
@@ -59,6 +61,8 @@ class TestLookup:
         assert lookup.expression == {
             "$lookup": {
                 "from": "right_collection",
+                "localField": None,
+                "foreignField": None,
                 "let": {"variable": "$local_variable"},
                 "pipeline": [{"$match": {"$expr": {"$gte": ["$$variable", "$foreign_field_quantity"]}}}],
                 "as": "foreign_documents",
@@ -85,6 +89,9 @@ class TestLookup:
         assert lookup.expression == {
             "$lookup": {
                 "from": "holidays",
+                "let": None,
+                "localField": None,
+                "foreignField": None,
                 "pipeline": [{"$match": {"year": 2018}}, {"$project": {"name": 1, "date": 1, "_id": 0}}],
                 "as": "holidaysIn2018",
             }
