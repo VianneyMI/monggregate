@@ -74,13 +74,31 @@ class SortByCount(Stage):
     Source : https://www.mongodb.com/docs/manual/reference/operator/aggregation/sortByCount/#mongodb-pipeline-pipe.-sortByCount
     """
 
-    by: str  # TODO : Allow more types <VM, 17/09/2022>
-    # Should be a field path or a valid expression
+    by: str | list[str] | set[str]
+
     # Validators
     # ------------------------
     _validates_path_to_array = pyd.validator(
         "by", allow_reuse=True, pre=True, always=True
     )(validate_field_path)
+
+    @pyd.validator("by", pre=True)
+    @classmethod
+    def validates_by(
+        cls, value: str | list[str] | set[str], values: dict
+    ) -> str | set[str]:
+        """Validates by"""
+
+        output: str | set[str]
+
+        if isinstance(value, list) or isinstance(value, set):
+            output = set([validate_field_path(path) for path in value])
+        elif isinstance(value, str):
+            output = validate_field_path(value)
+        else:
+            raise ValueError("by must be a string, list of strings, or set of strings")
+
+        return output
 
     @property
     def expression(self) -> Expression:
