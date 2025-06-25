@@ -22,6 +22,12 @@ dependencies = [
     "typing-extensions>=4.0",
 ]
 
+[project.optional-dependencies]
+mongodb = [
+    "pymongo>=3.0.0",
+    "motor>=3.0.0",
+]
+
 [project.urls]
 Homepage = "https://github.com/VianneyMI/monggregate"
 documentation = "https://vianneymi.github.io/monggregate/"
@@ -49,10 +55,29 @@ monggregate = "src/monggregate"
 tests = "tests"
 
 [dependency-groups]
-dev = [
+test = [
     "pytest>=8.3.5",
+    "pytest-html>=3.2.0",
+    "python-dotenv>=1.0.0",
+    "certifi",
+]
+lint = [
+    "mypy>=1.6.1",
+    "ruff",
+    "black",
 ]
 doc = [
+    "mkdocs==1.5.2",
+    "mkdocs-material==9.2.7",
+]
+dev = [
+    "pytest>=8.3.5",
+    "pytest-html>=3.2.0",
+    "python-dotenv>=1.0.0",
+    "certifi",
+    "mypy>=1.6.1",
+    "ruff",
+    "black",
     "mkdocs==1.5.2",
     "mkdocs-material==9.2.7",
 ]
