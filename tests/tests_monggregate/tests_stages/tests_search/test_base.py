@@ -52,6 +52,7 @@ class TestSearchBase:
         "value": "value",
         "gte": 1,
         "lte": 2,
+        "like": {"title": "test"},
     }
 
     def test_instantiation(self) -> None:
@@ -61,10 +62,6 @@ class TestSearchBase:
         assert isinstance(base, SearchBase)
         assert isinstance(base, BaseModel)
 
-    @pytest.mark.xfail(
-        reason="""Broken because operator is not correctly set.
-                Uncomment lines in init to fix."""
-    )
     @pytest.mark.parametrize("operator_name", OperatorLiteral.__args__)
     def test_init_with_operator_name(self, operator_name: OperatorLiteral) -> None:
         """Tests the init method of the SearchBase class."""
@@ -72,10 +69,6 @@ class TestSearchBase:
         search_base = SearchBase(operator_name=operator_name, **self.default_args)
         assert isinstance(search_base.operator, OperatorMap[operator_name])
 
-    @pytest.mark.xfail(
-        reason="""Broken because collector is not correctly set.
-                Uncomment lines in init to fix."""
-    )
     def test_init_with_collector_name(self, collector_name: str = "facet") -> None:
         """Tests the init method of the SearchBase class."""
 

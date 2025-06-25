@@ -16,9 +16,6 @@ class TestMatch:
         match = Match(query={"status": "active"})
         assert match.expression == {"$match": {"status": "active"}}
 
-    @pytest.mark.xfail(reason="This should be valid. Bug in the code.")
-    # NOTE: The bug is that the $exp is inserted twice.
-    # once in validate_operand and once in the expression method.
     def test_expression_with_expr(self) -> None:
         """Test that the expression method returns the correct expression."""
 

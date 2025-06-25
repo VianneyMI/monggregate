@@ -2,7 +2,7 @@
 
 [project]
 name = "monggregate"
-version = "0.21.0"
+version = "0.22.0"
 description = "MongoDB aggregation pipelines made easy. Joins, grouping, counting and much more..."
 readme = "README.md"
 authors = [{ name = "Vianney Mixtur", email = "vianney.mixtur@outlook.fr" }]
@@ -22,12 +22,18 @@ dependencies = [
     "typing-extensions>=4.0",
 ]
 
+[project.optional-dependencies]
+mongodb = [
+    "pymongo>=3.0.0",
+    "motor>=3.0.0",
+]
+
 [project.urls]
 Homepage = "https://github.com/VianneyMI/monggregate"
 documentation = "https://vianneymi.github.io/monggregate/"
 
 [tool.bumpver]
-current_version = "0.21.0"
+current_version = "0.22.0"
 version_pattern = "MAJOR.MINOR.PATCH[PYTAGNUM]"
 commit_message = "bump version {old_version} -> {new_version}"
 commit = true
@@ -41,11 +47,37 @@ push = false
 ]
 "src/monggregate/__init__.py" = ['__version__ = "{version}"']
 
+[tool.setuptools]
+packages = ["monggregate", "tests"]
+
+[tool.setuptools.package-dir]
+monggregate = "src/monggregate"
+tests = "tests"
+
 [dependency-groups]
-dev = [
+test = [
     "pytest>=8.3.5",
+    "pytest-html>=3.2.0",
+    "python-dotenv>=1.0.0",
+    "certifi",
+]
+lint = [
+    "mypy>=1.6.1",
+    "ruff",
+    "black",
 ]
 doc = [
+    "mkdocs==1.5.2",
+    "mkdocs-material==9.2.7",
+]
+dev = [
+    "pytest>=8.3.5",
+    "pytest-html>=3.2.0",
+    "python-dotenv>=1.0.0",
+    "certifi",
+    "mypy>=1.6.1",
+    "ruff",
+    "black",
     "mkdocs==1.5.2",
     "mkdocs-material==9.2.7",
 ]

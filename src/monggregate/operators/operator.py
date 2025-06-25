@@ -1,7 +1,7 @@
 """Operator Module"""
 
 # Standard Library imports
-#----------------------------
+# ----------------------------
 from abc import ABC
 
 # Package imports
@@ -9,12 +9,13 @@ from abc import ABC
 from monggregate.base import BaseModel
 from monggregate.utils import StrEnum
 
+
 class Operator(BaseModel, ABC):
     """MongoDB operator abstract base class"""
 
+
 class OperatorEnum(StrEnum):
     """Enumeration of available operators"""
-
 
     ABS = "$abs"
     ACCUMULATOR = "$accumulator"
@@ -34,7 +35,7 @@ class OperatorEnum(StrEnum):
     ATANH = "$atanh"
     AVG = "$avg"
     BINARY_SIZE = "$binarySize"
-    BSON_SIZE ="$bsonSize"
+    BSON_SIZE = "$bsonSize"
     CEIL = "$ceil"
     CMP = "$cmp"
     CONCAT = "$concat"
@@ -47,7 +48,7 @@ class OperatorEnum(StrEnum):
     DATE_FROM_STRING = "$dateFromString"
     DATE_TO_PARTS = "$dateToParts"
     DATE_TO_STRING = "$dateToString"
-    DAY_OF_MONTH ="$dayOfMonth"
+    DAY_OF_MONTH = "$dayOfMonth"
     DAY_OF_WEEK = "$dayOfWeek"
     DAY_OF_YEAR = "$dayOfYear"
     DEGREES_TO_RADIANS = "$degreesToRadians"
@@ -55,7 +56,7 @@ class OperatorEnum(StrEnum):
     EQ = "$eq"
     EXP = "$exp"
     FILTER = "$filter"
-    FIRST = "$first" # two operators one for array one for accumulator
+    FIRST = "$first"  # two operators one for array one for accumulator
     FLOOR = "$floor"
     FUNCTION = "$function"
     GET_FIELD = "$getField"
@@ -71,9 +72,9 @@ class OperatorEnum(StrEnum):
     IS_NUMBER = "$isNumber"
     ISO_DAY_OF_WEEK = "$isoDayOfWeek"
     ISO_WEEK = "$isoWeek"
-    ISO_WEEK_YEAR ="$isoWeekYear"
+    ISO_WEEK_YEAR = "$isoWeekYear"
     LAST = "$last"  # two operators one for array one for accumulator
-    LET ="$let"
+    LET = "$let"
     LITERAL = "$literal"
     LN = "$ln"
     LOG = "$log"
@@ -85,15 +86,15 @@ class OperatorEnum(StrEnum):
     MAX = "$max"
     MERGE_OBJECTS = "$mergeObjects"
     META = "$meta"
-    MILLI_SECOND = "$millisecond"
+    MILLISECOND = "$millisecond"
     MIN = "$min"
-    MINUTE ="$minute"
-    MOD ="$mod"
+    MINUTE = "$minute"
+    MOD = "$mod"
     MONTH = "$month"
-    MULTIPLY ="$multiply"
-    NE ="$ne"
-    NOT ="$not"
-    OBJECT_TO_ARRAY ="$objectToArray"
+    MULTIPLY = "$multiply"
+    NE = "$ne"
+    NOT = "$not"
+    OBJECT_TO_ARRAY = "$objectToArray"
     OR = "$or"
     POW = "$pow"
     PUSH = "$push"
@@ -101,10 +102,10 @@ class OperatorEnum(StrEnum):
     RAND = "$rand"
     RANGE = "$range"
     REDUCE = "$reduce"
-    REGEX_FIND ="$regexFind"
+    REGEX_FIND = "$regexFind"
     REGEX_FIND_ALL = "$regexFindAll"
     REGEX_MATCH = "$regexMatch"
-    REPLACE_ONE ="$replaceOne"
+    REPLACE_ONE = "$replaceOne"
     REPLACE_ALL = "$replaceAll"
     REVERSE_ARRAY = "$reverseArray"
     ROUND = "$round"
@@ -126,16 +127,16 @@ class OperatorEnum(StrEnum):
     STD_DEV_SAMP = "$stdDevSamp"
     STR_LEN_BYTES = "$strLenBytes"
     STR_LEN_CP = "$strLenCP"
-    STR_CASE_CMP = "$strcasecmp"
+    STRCASECMP = "$strcasecmp"
     SUBSTR = "$substr"
     SUBSTR_BYTES = "$substrBytes"
     SUBSTR_CP = "$substrCP"
-    SUBSTRACT = "$subtract"
+    SUBTRACT = "$subtract"
     SUM = "$sum"
     SWITCH = "$switch"
     TAN = "$tan"
     TANH = "$tanh"
-    TO_BOOL ="$toBool"
+    TO_BOOL = "$toBool"
     TO_DATE = "$toDate"
     TO_DECIMAL = "$toDecimal"
     TO_DOUBLE = "$toDouble"

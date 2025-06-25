@@ -19,9 +19,8 @@ class TestSortByCount:
         sort_by_count = SortByCount(by="field1")
         assert sort_by_count.expression == {"$sortByCount": "$field1"}
 
-    @pytest.mark.xfail(reason="Bug in the code.")
-    def test_exppression_with_other_types(self) -> None:
+    def test_expression_with_other_types(self) -> None:
         """Test that the expression method returns the correct expression with other types."""
 
         sort_by_count = SortByCount(by=["field1", "field2"])
-        assert sort_by_count.expression == {"$sortByCount": ["$field1", "$field2"]}
+        assert sort_by_count.expression == {"$sortByCount": {"$field1", "$field2"}}

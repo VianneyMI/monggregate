@@ -118,13 +118,13 @@ class SearchBase(Stage, SearchConfig):
 
         if operator_name and not operator:
             operator = OperatorMap[operator_name](**values)
-            # values.pop("collector", None)
-            # values["operator"] = operator
+            values.pop("collector", None)
+            values["operator"] = operator
 
         if collector_name and not collector:
             collector = Facet(operator=operator, **values)
             values.pop("operator", None)
-            # values["collector"] = collector
+            values["collector"] = collector
 
         if not collector and not operator:
             values["operator"] = Compound()
