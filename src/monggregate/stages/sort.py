@@ -180,7 +180,7 @@ class Sort(Stage):
         elif descending is None and isinstance(ascending, bool):
             values["descending"] = not ascending
 
-        elif isinstance(ascending, list) or isinstance(descending, list):
+        elif isinstance(ascending, (list, set)) or isinstance(descending, (list, set)):
             pass
 
         elif isinstance(ascending, dict) or isinstance(descending, dict):

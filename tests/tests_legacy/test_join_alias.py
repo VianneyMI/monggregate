@@ -7,36 +7,32 @@ It is temporary as it should come in a more general test_pipeline module or pack
 from monggregate import Pipeline
 from monggregate.stages import Lookup, Match
 
-def test_left_join()->None:
+
+def test_left_join() -> None:
     """Tests left join in pipeline class"""
 
     pipeline = Pipeline(collection="left")
-    pipeline.join(
-        other = "right",
-        how = "left",
-        on = "zipcode"
-    )
+    pipeline.join(other="right", how="left", on="zipcode")
 
     assert len(pipeline.stages) == 4, pipeline
     assert isinstance(pipeline[0], Lookup)
     assert pipeline[0]() == {
-        "$lookup":{
-            "from" : "right", # from references the right collection
-            "localField" : "zipcode",
-            "foreignField" : "zipcode",
-            "as" : "__right__"
-    }}
+        "$lookup": {
+            "from": "right",  # from references the right collection
+            "localField": "zipcode",
+            "foreignField": "zipcode",
+            "as": "__right__",
+            "let": None,
+            "pipeline": None,
+        }
+    }
 
 
-def test_inner_join()->None:
+def test_inner_join() -> None:
     """Tests left join in pipeline class"""
 
     pipeline = Pipeline(collection="left")
-    pipeline.join(
-        other = "right",
-        how = "inner",
-        on = "zipcode"
-    )
+    pipeline.join(other="right", how="inner", on="zipcode")
 
     assert len(pipeline.stages) == 5, pipeline
     assert isinstance(pipeline[0], Lookup)
@@ -46,12 +42,16 @@ def test_inner_join()->None:
 
     assert isinstance(pipeline[1], Match)
     assert pipeline[0]() == {
-        "$lookup":{
-            "from" : "right", # from references the right collection
-            "localField" : "zipcode",
-            "foreignField" : "zipcode",
-            "as" : "__right__"
-    }}
+        "$lookup": {
+            "from": "right",  # from references the right collection
+            "localField": "zipcode",
+            "foreignField": "zipcode",
+            "as": "__right__",
+            "let": None,
+            "pipeline": None,
+        }
+    }
+
 
 if __name__ == "__main__":
     test_left_join()
