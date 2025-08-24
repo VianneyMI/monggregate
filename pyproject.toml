@@ -1,10 +1,25 @@
 # pyproject.toml
 
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/monggregate"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+    "/LICENSE",
+    "/readme.md",
+    "/pyproject.toml",
+]
+
 [project]
 name = "monggregate"
 version = "0.22.0"
 description = "MongoDB aggregation pipelines made easy. Joins, grouping, counting and much more..."
-readme = "README.md"
+readme = "readme.md"
 authors = [{ name = "Vianney Mixtur", email = "vianney.mixtur@outlook.fr" }]
 license = { file = "LICENSE" }
 classifiers = [
