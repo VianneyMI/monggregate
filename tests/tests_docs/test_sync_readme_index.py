@@ -6,7 +6,7 @@ from difflib import unified_diff
 def test_sync():
     """Test sync between readme.md and index.md files"""
 
-    with open("README.md", "r", encoding="utf-8") as readme_file:
+    with open("readme.md", "r", encoding="utf-8") as readme_file:
         readme = readme_file.readlines()
     with open("docs/index.md", "r", encoding="utf-8") as index_file:
         index = index_file.readlines()

@@ -220,7 +220,7 @@ class FacetBucket(BaseModel):
     @property
     def expression(self) -> str:
         """Return the expression for the facet bucket."""
-        return self.model_dump(by_alias=True)
+        return self.dict(by_alias=True)
 
 
 class FacetBuckets(BaseModel):
@@ -236,7 +236,7 @@ class FacetBuckets(BaseModel):
     @property
     def expression(self) -> str:
         """Return the expression for the facet buckets."""
-        return self.model_dump(by_alias=True)
+        return self.dict(by_alias=True)
 
 
 FacetResult = dict[FacetName, FacetBuckets]
